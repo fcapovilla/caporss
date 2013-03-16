@@ -1,1 +1,74 @@
-test
+.feed-list.well.well-small
+  .btn-group
+    %button(class="btn" id="syncButton")
+      %i(class="icon-refresh")
+    %button(class="btn" href="#opmlModal" role="button" data-toggle="modal")
+      %i(class="icon-upload")
+  %ul(id="feed-list" class="nav nav-list")
+.item-list
+  %ul(id="item-list" class="nav nav-list")
+
+-# OPML Upload Modal Dialog
+
+%form(class="upload-form well" method="post" enctype="multipart/form-data" action="/opml_upload")
+  %div(class="modal hide fade" id="opmlModal" tabindex="-1" role="dialog" aria-labelledby="opmlModal" aria-hidden="true")
+    .modal-header
+      OPML Upload
+      %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+        x
+    .modal-body
+      %input(type="file" name="file" aria-hidden="true")
+    .modal-footer
+      %button(type="button" class="btn" data-dismiss="modal" aria-hidden="true")
+        Close
+      %button(type="submit" class="btn btn-primary" aria-hidden="true")
+        Upload OPML
+
+-# Underscore Templates
+
+:plain
+  <script id='tmpl-folder' type='text/template'>
+    <i class="folder-icon <% if(open){ %>icon-minus<% }else{ %>icon-plus<% } %>"></i>
+    <%= title %>
+    <span class="dropdown">
+      <i class="icon icon-chevron-down dropdown-toggle" data-toggle="dropdown"></i>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="folder-<%= id %>-menu">
+        <li><a class="deleteFolderAction">Supprimer</a></li>
+        <li><a class="syncFolderAction">Sync</a></li>
+      </ul>
+    </span>
+  </script>
+
+  <script id='tmpl-feed' type='text/template'>
+    <span class="dropdown">
+      <i class="icon icon-chevron-down dropdown-toggle" data-toggle="dropdown"></i>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="feed-<%= id %>-menu">
+        <li><a class="deleteFeedAction">Supprimer</a></li>
+        <li><a class="syncFeedAction">Sync</a></li>
+      </ul>
+    </span>
+    <span class="feedName">
+      <%= title %>
+      <% if(unread_count > 0) { %>
+        <span class="badge badge-info"><%= unread_count %></span>
+      <% } %>
+    </span>
+  </script>
+
+  <script id='tmpl-item' type='text/template'>
+    <i class="icon-check"></i>
+
+    <% if(read){ %>
+      <%= title %>
+    <% } else { %>
+      <b><%= title %></b>
+    <% } %>
+
+    <% if(open){ %>
+      <div class="well item-content">
+        <a href="<%= url %>" target="_blank"><%= title %></a>
+        <br>
+        <%= content %>
+      </div>
+    <% } %>
+  </script>
