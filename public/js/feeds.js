@@ -29,6 +29,9 @@ var ItemView = Backbone.View.extend({
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
+		if(this.model.get('open')) {
+			this.$el.find('.item-content a').attr('target', '_blank');
+		}
 		return this;
 	},
 	toggleContent: function() {

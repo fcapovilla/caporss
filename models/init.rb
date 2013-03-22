@@ -1,6 +1,6 @@
 require 'data_mapper'
 
-DataMapper::Logger.new(STDOUT, :debug)
+DataMapper::Logger.new(STDOUT, :warn)
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')
 
 require_relative 'folder'
