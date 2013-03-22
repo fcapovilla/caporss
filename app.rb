@@ -156,7 +156,7 @@ delete '/folder/*/feed/:id' do |x,id|
 end
 
 get '/feed/:id/item' do |id|
-	Feed.ordered_by_date.get(id).items.to_json
+	Feed.get(id).items(:order => [:date.desc]).to_json
 end
 
 get '/sync/feed/:id' do |id|
@@ -168,7 +168,7 @@ end
 # Items
 
 get '/item' do
-    Item.all(:order => [:date => :desc]).to_json
+    Item.all(:order => [:date.desc]).to_json
 end
 
 get '/item/:id' do |id|

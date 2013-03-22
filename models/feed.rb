@@ -44,12 +44,4 @@ class Feed
 		self.save
 		return self
 	end
-
-	def self.ordered_by_date direction = :desc
-		order = DataMapper::Query::Direction.new(items.date, direction)
-		query = all.query
-		query.instance_variable_set("@order", [order])
-		query.instance_variable_set("@links", [relationships['items'].inverse])
-		all(query)
-	end
 end
