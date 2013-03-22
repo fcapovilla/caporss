@@ -74,12 +74,26 @@
   </script>
 
   <script id='tmpl-item' type='text/template'>
-    <i class="icon-check"></i>
 
-    <% if(read){ %>
+    <% if(!read){ %>
+      <b>
+    <% } %>
+
+    <p class="pull-left">
+      <i class="icon-check"></i>
       <%= title %>
-    <% } else { %>
-      <b><%= title %></b>
+    </p>
+
+    <p class="pull-right">
+      <span class="label">
+        <%= new Date(date).toLocaleString() %>
+      </span>
+    </p>
+
+    <div class="clear"></div>
+
+    <% if(!read){ %>
+      </b>
     <% } %>
 
     <% if(open){ %>
