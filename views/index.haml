@@ -74,23 +74,26 @@
   </script>
 
   <script id='tmpl-item' type='text/template'>
+    <span class="dropdown">
+      <i class="icon icon-chevron-down dropdown-toggle" data-toggle="dropdown"></i>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= id %>-menu">
+        <li><a class="readOlderAction">Mark items older than this one read</a></li>
+      </ul>
+    </span>
+    <i class="icon-check"></i>
 
     <% if(!read){ %>
       <b>
     <% } %>
-
-    <p class="pull-left">
-      <i class="icon-check"></i>
+    <span class="title">
       <%= title %>
-    </p>
-
-    <p class="pull-right">
-      <span class="label">
-        <%= new Date(date).toLocaleString() %>
-      </span>
-    </p>
-
-    <div class="clear"></div>
+      <p class="pull-right">
+        <span class="label">
+          <%= new Date(date).toLocaleString() %>
+        </span>
+      </p>
+      <div class="clear"></div>
+    </span>
 
     <% if(!read){ %>
       </b>

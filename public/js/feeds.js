@@ -20,8 +20,9 @@ var ItemView = Backbone.View.extend({
 	tagName: "li",
 	template: _.template($('#tmpl-item').html()),
 	events: {
+		"click .readOlderAction" : "readAllOlder",
 		'click .icon-check': 'toggleRead',
-		'click': 'toggleContent'
+		'click .title': 'toggleContent'
 	},
 	initialize: function() {
 		this.listenTo(this.model, 'change', this.render);
@@ -50,7 +51,18 @@ var ItemView = Backbone.View.extend({
 		this.model.save();
 		this.model.trigger('sync');
 		return false;
-	}
+	},
+	readAllOlder: function() {
+		var cursorDate = new Date(this.model.get('date'));
+		items.collection.each(function(item) {
+			var date = new Date(item.get('date'));
+			if(date < cursorDate) {
+				item.set('read', true);
+				item.save();
+			}
+		});
+		this.model.trigger('sync');
+    }
 });
 
 var ItemListView = Backbone.View.extend({
