@@ -105,7 +105,17 @@ var Feed = Backbone.Model.extend({
 	initialize: function() {
 		this.items = new ItemCollection();
 		this.items.url = '/feed/' + this.id + '/item';
-	}
+	},
+	markRead: function() {
+		var that = this;
+		$.ajax({
+			method: 'PUT',
+			url: 'read/feed/' + this.id,
+			success: function() {
+				that.set('unread_count', 0);
+			}
+		});
+    }
 });
 
 var FeedCollection = Backbone.Collection.extend({
@@ -117,6 +127,7 @@ var FeedView = Backbone.View.extend({
 	tagName: "li",
 	template: _.template($('#tmpl-feed').html()),
 	events: {
+		"click .markFeedReadAction" : "markFeedRead",
 		"click .syncFeedAction" : "syncFeed",
 		"click .deleteFeedAction" : "deleteFeed",
 		"click .feedName" : "selectFeed"
@@ -149,6 +160,9 @@ var FeedView = Backbone.View.extend({
 				that.update();
 			}
 		});
+    },
+	markFeedRead: function() {
+		this.model.markRead();
     }
 });
 
@@ -177,6 +191,7 @@ var FolderView = Backbone.View.extend({
 	tagName: "li",
 	template: _.template($('#tmpl-folder').html()),
 	events: {
+		"click .markFolderReadAction" : "markFolderRead",
 		"click .syncFolderAction" : "syncFolder",
 		"click .deleteFolderAction" : "deleteFolder",
 		'click .folder-icon' : 'toggleFolderOpen'
@@ -220,6 +235,11 @@ var FolderView = Backbone.View.extend({
 			success: function() {
 				that.model.feeds.fetch();
 			}
+		});
+    },
+	markFolderRead: function() {
+		this.model.feeds.each(function(feed) {
+			feed.markRead();
 		});
     }
 });

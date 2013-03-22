@@ -94,13 +94,14 @@ get '/folder/:id' do |id|
 end
 
 post '/folder' do
-    Folder.create(params)
+    Folder.create(params).to_json
 end
 
 put '/folder/:id' do |id|
     folder = Folder.get(id)
 	folder.attributes = JSON.parse(request.body.string, :symbolize_name => true)
 	folder.save
+	folder.to_json
 end
 
 delete '/folder/:id' do |id|
@@ -138,13 +139,14 @@ get '/folder/*/feed/:id' do |x,id|
 end
 
 post '/feed' do
-    Feed.create(params)
+    Feed.create(params).to_json
 end
 
 put '/feed/:id' do |id|
     feed = Feed.get(id)
 	feed.attributes = JSON.parse(request.body.string, :symbolize_name => true)
 	feed.save
+	feed.to_json
 end
 
 delete '/feed/:id' do |id|
@@ -164,6 +166,15 @@ get '/sync/feed/:id' do |id|
 	return 'done'
 end
 
+put '/read/feed/:id' do |id|
+	feed = Feed.get(id)
+	feed.items.each do |item|
+		item.read = true
+	end
+	feed.unread_count = 0
+	feed.save
+end
+
 
 # Items
 
@@ -180,7 +191,7 @@ get '/feed/*/item/:id' do |x,id|
 end
 
 post '/item' do
-    Item.create(params)
+    Item.create(params).to_json
 end
 
 put '/item/:id' do |id|
@@ -188,6 +199,7 @@ put '/item/:id' do |id|
 	item.attributes = JSON.parse(request.body.string, :symbolize_name => true)
 	item.save
 	item.feed.update_unread_count!
+	item.to_json
 end
 
 put '/feed/*/item/:id' do |x,id|
@@ -195,6 +207,7 @@ put '/feed/*/item/:id' do |x,id|
 	item.attributes = JSON.parse(request.body.string, :symbolize_name => true)
 	item.save
 	item.feed.update_unread_count!
+	item.to_json
 end
 
 delete '/item/:id' do |id|
