@@ -12,10 +12,14 @@ class Feed
 
 	def sync!
 		feed = Feedzirra::Feed.fetch_and_parse(self.url)
-		update_feed!(feed) unless feed.kind_of?(Fixnum)
+		update_feed!(feed) unless feed.kind_of?(Fixnum) or feed.nil?
 	end
 
 	def update_feed!(feed)
+		if feed.title and feed.title != self.title
+			self.title = feed.title
+		end
+
 		feed.entries.each do |entry|
 			if entry.published > self.last_update
 				item = Item.new(
@@ -27,6 +31,7 @@ class Feed
 				self.items << item
 			end
 		end
+
 		self.save
 
 		self.last_update = Time.now

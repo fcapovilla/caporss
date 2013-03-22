@@ -3,6 +3,7 @@ require 'sinatra'
 require 'haml'
 require 'sass'
 require 'json'
+require 'open-uri'
 
 require_relative 'models/init'
 
@@ -61,6 +62,24 @@ post '/opml_upload' do
 	end
 
 	redirect '/'
+end
+
+# Subscription
+
+post '/subscribe' do
+	params[:folder] = 'Feeds' if params[:folder].empty?
+	folder = Folder.first_or_create(:title => params[:folder])
+	feed = Feed.new(
+		:title => params[:url],
+		:url => params[:url],
+		:last_update => DateTime.new(2000,1,1)
+	)
+	folder.feeds << feed
+	folder.save
+
+	feed.sync!
+
+	return 'done'
 end
 
 

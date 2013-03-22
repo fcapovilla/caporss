@@ -4,13 +4,15 @@
       %i(class="icon-refresh")
     %button(class="btn" href="#opmlModal" role="button" data-toggle="modal")
       %i(class="icon-upload")
+    %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal")
+      %i(class="icon-plus")
   %ul(id="feed-list" class="nav nav-list")
 .item-list
   %ul(id="item-list" class="nav nav-list")
 
 -# OPML Upload Modal Dialog
 
-%form(class="upload-form well" method="post" enctype="multipart/form-data" action="/opml_upload")
+%form(class="upload-form" method="post" enctype="multipart/form-data" action="/opml_upload")
   %div(class="modal hide fade" id="opmlModal" tabindex="-1" role="dialog" aria-labelledby="opmlModal" aria-hidden="true")
     .modal-header
       OPML Upload
@@ -19,10 +21,26 @@
     .modal-body
       %input(type="file" name="file" aria-hidden="true")
     .modal-footer
-      %button(type="button" class="btn" data-dismiss="modal" aria-hidden="true")
-        Close
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         Upload OPML
+
+-# Subscription form
+
+%div(class="modal hide fade" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModal" aria-hidden="true")
+  .modal-header
+    Subscribe
+    %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+      x
+  .modal-body
+    %label
+      URL :
+    %input(class="input-block-level" type="text" id="subscriptionUrl" aria-hidden="true")
+    %label
+      Folder :
+    %input(class="input-block-level" type="text" id="subscriptionFolder" aria-hidden="true")
+  .modal-footer
+    %button(type="button" id="subscribeButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
+      Subscribe
 
 -# Underscore Templates
 

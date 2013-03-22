@@ -247,4 +247,18 @@ $('#syncButton').click(function() {
 	});
 });
 
+$('#subscribeButton').click(function() {
+	$.ajax({
+		url: '/subscribe',
+		method: 'POST',
+		data: {
+			url: $('#subscriptionUrl').val(),
+			folder: $('#subscriptionFolder').val()
+		},
+		success: function() {
+			folderList.collection.fetch();
+		}
+	});
+});
+
 });
