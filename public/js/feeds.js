@@ -144,10 +144,10 @@ var FeedView = Backbone.View.extend({
 	},
 	selectFeed: function() {
 		items.setCollection(this.model.items);
-		this.$el.addClass('active');
 		if(currentFeed !== null) {
 			currentFeed.removeClass('active');
 		}
+		this.$el.addClass('active');
 		currentFeed = this.$el;
 	},
 	update: function() {
