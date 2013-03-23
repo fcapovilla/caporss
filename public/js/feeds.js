@@ -330,7 +330,7 @@ $('#editFeedButton').click(function() {
 
 $(document).ajaxStart(function() {
 	$('#spinner').removeClass('invisible').addClass('icon-spin');
-}).ajaxComplete(function() {
+}).ajaxStop(function() {
 	$('#spinner').removeClass('icon-spin').addClass('invisible');
 });
 

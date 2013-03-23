@@ -9,6 +9,7 @@
 	overflow-y: scroll;
 	overflow-x: hidden;
 	#feed-list {
+		padding-top: 50px;
 		width: 500px;
 	}
 	.folder-icon,
@@ -16,6 +17,13 @@
 	.dropdown,
 	.folderTitle {
 		cursor: pointer;
+	}
+	.navbar.affix {
+		z-index: 100;
+		.navbar-inner {
+			padding-left: 5px;
+			padding-right: 5px;
+		}
 	}
 }
 
@@ -47,3 +55,4 @@
 .clear {
 	clear: both;
 }
+

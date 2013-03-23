@@ -1,12 +1,15 @@
-.feed-list.well.well-small
-  .btn-group
-    %button(class="btn" id="syncButton")
-      %i(class="icon-refresh")
-    %button(class="btn" href="#opmlModal" role="button" data-toggle="modal")
-      %i(class="icon-upload")
-    %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal")
-      %i(class="icon-plus")
-  %i(id="spinner" class="icon-spinner icon-large invisible")
+.feed-list.well.well-small.container
+  .navbar.affix
+    .navbar-inner
+      .btn-group
+        %button(class="btn btn-inverse")
+          %i(id="spinner" class="icon-spinner icon-large invisible")
+        %button(class="btn" id="syncButton")
+          %i(class="icon-refresh")
+        %button(class="btn" href="#opmlModal" role="button" data-toggle="modal")
+          %i(class="icon-upload")
+        %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal")
+          %i(class="icon-plus")
   %ul(id="feed-list" class="nav nav-list")
 .item-list
   %ul(id="item-list" class="nav nav-list")
