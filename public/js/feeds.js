@@ -21,7 +21,7 @@ var ItemView = Backbone.View.extend({
 	template: _.template($('#tmpl-item').html()),
 	events: {
 		"click .readOlderAction" : "readAllOlder",
-		'click .icon-check': 'toggleRead',
+		'click .readUnreadIcon': 'toggleRead',
 		'click .title': 'toggleContent'
 	},
 	initialize: function() {

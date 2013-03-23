@@ -67,10 +67,12 @@
 
 :plain
   <script id='tmpl-folder' type='text/template'>
-    <i class="folder-icon <% if(open){ %>icon-minus<% }else{ %>icon-plus<% } %>"></i>
-    <%= title %>
+    <i class="folder-icon <% if(open){ %>icon-folder-open<% }else{ %>icon-folder-close<% } %>"></i>
+    <span class="folderTitle">
+      <%= title %>
+    </span>
     <span class="dropdown">
-      <i class="icon icon-chevron-down dropdown-toggle" data-toggle="dropdown"></i>
+      <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
       <ul class="dropdown-menu" role="menu" aria-labelledby="folder-<%= id %>-menu">
         <li><a class="markFolderReadAction">Mark all read</a></li>
         <li><a class="syncFolderAction">Sync</a></li>
@@ -81,7 +83,7 @@
 
   <script id='tmpl-feed' type='text/template'>
     <span class="dropdown">
-      <i class="icon icon-chevron-down dropdown-toggle" data-toggle="dropdown"></i>
+      <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
       <ul class="dropdown-menu" role="menu" aria-labelledby="feed-<%= id %>-menu">
         <li><a class="markFeedReadAction">Mark all read</a></li>
         <li><a class="syncFeedAction">Sync</a></li>
@@ -99,12 +101,12 @@
 
   <script id='tmpl-item' type='text/template'>
     <span class="dropdown">
-      <i class="icon icon-chevron-down dropdown-toggle" data-toggle="dropdown"></i>
+      <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
       <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= id %>-menu">
         <li><a class="readOlderAction">Mark older items read</a></li>
       </ul>
     </span>
-    <i class="icon-check"></i>
+    <i class="readUnreadIcon icon-circle<% if(read){ %>-blank<% } %>"></i>
 
     <% if(!read){ %>
       <b>

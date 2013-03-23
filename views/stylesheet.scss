@@ -8,11 +8,13 @@
 	height: 100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	cursor: default;
 	#feed-list {
 		width: 500px;
 	}
-	.folder-icon {
+	.folder-icon,
+	.feedName,
+	.dropdown,
+	.folderTitle {
 		cursor: pointer;
 	}
 }
