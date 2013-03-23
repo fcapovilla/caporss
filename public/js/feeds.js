@@ -144,6 +144,11 @@ var FeedView = Backbone.View.extend({
 	},
 	selectFeed: function() {
 		items.setCollection(this.model.items);
+		this.$el.addClass('active');
+		if(currentFeed !== null) {
+			currentFeed.removeClass('active');
+		}
+		currentFeed = this.$el;
 	},
 	update: function() {
 		this.model.fetch();
@@ -273,6 +278,7 @@ var FolderListView = Backbone.View.extend({
 
 var items = new ItemListView();
 var folderList = new FolderListView({collection: new FolderCollection()});
+var currentFeed = null;
 
 
 // Buttons and dialogs actions
@@ -316,10 +322,10 @@ $('#editFeedButton').click(function() {
 	folderList.collection.each(function(folder) {
 		var feed = folder.feeds.get(feedId);
 		if(feed) {
-			feed.set({
+			feed.save({
 				url: feedUrl,
 				folder: feedFolder
-			}).save(null, {
+			},{
 				success: function() {
 					folderList.collection.fetch();
 				}
