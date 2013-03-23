@@ -129,6 +129,7 @@ var FeedView = Backbone.View.extend({
 	events: {
 		"click .markFeedReadAction" : "markFeedRead",
 		"click .syncFeedAction" : "syncFeed",
+		"click .editFeedAction" : "showFeedEditDialog",
 		"click .deleteFeedAction" : "deleteFeed",
 		"click .feedName" : "selectFeed"
 	},
@@ -163,7 +164,14 @@ var FeedView = Backbone.View.extend({
     },
 	markFeedRead: function() {
 		this.model.markRead();
-    }
+    },
+	showFeedEditDialog: function() {
+		var dialog = $('#editFeedModal');
+		dialog.find('#feedId').val(this.model.id);
+		dialog.find('#feedFolder').val(folderList.collection.get(this.model.get('folder_id')).get('title'));
+		dialog.find('#feedUrl').val(this.model.get('url'));
+		dialog.modal();
+	}
 });
 
 
@@ -266,6 +274,9 @@ var FolderListView = Backbone.View.extend({
 var items = new ItemListView();
 var folderList = new FolderListView({collection: new FolderCollection()});
 
+
+// Buttons and dialogs actions
+
 $('#syncButton').click(function() {
 	var icon = $(this).children('i');
 	icon.attr('class', 'icon-time');
@@ -292,6 +303,27 @@ $('#subscribeButton').click(function() {
 		},
 		success: function() {
 			folderList.collection.fetch();
+		}
+	});
+});
+
+$('#editFeedButton').click(function() {
+	var dialog = $('#editFeedModal');
+	var feedId = dialog.find('#feedId').val();
+	var feedFolder = dialog.find('#feedFolder').val();
+	var feedUrl = dialog.find('#feedUrl').val();
+
+	folderList.collection.each(function(folder) {
+		var feed = folder.feeds.get(feedId);
+		if(feed) {
+			feed.set({
+				url: feedUrl,
+				folder: feedFolder
+			}).save(null, {
+				success: function() {
+					folderList.collection.fetch();
+				}
+			});
 		}
 	});
 });

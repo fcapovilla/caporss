@@ -99,7 +99,7 @@ end
 
 put '/folder/:id' do |id|
     folder = Folder.get(id)
-	folder.attributes = JSON.parse(request.body.string, :symbolize_name => true)
+	folder.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	folder.save
 	folder.to_json
 end
@@ -142,9 +142,18 @@ post '/feed' do
     Feed.create(params).to_json
 end
 
-put '/feed/:id' do |id|
+put '/folder/*/feed/:id' do |x,id|
+	attributes = JSON.parse(request.body.string, :symbolize_names => true)
+	if attributes.has_key?(:folder)
+		folder = Folder.first_or_create(:title => attributes[:folder])
+		folder.save
+		attributes.delete(:folder_id)
+		attributes.delete(:folder)
+		attributes[:folder_id] = folder.id
+	end
+
     feed = Feed.get(id)
-	feed.attributes = JSON.parse(request.body.string, :symbolize_name => true)
+	feed.attributes = attributes
 	feed.save
 	feed.to_json
 end
@@ -196,7 +205,7 @@ end
 
 put '/item/:id' do |id|
     item = Item.get(id)
-	item.attributes = JSON.parse(request.body.string, :symbolize_name => true)
+	item.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	item.save
 	item.feed.update_unread_count!
 	item.to_json
@@ -204,7 +213,7 @@ end
 
 put '/feed/*/item/:id' do |x,id|
     item = Item.get(id)
-	item.attributes = JSON.parse(request.body.string, :symbolize_name => true)
+	item.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	item.save
 	item.feed.update_unread_count!
 	item.to_json

@@ -42,6 +42,26 @@
     %button(type="button" id="subscribeButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
       Subscribe
 
+-# Edit feed form
+
+%div(class="modal hide fade" id="editFeedModal" tabindex="-1" role="dialog" aria-labelledby="editFeedModal" aria-hidden="true")
+  .modal-header
+    Edit feed
+    %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+      x
+  .modal-body
+    %label
+      URL :
+    %input(class="input-block-level" type="text" id="feedUrl" aria-hidden="true")
+    %label
+      Folder :
+    %input(class="input-block-level" type="text" id="feedFolder" aria-hidden="true")
+    %input(type="hidden" id="feedId" value="")
+  .modal-footer
+    %button(type="button" id="editFeedButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
+      Subscribe
+
+
 -# Underscore Templates
 
 :plain
@@ -53,7 +73,7 @@
       <ul class="dropdown-menu" role="menu" aria-labelledby="folder-<%= id %>-menu">
         <li><a class="markFolderReadAction">Mark all read</a></li>
         <li><a class="syncFolderAction">Sync</a></li>
-        <li><a class="deleteFolderAction">Supprimer</a></li>
+        <li><a class="deleteFolderAction">Delete</a></li>
       </ul>
     </span>
   </script>
@@ -64,7 +84,8 @@
       <ul class="dropdown-menu" role="menu" aria-labelledby="feed-<%= id %>-menu">
         <li><a class="markFeedReadAction">Mark all read</a></li>
         <li><a class="syncFeedAction">Sync</a></li>
-        <li><a class="deleteFeedAction">Supprimer</a></li>
+        <li><a class="editFeedAction">Edit</a></li>
+        <li><a class="deleteFeedAction">Delete</a></li>
       </ul>
     </span>
     <span class="feedName">
