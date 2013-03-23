@@ -37,6 +37,7 @@ var ItemView = Backbone.View.extend({
 	toggleContent: function() {
 		if(this.model.get('open')) {
 			this.model.set('open', false);
+			items.cursor = null;
 		}
 		else {
 			items.closeAll();
@@ -44,6 +45,7 @@ var ItemView = Backbone.View.extend({
 			this.model.set('read', true);
 			this.model.save();
 			this.model.trigger('sync');
+			items.cursor = this.model.id;
 		}
 	},
 	close: function() {
@@ -71,6 +73,9 @@ var ItemView = Backbone.View.extend({
 var ItemListView = Backbone.View.extend({
 	el: $('#item-list'),
 	initialize: function() {
+		this.cursor = null;
+		_.bindAll(this);
+		$(document).on('keyup', this.moveCursor);
 	},
 	addOne: function(item) {
 		var view = new ItemView({model: item});
@@ -95,6 +100,27 @@ var ItemListView = Backbone.View.extend({
 		this.collection.each(function(item) {
 			item.set('open', false);
 		});
+	},
+	moveCursor: function(e) {
+		if(this.cursor != null) {
+			var index = this.collection.indexOf(this.collection.get(this.cursor));
+			console.log(index);
+			var item = null;
+			if(e.keyCode == 74) {
+				item = this.collection.at(index+1);
+			}
+			else if(e.keyCode == 75) {
+				item = this.collection.at(index-1);
+			}
+			if(item != null) {
+				this.closeAll();
+				item.set('open', true);
+				item.set('read', true);
+				item.save();
+				item.trigger('sync');
+				this.cursor = item.id;
+			}
+		}
 	}
 });
 
