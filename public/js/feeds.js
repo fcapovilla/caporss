@@ -104,7 +104,6 @@ var ItemListView = Backbone.View.extend({
 	moveCursor: function(e) {
 		if(this.cursor != null) {
 			var index = this.collection.indexOf(this.collection.get(this.cursor));
-			console.log(index);
 			var item = null;
 			if(e.keyCode == 74) {
 				item = this.collection.at(index+1);
