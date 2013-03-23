@@ -236,6 +236,9 @@ var FolderView = Backbone.View.extend({
 	},
 	toggleFolderOpen: function() {
 		this.model.toggle();
+		if(this.model.get('open')) {
+			this.addAll();
+		}
 	},
 	deleteFolder: function() {
 		this.model.destroy();
