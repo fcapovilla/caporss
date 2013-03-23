@@ -7,6 +7,16 @@ require 'open-uri'
 
 require_relative 'models/init'
 
+use Rack::Auth::Basic, "Restricted Area" do |username, password|
+  [username, password] == ['caposite', 'r5t6y7u8']
+end
+
+configure :production do
+	# Force SSL in production
+	require 'rack/ssl-enforcer'
+	use Rack::SslEnforcer
+end
+
 before do
     content_type :html, 'charset' => 'utf-8'
 end
