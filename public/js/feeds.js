@@ -82,14 +82,14 @@ var ItemListView = Backbone.View.extend({
 	},
 	setCollection: function(collection) {
 		this.stopListening(this.collection);
-		this.$el.empty();
+		//this.$el.empty();
 
 		this.collection = collection;
 
 		this.listenTo(this.collection, 'add', this.addOne);
 		this.listenTo(this.collection, 'reset', this.addAll);
 
-		this.collection.fetch();
+		this.collection.fetch({reset: true});
 	},
 	closeAll: function() {
 		this.collection.each(function(item) {
