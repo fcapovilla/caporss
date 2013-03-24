@@ -9,20 +9,22 @@ require 'open-uri'
 
 require_relative 'models/init'
 
+
 configure :production do
 	# Force SSL in production
 	require 'rack/ssl-enforcer'
 	use Rack::SslEnforcer
 end
 
+
 use Rack::Auth::Basic, "Access restricted" do |username, password|
   [username, password] == ['caposite', 'r5t6y7u8']
 end
 
+
 before do
     content_type :html, 'charset' => 'utf-8'
 end
-
 
 get '/stylesheet.css' do
     content_type :css, 'charset' => 'utf-8'
@@ -129,6 +131,10 @@ get '/folder/:id' do |id|
     Folder.get(id).to_json
 end
 
+get '/folder/:id/feed' do |id|
+	Folder.get(id).feeds.to_json
+end
+
 # post '/folder' do
 
 put '/folder/:id' do |id|
@@ -142,10 +148,6 @@ delete '/folder/:id' do |id|
 	Folder.get(id).destroy
 end
 
-get '/folder/:id/feed' do |id|
-	Folder.get(id).feeds.to_json
-end
-
 
 # Feeds
 
@@ -155,6 +157,10 @@ end
 
 get '/feed/:id', '/folder/*/feed/:id' do
     Feed.get(params[:id]).to_json
+end
+
+get '/feed/:id/item' do |id|
+	Feed.get(id).items(:order => [:date.desc]).to_json
 end
 
 #post '/feed' do
@@ -175,14 +181,7 @@ put '/feed/:id', '/folder/*/feed/:id' do
 	feed.to_json
 end
 
-delete '/feed/:id', '/folder/*/feed/:id' do
-	Feed.get(params[:id]).destroy
-end
-
-get '/feed/:id/item' do |id|
-	Feed.get(id).items(:order => [:date.desc]).to_json
-end
-
+# Mark all items in this feed as "read"
 put '/read/feed/:id' do |id|
 	feed = Feed.get(id)
 	feed.items.each do |item|
@@ -190,6 +189,10 @@ put '/read/feed/:id' do |id|
 	end
 	feed.unread_count = 0
 	feed.save
+end
+
+delete '/feed/:id', '/folder/*/feed/:id' do
+	Feed.get(params[:id]).destroy
 end
 
 
