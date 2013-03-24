@@ -43,9 +43,6 @@ body {
 		}
 		padding: 0 5px;
 	}
-	#item-list {
-		padding: 0;
-	}
 }
 
 .upload-form {
@@ -54,11 +51,29 @@ body {
 }
 
 #item-list {
+	padding: 0;
 	>li {
 		border-bottom: 1px solid lightgrey;
 	}
 	p {
 		margin: 1px;
+	}
+}
+
+.item-container {
+	position: relative;
+	.item-icons {
+		position: absolute;
+	}
+	.item-date {
+		float: right;
+		text-align: right;
+	}
+	.item-title {
+		float: none;
+		overflow: hidden;
+		margin-left: 40px;
+		height: 20px;
 	}
 }
 

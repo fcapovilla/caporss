@@ -112,36 +112,37 @@
   </script>
 
   <script id='tmpl-item' type='text/template'>
-    <span class="dropdown">
-      <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= id %>-menu">
-        <li><a class="readOlderAction">Mark older items read</a></li>
-      </ul>
-    </span>
-    <i class="readUnreadIcon icon-circle<% if(read){ %>-blank<% } %>"></i>
+    <div class="item-container">
+      <div class="item-icons">
+        <span class="dropdown">
+          <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= id %>-menu">
+            <li><a class="readOlderAction">Mark older items read</a></li>
+          </ul>
+        </span>
+        <i class="readUnreadIcon icon-circle<% if(read){ %>-blank<% } %>"></i>
+      </div>
 
-    <% if(!read){ %>
-      <b>
-    <% } %>
-    <span class="title">
-      <%= title %>
-      <p class="pull-right">
+      <div class="item-date">
         <span class="label">
           <%= new Date(date).toLocaleString() %>
         </span>
-      </p>
-      <div class="clear"></div>
-    </span>
-
-    <% if(!read){ %>
-      </b>
-    <% } %>
-
-    <% if(open){ %>
-      <div class="well item-content">
-        <a href="<%= url %>" target="_blank"><%= title %></a>
-        <br>
-        <%= content %>
       </div>
-    <% } %>
+
+      <div class="item-title">
+        <% if(!read){ %>
+          <b><%= title %></b>
+        <% }else{ %>
+          <%= title %>
+        <% } %>
+      </div>
+
+      <% if(open){ %>
+        <div class="well item-content">
+          <a href="<%= url %>" target="_blank"><%= title %></a>
+          <br>
+          <%= content %>
+        </div>
+      <% } %>
+    </div>
   </script>
