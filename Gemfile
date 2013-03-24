@@ -5,6 +5,7 @@ gem 'sinatra-contrib'
 gem 'haml'
 gem 'sass'
 gem 'datamapper'
+gem 'dm-is-list'
 gem 'feedzirra'
 gem 'dm-sqlite-adapter', :group => :development
 gem 'dm-postgres-adapter', :group => :production

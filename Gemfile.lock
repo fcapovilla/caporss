@@ -21,6 +21,8 @@ GEM
       dm-transactions (~> 1.2.0)
       dm-types (~> 1.2.0)
       dm-validations (~> 1.2.0)
+    dm-adjust (1.2.0)
+      dm-core (~> 1.2.0)
     dm-aggregates (1.2.0)
       dm-core (~> 1.2.0)
     dm-constraints (1.2.0)
@@ -30,6 +32,8 @@ GEM
     dm-do-adapter (1.2.0)
       data_objects (~> 0.10.6)
       dm-core (~> 1.2.0)
+    dm-is-list (1.2.0)
+      dm-adjust (~> 1.2.0)
     dm-migrations (1.2.0)
       dm-core (~> 1.2.0)
     dm-postgres-adapter (1.2.0)
@@ -119,6 +123,7 @@ PLATFORMS
 
 DEPENDENCIES
   datamapper
+  dm-is-list
   dm-postgres-adapter
   dm-sqlite-adapter
   feedzirra

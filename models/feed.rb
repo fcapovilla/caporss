@@ -2,13 +2,16 @@ require 'feedzirra'
 
 class Feed
 	include DataMapper::Resource
+
 	property :id, Serial
 	property :title, String, :length => 1..100
 	property :url, String, :length => 1..1000
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
+
 	belongs_to :folder
 	has n, :items, :constraint => :destroy
+	is :list, :scope => :folder_id
 
 	def sync!
 		feed = Feedzirra::Feed.fetch_and_parse(self.url)
