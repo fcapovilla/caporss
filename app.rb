@@ -129,9 +129,7 @@ get '/folder/:id' do |id|
     Folder.get(id).to_json
 end
 
-post '/folder' do
-    Folder.create(params).to_json
-end
+# post '/folder' do
 
 put '/folder/:id' do |id|
     folder = Folder.get(id)
@@ -205,9 +203,7 @@ get '/item/:id', '/feed/*/item/:id' do
     Item.get(params[:id]).to_json
 end
 
-post '/item' do
-    Item.create(params).to_json
-end
+#post '/item' do
 
 put '/item/:id', '/feed/*/item/:id' do
     item = Item.get(params[:id])
