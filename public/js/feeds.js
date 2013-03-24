@@ -315,7 +315,7 @@ $('#syncButton').click(function() {
 	var icon = $(this).children('i');
 	icon.attr('class', 'icon-time');
 	$.ajax({
-		url: '/syncAll',
+		url: '/sync/all',
 		method: 'GET',
 		success: function() {
 			folderList.collection.fetch();
