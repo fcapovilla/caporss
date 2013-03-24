@@ -1,5 +1,7 @@
 # encoding: utf-8
 require 'sinatra'
+require 'sinatra/multi_route'
+require 'sinatra/namespace'
 require 'haml'
 require 'sass'
 require 'json'
@@ -13,13 +15,14 @@ configure :production do
 	use Rack::SslEnforcer
 end
 
-use Rack::Auth::Basic, "Restricted Area" do |username, password|
+use Rack::Auth::Basic, "Access restricted" do |username, password|
   [username, password] == ['caposite', 'r5t6y7u8']
 end
 
 before do
     content_type :html, 'charset' => 'utf-8'
 end
+
 
 get '/stylesheet.css' do
     content_type :css, 'charset' => 'utf-8'
@@ -30,16 +33,38 @@ get '/' do
     haml :index
 end
 
-get '/syncAll' do
-	urls = Feed.all.map{ |feed| feed.url }
-	feeds = Feedzirra::Feed.fetch_and_parse(urls)
-	feeds.each do |url, xml|
-		next if xml.kind_of?(Fixnum)
-		feed = Feed.first(:url => url)
-		feed.update_feed!(xml) if feed
+
+# Sync
+
+namespace '/sync' do
+	get '/all' do
+		urls = Feed.all.map{ |feed| feed.url }
+		feeds = Feedzirra::Feed.fetch_and_parse(urls)
+		feeds.each do |url, xml|
+			next if xml.kind_of?(Fixnum)
+			feed = Feed.first(:url => url)
+			feed.update_feed!(xml) if feed
+		end
+		return 'done'
 	end
-	return 'done'
+
+	get '/folder/:id' do |id|
+		urls = Folder.get(id).feeds.map{ |feed| feed.url }
+		feeds = Feedzirra::Feed.fetch_and_parse(urls)
+		feeds.each do |url, xml|
+			next if xml.kind_of?(Fixnum)
+			feed = Feed.first(:url => url)
+			feed.update_feed!(xml) if feed
+		end
+		return 'done'
+	end
+
+	get '/feed/:id' do |id|
+		Feed.get(id).sync!
+		return 'done'
+	end
 end
+
 
 # Import OPML Files
 
@@ -73,6 +98,7 @@ post '/opml_upload' do
 
 	redirect '/'
 end
+
 
 # Subscription
 
@@ -122,17 +148,6 @@ get '/folder/:id/feed' do |id|
 	Folder.get(id).feeds.to_json
 end
 
-get '/sync/folder/:id' do |id|
-	urls = Folder.get(id).feeds.map{ |feed| feed.url }
-	feeds = Feedzirra::Feed.fetch_and_parse(urls)
-	feeds.each do |url, xml|
-		next if xml.kind_of?(Fixnum)
-		feed = Feed.first(:url => url)
-		feed.update_feed!(xml) if feed
-	end
-	return 'done'
-end
-
 
 # Feeds
 
@@ -140,19 +155,13 @@ get '/feed' do
     Feed.all.to_json
 end
 
-get '/feed/:id' do |id|
-    Feed.get(id).to_json
+get '/feed/:id', '/folder/*/feed/:id' do
+    Feed.get(params[:id]).to_json
 end
 
-get '/folder/*/feed/:id' do |x,id|
-    Feed.get(id).to_json
-end
+#post '/feed' do
 
-post '/feed' do
-    Feed.create(params).to_json
-end
-
-put '/folder/*/feed/:id' do |x,id|
+put '/feed/:id', '/folder/*/feed/:id' do
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	if attributes.has_key?(:folder)
 		folder = Folder.first_or_create(:title => attributes[:folder])
@@ -162,27 +171,18 @@ put '/folder/*/feed/:id' do |x,id|
 		attributes[:folder_id] = folder.id
 	end
 
-    feed = Feed.get(id)
+    feed = Feed.get(params[:id])
 	feed.attributes = attributes
 	feed.save
 	feed.to_json
 end
 
-delete '/feed/:id' do |id|
-	Feed.get(id).destroy
-end
-
-delete '/folder/*/feed/:id' do |x,id|
-	Feed.get(id).destroy
+delete '/feed/:id', '/folder/*/feed/:id' do
+	Feed.get(params[:id]).destroy
 end
 
 get '/feed/:id/item' do |id|
 	Feed.get(id).items(:order => [:date.desc]).to_json
-end
-
-get '/sync/feed/:id' do |id|
-	Feed.get(id).sync!
-	return 'done'
 end
 
 put '/read/feed/:id' do |id|
@@ -201,28 +201,16 @@ get '/item' do
     Item.all(:order => [:date.desc]).to_json
 end
 
-get '/item/:id' do |id|
-    Item.get(id).to_json
-end
-
-get '/feed/*/item/:id' do |x,id|
-	Item.get(id).to_json
+get '/item/:id', '/feed/*/item/:id' do
+    Item.get(params[:id]).to_json
 end
 
 post '/item' do
     Item.create(params).to_json
 end
 
-put '/item/:id' do |id|
-    item = Item.get(id)
-	item.attributes = JSON.parse(request.body.string, :symbolize_names => true)
-	item.save
-	item.feed.update_unread_count!
-	item.to_json
-end
-
-put '/feed/*/item/:id' do |x,id|
-    item = Item.get(id)
+put '/item/:id', '/feed/*/item/:id' do
+    item = Item.get(params[:id])
 	item.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	item.save
 	item.feed.update_unread_count!
