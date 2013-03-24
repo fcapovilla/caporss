@@ -165,6 +165,7 @@ var FeedCollection = Backbone.Collection.extend({
 
 var FeedView = Backbone.View.extend({
 	tagName: 'li',
+	className: 'feed',
 	template: _.template($('#tmpl-feed').html()),
 	events: {
 		'click .markFeedReadAction' : 'markFeedRead',
