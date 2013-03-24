@@ -140,6 +140,16 @@ var Feed = Backbone.Model.extend({
 				that.set('unread_count', 0);
 			}
 		});
+    },
+	markUnread: function() {
+		var that = this;
+		$.ajax({
+			method: 'PUT',
+			url: 'unread/feed/' + this.id,
+			success: function() {
+				that.fetch();
+			}
+		});
     }
 });
 
@@ -153,6 +163,7 @@ var FeedView = Backbone.View.extend({
 	template: _.template($('#tmpl-feed').html()),
 	events: {
 		"click .markFeedReadAction" : "markFeedRead",
+		"click .markFeedUnreadAction" : "markFeedUnread",
 		"click .syncFeedAction" : "syncFeed",
 		"click .editFeedAction" : "showFeedEditDialog",
 		"click .deleteFeedAction" : "deleteFeed",
@@ -195,6 +206,9 @@ var FeedView = Backbone.View.extend({
 	markFeedRead: function() {
 		this.model.markRead();
     },
+	markFeedUnread: function() {
+		this.model.markUnread();
+    },
 	showFeedEditDialog: function() {
 		var dialog = $('#editFeedModal');
 		dialog.find('#feedId').val(this.model.id);
@@ -230,6 +244,7 @@ var FolderView = Backbone.View.extend({
 	template: _.template($('#tmpl-folder').html()),
 	events: {
 		"click .markFolderReadAction" : "markFolderRead",
+		"click .markFolderUnreadAction" : "markFolderUnread",
 		"click .syncFolderAction" : "syncFolder",
 		"click .deleteFolderAction" : "deleteFolder",
 		'click .folder-icon' : 'toggleFolderOpen'
@@ -281,6 +296,11 @@ var FolderView = Backbone.View.extend({
 	markFolderRead: function() {
 		this.model.feeds.each(function(feed) {
 			feed.markRead();
+		});
+    },
+	markFolderUnread: function() {
+		this.model.feeds.each(function(feed) {
+			feed.markUnread();
 		});
     }
 });

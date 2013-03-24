@@ -191,6 +191,16 @@ put '/read/feed/:id' do |id|
 	feed.save
 end
 
+# Mark all items in this feed as "unread"
+put '/unread/feed/:id' do |id|
+	feed = Feed.get(id)
+	feed.items.each do |item|
+		item.read = false
+	end
+	feed.save
+	feed.update_unread_count!
+end
+
 delete '/feed/:id', '/folder/*/feed/:id' do
 	Feed.get(params[:id]).destroy
 end
