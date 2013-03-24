@@ -72,7 +72,12 @@
   <script id='tmpl-folder' type='text/template'>
     <i class="folder-icon <% if(open){ %>icon-folder-open<% }else{ %>icon-folder-close<% } %>"></i>
     <span class="folderTitle">
-      <%= title %>
+      <% if(unread_count > 0) { %>
+        <b><%= title %></b>
+        <span class="badge badge-info"><%= unread_count %></span>
+      <% }else{ %>
+        <%= title %>
+      <% } %>
     </span>
     <span class="dropdown">
       <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
@@ -97,9 +102,11 @@
       </ul>
     </span>
     <span class="feedName">
-      <%= title %>
       <% if(unread_count > 0) { %>
+        <b><%= title %></b>
         <span class="badge badge-info"><%= unread_count %></span>
+      <% }else{ %>
+        <%= title %>
       <% } %>
     </span>
   </script>

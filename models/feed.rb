@@ -45,6 +45,7 @@ class Feed
 	def update_unread_count!
 		self.unread_count = self.items.all(:read => false).count
 		self.save
+		self.folder.update_unread_count!
 		return self
 	end
 end

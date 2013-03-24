@@ -2,7 +2,7 @@ $(function() {
 
 // Items
 var Item = Backbone.Model.extend({
-	idAttribute: "id",
+	idAttribute: 'id',
 	initialize: function() {
 		this.set('open', false);
 	},
@@ -17,12 +17,13 @@ var ItemCollection = Backbone.Collection.extend({
 });
 
 var ItemView = Backbone.View.extend({
-	tagName: "li",
+	tagName: 'li',
 	template: _.template($('#tmpl-item').html()),
 	events: {
-		"click .readOlderAction" : "readAllOlder",
+		'click .readOlderAction' : 'readAllOlder',
 		'click .readUnreadIcon': 'toggleRead',
-		'click .title': 'toggleContent'
+		'click .dropdown': 'showDropdownMenu',
+		'click': 'toggleContent'
 	},
 	initialize: function() {
 		this.listenTo(this.model, 'change', this.render);
@@ -67,7 +68,11 @@ var ItemView = Backbone.View.extend({
 			}
 		});
 		this.model.trigger('sync');
-    }
+    },
+	showDropdownMenu: function() {
+		this.$el.find('.dropdown-toggle').dropdown('toggle');
+		return false;
+	}
 });
 
 var ItemListView = Backbone.View.extend({
@@ -126,7 +131,7 @@ var ItemListView = Backbone.View.extend({
 
 // Feeds
 var Feed = Backbone.Model.extend({
-	idAttribute: "id",
+	idAttribute: 'id',
 	initialize: function() {
 		this.items = new ItemCollection();
 		this.items.url = '/feed/' + this.id + '/item';
@@ -159,15 +164,16 @@ var FeedCollection = Backbone.Collection.extend({
 });
 
 var FeedView = Backbone.View.extend({
-	tagName: "li",
+	tagName: 'li',
 	template: _.template($('#tmpl-feed').html()),
 	events: {
-		"click .markFeedReadAction" : "markFeedRead",
-		"click .markFeedUnreadAction" : "markFeedUnread",
-		"click .syncFeedAction" : "syncFeed",
-		"click .editFeedAction" : "showFeedEditDialog",
-		"click .deleteFeedAction" : "deleteFeed",
-		"click .feedName" : "selectFeed"
+		'click .markFeedReadAction' : 'markFeedRead',
+		'click .markFeedUnreadAction' : 'markFeedUnread',
+		'click .syncFeedAction' : 'syncFeed',
+		'click .editFeedAction' : 'showFeedEditDialog',
+		'click .deleteFeedAction' : 'deleteFeed',
+		'click .dropdown': 'showDropdownMenu',
+		'click' : 'selectFeed'
 	},
 	initialize: function() {
 		this.listenTo(this.model, 'destroy', this.remove);
@@ -215,13 +221,17 @@ var FeedView = Backbone.View.extend({
 		dialog.find('#feedFolder').val(folderList.collection.get(this.model.get('folder_id')).get('title'));
 		dialog.find('#feedUrl').val(this.model.get('url'));
 		dialog.modal();
+	},
+	showDropdownMenu: function() {
+		this.$el.find('.dropdown-toggle').dropdown('toggle');
+		return false;
 	}
 });
 
 
 // Folders
 var Folder = Backbone.Model.extend({
-	idAttribute: "id",
+	idAttribute: 'id',
 	initialize: function() {
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
@@ -236,17 +246,17 @@ var Folder = Backbone.Model.extend({
 
 var FolderCollection = Backbone.Collection.extend({
 	model: Folder,
-	url: "/folder"
+	url: '/folder'
 });
 
 var FolderView = Backbone.View.extend({
 	tagName: "li",
 	template: _.template($('#tmpl-folder').html()),
 	events: {
-		"click .markFolderReadAction" : "markFolderRead",
-		"click .markFolderUnreadAction" : "markFolderUnread",
-		"click .syncFolderAction" : "syncFolder",
-		"click .deleteFolderAction" : "deleteFolder",
+		'click .markFolderReadAction' : 'markFolderRead',
+		'click .markFolderUnreadAction' : 'markFolderUnread',
+		'click .syncFolderAction' : 'syncFolder',
+		'click .deleteFolderAction' : 'deleteFolder',
 		'click .folder-icon' : 'toggleFolderOpen'
 	},
 	initialize: function() {
@@ -302,7 +312,11 @@ var FolderView = Backbone.View.extend({
 		this.model.feeds.each(function(feed) {
 			feed.markUnread();
 		});
-    }
+    },
+	showDropdownMenu: function() {
+		this.$el.find('.dropdown-toggle').dropdown('toggle');
+		return false;
+	}
 });
 
 var FolderListView = Backbone.View.extend({
