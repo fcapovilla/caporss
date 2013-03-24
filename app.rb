@@ -101,6 +101,26 @@ post '/opml_upload' do
 	redirect '/'
 end
 
+# OPML Export
+
+get '/export.opml' do
+	headers "Content-Disposition" => "attachment;filename=export.opml"
+	content_type 'text/x-opml', 'charset' => 'utf-8'
+
+	Nokogiri::XML::Builder.new { |xml|
+		xml.opml(:version => '1.0') {
+			xml.head {
+				xml.title "OPML Export"
+			}
+			xml.body {
+				Folder.all.each { |folder|
+					xml.__send__ :insert, folder.to_opml
+				}
+			}
+		}
+	}.to_xml
+end
+
 
 # Subscription
 

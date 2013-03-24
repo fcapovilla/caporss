@@ -1,5 +1,3 @@
-require 'feedzirra'
-
 class Feed
 	include DataMapper::Resource
 
@@ -47,5 +45,18 @@ class Feed
 		self.save
 		self.folder.update_unread_count!
 		return self
+	end
+
+	def to_opml
+		doc = Nokogiri::HTML::DocumentFragment.parse ""
+		Nokogiri::XML::Builder.with(doc) { |xml|
+			xml.outline(
+				:title => self.title,
+				:text => self.title,
+				:type => 'rss',
+				:xmlUrl => self.url
+			)
+		}
+		return doc
 	end
 end

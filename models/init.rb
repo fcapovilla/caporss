@@ -1,5 +1,6 @@
 require 'data_mapper'
 require 'dm-is-list'
+require 'feedzirra'
 
 DataMapper::Logger.new(STDOUT, :warn)
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')

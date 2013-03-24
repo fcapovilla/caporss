@@ -17,4 +17,16 @@ class Folder
 		self.save
 		return self
 	end
+
+	def to_opml
+		doc = Nokogiri::HTML::DocumentFragment.parse ""
+		Nokogiri::XML::Builder.with(doc) { |xml|
+			xml.outline(:title => self.title, :text => self.title) {
+				self.feeds.each do |feed|
+					xml.__send__ :insert, feed.to_opml
+				end
+			}
+		}
+		return doc
+	end
 end
