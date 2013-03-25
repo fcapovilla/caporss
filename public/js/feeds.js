@@ -23,7 +23,7 @@ var ItemView = Backbone.View.extend({
 		'click .readOlderAction' : 'readAllOlder',
 		'click .readUnreadIcon': 'toggleRead',
 		'click .dropdown': 'showDropdownMenu',
-		'click': 'toggleContent'
+		'click .item-container': 'toggleContent'
 	},
 	initialize: function() {
 		this.listenTo(this.model, 'change', this.render);
