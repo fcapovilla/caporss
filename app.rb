@@ -107,7 +107,7 @@ get '/export.opml' do
 	headers "Content-Disposition" => "attachment;filename=export.opml"
 	content_type 'text/x-opml', 'charset' => 'utf-8'
 
-	Nokogiri::XML::Builder.new { |xml|
+	Nokogiri::XML::Builder.new(:encoding => 'UTF-8') { |xml|
 		xml.opml(:version => '1.0') {
 			xml.head {
 				xml.title "OPML Export"
