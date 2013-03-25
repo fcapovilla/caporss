@@ -4,13 +4,13 @@
       .btn-group
         %button(class="btn btn-inverse")
           %i(id="spinner" class="icon-spinner icon-large invisible")
-        %button(class="btn" id="syncButton")
+        %button(class="btn" id="syncButton" title="Sync")
           %i(class="icon-refresh")
-        %button(class="btn" href="#opmlModal" role="button" data-toggle="modal")
+        %button(class="btn" href="#opmlModal" role="button" data-toggle="modal" title="Import OPML")
           %i(class="icon-upload")
-        %a(class="btn" href="/export.opml")
+        %a(class="btn" href="/export.opml" title="Export to OPML")
           %i(class="icon-download-alt")
-        %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal")
+        %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal" title="Subscribe")
           %i(class="icon-plus")
   %ul(id="feed-list" class="nav nav-list")
 .item-list
