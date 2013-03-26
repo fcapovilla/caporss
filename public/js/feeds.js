@@ -107,7 +107,7 @@ var ItemListView = Backbone.View.extend({
 		});
 	},
 	moveCursor: function(e) {
-		if(this.cursor != null) {
+		if(this.cursor !== null) {
 			var index = this.collection.indexOf(this.collection.get(this.cursor));
 			var item = null;
 			if(e.keyCode == 74) {
@@ -116,7 +116,7 @@ var ItemListView = Backbone.View.extend({
 			else if(e.keyCode == 75) {
 				item = this.collection.at(index-1);
 			}
-			if(item != null) {
+			if(item !== null) {
 				this.closeAll();
 				item.set('open', true);
 				item.set('read', true);
@@ -173,7 +173,7 @@ var FeedView = Backbone.View.extend({
 		'click .syncFeedAction' : 'syncFeed',
 		'click .editFeedAction' : 'showFeedEditDialog',
 		'click .deleteFeedAction' : 'deleteFeed',
-		'click .dropdown': 'showDropdownMenu',
+		'click .menu-toggle': 'toggleMenu',
 		'click' : 'selectFeed'
 	},
 	initialize: function() {
@@ -209,12 +209,15 @@ var FeedView = Backbone.View.extend({
 				that.update();
 			}
 		});
+		return this.toggleMenu();
     },
 	markFeedRead: function() {
 		this.model.markRead();
+		return this.toggleMenu();
     },
 	markFeedUnread: function() {
 		this.model.markUnread();
+		return this.toggleMenu();
     },
 	showFeedEditDialog: function() {
 		var dialog = $('#editFeedModal');
@@ -222,9 +225,16 @@ var FeedView = Backbone.View.extend({
 		dialog.find('#feedFolder').val(folderList.collection.get(this.model.get('folder_id')).get('title'));
 		dialog.find('#feedUrl').val(this.model.get('url'));
 		dialog.modal();
+		return this.toggleMenu();
 	},
-	showDropdownMenu: function() {
-		this.$el.find('.dropdown-toggle').dropdown('toggle');
+	toggleMenu: function() {
+		var menu = this.$el.find('.feedMenu');
+		if(menu.hasClass('hide')) {
+			menu.removeClass('hide');
+		}
+		else {
+			menu.addClass('hide');
+		}
 		return false;
 	}
 });
@@ -258,7 +268,8 @@ var FolderView = Backbone.View.extend({
 		'click .markFolderUnreadAction' : 'markFolderUnread',
 		'click .syncFolderAction' : 'syncFolder',
 		'click .deleteFolderAction' : 'deleteFolder',
-		'click .folder-icon' : 'toggleFolderOpen'
+		'click .folder-icon' : 'toggleFolderOpen',
+		'click .menu-toggle': 'toggleMenu'
 	},
 	initialize: function() {
 		this.listenTo(this.model, 'change', this.render);
@@ -293,6 +304,7 @@ var FolderView = Backbone.View.extend({
 	},
 	deleteFolder: function() {
 		this.model.destroy();
+		return this.toggleMenu();
 	},
 	syncFolder: function() {
 		var that = this;
@@ -303,19 +315,28 @@ var FolderView = Backbone.View.extend({
 				that.model.feeds.fetch();
 			}
 		});
+		return this.toggleMenu();
     },
 	markFolderRead: function() {
 		this.model.feeds.each(function(feed) {
 			feed.markRead();
 		});
+		return this.toggleMenu();
     },
 	markFolderUnread: function() {
 		this.model.feeds.each(function(feed) {
 			feed.markUnread();
 		});
+		return this.toggleMenu();
     },
-	showDropdownMenu: function() {
-		this.$el.find('.dropdown-toggle').dropdown('toggle');
+	toggleMenu: function() {
+		var menu = this.$el.find('.folderMenu');
+		if(menu.hasClass('hide')) {
+			menu.removeClass('hide');
+		}
+		else {
+			menu.addClass('hide');
+		}
 		return false;
 	}
 });

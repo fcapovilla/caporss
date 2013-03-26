@@ -72,45 +72,41 @@
 
 :plain
   <script id='tmpl-folder' type='text/template'>
-    <i class="folder-icon <% if(open){ %>icon-folder-open<% }else{ %>icon-folder-close<% } %>"></i>
-    <span class="folderTitle">
+    <div class="folderTitle">
+      <i class="folder-icon <% if(open){ %>icon-folder-open<% }else{ %>icon-folder-close<% } %>"></i>
       <% if(unread_count > 0) { %>
         <b><%= title %></b>
         <span class="badge badge-info"><%= unread_count %></span>
       <% }else{ %>
         <%= title %>
       <% } %>
-    </span>
-    <span class="dropdown">
-      <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="folder-<%= id %>-menu">
-        <li><a class="markFolderReadAction">Mark all read</a</li>
-        <li><a class="markFolderUnreadAction">Mark all unread</a></li>
-        <li><a class="syncFolderAction">Sync</a></li>
-        <li><a class="deleteFolderAction">Delete</a></li>
-      </ul>
-    </span>
+      <i class="icon icon-caret-down menu-toggle"></i>
+    </div>
+    <div class="btn-group folderMenu hide">
+      <a class="btn markFolderReadAction" title="Mark all read"><i class="icon-circle-blank"></i></a>
+      <a class="btn markFolderUnreadAction" title="Mark all unread"><i class="icon-circle"></i></a>
+      <a class="btn syncFolderAction" title="Sync"><i class="icon-refresh"></i></a>
+      <a class="btn deleteFolderAction" title="Delete"><i class="icon-trash"></i></a>
+    </div>
   </script>
 
   <script id='tmpl-feed' type='text/template'>
-    <span class="dropdown">
-      <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
-      <ul class="dropdown-menu" role="menu" aria-labelledby="feed-<%= id %>-menu">
-        <li><a class="markFeedReadAction">Mark all read</a></li>
-        <li><a class="markFeedUnreadAction">Mark all unread</a></li>
-        <li><a class="syncFeedAction">Sync</a></li>
-        <li><a class="editFeedAction">Edit</a></li>
-        <li><a class="deleteFeedAction">Delete</a></li>
-      </ul>
-    </span>
-    <span class="feedName">
+    <div class="feedTitle">
+      <i class="icon icon-caret-down menu-toggle"></i>
       <% if(unread_count > 0) { %>
         <b><%= title %></b>
         <span class="badge badge-info"><%= unread_count %></span>
       <% }else{ %>
         <%= title %>
       <% } %>
-    </span>
+    </div>
+    <div class="btn-group feedMenu hide">
+      <a class="btn markFeedReadAction" title="Mark all read"><i class="icon-circle-blank"></i></a>
+      <a class="btn markFeedUnreadAction" title="Mark all unread"><i class="icon-circle"></i></a>
+      <a class="btn syncFeedAction" title="Sync"><i class="icon-refresh"></i></a>
+      <a class="btn editFeedAction" title="Edit"><i class="icon-edit"></i></a>
+      <a class="btn deleteFeedAction" title="Delete"><i class="icon-trash"></i></a>
+    </div>
   </script>
 
   <script id='tmpl-item' type='text/template'>

@@ -15,7 +15,7 @@ body {
 	#feed-list {
 		white-space: nowrap;
 		padding-top: 50px;
-		padding-bottom: 10px;
+		padding-bottom: 30px;
 	}
 	.folder-icon,
 	.dropdown,
@@ -83,7 +83,7 @@ body {
 	clear: both;
 }
 
-.nav-list>.active {
+.nav-list>.active>.feedTitle {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
 	background-color: rgb(91, 165, 202);
