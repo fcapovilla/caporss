@@ -2,7 +2,7 @@ class Folder
 	include DataMapper::Resource
 
 	property :id, Serial
-	property :title, String, :length => 1..30
+	property :title, String, :length => 1..200
 	property :open, Boolean, :default => false
 	property :unread_count, Integer, :default => 0
 

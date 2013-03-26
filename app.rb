@@ -6,6 +6,7 @@ require 'haml'
 require 'sass'
 require 'json'
 require 'open-uri'
+require 'digest/sha2'
 
 require_relative 'models/init'
 
@@ -16,9 +17,15 @@ configure :production do
 	use Rack::SslEnforcer
 end
 
+# Load settings
+Setting.all.each do |setting|
+	set setting.name.to_sym, setting.value
+end
 
-use Rack::Auth::Basic, "Access restricted" do |username, password|
-  [username, password] == ['caposite', 'r5t6y7u8']
+if defined? settings.username and defined? settings.password
+	use Rack::Auth::Basic, "Access restricted" do |username, password|
+	    [username, Digest::SHA512.hexdigest(password + settings.salt)] == [settings.username, settings.password]
+	end
 end
 
 
@@ -33,6 +40,38 @@ end
 
 get '/' do
     haml :index
+end
+
+
+# Save settings form
+post '/save_settings' do
+	if not defined? settings.password or Digest::SHA512.hexdigest(params[:old_password] + settings.salt) == settings.password
+		if params[:username]
+			username = Setting.first_or_create(:name => 'username')
+			username.value = params[:username]
+			username.save
+		end
+
+		if params[:new_password]
+			salt = ''
+			64.times { salt << (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }
+
+			salt_object = Setting.first_or_create(:name => 'salt')
+			salt_object.value = salt
+			salt_object.save
+
+			password = Setting.first_or_create(:name => 'password')
+			password.value = Digest::SHA512.hexdigest(params[:new_password] + salt)
+			password.save
+		end
+
+		# Reset settings
+		Setting.all.each do |setting|
+			set setting.name.to_sym, setting.value
+		end
+	end
+
+	redirect '/'
 end
 
 

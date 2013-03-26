@@ -2,8 +2,8 @@ class Feed
 	include DataMapper::Resource
 
 	property :id, Serial
-	property :title, String, :length => 1..100
-	property :url, String, :length => 1..1000
+	property :title, String, :length => 100
+	property :url, String, :length => 1..1024
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
 
