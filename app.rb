@@ -305,13 +305,13 @@ get '/item' do
     Item.all(:order => [:date.desc]).to_json
 end
 
-get '/item/:id', '/feed/*/item/:id' do
+get '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
     Item.get(params[:id]).to_json
 end
 
 #post '/item' do
 
-put '/item/:id', '/feed/*/item/:id' do
+put '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
     item = Item.get(params[:id])
 	item.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	item.save
