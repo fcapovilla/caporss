@@ -325,6 +325,7 @@ var FolderView = Backbone.View.extend({
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
 		if(this.model.get('open')) {
+			this.addAll();
 			this.$el.append(this.$feedList);
 		}
 		return this;
