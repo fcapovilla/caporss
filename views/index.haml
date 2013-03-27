@@ -6,6 +6,8 @@
           %i(id="spinner" class="icon-spinner icon-large invisible")
         %button(class="btn" id="syncButton" title="Sync")
           %i(class="icon-refresh")
+        %button(class="btn" id="cleanupButton" title="Cleanup")
+          %i(class="icon-bolt")
         %button(class="btn" href="#opmlModal" role="button" data-toggle="modal" title="Import OPML")
           %i(class="icon-upload")
         %a(class="btn" href="/export.opml" title="Export to OPML")
@@ -89,7 +91,7 @@
           New Password :
         %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
       %label
-        Clean up after :
+        "Cleanup" deletes items older than :
       .input-append
         %input(class="input-block-level" type="text" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
         %span.add-on

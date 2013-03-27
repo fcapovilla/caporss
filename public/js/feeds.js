@@ -383,6 +383,22 @@ $('#syncButton').click(function() {
 	});
 });
 
+$('#cleanupButton').click(function() {
+	var icon = $(this).children('i');
+	icon.attr('class', 'icon-time');
+	$.ajax({
+		url: '/cleanup/all',
+		method: 'GET',
+		success: function() {
+			folderList.collection.fetch();
+			icon.attr('class', 'icon-bolt');
+		},
+		error: function() {
+			icon.attr('class', 'icon-bolt');
+		}
+	});
+});
+
 $('#subscribeButton').click(function() {
 	$.ajax({
 		url: '/subscribe',

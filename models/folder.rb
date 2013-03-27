@@ -29,4 +29,11 @@ class Folder
 		}
 		return doc
 	end
+
+	def cleanup!(days)
+		self.feeds.each do |feed|
+			feed.cleanup!(days)
+		end
+		return self
+	end
 end

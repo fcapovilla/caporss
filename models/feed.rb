@@ -59,4 +59,14 @@ class Feed
 		}
 		return doc
 	end
+
+	def cleanup!(days)
+		self.items.each do |item|
+			if item.date.to_date + days.to_i < Date.today
+				item.destroy
+			end
+		end
+		self.update_unread_count!
+		return self
+	end
 end

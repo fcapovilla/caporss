@@ -65,11 +65,6 @@ post '/save_settings' do
 			password.value = Digest::SHA512.hexdigest(params[:new_password] + salt)
 			password.save
 		end
-
-		# Reset settings
-		Setting.all.each do |setting|
-			set setting.name.to_sym, setting.value
-		end
 	end
 
 	# Other settings
@@ -77,6 +72,11 @@ post '/save_settings' do
 		cleanup_after = Setting.first_or_create(:name => 'cleanup_after')
 		cleanup_after.value = params[:cleanup_after]
 		cleanup_after.save
+	end
+
+	# Reset settings
+	Setting.all.each do |setting|
+		set setting.name.to_sym, setting.value
 	end
 
 	redirect '/'
@@ -110,6 +110,28 @@ namespace '/sync' do
 
 	get '/feed/:id' do |id|
 		Feed.get(id).sync!
+		return 'done'
+	end
+end
+
+
+# Cleanup
+
+namespace '/cleanup' do
+	get '/all' do
+		Folder.all.each do |folder|
+			folder.cleanup!(settings.cleanup_after)
+		end
+		return 'done'
+	end
+
+	get '/folder/:id' do |id|
+		Folder.get(id).cleanup!(settings.cleanup_after)
+		return 'done'
+	end
+
+	get '/feed/:id' do |id|
+		Feed.get(id).cleanup!(settings.cleanup_after)
 		return 'done'
 	end
 end
