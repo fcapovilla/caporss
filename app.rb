@@ -224,6 +224,10 @@ get '/folder/:id/feed' do |id|
 	Folder.get(id).feeds.to_json
 end
 
+get '/folder/:id/item' do |id|
+	Folder.get(id).feeds.items(:order => [:date.desc]).to_json
+end
+
 # post '/folder' do
 
 put '/folder/:id' do |id|

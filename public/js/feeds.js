@@ -174,7 +174,7 @@ var FeedView = Backbone.View.extend({
 		'click .editFeedAction' : 'showFeedEditDialog',
 		'click .deleteFeedAction' : 'deleteFeed',
 		'click .menu-toggle': 'toggleMenu',
-		'click' : 'selectFeed'
+		'click .feedTitle' : 'selectFeed'
 	},
 	initialize: function() {
 		this.listenTo(this.model, 'destroy', this.remove);
@@ -269,7 +269,8 @@ var FolderView = Backbone.View.extend({
 		'click .syncFolderAction' : 'syncFolder',
 		'click .deleteFolderAction' : 'deleteFolder',
 		'click .folder-icon' : 'toggleFolderOpen',
-		'click .menu-toggle': 'toggleMenu'
+		'click .menu-toggle': 'toggleMenu',
+		'click .folderTitle' : 'selectFolder'
 	},
 	initialize: function() {
 		this.listenTo(this.model, 'change', this.render);
@@ -338,6 +339,17 @@ var FolderView = Backbone.View.extend({
 			menu.addClass('hide');
 		}
 		return false;
+	},
+	selectFolder: function() {
+		var folderItems = new ItemCollection();
+		folderItems.url = '/folder/' + this.model.id + '/item';
+
+		items.setCollection(folderItems);
+		if(currentFeed !== null) {
+			currentFeed.removeClass('active');
+		}
+		this.$el.addClass('active');
+		currentFeed = this.$el;
 	}
 });
 

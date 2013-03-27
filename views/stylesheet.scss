@@ -19,7 +19,8 @@ body {
 	}
 	.folder-icon,
 	.dropdown,
-	.feed {
+	.feedTitle,
+	.folderTitle {
 		cursor: pointer;
 	}
 	.navbar.affix {
@@ -83,7 +84,8 @@ body {
 	clear: both;
 }
 
-.nav-list>.active>.feedTitle {
+.nav-list>.active>.feedTitle,
+.nav-list>.active>.folderTitle {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
 	background-color: rgb(91, 165, 202);
