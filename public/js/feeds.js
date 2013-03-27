@@ -8,7 +8,7 @@ var Item = Backbone.Model.extend({
 		this.set('open', false);
 	},
 	toJSON: function() {
-		// Only the item's read status can be changed
+		// Syncable attributes
 		return {read: this.get('read')};
 	},
 	toggleRead: function() {
@@ -115,12 +115,14 @@ var ItemListView = Backbone.View.extend({
 		if(this.cursor !== null) {
 			var index = this.collection.indexOf(this.collection.get(this.cursor));
 			var item = null;
-			if(e.keyCode == 74) {
+
+			if(e.keyCode == 74) { // J (down
 				item = this.collection.at(index+1);
 			}
-			else if(e.keyCode == 75) {
+			else if(e.keyCode == 75) { // K (Up)
 				item = this.collection.at(index-1);
 			}
+
 			if(item !== null) {
 				this.closeAll();
 				item.set('open', true);
@@ -138,11 +140,21 @@ var ItemListView = Backbone.View.extend({
 var Feed = Backbone.Model.extend({
 	idAttribute: 'id',
 	initialize: function() {
+		this.set('active', false);
+
 		this.items = new ItemCollection();
 		this.items.url = '/feed/' + this.id + '/item';
 
 		this.listenTo(this.items, 'itemRead', this.decrementReadCount);
 		this.listenTo(this.items, 'itemUnread', this.incrementReadCount);
+	},
+	toJSON: function() {
+		// Syncable attributes
+		return {
+			position: this.get('position'),
+			folder: this.get('folder'),
+			url: this.get('url')
+		};
 	},
 	markRead: function() {
 		var that = this;
@@ -201,11 +213,11 @@ var FeedView = Backbone.View.extend({
 	},
 	selectFeed: function() {
 		items.setCollection(this.model.items);
-		if(currentFeed !== null) {
-			currentFeed.removeClass('active');
+		if(currentSelection !== null) {
+			currentSelection.set('active', false);
 		}
-		this.$el.addClass('active');
-		currentFeed = this.$el;
+		this.model.set('active', true);
+		currentSelection = this.model;
 	},
 	update: function() {
 		this.model.fetch();
@@ -264,6 +276,8 @@ var FeedView = Backbone.View.extend({
 var Folder = Backbone.Model.extend({
 	idAttribute: 'id',
 	initialize: function() {
+		this.set('active', false);
+
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
 		this.listenTo(this.feeds, 'change:unread_count', this.recalculateReadCount);
@@ -389,11 +403,11 @@ var FolderView = Backbone.View.extend({
 	},
 	selectFolder: function() {
 		items.setCollection(this.model.items);
-		if(currentFeed !== null) {
-			currentFeed.removeClass('active');
+		if(currentSelection !== null) {
+			currentSelection.set('active', false);
 		}
-		this.$el.addClass('active');
-		currentFeed = this.$el;
+		this.model.set('active', true);
+		currentSelection = this.model;
 	}
 });
 
@@ -418,7 +432,7 @@ var FolderListView = Backbone.View.extend({
 
 var items = new ItemListView();
 var folderList = new FolderListView({collection: new FolderCollection()});
-var currentFeed = null;
+var currentSelection = null;
 
 
 // Buttons and dialogs actions

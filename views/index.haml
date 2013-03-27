@@ -112,7 +112,7 @@
 
 :plain
   <script id='tmpl-folder' type='text/template'>
-    <div class="folderTitle">
+    <div class="folderTitle<% if(active){ %> active <% } %>">
       <i class="folder-icon <% if(open){ %>icon-folder-open<% }else{ %>icon-folder-close<% } %>"></i>
       <% if(unread_count > 0) { %>
         <b><%= title %></b>
@@ -131,7 +131,7 @@
   </script>
 
   <script id='tmpl-feed' type='text/template'>
-    <div class="feedTitle">
+    <div class="feedTitle<% if(active){ %> active<% } %>">
       <i class="icon icon-caret-down menu-toggle"></i>
       <% if(unread_count > 0) { %>
         <b><%= title %></b>
