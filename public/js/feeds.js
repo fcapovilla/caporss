@@ -148,6 +148,7 @@ var Feed = Backbone.Model.extend({
 			method: 'PUT',
 			url: 'read/feed/' + this.id,
 			success: function() {
+				that.trigger('readCountChanged', -that.get('unread_count'));
 				that.set('unread_count', 0);
 			}
 		});
@@ -158,17 +159,21 @@ var Feed = Backbone.Model.extend({
 			method: 'PUT',
 			url: 'unread/feed/' + this.id,
 			success: function() {
-				that.fetch();
+				var old_count = that.get('unread_count');
+				that.fetch({success: function() {
+					console.log('fetched');
+					that.trigger('readCountChanged', that.get('unread_count') - old_count);
+				}});
 			}
 		});
     },
 	incrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') + 1);
-		this.trigger('itemUnread');
+		this.trigger('readCountChanged', +1);
 	},
 	decrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') - 1);
-		this.trigger('itemRead');
+		this.trigger('readCountChanged', -1);
 	}
 });
 
@@ -266,8 +271,7 @@ var Folder = Backbone.Model.extend({
 	initialize: function() {
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
-		this.listenTo(this.feeds, 'itemRead', this.decrementReadCount);
-		this.listenTo(this.feeds, 'itemUnread', this.incrementReadCount);
+		this.listenTo(this.feeds, 'readCountChanged', this.changeReadCount);
 
 		this.items = new ItemCollection();
 		this.items.url = '/folder/' + this.id + '/item';
@@ -280,11 +284,8 @@ var Folder = Backbone.Model.extend({
 	toJSON: function() {
 		return {open: this.get('open')};
 	},
-	incrementReadCount: function() {
-		this.set('unread_count', this.get('unread_count') + 1);
-	},
-	decrementReadCount: function() {
-		this.set('unread_count', this.get('unread_count') - 1);
+	changeReadCount: function(i) {
+		this.set('unread_count', this.get('unread_count') + i);
 	},
 	itemCollectionRead: function(feed_id) {
 		this.feeds.get(feed_id).decrementReadCount();
