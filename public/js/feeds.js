@@ -14,10 +14,10 @@ var Item = Backbone.Model.extend({
 		this.save();
 
 		if(this.get('read')) {
-			this.trigger('itemRead');
+			this.trigger('itemRead', this.get('feed_id'));
 		}
 		else {
-			this.trigger('itemUnread');
+			this.trigger('itemUnread', this.get('feed_id'));
 		}
 	}
 });
@@ -54,15 +54,12 @@ var ItemView = Backbone.View.extend({
 		else {
 			items.closeAll();
 			this.model.set('open', true);
-			this.model.set('read', true);
-			this.model.save();
-			this.model.trigger('sync');
+			if(!this.model.get('read')) {
+				this.model.toggleRead();
+			}
 			items.cursor = this.model.id;
 		}
 	},
-	close: function() {
-		this.model.set('open', false);
-    },
 	toggleRead: function(e) {
 		this.model.toggleRead();
 		return false;
@@ -99,7 +96,6 @@ var ItemListView = Backbone.View.extend({
 	},
 	setCollection: function(collection) {
 		this.stopListening(this.collection);
-		//this.$el.empty();
 
 		this.collection = collection;
 
@@ -126,9 +122,9 @@ var ItemListView = Backbone.View.extend({
 			if(item !== null) {
 				this.closeAll();
 				item.set('open', true);
-				item.set('read', true);
-				item.save();
-				item.trigger('sync');
+				if(!item.get('read')) {
+					item.toggleRead();
+				}
 				this.cursor = item.id;
 			}
 		}
@@ -166,7 +162,7 @@ var Feed = Backbone.Model.extend({
 			}
 		});
     },
-	incrementReadCount: function(amount) {
+	incrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') + 1);
 		this.trigger('itemUnread');
 	},
@@ -270,9 +266,13 @@ var Folder = Backbone.Model.extend({
 	initialize: function() {
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
-
 		this.listenTo(this.feeds, 'itemRead', this.decrementReadCount);
 		this.listenTo(this.feeds, 'itemUnread', this.incrementReadCount);
+
+		this.items = new ItemCollection();
+		this.items.url = '/folder/' + this.id + '/item';
+		this.listenTo(this.items, 'itemRead', this.itemCollectionRead);
+		this.listenTo(this.items, 'itemUnread', this.itemCollectionUnread);
 	},
 	toggle: function() {
 		this.save({open : !this.get('open')});
@@ -280,11 +280,17 @@ var Folder = Backbone.Model.extend({
 	toJSON: function() {
 		return {open: this.get('open')};
 	},
-	incrementReadCount: function(amount) {
+	incrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') + 1);
 	},
 	decrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') - 1);
+	},
+	itemCollectionRead: function(feed_id) {
+		this.feeds.get(feed_id).decrementReadCount();
+    },
+	itemCollectionUnread: function(feed_id) {
+		this.feeds.get(feed_id).incrementReadCount();
 	}
 });
 
@@ -336,6 +342,7 @@ var FolderView = Backbone.View.extend({
 		if(this.model.get('open')) {
 			this.addAll();
 		}
+		return false;
 	},
 	deleteFolder: function() {
 		this.model.destroy();
@@ -380,10 +387,7 @@ var FolderView = Backbone.View.extend({
 		return false;
 	},
 	selectFolder: function() {
-		var folderItems = new ItemCollection();
-		folderItems.url = '/folder/' + this.model.id + '/item';
-
-		items.setCollection(folderItems);
+		items.setCollection(this.model.items);
 		if(currentFeed !== null) {
 			currentFeed.removeClass('active');
 		}
