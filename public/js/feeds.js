@@ -173,10 +173,11 @@ var FeedView = Backbone.View.extend({
 		'click .syncFeedAction' : 'syncFeed',
 		'click .editFeedAction' : 'showFeedEditDialog',
 		'click .deleteFeedAction' : 'deleteFeed',
-		'click .menu-toggle': 'toggleMenu',
+		'click .menu-toggle': 'openMenu',
 		'click .feedTitle' : 'selectFeed'
 	},
 	initialize: function() {
+		_.bindAll(this);
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model.items, 'sync', this.update);
@@ -199,6 +200,7 @@ var FeedView = Backbone.View.extend({
 	},
 	deleteFeed: function() {
 		this.model.destroy();
+		return this.closeMenu();
 	},
 	syncFeed: function() {
 		var that = this;
@@ -209,15 +211,15 @@ var FeedView = Backbone.View.extend({
 				that.update();
 			}
 		});
-		return this.toggleMenu();
+		return this.closeMenu();
     },
 	markFeedRead: function() {
 		this.model.markRead();
-		return this.toggleMenu();
+		return this.closeMenu();
     },
 	markFeedUnread: function() {
 		this.model.markUnread();
-		return this.toggleMenu();
+		return this.closeMenu();
     },
 	showFeedEditDialog: function() {
 		var dialog = $('#editFeedModal');
@@ -225,16 +227,21 @@ var FeedView = Backbone.View.extend({
 		dialog.find('#feedFolder').val(folderList.collection.get(this.model.get('folder_id')).get('title'));
 		dialog.find('#feedUrl').val(this.model.get('url'));
 		dialog.modal();
-		return this.toggleMenu();
+		return this.closeMenu();
 	},
-	toggleMenu: function() {
+	openMenu: function() {
+		// Close any opened menu
+		$(document).click();
+
 		var menu = this.$el.find('.feedMenu');
-		if(menu.hasClass('hide')) {
-			menu.removeClass('hide');
-		}
-		else {
-			menu.addClass('hide');
-		}
+		menu.removeClass('hide');
+
+		$(document).one('click', this.closeMenu);
+		return false;
+	},
+	closeMenu: function() {
+		var menu = this.$el.find('.feedMenu');
+		menu.addClass('hide');
 		return false;
 	}
 });
@@ -269,10 +276,11 @@ var FolderView = Backbone.View.extend({
 		'click .syncFolderAction' : 'syncFolder',
 		'click .deleteFolderAction' : 'deleteFolder',
 		'click .folder-icon' : 'toggleFolderOpen',
-		'click .menu-toggle': 'toggleMenu',
+		'click .menu-toggle': 'openMenu',
 		'click .folderTitle' : 'selectFolder'
 	},
 	initialize: function() {
+		_.bindAll(this);
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model.feeds, 'add', this.addOne);
@@ -305,7 +313,7 @@ var FolderView = Backbone.View.extend({
 	},
 	deleteFolder: function() {
 		this.model.destroy();
-		return this.toggleMenu();
+		return this.closeMenu();
 	},
 	syncFolder: function() {
 		var that = this;
@@ -316,28 +324,33 @@ var FolderView = Backbone.View.extend({
 				that.model.feeds.fetch();
 			}
 		});
-		return this.toggleMenu();
+		return this.closeMenu();
     },
 	markFolderRead: function() {
 		this.model.feeds.each(function(feed) {
 			feed.markRead();
 		});
-		return this.toggleMenu();
+		return this.closeMenu();
     },
 	markFolderUnread: function() {
 		this.model.feeds.each(function(feed) {
 			feed.markUnread();
 		});
-		return this.toggleMenu();
+		return this.closeMenu();
     },
-	toggleMenu: function() {
+	openMenu: function() {
+		// Close any opened menu
+		$(document).click();
+
 		var menu = this.$el.find('.folderMenu');
-		if(menu.hasClass('hide')) {
-			menu.removeClass('hide');
-		}
-		else {
-			menu.addClass('hide');
-		}
+		menu.removeClass('hide');
+
+		$(document).one('click', this.closeMenu);
+		return false;
+	},
+	closeMenu: function() {
+		var menu = this.$el.find('.folderMenu');
+		menu.addClass('hide');
 		return false;
 	},
 	selectFolder: function() {
