@@ -7,11 +7,7 @@
         %button(class="btn" id="syncButton" title="Sync")
           %i(class="icon-refresh")
         %button(class="btn" id="cleanupButton" title="Cleanup")
-          %i(class="icon-bolt")
-        %button(class="btn" href="#opmlModal" role="button" data-toggle="modal" title="Import OPML")
-          %i(class="icon-upload")
-        %a(class="btn" href="/export.opml" title="Export to OPML")
-          %i(class="icon-download-alt")
+          %i(class="icon-fire")
         %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal" title="Subscribe")
           %i(class="icon-plus")
         %button(class="btn" href="#settingsModal" role="button" data-toggle="modal" title="Settings")
@@ -19,20 +15,6 @@
   %ul(id="feed-list" class="nav nav-list")
 .item-list
   %ul(id="item-list" class="nav nav-list")
-
--# OPML Upload Modal Dialog
-
-%form(class="upload-form" method="post" enctype="multipart/form-data" action="/opml_upload")
-  %div(class="modal hide fade" id="opmlModal" tabindex="-1" role="dialog" aria-labelledby="opmlModal" aria-hidden="true")
-    .modal-header
-      OPML Upload
-      %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-        x
-    .modal-body
-      %input(type="file" name="file" aria-hidden="true")
-    .modal-footer
-      %button(type="submit" class="btn btn-primary" aria-hidden="true")
-        Upload OPML
 
 -# Subscription form
 
@@ -73,7 +55,7 @@
 
 -# Settings form
 
-%form(class="settings-form" method="post" enctype="multipart/form-data" action="/save_settings")
+%form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
   %div(class="modal hide fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true")
     .modal-header
       Settings
@@ -81,15 +63,26 @@
         x
     .modal-body
       .well
-        %label
-          Username :
-        %input(class="input-block-level" type="text" name="username" value="#{settings.username}" aria-hidden="true")
-        %label
-          Current password :
-        %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
-        %label
-          New Password :
-        %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
+        .control-group
+          %label.control-label
+            Username :
+          .controls
+            %input(class="input-block-level" type="text" name="username" value="#{settings.username}" aria-hidden="true")
+        .control-group
+          %label.control-label
+            Current password :
+          .controls
+            %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
+        .control-group
+          %label.control-label
+            New Password :
+          .controls
+            %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
+      .well
+        %button(class="btn" href="#opmlModal" role="button" data-toggle="modal" title="Import OPML")
+          Import OPML file
+        %a(class="btn" href="/export.opml" title="Export to OPML")
+          Export feeds as OPML
       %label
         "Cleanup" deletes items older than :
       .input-append
@@ -99,6 +92,20 @@
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         Save
+
+-# OPML Upload Modal Dialog
+
+%form(class="upload-form" method="post" enctype="multipart/form-data" action="/opml_upload")
+  %div(class="modal hide fade" id="opmlModal" tabindex="-1" role="dialog" aria-labelledby="opmlModal" aria-hidden="true")
+    .modal-header
+      OPML Upload
+      %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+        x
+    .modal-body
+      %input(type="file" name="file" aria-hidden="true")
+    .modal-footer
+      %button(type="submit" class="btn btn-primary" aria-hidden="true")
+        Upload OPML
 
 
 -# Underscore Templates
