@@ -8,6 +8,17 @@ var Item = Backbone.Model.extend({
 	},
 	toJSON: function() {
 		return {read: this.get('read')};
+	},
+	toggleRead: function() {
+		this.set('read', !this.get('read'));
+		this.save();
+
+		if(this.get('read')) {
+			this.trigger('itemRead');
+		}
+		else {
+			this.trigger('itemUnread');
+		}
 	}
 });
 
@@ -53,21 +64,17 @@ var ItemView = Backbone.View.extend({
 		this.model.set('open', false);
     },
 	toggleRead: function(e) {
-		this.model.set('read', !this.model.get('read'));
-		this.model.save();
-		this.model.trigger('sync');
+		this.model.toggleRead();
 		return false;
 	},
 	readAllOlder: function() {
 		var cursorDate = new Date(this.model.get('date'));
 		items.collection.each(function(item) {
 			var date = new Date(item.get('date'));
-			if(date < cursorDate) {
-				item.set('read', true);
-				item.save();
+			if(date < cursorDate && !item.get('read')) {
+				item.toggleRead();
 			}
 		});
-		this.model.trigger('sync');
     },
 	showDropdownMenu: function() {
 		this.$el.find('.dropdown-toggle').dropdown('toggle');
@@ -135,6 +142,9 @@ var Feed = Backbone.Model.extend({
 	initialize: function() {
 		this.items = new ItemCollection();
 		this.items.url = '/feed/' + this.id + '/item';
+
+		this.listenTo(this.items, 'itemRead', this.decrementReadCount);
+		this.listenTo(this.items, 'itemUnread', this.incrementReadCount);
 	},
 	markRead: function() {
 		var that = this;
@@ -155,7 +165,15 @@ var Feed = Backbone.Model.extend({
 				that.fetch();
 			}
 		});
-    }
+    },
+	incrementReadCount: function(amount) {
+		this.set('unread_count', this.get('unread_count') + 1);
+		this.trigger('itemUnread');
+	},
+	decrementReadCount: function() {
+		this.set('unread_count', this.get('unread_count') - 1);
+		this.trigger('itemRead');
+	}
 });
 
 var FeedCollection = Backbone.Collection.extend({
@@ -180,7 +198,6 @@ var FeedView = Backbone.View.extend({
 		_.bindAll(this);
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model.items, 'sync', this.update);
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
@@ -253,12 +270,21 @@ var Folder = Backbone.Model.extend({
 	initialize: function() {
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
+
+		this.listenTo(this.feeds, 'itemRead', this.decrementReadCount);
+		this.listenTo(this.feeds, 'itemUnread', this.incrementReadCount);
 	},
 	toggle: function() {
 		this.save({open : !this.get('open')});
 	},
 	toJSON: function() {
 		return {open: this.get('open')};
+	},
+	incrementReadCount: function(amount) {
+		this.set('unread_count', this.get('unread_count') + 1);
+	},
+	decrementReadCount: function() {
+		this.set('unread_count', this.get('unread_count') - 1);
 	}
 });
 
