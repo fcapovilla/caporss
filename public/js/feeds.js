@@ -4,9 +4,11 @@ $(function() {
 var Item = Backbone.Model.extend({
 	idAttribute: 'id',
 	initialize: function() {
+		// Client-side attribute
 		this.set('open', false);
 	},
 	toJSON: function() {
+		// Only the item's read status can be changed
 		return {read: this.get('read')};
 	},
 	toggleRead: function() {
@@ -60,7 +62,7 @@ var ItemView = Backbone.View.extend({
 			items.cursor = this.model.id;
 		}
 	},
-	toggleRead: function(e) {
+	toggleRead: function() {
 		this.model.toggleRead();
 		return false;
 	},
@@ -83,6 +85,7 @@ var ItemListView = Backbone.View.extend({
 	el: $('#item-list'),
 	initialize: function() {
 		this.cursor = null;
+
 		_.bindAll(this);
 		$(document).on('keyup', this.moveCursor);
 	},
@@ -99,7 +102,6 @@ var ItemListView = Backbone.View.extend({
 
 		this.collection = collection;
 
-		this.listenTo(this.collection, 'add', this.addOne);
 		this.listenTo(this.collection, 'reset', this.addAll);
 
 		this.collection.fetch({reset: true});
