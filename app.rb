@@ -45,6 +45,7 @@ end
 
 # Save settings form
 post '/save_settings' do
+	# Password protected settings
 	if not defined? settings.password or Digest::SHA512.hexdigest(params[:old_password] + settings.salt) == settings.password
 		if params[:username]
 			username = Setting.first_or_create(:name => 'username')
@@ -69,6 +70,13 @@ post '/save_settings' do
 		Setting.all.each do |setting|
 			set setting.name.to_sym, setting.value
 		end
+	end
+
+	# Other settings
+	if params[:cleanup_after]
+		cleanup_after = Setting.first_or_create(:name => 'cleanup_after')
+		cleanup_after.value = params[:cleanup_after]
+		cleanup_after.save
 	end
 
 	redirect '/'

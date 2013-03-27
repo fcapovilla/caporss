@@ -78,15 +78,22 @@
       %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
         x
     .modal-body
+      .well
+        %label
+          Username :
+        %input(class="input-block-level" type="text" name="username" value="#{settings.username}" aria-hidden="true")
+        %label
+          Current password :
+        %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
+        %label
+          New Password :
+        %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
       %label
-        Current password :
-      %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
-      %label
-        New Password :
-      %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
-      %label
-        Username :
-      %input(class="input-block-level" type="text" name="username" value="#{settings.username}" aria-hidden="true")
+        Clean up after :
+      .input-append
+        %input(class="input-block-level" type="text" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
+        %span.add-on
+          days
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         Save

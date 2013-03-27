@@ -14,8 +14,9 @@ DataMapper.finalize
 DataMapper.auto_upgrade!
 
 # Set default settings
-if Setting.all.count == 0
+if Setting.count == 0
 	Setting.create(:name => 'username', :value => 'admin')
 	Setting.create(:name => 'salt', :value => '')
 	Setting.create(:name => 'password', :value => Digest::SHA512.hexdigest('admin'))
+	Setting.create(:name => 'cleanup_after', :value => '90')
 end
