@@ -163,6 +163,9 @@ var Feed = Backbone.Model.extend({
 			url: 'read/feed/' + this.id,
 			success: function() {
 				that.set('unread_count', 0);
+				if(that.get('active')) {
+					that.items.fetch();
+				}
 			}
 		});
     },
@@ -181,6 +184,13 @@ var Feed = Backbone.Model.extend({
 	},
 	decrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') - 1);
+	},
+	fetch: function(options) {
+		if(this.get('active')) {
+			this.items.fetch({reset: true});
+		}
+
+		return Backbone.Collection.prototype.fetch.call(this, options);
 	}
 });
 
@@ -219,10 +229,6 @@ var FeedView = Backbone.View.extend({
 		this.model.set('active', true);
 		currentSelection = this.model;
 	},
-	update: function() {
-		this.model.fetch();
-		this.render();
-	},
 	deleteFeed: function() {
 		this.model.destroy();
 		return this.closeMenu();
@@ -233,7 +239,7 @@ var FeedView = Backbone.View.extend({
 			method: 'GET',
 			url: '/sync/feed/' + this.model.id,
 			success: function() {
-				that.update();
+				that.model.fetch();
 			}
 		});
 		return this.closeMenu();
