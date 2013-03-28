@@ -26,7 +26,7 @@ class Feed
 				item = Item.new(
 					:title => entry.title,
 					:url => entry.url,
-					:content => entry.summary,
+					:content => (entry.content || entry.summary || entry.description),
 					:date => entry.published
 				)
 				self.items << item
