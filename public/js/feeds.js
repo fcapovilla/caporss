@@ -308,6 +308,7 @@ var Folder = Backbone.Model.extend({
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
 		this.listenTo(this.feeds, 'change:unread_count', this.recalculateReadCount);
+		this.listenTo(this.feeds, 'destroy', this.recalculateReadCount);
 
 		this.items = new ItemCollection();
 		this.items.url = '/folder/' + this.id + '/item';
@@ -554,6 +555,7 @@ $('#editFeedButton').click(function() {
 	});
 });
 
+// Add a spinner icon when an Ajax call is running
 $(document).ajaxStart(function() {
 	$('#spinner').removeClass('invisible').addClass('icon-spin');
 }).ajaxStop(function() {
