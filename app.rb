@@ -269,8 +269,13 @@ put '/feed/:id', '/folder/*/feed/:id' do
 	end
 
     feed = Feed.get(params[:id])
+	old_folder = feed.folder
 	feed.attributes = attributes
 	feed.save
+
+	feed.update_unread_count!
+	old_folder.update_unread_count!
+
 	feed.to_json
 end
 
@@ -296,7 +301,10 @@ put '/unread/feed/:id' do |id|
 end
 
 delete '/feed/:id', '/folder/*/feed/:id' do
-	Feed.get(params[:id]).destroy
+	feed = Feed.get(params[:id])
+	old_folder = feed.folder
+	feed.destroy
+	old_folder.update_unread_count!
 end
 
 
@@ -320,6 +328,4 @@ put '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
 	item.to_json
 end
 
-delete '/item/:id' do |id|
-	Item.get(id).destroy
-end
+#delete '/item/:id' do |id|
