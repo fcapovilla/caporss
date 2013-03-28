@@ -99,11 +99,10 @@ var ItemListView = Backbone.View.extend({
 	},
 	setCollection: function(collection) {
 		this.stopListening(this.collection);
-
 		this.collection = collection;
+		this.cursor = null;
 
 		this.listenTo(this.collection, 'reset', this.addAll);
-
 		this.collection.fetch({reset: true});
 	},
 	closeAll: function() {
@@ -112,9 +111,15 @@ var ItemListView = Backbone.View.extend({
 		});
 	},
 	moveCursor: function(e) {
-		if(this.cursor !== null) {
+		var item = null;
+
+		if(this.cursor === null) {
+			if(e.keyCode == 74) {
+				item = this.collection.first();
+			}
+		}
+		else {
 			var index = this.collection.indexOf(this.collection.get(this.cursor));
-			var item = null;
 
 			if(e.keyCode == 74) { // J (down
 				item = this.collection.at(index+1);
@@ -122,15 +127,15 @@ var ItemListView = Backbone.View.extend({
 			else if(e.keyCode == 75) { // K (Up)
 				item = this.collection.at(index-1);
 			}
+		}
 
-			if(item !== null) {
-				this.closeAll();
-				item.set('open', true);
-				if(!item.get('read')) {
-					item.toggleRead();
-				}
-				this.cursor = item.id;
+		if(item !== null && item !== undefined) {
+			this.closeAll();
+			item.set('open', true);
+			if(!item.get('read')) {
+				item.toggleRead();
 			}
+			this.cursor = item.id;
 		}
 	}
 });
