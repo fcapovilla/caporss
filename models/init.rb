@@ -18,5 +18,5 @@ if Setting.count == 0
 	Setting.create(:name => 'username', :value => 'admin')
 	Setting.create(:name => 'salt', :value => '')
 	Setting.create(:name => 'password', :value => Digest::SHA512.hexdigest('admin'))
-	Setting.create(:name => 'cleanup_after', :value => '90')
+	Setting.create(:name => 'cleanup_after', :value => '300')
 end
