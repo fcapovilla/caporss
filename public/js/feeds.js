@@ -102,6 +102,7 @@ var ItemListView = Backbone.View.extend({
 		this.collection = collection;
 		this.cursor = null;
 
+		this.listenTo(this.collection, 'sync', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
 		this.collection.fetch({reset: true});
 	},
@@ -190,18 +191,32 @@ var Feed = Backbone.Model.extend({
 	decrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') - 1);
 	},
-	fetch: function(options) {
+	fetchChildren: function() {
 		if(this.get('active')) {
 			this.items.fetch({reset: true});
 		}
+	},
+	fetch: function(options) {
+		var res = Backbone.Collection.prototype.fetch.call(this, options);
 
-		return Backbone.Collection.prototype.fetch.call(this, options);
+		this.fetchChildren();
+
+		return res;
 	}
 });
 
 var FeedCollection = Backbone.Collection.extend({
 	model: Feed,
-	url: '/feed'
+	url: '/feed',
+	fetch: function(options) {
+		var res = Backbone.Collection.prototype.fetch.call(this, options);
+
+		this.each(function(feed) {
+			feed.fetchChildren();
+		});
+
+		return res;
+	}
 });
 
 var FeedView = Backbone.View.extend({
@@ -221,6 +236,7 @@ var FeedView = Backbone.View.extend({
 		_.bindAll(this);
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model, 'change', this.render);
+		this.listenTo(this.model, 'sync', this.render);
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
@@ -295,8 +311,8 @@ var Folder = Backbone.Model.extend({
 
 		this.items = new ItemCollection();
 		this.items.url = '/folder/' + this.id + '/item';
-		this.listenTo(this.items, 'itemRead', this.itemCollectionRead);
-		this.listenTo(this.items, 'itemUnread', this.itemCollectionUnread);
+		this.listenTo(this.items, 'itemRead', this.itemRead);
+		this.listenTo(this.items, 'itemUnread', this.itemUnread);
 	},
 	toggle: function() {
 		this.save({open : !this.get('open')});
@@ -304,10 +320,10 @@ var Folder = Backbone.Model.extend({
 	toJSON: function() {
 		return {open: this.get('open')};
 	},
-	itemCollectionRead: function(feed_id) {
+	itemRead: function(feed_id) {
 		this.feeds.get(feed_id).decrementReadCount();
     },
-	itemCollectionUnread: function(feed_id) {
+	itemUnread: function(feed_id) {
 		this.feeds.get(feed_id).incrementReadCount();
 	},
 	recalculateReadCount: function() {
@@ -316,12 +332,37 @@ var Folder = Backbone.Model.extend({
 			count += feed.get('unread_count');
 		});
 		this.set('unread_count', count);
+	},
+	fetchChildren: function() {
+		if(this.get('active')) {
+			this.items.fetch();
+		}
+
+		if(this.get('open')) {
+			this.feeds.fetch();
+		}
+	},
+	fetch: function(options) {
+		var res = Backbone.Collection.prototype.fetch.call(this, options);
+
+		this.fetchChildren();
+
+		return res;
 	}
 });
 
 var FolderCollection = Backbone.Collection.extend({
 	model: Folder,
-	url: '/folder'
+	url: '/folder',
+	fetch: function(options) {
+		var res = Backbone.Collection.prototype.fetch.call(this, options);
+
+		this.each(function(folder) {
+			folder.fetchChildren();
+		});
+
+		return res;
+	}
 });
 
 var FolderView = Backbone.View.extend({
@@ -342,6 +383,7 @@ var FolderView = Backbone.View.extend({
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model.feeds, 'add', this.addOne);
 		this.listenTo(this.model.feeds, 'reset', this.addAll);
+		this.listenTo(this.model.feeds, 'sync', this.render);
 
 		this.$feedList = $('<ul class="nav nav-list"></ul>');
 
@@ -365,9 +407,6 @@ var FolderView = Backbone.View.extend({
 	},
 	toggleFolderOpen: function() {
 		this.model.toggle();
-		if(this.model.get('open')) {
-			this.addAll();
-		}
 		return false;
 	},
 	deleteFolder: function() {
@@ -455,7 +494,7 @@ $('#syncButton').click(function() {
 		url: '/sync/all',
 		method: 'GET',
 		success: function() {
-			folderList.collection.fetch({reset: true});
+			folderList.collection.fetch();
 			icon.attr('class', 'icon-refresh');
 		},
 		error: function() {
@@ -471,7 +510,7 @@ $('#cleanupButton').click(function() {
 		url: '/cleanup/all',
 		method: 'GET',
 		success: function() {
-			folderList.collection.fetch({reset: true});
+			folderList.collection.fetch();
 			icon.attr('class', 'icon-fire');
 		},
 		error: function() {
@@ -489,7 +528,7 @@ $('#subscribeButton').click(function() {
 			folder: $('#subscriptionFolder').val()
 		},
 		success: function() {
-			folderList.collection.fetch({reset: true});
+			folderList.collection.fetch();
 		}
 	});
 });
@@ -508,7 +547,7 @@ $('#editFeedButton').click(function() {
 				folder: feedFolder
 			},{
 				success: function() {
-					folderList.collection.fetch({reset: true});
+					folderList.collection.fetch();
 				}
 			});
 		}

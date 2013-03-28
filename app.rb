@@ -282,6 +282,7 @@ put '/read/feed/:id' do |id|
 	end
 	feed.unread_count = 0
 	feed.save
+	feed.folder.update_unread_count!
 end
 
 # Mark all items in this feed as "unread"
