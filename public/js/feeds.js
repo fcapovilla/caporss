@@ -487,7 +487,9 @@ $('#syncButton').click(function() {
 		url: '/sync/all',
 		method: 'POST',
 		success: function() {
-			folderList.collection.fetch();
+			items = null;
+			currentSelection = null;
+			folders.fetch();
 			icon.attr('class', 'icon-refresh');
 		},
 		error: function() {
@@ -504,7 +506,9 @@ $('#cleanupButton').click(function() {
 			cleanup_after: $('#cleanup_after').val()
 		},
 		success: function() {
-			folderList.collection.fetch();
+			items = null;
+			currentSelection = null;
+			folders.fetch();
 		},
 	});
 });
@@ -518,7 +522,9 @@ $('#subscribeButton').click(function() {
 			folder: $('#subscriptionFolder').val()
 		},
 		success: function() {
-			folderList.collection.fetch();
+			items = null;
+			currentSelection = null;
+			folders.fetch({reset: true});
 		}
 	});
 	$('#subscriptionUrl').val('');
@@ -531,7 +537,7 @@ $('#editFeedButton').click(function() {
 	var feedFolder = dialog.find('#feedFolder').val();
 	var feedUrl = dialog.find('#feedUrl').val();
 
-	folderList.collection.each(function(folder) {
+	folders.each(function(folder) {
 		var feed = folder.feeds.get(feedId);
 		if(feed) {
 			feed.save({
@@ -539,7 +545,9 @@ $('#editFeedButton').click(function() {
 				folder: feedFolder
 			},{
 				success: function() {
-					folderList.collection.fetch();
+					items = null;
+					currentSelection = null;
+					folders.fetch({reset: true});
 				}
 			});
 		}
