@@ -88,9 +88,15 @@ body {
 	clear: both;
 }
 
-.feedTitle.active,
-.folderTitle.active {
-	color: #ffffff;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-	background-color: rgb(91, 165, 202);
+.feedTitle,
+.folderTitle,
+.item-container {
+	&:hover {
+		background-color: rgb(230, 230, 230);
+	}
+	&.active {
+		color: #ffffff;
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+		background-color: rgb(91, 165, 202);
+	}
 }
