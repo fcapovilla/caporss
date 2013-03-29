@@ -87,7 +87,11 @@ var ItemListView = Backbone.View.extend({
 		this.cursor = null;
 
 		_.bindAll(this);
-		$(document).on('keyup', this.moveCursor);
+		this.listenTo(this.collection, 'sync', this.addAll);
+		this.listenTo(this.collection, 'reset', this.addAll);
+
+		$(document).off('keyup.itemlist');
+		$(document).on('keyup.itemlist', this.moveCursor);
 	},
 	addOne: function(item) {
 		var view = new ItemView({model: item});
@@ -96,15 +100,6 @@ var ItemListView = Backbone.View.extend({
 	addAll: function() {
 		this.$el.empty();
 		this.collection.each(this.addOne, this);
-	},
-	setCollection: function(collection) {
-		this.stopListening(this.collection);
-		this.collection = collection;
-		this.cursor = null;
-
-		this.listenTo(this.collection, 'sync', this.addAll);
-		this.listenTo(this.collection, 'reset', this.addAll);
-		this.collection.fetch();
 	},
 	closeAll: function() {
 		this.collection.each(function(item) {
@@ -241,7 +236,8 @@ var FeedView = Backbone.View.extend({
 		return this;
 	},
 	selectFeed: function() {
-		items.setCollection(this.model.items);
+		items = new ItemListView({collection: this.model.items});
+		this.model.items.fetch();
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
 		}
@@ -448,7 +444,8 @@ var FolderView = Backbone.View.extend({
 		return false;
 	},
 	selectFolder: function() {
-		items.setCollection(this.model.items);
+		items = new ItemListView({collection: this.model.items});
+		this.model.items.fetch();
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
 		}
@@ -462,8 +459,6 @@ var FolderListView = Backbone.View.extend({
 	initialize: function() {
 		this.listenTo(this.collection, 'add', this.addOne);
 		this.listenTo(this.collection, 'reset', this.addAll);
-
-		this.collection.fetch();
 	},
 	addOne: function(folder) {
 		var view = new FolderView({model: folder});
@@ -476,9 +471,11 @@ var FolderListView = Backbone.View.extend({
 });
 
 
-var items = new ItemListView();
-var folderList = new FolderListView({collection: new FolderCollection()});
+var items = null;
 var currentSelection = null;
+var folders = new FolderCollection();
+var folderList = new FolderListView({collection: folders});
+folders.fetch();
 
 
 // Buttons and dialogs actions
