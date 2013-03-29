@@ -339,9 +339,7 @@ var Folder = Backbone.Model.extend({
 			this.items.fetch();
 		}
 
-		if(this.get('open')) {
-			this.feeds.fetch();
-		}
+		this.feeds.fetch();
 	},
 	fetch: function(options) {
 		var res = Backbone.Collection.prototype.fetch.call(this, options);
