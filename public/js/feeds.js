@@ -2,7 +2,6 @@ $(function() {
 
 // Items
 var Item = Backbone.Model.extend({
-	idAttribute: 'id',
 	initialize: function() {
 		// Client-side attribute
 		this.set('open', false);
@@ -75,7 +74,7 @@ var ItemView = Backbone.View.extend({
 				item.toggleRead();
 			}
 		});
-    },
+	},
 	showDropdownMenu: function() {
 		this.$el.find('.dropdown-toggle').dropdown('toggle');
 		return false;
@@ -105,7 +104,7 @@ var ItemListView = Backbone.View.extend({
 
 		this.listenTo(this.collection, 'sync', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
-		this.collection.fetch({reset: true});
+		this.collection.fetch();
 	},
 	closeAll: function() {
 		this.collection.each(function(item) {
@@ -145,7 +144,6 @@ var ItemListView = Backbone.View.extend({
 
 // Feeds
 var Feed = Backbone.Model.extend({
-	idAttribute: 'id',
 	initialize: function() {
 		this.set('active', false);
 
@@ -175,7 +173,7 @@ var Feed = Backbone.Model.extend({
 				}
 			}
 		});
-    },
+	},
 	markUnread: function() {
 		var that = this;
 		$.ajax({
@@ -185,7 +183,7 @@ var Feed = Backbone.Model.extend({
 				that.fetch();
 			}
 		});
-    },
+	},
 	incrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') + 1);
 	},
@@ -194,7 +192,7 @@ var Feed = Backbone.Model.extend({
 	},
 	fetchChildren: function() {
 		if(this.get('active')) {
-			this.items.fetch({reset: true});
+			this.items.fetch();
 		}
 	},
 	fetch: function(options) {
@@ -264,15 +262,15 @@ var FeedView = Backbone.View.extend({
 			}
 		});
 		return this.closeMenu();
-    },
+	},
 	markFeedRead: function() {
 		this.model.markRead();
 		return this.closeMenu();
-    },
+	},
 	markFeedUnread: function() {
 		this.model.markUnread();
 		return this.closeMenu();
-    },
+	},
 	showFeedEditDialog: function() {
 		var dialog = $('#editFeedModal');
 		dialog.find('#feedId').val(this.model.id);
@@ -301,7 +299,6 @@ var FeedView = Backbone.View.extend({
 
 // Folders
 var Folder = Backbone.Model.extend({
-	idAttribute: 'id',
 	initialize: function() {
 		this.set('active', false);
 
@@ -323,7 +320,7 @@ var Folder = Backbone.Model.extend({
 	},
 	itemRead: function(feed_id) {
 		this.feeds.get(feed_id).decrementReadCount();
-    },
+	},
 	itemUnread: function(feed_id) {
 		this.feeds.get(feed_id).incrementReadCount();
 	},
@@ -422,19 +419,19 @@ var FolderView = Backbone.View.extend({
 			}
 		});
 		return this.closeMenu();
-    },
+	},
 	markFolderRead: function() {
 		this.model.feeds.each(function(feed) {
 			feed.markRead();
 		});
 		return this.closeMenu();
-    },
+	},
 	markFolderUnread: function() {
 		this.model.feeds.each(function(feed) {
 			feed.markUnread();
 		});
 		return this.closeMenu();
-    },
+	},
 	openMenu: function() {
 		// Close any opened menu
 		$(document).click();
