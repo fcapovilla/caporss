@@ -532,6 +532,8 @@ $('#subscribeButton').click(function() {
 			folderList.collection.fetch();
 		}
 	});
+	$('#subscriptionUrl').val('');
+	$('#subscriptionFolder').val('');
 });
 
 $('#editFeedButton').click(function() {
@@ -560,6 +562,16 @@ $(document).ajaxStart(function() {
 	$('#spinner').removeClass('invisible').addClass('icon-spin');
 }).ajaxStop(function() {
 	$('#spinner').removeClass('icon-spin').addClass('invisible');
+});
+
+// Prevent double-submit in the OPML upload form
+$('form.upload-form').submit(function(e) {
+	if($(this).data('submitted') === true) {
+		e.preventDefault();
+	}
+	else {
+		$(this).data('submitted', true);
+	}
 });
 
 });

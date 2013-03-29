@@ -6,8 +6,6 @@
           %i(id="spinner" class="icon-spinner icon-large invisible")
         %button(class="btn" id="syncButton" title="Sync")
           %i(class="icon-refresh")
-        %button(class="btn" id="cleanupButton" title="Cleanup")
-          %i(class="icon-fire")
         %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal" title="Subscribe")
           %i(class="icon-plus")
         %button(class="btn" href="#settingsModal" role="button" data-toggle="modal" title="Settings")
@@ -78,17 +76,19 @@
             New Password :
           .controls
             %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
-      .well
-        %button(class="btn" href="#opmlModal" role="button" data-toggle="modal" title="Import OPML")
-          Import OPML file
-        %a(class="btn" href="/export.opml" title="Export to OPML")
-          Export feeds as OPML
       %label
-        "Cleanup" deletes items older than :
+        "Clean up" deletes items older than :
       .input-append
         %input(class="input-block-level" type="text" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
         %span.add-on
           days
+      .well
+        %button(class="btn" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal" title="Import OPML")
+          Import OPML file
+        %a(class="btn" href="/export.opml" title="Export to OPML")
+          Export feeds as OPML
+        %button(class="btn" id="cleanupButton" data-dismiss="modal" title="Cleanup feeds")
+          Clean up feeds
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         Save
