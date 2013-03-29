@@ -257,7 +257,7 @@ var FeedView = Backbone.View.extend({
 	syncFeed: function() {
 		var that = this;
 		$.ajax({
-			method: 'GET',
+			method: 'POST',
 			url: '/sync/feed/' + this.model.id,
 			success: function() {
 				that.model.fetch();
@@ -417,7 +417,7 @@ var FolderView = Backbone.View.extend({
 	syncFolder: function() {
 		var that = this;
 		$.ajax({
-			method: 'GET',
+			method: 'POST',
 			url: '/sync/folder/' + this.model.id,
 			success: function() {
 				that.model.feeds.fetch();
@@ -493,7 +493,7 @@ $('#syncButton').click(function() {
 	icon.attr('class', 'icon-time');
 	$.ajax({
 		url: '/sync/all',
-		method: 'GET',
+		method: 'POST',
 		success: function() {
 			folderList.collection.fetch();
 			icon.attr('class', 'icon-refresh');
@@ -505,18 +505,15 @@ $('#syncButton').click(function() {
 });
 
 $('#cleanupButton').click(function() {
-	var icon = $(this).children('i');
-	icon.attr('class', 'icon-time');
 	$.ajax({
 		url: '/cleanup/all',
-		method: 'GET',
+		method: 'POST',
+		data: {
+			cleanup_after: $('#cleanup_after').val()
+		},
 		success: function() {
 			folderList.collection.fetch();
-			icon.attr('class', 'icon-fire');
 		},
-		error: function() {
-			icon.attr('class', 'icon-fire');
-		}
 	});
 });
 

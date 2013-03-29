@@ -79,16 +79,16 @@
       %label
         "Clean up" deletes items older than :
       .input-append
-        %input(class="input-block-level" type="text" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
+        %input(class="input-block-level" type="text" id="cleanup_after" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
         %span.add-on
           days
+      %button(class="btn pull-right" id="cleanupButton" data-dismiss="modal" title="Cleanup feeds")
+        Clean up feeds
       .well
         %button(class="btn" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal" title="Import OPML")
           Import OPML file
         %a(class="btn" href="/export.opml" title="Export to OPML")
           Export feeds as OPML
-        %button(class="btn" id="cleanupButton" data-dismiss="modal" title="Cleanup feeds")
-          Clean up feeds
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         Save

@@ -86,7 +86,7 @@ end
 # Sync
 
 namespace '/sync' do
-	get '/all' do
+	post '/all' do
 		urls = Feed.all.map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
 		feeds.each do |url, xml|
@@ -97,7 +97,7 @@ namespace '/sync' do
 		return 'done'
 	end
 
-	get '/folder/:id' do |id|
+	post '/folder/:id' do |id|
 		urls = Folder.get(id).feeds.map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
 		feeds.each do |url, xml|
@@ -108,7 +108,7 @@ namespace '/sync' do
 		return 'done'
 	end
 
-	get '/feed/:id' do |id|
+	post '/feed/:id' do |id|
 		Feed.get(id).sync!
 		return 'done'
 	end
@@ -118,19 +118,28 @@ end
 # Cleanup
 
 namespace '/cleanup' do
-	get '/all' do
+	before do
+		if params[:cleanup_after]
+			cleanup_after = Setting.first_or_create(:name => 'cleanup_after')
+			cleanup_after.value = params[:cleanup_after]
+			cleanup_after.save
+			set :cleanup_after, params[:cleanup_after]
+		end
+	end
+
+	post '/all' do
 		Folder.all.each do |folder|
 			folder.cleanup!(settings.cleanup_after)
 		end
 		return 'done'
 	end
 
-	get '/folder/:id' do |id|
+	post '/folder/:id' do |id|
 		Folder.get(id).cleanup!(settings.cleanup_after)
 		return 'done'
 	end
 
-	get '/feed/:id' do |id|
+	post '/feed/:id' do |id|
 		Feed.get(id).cleanup!(settings.cleanup_after)
 		return 'done'
 	end
