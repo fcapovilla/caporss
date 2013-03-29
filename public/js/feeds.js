@@ -300,6 +300,8 @@ var Folder = Backbone.Model.extend({
 
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
+		this.feeds.fetch();
+
 		this.listenTo(this.feeds, 'change:unread_count', this.recalculateReadCount);
 		this.listenTo(this.feeds, 'destroy', this.recalculateReadCount);
 
@@ -378,8 +380,6 @@ var FolderView = Backbone.View.extend({
 		this.listenTo(this.model.feeds, 'change', this.render);
 
 		this.$feedList = $('<ul class="nav nav-list"></ul>');
-
-		this.model.feeds.fetch();
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
