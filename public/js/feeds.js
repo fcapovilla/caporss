@@ -39,6 +39,7 @@ var ItemView = Backbone.View.extend({
 		'click .item-container': 'toggleContent'
 	},
 	initialize: function() {
+		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model, 'change', this.render);
 	},
 	render: function() {
@@ -236,7 +237,6 @@ var FeedView = Backbone.View.extend({
 		_.bindAll(this);
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model, 'sync', this.render);
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
@@ -382,7 +382,7 @@ var FolderView = Backbone.View.extend({
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model.feeds, 'add', this.addOne);
 		this.listenTo(this.model.feeds, 'reset', this.addAll);
-		this.listenTo(this.model.feeds, 'sync', this.render);
+		this.listenTo(this.model.feeds, 'change', this.render);
 
 		this.$feedList = $('<ul class="nav nav-list"></ul>');
 
