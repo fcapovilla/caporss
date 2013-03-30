@@ -32,9 +32,18 @@ Most dependencies are already included in the Gemfile and in the application's p
 This procedure will run CapoRSS in development mode using an SQLite database
 
 1. Install Ruby 1.9.3
-2. Install the "bundler" Ruby gem using this command : "gem install bundler"
-3. Run "bundle install --without=production" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages.
-4. Start CapoRSS using this command : "ruby app.rb"
+2. Install the "bundler" Ruby gem using this command:
+
+	gem install bundler
+
+3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
+
+	bundle install --without=production
+
+4. Start CapoRSS using this command:
+
+	ruby app.rb
+
 5. Open a web browser and go to "http://localhost:4567"
 6. The default username/password is "admin"/"admin"
 
@@ -43,10 +52,21 @@ This procedure will run CapoRSS in development mode using an SQLite database
 CapoRSS can be run in production mode with Thin and PostgresQL. Other database backends can be used by replacing the "dm-postgres-adapter" with the correct Datamapper adapter for your database.
 
 1. Install Ruby 1.9.3
-2. Install the "bundler" Ruby gem using this command : "gem install bundler"
-3. Run "bundle install --without=development" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages.
-4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex: "export DATABASE\_URL="postgres://username:password@hostname/database"
-5. Run CapoRSS using Thin : "thin start -R config.ru"
+2. Install the "bundler" Ruby gem using this command:
+
+	gem install bundler
+
+3. Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
+
+	bundle install --without=development
+
+4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
+
+	export DATABASE\_URL="postgres://username:password@hostname/database
+
+5. Run CapoRSS using Thin:
+
+	thin start -R config.ru
 
 ### Heroku
 
