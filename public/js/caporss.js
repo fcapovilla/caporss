@@ -1,3 +1,6 @@
+// CapoRSS - (c) 2013 Frédérick Capovilla
+// CapoRSS may be freely distributed under the revised BSD license.
+
 $(function() {
 
 // Items
