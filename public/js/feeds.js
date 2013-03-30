@@ -243,6 +243,7 @@ var FeedView = Backbone.View.extend({
 		}
 		this.model.set('active', true);
 		currentSelection = this.model;
+		window.scrollTo(0,0);
 	},
 	deleteFeed: function() {
 		this.model.destroy();
@@ -451,6 +452,7 @@ var FolderView = Backbone.View.extend({
 		}
 		this.model.set('active', true);
 		currentSelection = this.model;
+		window.scrollTo(0,0);
 	}
 });
 
@@ -570,5 +572,9 @@ $('form.upload-form').submit(function(e) {
 		$(this).data('submitted', true);
 	}
 });
+
+$(window).on('resize orientationChanged', function() {
+	$('.feed-list').css('height', $(window).height() - 42);
+}).resize();
 
 });
