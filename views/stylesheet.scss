@@ -20,6 +20,7 @@ body {
 	height: 100%;
 	overflow: auto;
 	cursor:	default;
+	background-color: #f8f8f8;
 	#feed-list {
 		white-space: nowrap;
 		padding-top: 10px;
@@ -43,9 +44,15 @@ body {
 	}
 }
 
+.content {
+	margin-left: 300px;
+}
+
 .item-list {
 	display: block;
-	margin-left: 300px;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
 	li {
 		cursor: pointer;
 		.item-content {
