@@ -239,6 +239,9 @@ var FeedView = Backbone.View.extend({
 		return this;
 	},
 	selectFeed: function() {
+		if(items !== null) {
+			items.$el.empty();
+		}
 		items = new ItemListView({collection: this.model.items});
 		this.model.items.fetch();
 		if(currentSelection !== null) {
@@ -448,6 +451,9 @@ var FolderView = Backbone.View.extend({
 		return false;
 	},
 	selectFolder: function() {
+		if(items !== null) {
+			items.$el.empty();
+		}
 		items = new ItemListView({collection: this.model.items});
 		this.model.items.fetch();
 		if(currentSelection !== null) {
@@ -492,7 +498,9 @@ $('#syncButton').click(function() {
 		url: '/sync/all',
 		method: 'POST',
 		success: function() {
-			items = null;
+			if(items !== null) {
+				items.$el.empty();
+			}
 			currentSelection = null;
 			folders.fetch();
 			icon.attr('class', 'icon-refresh');
@@ -511,7 +519,9 @@ $('#cleanupButton').click(function() {
 			cleanup_after: $('#cleanup_after').val()
 		},
 		success: function() {
-			items = null;
+			if(items !== null) {
+				items.$el.empty();
+			}
 			currentSelection = null;
 			folders.fetch();
 		},
@@ -527,7 +537,9 @@ $('#subscribeButton').click(function() {
 			folder: $('#subscriptionFolder').val()
 		},
 		success: function() {
-			items = null;
+			if(items !== null) {
+				items.$el.empty();
+			}
 			currentSelection = null;
 			folders.fetch({reset: true});
 		}
@@ -550,7 +562,9 @@ $('#editFeedButton').click(function() {
 				folder: feedFolder
 			},{
 				success: function() {
-					items = null;
+					if(items !== null) {
+						items.$el.empty();
+					}
 					currentSelection = null;
 					folders.fetch({reset: true});
 				}
