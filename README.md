@@ -49,7 +49,7 @@ This procedure will run CapoRSS in development mode using an SQLite database
 
 ### localhost (production)
 
-CapoRSS can be run in production mode with Thin and PostgresQL. Other database backends can be used by replacing the "dm-postgres-adapter" with the correct Datamapper adapter for your database.
+CapoRSS can be run in production mode with Thin and PostgresQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
 
 1. Install Ruby 1.9.3
 2. Install the "bundler" Ruby gem using this command:
