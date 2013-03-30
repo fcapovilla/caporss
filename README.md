@@ -8,20 +8,20 @@ CapoRSS is a simple self-hosted RSS aggregator written in Ruby.
 
 CapoRSS is built on top of these great projects :
 
-* Ruby 1.9.3
-* Sinatra
-* Datamapper
-* Feedzirra
-* Nokogiri
-* Bootstrap
-* Font awesome
-* Backbone.js
-* Underscore.js
-* JQuery
-* Haml
-* Sass
-* Thin
-* rack-ssl-enforcer
+* [Ruby 1.9.3](http://www.ruby-lang.org/)
+* [Sinatra](http://www.sinatrarb.com/)
+* [Datamapper](http://datamapper.org/)
+* [Feedzirra](https://github.com/pauldix/feedzirra)
+* [Nokogiri](http://nokogiri.org/)
+* [Bootstrap](http://twitter.github.com/bootstrap/)
+* [Font awesome](http://fortawesome.github.com/Font-Awesome/)
+* [Backbone.js](http://backbonejs.org/)
+* [Underscore.js](http://underscorejs.org/)
+* [JQuery](http://jquery.com/)
+* [Haml](http://haml.info/)
+* [Sass](http://sass-lang.com/)
+* [Thin](http://code.macournoyer.com/thin/)
+* [rack-ssl-enforcer](https://github.com/tobmatth/rack-ssl-enforcer)
 
 Most dependencies are already included in the Gemfile and in the application's public directory.
 
@@ -34,15 +34,15 @@ This procedure will run CapoRSS in development mode using an SQLite database
 1. Install Ruby 1.9.3
 2. Install the "bundler" Ruby gem using this command:
 
-	gem install bundler
+    gem install bundler
 
 3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-	bundle install --without=production
+    bundle install --without=production
 
 4. Start CapoRSS using this command:
 
-	ruby app.rb
+    ruby app.rb
 
 5. Open a web browser and go to "http://localhost:4567"
 6. The default username/password is "admin"/"admin"
@@ -54,19 +54,21 @@ CapoRSS can be run in production mode with Thin and PostgresQL. Other database b
 1. Install Ruby 1.9.3
 2. Install the "bundler" Ruby gem using this command:
 
-	gem install bundler
+    gem install bundler
 
 3. Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-	bundle install --without=development
+    bundle install --without=development
 
 4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
 
-	export DATABASE\_URL="postgres://username:password@hostname/database
+    export DATABASE\_URL="postgres://username:password@hostname/database
 
 5. Run CapoRSS using Thin:
 
-	thin start -R config.ru
+    thin start -R config.ru
+
+Note: For security reasons, a SSL certificate is required for running CapoRSS in production mode.
 
 ### Heroku
 
