@@ -1,15 +1,19 @@
+# encoding: utf-8
 require 'data_mapper'
 require 'dm-is-list'
 require 'feedzirra'
 
+# Connect to the database
 DataMapper::Logger.new(STDOUT, :warn)
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')
 
+# Load all models
 require_relative 'setting'
 require_relative 'folder'
 require_relative 'feed'
 require_relative 'item'
 
+# Upgrade the database
 DataMapper.finalize
 DataMapper.auto_upgrade!
 

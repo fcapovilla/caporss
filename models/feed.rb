@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Feed
 	include DataMapper::Resource
 
@@ -11,11 +12,13 @@ class Feed
 	has n, :items, :constraint => :destroy
 	is :list, :scope => :folder_id
 
+	# Fetch the feed using feedzirra and update it
 	def sync!
 		feed = Feedzirra::Feed.fetch_and_parse(self.url)
 		update_feed!(feed) unless feed.kind_of?(Fixnum) or feed.nil?
 	end
 
+	# Update the feed using a feedzirra feed object
 	def update_feed!(feed)
 		if feed.title and feed.title != self.title
 			self.title = feed.title
@@ -47,8 +50,9 @@ class Feed
 		return self
 	end
 
+	# Return an OPML XML DocumentFragment representing this feed
 	def to_opml
-		doc = Nokogiri::HTML::DocumentFragment.parse ""
+		doc = Nokogiri::XML::DocumentFragment.parse ""
 		Nokogiri::XML::Builder.with(doc) { |xml|
 			xml.outline(
 				:title => self.title,
@@ -60,6 +64,7 @@ class Feed
 		return doc
 	end
 
+	# Delete all items older than x days
 	def cleanup!(days)
 		self.items.each do |item|
 			if item.date.to_date + days.to_i < Date.today

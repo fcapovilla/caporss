@@ -11,8 +11,8 @@ require 'digest/sha2'
 require_relative 'models/init'
 
 
+# Force SSL in production
 configure :production do
-	# Force SSL in production
 	require 'rack/ssl-enforcer'
 	use Rack::SslEnforcer
 end
@@ -22,6 +22,7 @@ Setting.all.each do |setting|
 	set setting.name.to_sym, setting.value
 end
 
+# Basic Auth
 if defined? settings.username and defined? settings.password
 	use Rack::Auth::Basic, "Access restricted" do |username, password|
 	    [username, Digest::SHA512.hexdigest(password + settings.salt)] == [settings.username, settings.password]
@@ -29,15 +30,18 @@ if defined? settings.username and defined? settings.password
 end
 
 
+# Force UTF-8
 before do
     content_type :html, 'charset' => 'utf-8'
 end
 
+# SCSS stylesheet
 get '/stylesheet.css' do
     content_type :css, 'charset' => 'utf-8'
     scss :stylesheet
 end
 
+# Render home page
 get '/' do
     haml :index
 end
@@ -84,7 +88,6 @@ end
 
 
 # Sync
-
 namespace '/sync' do
 	post '/all' do
 		urls = Feed.all.map{ |feed| feed.url }
@@ -116,7 +119,6 @@ end
 
 
 # Cleanup
-
 namespace '/cleanup' do
 	before do
 		if params[:cleanup_after]
@@ -147,7 +149,6 @@ end
 
 
 # Import OPML Files
-
 post '/opml_upload' do
 	opml = Nokogiri::XML(params[:file][:tempfile].read)
 	opml.css('body>outline').each do |root_node|
@@ -180,7 +181,6 @@ post '/opml_upload' do
 end
 
 # OPML Export
-
 get '/export.opml' do
 	headers "Content-Disposition" => "attachment;filename=export.opml"
 	content_type 'text/x-opml', 'charset' => 'utf-8'
@@ -201,7 +201,6 @@ end
 
 
 # Subscription
-
 post '/subscribe' do
 	params[:folder] = 'Feeds' if params[:folder].empty?
 	folder = Folder.first_or_create(:title => params[:folder])
@@ -269,6 +268,8 @@ end
 
 put '/feed/:id', '/folder/*/feed/:id' do
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
+
+	# Convert the folder name into a folder_id
 	if attributes.has_key?(:folder)
 		folder = Folder.first_or_create(:title => attributes[:folder])
 		folder.save

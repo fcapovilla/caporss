@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Folder
 	include DataMapper::Resource
 
@@ -18,8 +19,9 @@ class Folder
 		return self
 	end
 
+	# Return an OPML XML DocumentFragment representing this feed
 	def to_opml
-		doc = Nokogiri::HTML::DocumentFragment.parse ""
+		doc = Nokogiri::XML::DocumentFragment.parse ""
 		Nokogiri::XML::Builder.with(doc) { |xml|
 			xml.outline(:title => self.title, :text => self.title) {
 				self.feeds.each do |feed|
@@ -30,6 +32,7 @@ class Folder
 		return doc
 	end
 
+	# Delete all items older than x days
 	def cleanup!(days)
 		self.feeds.each do |feed|
 			feed.cleanup!(days)
