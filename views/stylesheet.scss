@@ -118,6 +118,14 @@ body {
 }
 
 @media screen and (max-width:767px) {
+	body {
+		font-size: 16px;
+	}
+
+	.btn {
+		font-size: 22px !important;
+	}
+
 	.mobile-item-button {
 		display: inline !important;
 	}
@@ -125,7 +133,7 @@ body {
 	.feed-list {
 		width: 100%;
 		li {
-			line-height: 28px;
+			line-height: 30px;
 		}
 	}
 
