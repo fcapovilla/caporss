@@ -133,7 +133,7 @@ body {
 
 @media screen and (max-width:767px) {
 	body {
-		font-size: 14px;
+		font-size: 1em;
 		padding: 0px;
 	}
 
@@ -148,13 +148,9 @@ body {
 	.feed-list {
 		width: 100%;
 
-		li {
-			line-height: 30px;
-		}
-
 		.folder-icon,
 		.menu-toggle {
-			padding: 10px;
+			padding: 7px;
 			margin: 0px;
 		}
 	}
@@ -166,5 +162,20 @@ body {
 		top: 42px;
 		padding: 0px;
 		width: 100%;
+
+		.item-title {
+			float: none;
+			overflow: hidden;
+			margin-left: 55px;
+			line-height: 22px;
+			padding: 5px 0;
+		}
+	}
+
+	#item-list {
+		.readUnreadIcon,
+		.dropdown-toggle {
+			padding: 7px 1px;
+		}
 	}
 }
