@@ -43,6 +43,7 @@ var ItemView = Backbone.View.extend({
 	initialize: function() {
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model, 'change', this.render);
+		this.listenTo(this.model, 'change:open', this.openChanged);
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.attributes));
@@ -81,6 +82,12 @@ var ItemView = Backbone.View.extend({
 	showDropdownMenu: function() {
 		this.$el.find('.dropdown-toggle').dropdown('toggle');
 		return false;
+	},
+	openChanged: function(item, opened) {
+		if(opened) {
+			var elem = $('.item-list').eq(0);
+			elem.scrollTop(this.$el.position().top + elem.scrollTop());
+		}
 	}
 });
 
@@ -631,14 +638,14 @@ $('form.upload-form').submit(function(e) {
 	}
 });
 
-// Resize the feed list on viewport size changes
+// Resize the lists on viewport size changes
 $(window).on('resize orientationChanged', function() {
 	$('.feed-list').css('height', $(window).height() - 42);
 	if($(window).width() <= 767) {
 		$('.item-list').css('height', $(window).height() - 42);
 	}
 	else {
-		$('.item-list').css('height', '');
+		$('.item-list').css('height', $(window).height());
 	}
 }).resize();
 
