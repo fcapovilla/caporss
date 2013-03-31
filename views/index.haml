@@ -1,6 +1,8 @@
 .side-bar
   .navbar
     .navbar-inner
+      %button(class="btn mobile-back visible-phone invisible" id="mobileBackButton" title="Back")
+        %i(class="icon-arrow-left")
       .btn-group
         %button(class="btn btn-inverse")
           %i(id="spinner" class="icon-spinner icon-large invisible")
@@ -13,7 +15,7 @@
   .feed-list
     %ul(id="feed-list" class="nav nav-list")
 .content
-  .item-list
+  .item-list.hidden-phone
     %ul(id="item-list" class="nav nav-list")
 
 -# Subscription form

@@ -250,6 +250,9 @@ var FeedView = Backbone.View.extend({
 		this.model.set('active', true);
 		currentSelection = this.model;
 		window.scrollTo(0,0);
+		$('.item-list').removeClass('hidden-phone');
+		$('.feed-list').addClass('hidden-phone');
+		$('.mobile-back').removeClass('invisible');
 	},
 	deleteFeed: function() {
 		this.model.destroy();
@@ -474,6 +477,9 @@ var FolderView = Backbone.View.extend({
 		this.model.set('active', true);
 		currentSelection = this.model;
 		window.scrollTo(0,0);
+		$('.item-list').removeClass('hidden-phone');
+		$('.feed-list').addClass('hidden-phone');
+		$('.mobile-back').removeClass('invisible');
 	}
 });
 
@@ -585,6 +591,21 @@ $('#editFeedButton').click(function() {
 	});
 });
 
+$('#mobileBackButton').click(function() {
+	if(items !== null) {
+		items.$el.empty();
+	}
+
+	if(currentSelection !== null) {
+		currentSelection.set('active', false);
+		currentSelection = null;
+	}
+
+	$('.mobile-back').addClass('invisible');
+	$('.item-list').addClass('hidden-phone');
+	$('.feed-list').removeClass('hidden-phone');
+});
+
 // Add a spinner icon when an Ajax call is running
 $(document).ajaxStart(function() {
 	$('#spinner').removeClass('invisible').addClass('icon-spin');
@@ -605,6 +626,12 @@ $('form.upload-form').submit(function(e) {
 // Resize the feed list on viewport size changes
 $(window).on('resize orientationChanged', function() {
 	$('.feed-list').css('height', $(window).height() - 42);
+	if($(window).width() <= 767) {
+		$('.item-list').css('height', $(window).height() - 42);
+	}
+	else {
+		$('.item-list').css('height', '');
+	}
 }).resize();
 
 });
