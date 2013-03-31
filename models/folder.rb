@@ -4,7 +4,7 @@ class Folder
 
 	property :id, Serial
 	property :title, String, :length => 1..200
-	property :open, Boolean, :default => false
+	property :open, Boolean, :default => true
 	property :unread_count, Integer, :default => 0
 
 	has n, :feeds, :constraint => :destroy
