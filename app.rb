@@ -92,23 +92,27 @@ namespace '/sync' do
 	post '/all' do
 		urls = Feed.all.map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
+		count = 0
 		feeds.each do |url, xml|
 			next if xml.kind_of?(Fixnum)
 			feed = Feed.first(:url => url)
 			feed.update_feed!(xml) if feed
+			count+=1
 		end
-		return 'done'
+		return count + ' updated'
 	end
 
 	post '/folder/:id' do |id|
 		urls = Folder.get(id).feeds.map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
+		count = 0
 		feeds.each do |url, xml|
 			next if xml.kind_of?(Fixnum)
 			feed = Feed.first(:url => url)
 			feed.update_feed!(xml) if feed
+			count+=1
 		end
-		return 'done'
+		return count + ' updated'
 	end
 
 	post '/feed/:id' do |id|
