@@ -120,7 +120,7 @@ var ItemListView = Backbone.View.extend({
 		else {
 			var index = this.collection.indexOf(this.collection.get(this.cursor));
 
-			if(e.keyCode == 74) { // J (down
+			if(e.keyCode == 74) { // J (down)
 				item = this.collection.at(index+1);
 			}
 			else if(e.keyCode == 75) { // K (Up)
@@ -252,7 +252,7 @@ var FeedView = Backbone.View.extend({
 		window.scrollTo(0,0);
 		$('.item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
-		$('.mobile-back').removeClass('invisible');
+		$('.mobile-item-button').removeClass('invisible');
 	},
 	deleteFeed: function() {
 		this.model.destroy();
@@ -479,7 +479,7 @@ var FolderView = Backbone.View.extend({
 		window.scrollTo(0,0);
 		$('.item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
-		$('.mobile-back').removeClass('invisible');
+		$('.mobile-item-button').removeClass('invisible');
 	}
 });
 
@@ -601,9 +601,17 @@ $('#mobileBackButton').click(function() {
 		currentSelection = null;
 	}
 
-	$('.mobile-back').addClass('invisible');
+	$('.mobile-item-button').addClass('invisible');
 	$('.item-list').addClass('hidden-phone');
 	$('.feed-list').removeClass('hidden-phone');
+});
+
+$('#mobilePrevItem').click(function() {
+	items.moveCursor({keyCode: 74});
+});
+
+$('#mobileNextItem').click(function() {
+	items.moveCursor({keyCode: 75});
 });
 
 // Add a spinner icon when an Ajax call is running

@@ -1,7 +1,7 @@
 .side-bar
   .navbar
     .navbar-inner
-      %button(class="btn mobile-back visible-phone invisible" id="mobileBackButton" title="Back")
+      %button(class="btn mobile-item-button visible-phone invisible" id="mobileBackButton" title="Back")
         %i(class="icon-arrow-left")
       .btn-group
         %button(class="btn btn-inverse")
@@ -12,6 +12,11 @@
           %i(class="icon-plus")
         %button(class="btn" href="#settingsModal" role="button" data-toggle="modal" title="Settings")
           %i(class="icon-cog")
+      .btn-group
+        %button(class="btn mobile-item-button visible-phone invisible" id="mobileNextItem" title="Previous item")
+          %i(class="icon-circle-arrow-left")
+        %button(class="btn mobile-item-button visible-phone invisible" id="mobilePrevItem" title="Next item")
+          %i(class="icon-circle-arrow-right")
   .feed-list
     %ul(id="feed-list" class="nav nav-list")
 .content
