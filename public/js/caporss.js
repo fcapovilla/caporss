@@ -283,10 +283,16 @@ var FeedView = Backbone.View.extend({
 		return this.closeMenu();
 	},
 	openMenu: function() {
+		var menu = this.$el.find('.feedMenu');
+		var opened = !menu.hasClass('hide');
+
 		// Close any opened menu
 		$(document).click();
 
-		var menu = this.$el.find('.feedMenu');
+		if(opened) {
+			return false;
+		}
+
 		menu.removeClass('hide');
 
 		$(document).one('click', this.closeMenu);
@@ -436,10 +442,16 @@ var FolderView = Backbone.View.extend({
 		return this.closeMenu();
 	},
 	openMenu: function() {
+		var menu = this.$el.find('.folderMenu');
+		var opened = !menu.hasClass('hide');
+
 		// Close any opened menu
 		$(document).click();
 
-		var menu = this.$el.find('.folderMenu');
+		if(opened) {
+			return false;
+		}
+
 		menu.removeClass('hide');
 
 		$(document).one('click', this.closeMenu);
