@@ -49,7 +49,7 @@ This procedure will run CapoRSS in development mode using an SQLite database
 
 ### localhost (production)
 
-CapoRSS can be run in production mode with Thin and PostgresQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
+CapoRSS can be run in production mode with Thin and PostgreSQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
 
 1. Install Ruby 1.9.3
 2. Install the "bundler" Ruby gem using this command:
@@ -72,13 +72,12 @@ Note: For security reasons, a SSL certificate is required for running CapoRSS in
 
 ### Heroku
 
-CapoRSS is Heroku-ready, so you can push it like any other Sinatra-based application. See this page for more informations : [Getting started with ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
+CapoRSS is Heroku-ready, so you can push it like any other Sinatra-based application. See this page for more informations : [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 
 ## TODO
 
 * Correct client-side memory leaks
 * Performance optimisations
-* Mobile view
 * Use sprockets to organise and minify assets
 * Drap-and-drop feed reordering
 * Recursive folders (more than one folder level)
