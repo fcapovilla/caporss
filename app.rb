@@ -99,7 +99,7 @@ namespace '/sync' do
 			feed.update_feed!(xml) if feed
 			count+=1
 		end
-		return count + ' updated'
+		return "#{count} updated"
 	end
 
 	post '/folder/:id' do |id|
@@ -112,7 +112,7 @@ namespace '/sync' do
 			feed.update_feed!(xml) if feed
 			count+=1
 		end
-		return count + ' updated'
+		return "#{count} updated"
 	end
 
 	post '/feed/:id' do |id|
