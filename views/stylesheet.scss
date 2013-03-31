@@ -74,11 +74,19 @@ body {
 
 #item-list {
 	padding: 0;
+
 	>li {
 		border-bottom: 1px solid lightgrey;
 	}
+
 	p {
 		margin: 1px;
+	}
+
+	.readUnreadIcon,
+	.dropdown-toggle {
+		padding: 4px 2px;
+		margin: 0px;
 	}
 }
 
@@ -94,7 +102,7 @@ body {
 	.item-title {
 		float: none;
 		overflow: hidden;
-		margin-left: 45px;
+		margin-left: 48px;
 		height: 20px;
 	}
 }
@@ -102,6 +110,12 @@ body {
 @media screen and (min-width:768px) {
 	.feed-list {
 		width: 300px;
+
+		.folder-icon,
+		.menu-toggle {
+			padding: 4px;
+			margin: 0px;
+		}
 	}
 
 	.side-bar {
@@ -120,6 +134,7 @@ body {
 @media screen and (max-width:767px) {
 	body {
 		font-size: 14px;
+		padding: 0px;
 	}
 
 	.btn {
@@ -132,8 +147,15 @@ body {
 
 	.feed-list {
 		width: 100%;
+
 		li {
 			line-height: 30px;
+		}
+
+		.folder-icon,
+		.menu-toggle {
+			padding: 10px;
+			margin: 0px;
 		}
 	}
 
@@ -144,9 +166,5 @@ body {
 		top: 42px;
 		padding: 0px;
 		width: 100%;
-	}
-
-	body {
-		padding: 0px;
 	}
 }
