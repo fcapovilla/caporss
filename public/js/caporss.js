@@ -85,14 +85,15 @@ var ItemView = Backbone.View.extend({
 	},
 	openChanged: function(item, opened) {
 		if(opened) {
-			var elem = $('.item-list').eq(0);
+			var elem = $('#item-list').eq(0);
 			elem.scrollTop(this.$el.position().top + elem.scrollTop());
 		}
 	}
 });
 
 var ItemListView = Backbone.View.extend({
-	el: $('#item-list'),
+	tagName: 'ul',
+	className: 'nav nav-list',
 	initialize: function() {
 		this.cursor = null;
 
@@ -102,6 +103,8 @@ var ItemListView = Backbone.View.extend({
 
 		$(document).off('keyup.itemlist');
 		$(document).on('keyup.itemlist', this.moveCursor);
+
+		$(this.render().el).appendTo('#item-list');
 	},
 	addOne: function(item) {
 		var view = new ItemView({model: item});
@@ -247,7 +250,7 @@ var FeedView = Backbone.View.extend({
 	},
 	selectFeed: function() {
 		if(items !== null) {
-			items.$el.empty();
+			items.remove();
 		}
 		items = new ItemListView({collection: this.model.items});
 		this.model.items.fetch();
@@ -257,7 +260,7 @@ var FeedView = Backbone.View.extend({
 		this.model.set('active', true);
 		currentSelection = this.model;
 		window.scrollTo(0,0);
-		$('.item-list').removeClass('hidden-phone');
+		$('#item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
 		$('.mobile-item-button').removeClass('invisible');
 	},
@@ -474,7 +477,7 @@ var FolderView = Backbone.View.extend({
 	},
 	selectFolder: function() {
 		if(items !== null) {
-			items.$el.empty();
+			items.remove();
 		}
 		items = new ItemListView({collection: this.model.items});
 		this.model.items.fetch();
@@ -484,7 +487,7 @@ var FolderView = Backbone.View.extend({
 		this.model.set('active', true);
 		currentSelection = this.model;
 		window.scrollTo(0,0);
-		$('.item-list').removeClass('hidden-phone');
+		$('#item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
 		$('.mobile-item-button').removeClass('invisible');
 	}
@@ -549,7 +552,7 @@ $('#cleanupButton').click(function() {
 			}
 			currentSelection = null;
 			folders.fetch();
-		},
+		}
 	});
 });
 
@@ -609,7 +612,7 @@ $('#mobileBackButton').click(function() {
 	}
 
 	$('.mobile-item-button').addClass('invisible');
-	$('.item-list').addClass('hidden-phone');
+	$('#item-list').addClass('hidden-phone');
 	$('.feed-list').removeClass('hidden-phone');
 });
 
@@ -642,10 +645,10 @@ $('form.upload-form').submit(function(e) {
 $(window).on('resize orientationChanged', function() {
 	$('.feed-list').css('height', $(window).height() - 42);
 	if($(window).width() <= 767) {
-		$('.item-list').css('height', $(window).height() - 42);
+		$('#item-list').css('height', $(window).height() - 42);
 	}
 	else {
-		$('.item-list').css('height', $(window).height());
+		$('#item-list').css('height', $(window).height());
 	}
 }).resize();
 
@@ -653,7 +656,7 @@ $(window).on('resize orientationChanged', function() {
 
 // Default date output format
 function formatDate(date) {
-	var pad = function(n){return n<10 ? '0'+n : n}
+	var pad = function(n){return n<10 ? '0'+n : n;};
 	return  pad(date.getDate())+'/'+
 			pad(date.getMonth()+1)+'/'+
 			pad(date.getFullYear())+' '+
