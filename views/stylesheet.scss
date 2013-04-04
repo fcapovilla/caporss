@@ -185,3 +185,9 @@ body {
 	}
 
 }
+
+@media screen and (max-width:365px) {
+	.hidden-tiny-phone {
+		display: none;
+	}
+}
