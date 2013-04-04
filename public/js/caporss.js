@@ -631,6 +631,11 @@ $(document).ajaxStart(function() {
 	$('#spinner').removeClass('icon-spin').addClass('invisible');
 });
 
+// Manage AJAx errors
+$(document).ajaxError(function(event, request, settings) {
+	$('.feed-list').prepend('<div class="alert alert-error fade in">Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.statusText + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
+});
+
 // Prevent double-submit in the OPML upload form
 $('form.upload-form').submit(function(e) {
 	if($(this).data('submitted') === true) {
