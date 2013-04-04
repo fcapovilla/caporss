@@ -1,5 +1,7 @@
 # CapoRSS
 
+Version 0.1.2
+
 ## Description
 
 CapoRSS is a simple self-hosted RSS aggregator written in Ruby.
