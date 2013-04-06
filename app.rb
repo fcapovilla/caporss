@@ -267,7 +267,7 @@ end
 delete '/folder/:id' do |id|
 	Folder.get(id).destroy
 
-	return 'done'
+	return '{}'
 end
 
 
@@ -352,7 +352,7 @@ delete '/feed/:id', '/folder/*/feed/:id' do
 	feed.destroy
 	old_folder.update_unread_count!
 
-	return 'done'
+	return '{}'
 end
 
 
