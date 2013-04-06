@@ -438,6 +438,7 @@ var FolderView = Backbone.View.extend({
 		$.ajax({
 			method: 'POST',
 			url: '/sync/folder/' + this.model.id,
+			dataType: 'json',
 			success: function(result) {
 				$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 				that.model.feeds.fetch();
@@ -537,6 +538,7 @@ $('#syncButton').click(function() {
 	$.ajax({
 		url: '/sync/all',
 		method: 'POST',
+		dataType: 'json',
 		success: function(result) {
 			$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 
