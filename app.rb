@@ -92,32 +92,47 @@ namespace '/sync' do
 	post '/all' do
 		urls = Feed.all.map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
-		count = 0
+		updated_count = 0
+		new_items = 0
 		feeds.each do |url, xml|
 			next if xml.kind_of?(Fixnum)
 			feed = Feed.first(:url => url)
+			old_count = feed.items.count
+
 			feed.update_feed!(xml) if feed
-			count+=1
+
+			updated_count+=1
+			new_items += feed.items.count - old_count
 		end
-		return "#{count} updated"
+		{ :updated => updated_count, :new => new_items }.to_json
 	end
 
 	post '/folder/:id' do |id|
 		urls = Folder.get(id).feeds.map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
-		count = 0
+		updated_count = 0
+		new_items = 0
 		feeds.each do |url, xml|
 			next if xml.kind_of?(Fixnum)
 			feed = Feed.first(:url => url)
+			old_count = feed.items.count
+
 			feed.update_feed!(xml) if feed
-			count+=1
+
+			updated_count+=1
+			new_items += feed.items.count - old_count
 		end
-		return "#{count} updated"
+		{ :updated => updated_count, :new => new_items }.to_json
 	end
 
 	post '/feed/:id' do |id|
-		Feed.get(id).sync!
-		return 'done'
+		feed = Feed.get(id)
+		old_count = feed.items.count
+
+		feed.sync!
+
+		new_items = feed.items.count - old_count
+		{ :updated => 1, :new => new_items }.to_json
 	end
 end
 
@@ -251,6 +266,8 @@ end
 
 delete '/folder/:id' do |id|
 	Folder.get(id).destroy
+
+	return 'done'
 end
 
 
@@ -269,6 +286,15 @@ get '/feed/:id/item' do |id|
 end
 
 #post '/feed' do
+
+post '/reset/feed/:id' do
+	feed = Feed.get(params[:id])
+	feed.items.destroy
+	feed.last_update = DateTime.new(2000,1,1)
+	feed.save
+
+	return 'done'
+end
 
 put '/feed/:id', '/folder/*/feed/:id' do
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
@@ -302,6 +328,8 @@ put '/read/feed/:id' do |id|
 	feed.unread_count = 0
 	feed.save
 	feed.folder.update_unread_count!
+
+	feed.to_json
 end
 
 # Mark all items in this feed as "unread"
@@ -312,6 +340,8 @@ put '/unread/feed/:id' do |id|
 	end
 	feed.save
 	feed.update_unread_count!
+
+	feed.to_json
 end
 
 delete '/feed/:id', '/folder/*/feed/:id' do
@@ -319,6 +349,8 @@ delete '/feed/:id', '/folder/*/feed/:id' do
 	old_folder = feed.folder
 	feed.destroy
 	old_folder.update_unread_count!
+
+	return 'done'
 end
 
 
