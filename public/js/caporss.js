@@ -581,6 +581,7 @@ $('#editFeedButton').click(function() {
 	var feedId = dialog.find('#feedId').val();
 	var feedFolder = dialog.find('#feedFolder').val();
 	var feedUrl = dialog.find('#feedUrl').val();
+	var reset = dialog.find('#resetFeed').is(':checked');
 
 	folders.each(function(folder) {
 		var feed = folder.feeds.get(feedId);
@@ -594,7 +595,19 @@ $('#editFeedButton').click(function() {
 						items.$el.empty();
 					}
 					currentSelection = null;
-					folders.fetch({reset: true});
+
+					if(reset) {
+						$.ajax({
+							url: '/reset/feed/' + feedId,
+							method: 'POST',
+							success: function() {
+								folders.fetch({reset: true});
+							}
+						});
+					}
+					else {
+						folders.fetch({reset: true});
+					}
 				}
 			});
 		}

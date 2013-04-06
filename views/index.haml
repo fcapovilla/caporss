@@ -54,6 +54,9 @@
     %label
       Folder :
     %input(class="input-block-level" type="text" id="feedFolder" aria-hidden="true")
+    %label.checkbox
+      %input(type="checkbox" id="resetFeed" checked="checked")
+      Reset feed
     %input(type="hidden" id="feedId" value="")
   .modal-footer
     %button(type="button" id="editFeedButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")

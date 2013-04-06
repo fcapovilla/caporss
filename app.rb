@@ -293,6 +293,8 @@ post '/reset/feed/:id' do
 	feed.last_update = DateTime.new(2000,1,1)
 	feed.save
 
+	feed.sync!
+
 	return 'done'
 end
 
