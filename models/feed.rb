@@ -26,6 +26,7 @@ class Feed
 
 		feed.entries.each do |entry|
 			if entry.published > self.last_update.to_time
+				entry.sanitize!
 				item = Item.new(
 					:title => entry.title,
 					:url => entry.url,
