@@ -273,7 +273,9 @@ var FeedView = Backbone.View.extend({
 		$.ajax({
 			method: 'POST',
 			url: '/sync/feed/' + this.model.id,
-			success: function() {
+			dataType: 'json',
+			success: function(result) {
+				$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 				that.model.fetch();
 			}
 		});
@@ -436,7 +438,8 @@ var FolderView = Backbone.View.extend({
 		$.ajax({
 			method: 'POST',
 			url: '/sync/folder/' + this.model.id,
-			success: function() {
+			success: function(result) {
+				$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 				that.model.feeds.fetch();
 			}
 		});
@@ -517,6 +520,15 @@ var folderList = new FolderListView({collection: folders});
 folders.fetch();
 
 
+// Configure pnotify
+
+var pnotify_stack = {'dir1': 'up', 'dir2': 'left'};
+$.pnotify.defaults.history = false;
+$.pnotify.defaults.delay = 5000;
+$.pnotify.defaults.addclass = 'stack-bottomright';
+$.pnotify.defaults.stack = pnotify_stack;
+
+
 // Buttons and dialogs actions
 
 $('#syncButton').click(function() {
@@ -525,7 +537,9 @@ $('#syncButton').click(function() {
 	$.ajax({
 		url: '/sync/all',
 		method: 'POST',
-		success: function() {
+		success: function(result) {
+			$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+
 			if(items !== null) {
 				items.$el.empty();
 			}
@@ -644,9 +658,9 @@ $(document).ajaxStart(function() {
 	$('#spinner').removeClass('icon-spin').addClass('invisible');
 });
 
-// Manage AJAx errors
+// Manage AJAX errors
 $(document).ajaxError(function(event, request, settings) {
-	$('.feed-list').prepend('<div class="alert alert-error fade in">Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.statusText + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
+	$.pnotify({ text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.statusText, type: 'error' });
 });
 
 // Prevent double-submit in the OPML upload form

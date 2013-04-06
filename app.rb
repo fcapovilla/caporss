@@ -104,7 +104,7 @@ namespace '/sync' do
 			updated_count+=1
 			new_items += feed.items.count - old_count
 		end
-		{ :updated => updated_count, :new => new_items }.to_json
+		{ :updated => updated_count, :new_items => new_items }.to_json
 	end
 
 	post '/folder/:id' do |id|
@@ -122,7 +122,7 @@ namespace '/sync' do
 			updated_count+=1
 			new_items += feed.items.count - old_count
 		end
-		{ :updated => updated_count, :new => new_items }.to_json
+		{ :updated => updated_count, :new_items => new_items }.to_json
 	end
 
 	post '/feed/:id' do |id|
@@ -132,7 +132,7 @@ namespace '/sync' do
 		feed.sync!
 
 		new_items = feed.items.count - old_count
-		{ :updated => 1, :new => new_items }.to_json
+		{ :updated => 1, :new_items => new_items }.to_json
 	end
 end
 

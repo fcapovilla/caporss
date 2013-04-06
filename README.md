@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 0.1.2
+Version 0.1.3
 
 ## Description
 
@@ -17,6 +17,7 @@ CapoRSS is built on top of these great projects :
 * [Nokogiri](http://nokogiri.org/)
 * [Bootstrap](http://twitter.github.com/bootstrap/)
 * [Font awesome](http://fortawesome.github.com/Font-Awesome/)
+* [Pines notify](http://pinesframework.org/pnotify/)
 * [Backbone.js](http://backbonejs.org/)
 * [Underscore.js](http://underscorejs.org/)
 * [JQuery](http://jquery.com/)
