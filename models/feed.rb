@@ -25,7 +25,7 @@ class Feed
 		end
 
 		feed.entries.each do |entry|
-			if entry.published > self.last_update
+			if entry.published > self.last_update.to_time
 				item = Item.new(
 					:title => entry.title,
 					:url => entry.url,
