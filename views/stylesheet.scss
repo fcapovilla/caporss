@@ -57,6 +57,7 @@ body {
 #item-list {
 	display: block;
 	height: 100%;
+	padding-top: 15px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
@@ -78,7 +79,7 @@ body {
 		padding: 0;
 
 		&>li {
-			border-bottom: 1px solid lightgrey;
+			border-top: 1px solid lightgrey;
 		}
 
 		p {
@@ -142,6 +143,10 @@ body {
 	body {
 		font-size: 1em;
 		padding: 0px;
+	}
+
+	.ui-pnotify-history-container {
+		display: none;
 	}
 
 	.btn {

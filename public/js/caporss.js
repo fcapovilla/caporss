@@ -524,7 +524,6 @@ folders.fetch();
 // Configure pnotify
 
 var pnotify_stack = {'dir1': 'up', 'dir2': 'left'};
-$.pnotify.defaults.history = false;
 $.pnotify.defaults.delay = 5000;
 $.pnotify.defaults.addclass = 'stack-bottomright';
 $.pnotify.defaults.stack = pnotify_stack;
