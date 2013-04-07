@@ -96,19 +96,31 @@ var ItemListView = Backbone.View.extend({
 	className: 'nav nav-list',
 	initialize: function() {
 		this.cursor = null;
+		this.views = [];
 
-		_.bindAll(this);
 		this.listenTo(this.collection, 'sync', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
 
 		$(this.render().el).appendTo('#item-list');
 	},
+	remove: function() {
+		this.removeAllSubviews();
+		Backbone.View.prototype.remove.call(this);
+	},
+	removeAllSubviews: function() {
+		_.each(this.views, function(view) {
+			view.remove();
+		});
+		this.views.length = 0;
+	},
 	addOne: function(item) {
 		var view = new ItemView({model: item});
 		this.$el.append(view.render().el);
+		this.views.push(view);
 	},
 	addAll: function() {
 		this.$el.empty();
+		this.removeAllSubviews();
 		this.collection.each(this.addOne, this);
 	},
 	closeAll: function() {
@@ -409,6 +421,8 @@ var FolderView = Backbone.View.extend({
 		'click .folderTitle' : 'selectFolder'
 	},
 	initialize: function() {
+		this.views = [];
+
 		_.bindAll(this);
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
@@ -426,12 +440,24 @@ var FolderView = Backbone.View.extend({
 		}
 		return this;
 	},
+	remove: function() {
+		this.removeAllSubviews();
+		Backbone.View.prototype.remove.call(this);
+	},
+	removeAllSubviews: function() {
+		_.each(this.views, function(view) {
+			view.remove();
+		});
+		this.views.length = 0;
+	},
 	addOne: function(feed) {
 		var view = new FeedView({model: feed});
 		this.$feedList.append(view.render().el);
+		this.views.push(view);
 	},
 	addAll: function() {
 		this.$feedList.empty();
+		this.removeAllSubviews();
 		this.model.feeds.each(this.addOne, this);
 	},
 	toggleFolderOpen: function() {
@@ -512,15 +538,29 @@ var FolderView = Backbone.View.extend({
 var FolderListView = Backbone.View.extend({
 	el: $('#feed-list'),
 	initialize: function() {
+		this.views = [];
+
 		this.listenTo(this.collection, 'add', this.addOne);
 		this.listenTo(this.collection, 'reset', this.addAll);
+	},
+	remove: function() {
+		this.removeAllSubviews();
+		Backbone.View.prototype.remove.call(this);
+	},
+	removeAllSubviews: function() {
+		_.each(this.views, function(view) {
+			view.remove();
+		});
+		this.views.length = 0;
 	},
 	addOne: function(folder) {
 		var view = new FolderView({model: folder});
 		this.$el.append(view.render().el);
+		this.views.push(view);
 	},
 	addAll: function() {
 		this.$el.empty();
+		this.removeAllSubviews();
 		this.collection.each(this.addOne, this);
 	}
 });
