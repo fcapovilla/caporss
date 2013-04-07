@@ -379,6 +379,9 @@ var Folder = Backbone.Model.extend({
 var FolderCollection = Backbone.Collection.extend({
 	model: Folder,
 	url: '/folder',
+	initialize: function() {
+		this.on('add remove change:unread_count', this.recalculateReadCount);
+	},
 	fetch: function(options) {
 		var res = Backbone.Collection.prototype.fetch.call(this, options);
 
@@ -387,6 +390,13 @@ var FolderCollection = Backbone.Collection.extend({
 		});
 
 		return res;
+	},
+	recalculateReadCount: function() {
+		var count = 0;
+		this.each(function(folder) {
+			count += folder.get('unread_count');
+		});
+		document.title = 'CapoRSS (' + count + ')';
 	}
 });
 
@@ -530,7 +540,6 @@ folders.fetch();
 // Configure pnotify
 
 var pnotify_stack = {'dir1': 'up', 'dir2': 'left'};
-$.pnotify.defaults.delay = 5000;
 $.pnotify.defaults.addclass = 'stack-bottomright';
 $.pnotify.defaults.stack = pnotify_stack;
 
