@@ -275,8 +275,11 @@ var FeedView = Backbone.View.extend({
 			url: '/sync/feed/' + this.model.id,
 			dataType: 'json',
 			success: function(result) {
-				$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
-				that.model.fetch();
+				that.model.fetch({
+					success: function() {
+						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+					}
+				});
 			}
 		});
 		return this.closeMenu();
@@ -440,8 +443,11 @@ var FolderView = Backbone.View.extend({
 			url: '/sync/folder/' + this.model.id,
 			dataType: 'json',
 			success: function(result) {
-				$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
-				that.model.feeds.fetch();
+				that.model.feeds.fetch({
+					success: function() {
+						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+					}
+				});
 			}
 		});
 		return this.closeMenu();
@@ -539,14 +545,17 @@ $('#syncButton').click(function() {
 		method: 'POST',
 		dataType: 'json',
 		success: function(result) {
-			$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
-
 			if(items !== null) {
 				items.$el.empty();
 			}
 			currentSelection = null;
-			folders.fetch();
-			icon.attr('class', 'icon-refresh');
+
+			folders.fetch({
+				success: function() {
+					$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+					icon.attr('class', 'icon-refresh');
+				}
+			});
 		},
 		error: function() {
 			icon.attr('class', 'icon-refresh');
