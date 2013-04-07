@@ -101,9 +101,6 @@ var ItemListView = Backbone.View.extend({
 		this.listenTo(this.collection, 'sync', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
 
-		$(document).off('keyup.itemlist');
-		$(document).on('keyup.itemlist', this.moveCursor);
-
 		$(this.render().el).appendTo('#item-list');
 	},
 	addOne: function(item) {
@@ -702,6 +699,16 @@ $(window).on('resize orientationChanged', function() {
 		$('#item-list').css('height', $(window).height());
 	}
 }).resize();
+
+
+// Keyboard shortcuts
+$(document).keyup(function(e) {
+	if(e.keyCode == 74 || e.keyCode == 75) {
+		if(items !== null) {
+			items.moveCursor(e);
+		}
+	}
+});
 
 });
 
