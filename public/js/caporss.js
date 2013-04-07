@@ -333,8 +333,7 @@ var Folder = Backbone.Model.extend({
 		this.feeds.url = '/folder/' + this.id + '/feed';
 		this.feeds.fetch();
 
-		this.listenTo(this.feeds, 'change:unread_count', this.recalculateReadCount);
-		this.listenTo(this.feeds, 'destroy', this.recalculateReadCount);
+		this.listenTo(this.feeds, 'add remove change:unread_count', this.recalculateReadCount);
 
 		this.items = new ItemCollection();
 		this.items.url = '/folder/' + this.id + '/item';
@@ -380,7 +379,7 @@ var FolderCollection = Backbone.Collection.extend({
 	model: Folder,
 	url: '/folder',
 	initialize: function() {
-		this.on('add remove change:unread_count', this.recalculateReadCount);
+		this.listenTo(this, 'add remove change:unread_count', this.recalculateReadCount);
 	},
 	fetch: function(options) {
 		var res = Backbone.Collection.prototype.fetch.call(this, options);
