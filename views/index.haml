@@ -192,6 +192,12 @@
         <a class="item-content-title" href="<%= url %>" target="_blank"><%= title %></a>
         <br>
         <%= content %>
+        <% if(attachment_url){ %>
+          <br>
+          <a class="btn" href="<%= attachment_url %>">
+            <i class="icon-download"></i>Download file
+          </a>
+        <% } %>
       </div>
     <% } %>
   </script>

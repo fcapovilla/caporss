@@ -10,6 +10,8 @@ require 'digest/sha2'
 
 require_relative 'models/init'
 
+# Force enclosure parsing on all Feedzirra feed entries
+Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
 
 # Force SSL in production
 configure :production do
