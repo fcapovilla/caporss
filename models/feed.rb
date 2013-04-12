@@ -37,8 +37,6 @@ class Feed
 				# Check for podcast attachments
 				if entry.respond_to?(:enclosure_url)
 				  item.attachment_url = entry.enclosure_url
-				elsif item.content =~ /href="([^"]*)\.(m4a|mp3|mov|mp4|m4v|avi|wmv|wav)"/
-				  item.attachment_url = $1
 				end
 
 				self.items << item
