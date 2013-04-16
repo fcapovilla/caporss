@@ -62,6 +62,22 @@
     %button(type="button" id="editFeedButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
       Save
 
+-# Edit folder form
+
+%div(class="modal hide fade" id="editFolderModal" tabindex="-1" role="dialog" aria-labelledby="editFolderModal" aria-hidden="true")
+  .modal-header
+    Edit feed
+    %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+      x
+  .modal-body
+    %label
+      Title :
+    %input(class="input-block-level" type="text" id="folderTitle" aria-hidden="true")
+    %input(type="hidden" id="folderId" value="")
+  .modal-footer
+    %button(type="button" id="editFolderButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
+      Save
+
 -# Settings form
 
 %form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
@@ -137,6 +153,7 @@
       <a class="btn markFolderReadAction" title="Mark all read"><i class="icon-eye-open"></i></a>
       <a class="btn markFolderUnreadAction" title="Mark all unread"><i class="icon-eye-close"></i></a>
       <a class="btn syncFolderAction" title="Sync"><i class="icon-refresh"></i></a>
+      <a class="btn editFolderAction" title="Edit"><i class="icon-edit"></i></a>
       <a class="btn deleteFolderAction" title="Delete"><i class="icon-trash"></i></a>
     </div>
   </script>

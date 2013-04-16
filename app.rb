@@ -262,8 +262,11 @@ end
 put '/folder/:id' do |id|
     folder = Folder.get(id)
 	folder.attributes = JSON.parse(request.body.string, :symbolize_names => true)
-	folder.save
-	folder.to_json
+	if folder.save
+		folder.to_json
+	else
+		409
+	end
 end
 
 delete '/folder/:id' do |id|

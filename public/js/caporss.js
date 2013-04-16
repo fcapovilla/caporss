@@ -353,7 +353,7 @@ var Folder = Backbone.Model.extend({
 		this.save({open : !this.get('open')});
 	},
 	toJSON: function() {
-		return {open: this.get('open')};
+		return {open: this.get('open'), title: this.get('title')};
 	},
 	itemRead: function(feed_id) {
 		this.feeds.get(feed_id).decrementReadCount();
@@ -415,6 +415,7 @@ var FolderView = Backbone.View.extend({
 		'click .markFolderReadAction' : 'markFolderRead',
 		'click .markFolderUnreadAction' : 'markFolderUnread',
 		'click .syncFolderAction' : 'syncFolder',
+		'click .editFolderAction' : 'showFolderEditDialog',
 		'click .deleteFolderAction' : 'deleteFolder',
 		'click .folder-icon' : 'toggleFolderOpen',
 		'click .menu-toggle': 'openMenu',
@@ -532,6 +533,13 @@ var FolderView = Backbone.View.extend({
 		$('#item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
 		$('.mobile-item-button').removeClass('invisible');
+	},
+	showFolderEditDialog: function() {
+		var dialog = $('#editFolderModal');
+		dialog.find('#folderId').val(this.model.id);
+		dialog.find('#folderTitle').val(this.model.get('title'));
+		dialog.modal();
+		return this.closeMenu();
 	}
 });
 
@@ -644,6 +652,23 @@ $('#subscribeButton').click(function() {
 	});
 	$('#subscriptionUrl').val('');
 	$('#subscriptionFolder').val('');
+});
+
+$('#editFolderButton').click(function() {
+	var dialog = $('#editFolderModal');
+	var folderId = dialog.find('#folderId').val();
+	var folderTitle = dialog.find('#folderTitle').val();
+	var folder = folders.get(folderId);
+
+	if(folder) {
+		folder.save({
+			title: folderTitle
+		},{
+			error: function(){
+				folder.set('title', folder.previous('title'));
+			}
+		});
+	}
 });
 
 $('#editFeedButton').click(function() {
