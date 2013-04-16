@@ -43,6 +43,19 @@ get '/stylesheet.css' do
     scss :stylesheet
 end
 
+# Serve a concatenated version of the Backbone application
+get '/app.js' do
+	root = File.dirname(__FILE__) + '/backbone'
+	content_type :js, 'charset' => 'utf-8'
+	last_modified File.mtime("#{root}/init.js")
+
+	output = "$(function() {\n"
+	Dir["#{root}/models/*.js", "#{root}/collections/*.js", "#{root}/views/*.js", "#{root}/*.js"].each do |file|
+		output += File.open(file, 'r').read()
+	end
+	output + "});"
+end
+
 # Render home page
 get '/' do
     haml :index
