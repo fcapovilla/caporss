@@ -81,7 +81,6 @@ CapoRSS is Heroku-ready, so you can push it like any other Sinatra-based applica
 
 * Correct client-side memory leaks
 * Performance optimisations
-* Use sprockets to organise and minify assets
 * Drap-and-drop feed reordering
 * Recursive folders (more than one folder level)
 * Per-folder OPML export
