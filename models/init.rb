@@ -3,8 +3,19 @@ require 'data_mapper'
 require 'dm-is-list'
 require 'feedzirra'
 
-# Connect to the database
 DataMapper::Logger.new(STDOUT, :warn)
+
+# AppFog Database configuration
+if ENV['VCAP_SERVICES']
+	require 'json'
+	svcs = JSON.parse ENV['VCAP_SERVICES']
+	postgres = svcs.detect { |k,v| k =~ /^postgres/ }.last.first
+	creds = postgres['credentials']
+	user, pass, host, name = %w(user password host name).map { |key| creds[key] }
+	ENV['DATABASE_URL'] = "postgres://#{user}:#{pass}@#{host}/#{name}"
+end
+
+# Connect to the database
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')
 
 # Load all models

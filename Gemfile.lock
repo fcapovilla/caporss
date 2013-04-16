@@ -119,6 +119,7 @@ DEPENDENCIES
   dm-sqlite-adapter
   feedzirra (~> 0.2.0.rc2)
   haml
+  json
   rack-ssl-enforcer
   sass
   sinatra

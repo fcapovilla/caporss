@@ -1,4 +1,3 @@
 .bundle/*
 .sass-cache/*
 rss.db
-manifest.yml
