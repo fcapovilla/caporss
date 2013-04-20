@@ -24,6 +24,8 @@ class Feed
 			self.title = feed.title
 		end
 
+		newest = nil
+
 		feed.entries.each do |entry|
 			if entry.published > self.last_update.to_time
 				entry.sanitize!
@@ -40,12 +42,17 @@ class Feed
 				end
 
 				self.items << item
+
+				if newest == nil or newest < entry.published
+					newest = entry.published
+				end
 			end
 		end
 
 		self.save
 
-		self.last_update = Time.now
+		self.last_update = newest unless newest.nil?
+
 		self.update_unread_count!
 		return self
 	end
