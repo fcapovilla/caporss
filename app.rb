@@ -2,6 +2,7 @@
 require 'sinatra'
 require 'sinatra/multi_route'
 require 'sinatra/namespace'
+require 'sinatra/r18n'
 require 'haml'
 require 'sass'
 require 'json'
@@ -32,9 +33,10 @@ if defined? settings.username and defined? settings.password
 end
 
 
-# Force UTF-8
+# Force UTF-8 and set locale
 before do
     content_type :html, 'charset' => 'utf-8'
+	params[:locale] = settings.default_locale
 end
 
 # SCSS stylesheet
@@ -110,6 +112,12 @@ post '/save_settings' do
 		sync_timeout = Setting.first_or_create(:name => 'sync_timeout')
 		sync_timeout.value = params[:sync_timeout]
 		sync_timeout.save
+	end
+
+	if params[:default_locale]
+		default_locale = Setting.first_or_create(:name => 'default_locale')
+		default_locale.value = params[:default_locale]
+		default_locale.save
 	end
 
 	# Reset settings

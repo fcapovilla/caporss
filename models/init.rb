@@ -43,3 +43,6 @@ end
 unless Setting.first(:name => 'sync_timeout')
 	Setting.create(:name => 'sync_timeout', :value => '0')
 end
+unless Setting.first(:name => 'default_locale')
+	Setting.create(:name => 'default_locale', :value => 'en')
+end

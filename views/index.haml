@@ -118,6 +118,14 @@
                 New Password :
               .controls
                 %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
+          .control-group
+            %label.control-label
+              Language :
+            .controls
+              %select(name="default_locale")
+                - r18n.available_locales.each do |locale|
+                  %option(value="#{locale.code}"){selected: r18n.locale.code == locale.code}
+                    = locale.title
         .tab-pane#opmlSettings
           %button(class="btn" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal" title="Import OPML")
             Import OPML file
