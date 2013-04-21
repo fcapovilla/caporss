@@ -32,17 +32,18 @@ var Folder = Backbone.Model.extend({
 		});
 		this.set('unread_count', count);
 	},
-	fetchChildren: function() {
+	fetchChildren: function(options) {
 		if(this.get('active')) {
-			this.items.fetch();
+			this.items.fetch(options);
 		}
 
-		this.feeds.fetch();
+		this.feeds.fetch(options);
 	},
 	fetch: function(options) {
 		var res = Backbone.Collection.prototype.fetch.call(this, options);
+		options = _.omit(options, 'success', 'error');
 
-		this.fetchChildren();
+		this.fetchChildren(options);
 
 		return res;
 	}

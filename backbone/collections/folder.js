@@ -6,9 +6,10 @@ var FolderCollection = Backbone.Collection.extend({
 	},
 	fetch: function(options) {
 		var res = Backbone.Collection.prototype.fetch.call(this, options);
+		options = _.omit(options, 'success', 'error');
 
 		this.each(function(folder) {
-			folder.fetchChildren();
+			folder.fetchChildren(options);
 		});
 
 		return res;

@@ -71,7 +71,7 @@ $('#subscribeButton').click(function() {
 				items.$el.empty();
 			}
 			currentSelection = null;
-			folders.fetch({reset: true});
+			folders.fetch();
 		}
 	});
 	$('#subscriptionUrl').val('');
@@ -120,12 +120,12 @@ $('#editFeedButton').click(function() {
 							url: '/reset/feed/' + feedId,
 							method: 'POST',
 							success: function() {
-								folders.fetch({reset: true});
+								folders.fetch();
 							}
 						});
 					}
 					else {
-						folders.fetch({reset: true});
+						folders.fetch();
 					}
 				}
 			});

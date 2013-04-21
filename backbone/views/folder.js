@@ -18,8 +18,8 @@ var FolderView = Backbone.View.extend({
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
 		this.listenTo(this.model.feeds, 'add', this.addOne);
+		this.listenTo(this.model.feeds, 'remove', this.addAll);
 		this.listenTo(this.model.feeds, 'reset', this.addAll);
-		this.listenTo(this.model.feeds, 'change', this.render);
 
 		this.$feedList = $('<ul class="nav nav-list"></ul>');
 	},

@@ -45,15 +45,16 @@ var Feed = Backbone.Model.extend({
 	decrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') - 1);
 	},
-	fetchChildren: function() {
+	fetchChildren: function(options) {
 		if(this.get('active')) {
-			this.items.fetch();
+			this.items.fetch(options);
 		}
 	},
 	fetch: function(options) {
 		var res = Backbone.Collection.prototype.fetch.call(this, options);
+		options = _.omit(options, 'success', 'error');
 
-		this.fetchChildren();
+		this.fetchChildren(options);
 
 		return res;
 	}
