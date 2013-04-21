@@ -100,6 +100,18 @@ post '/save_settings' do
 		cleanup_after.save
 	end
 
+	if params[:refresh_timeout]
+		refresh_timeout = Setting.first_or_create(:name => 'refresh_timeout')
+		refresh_timeout.value = params[:refresh_timeout]
+		refresh_timeout.save
+	end
+
+	if params[:sync_timeout]
+		sync_timeout = Setting.first_or_create(:name => 'sync_timeout')
+		sync_timeout.value = params[:sync_timeout]
+		sync_timeout.save
+	end
+
 	# Reset settings
 	Setting.all.each do |setting|
 		set setting.name.to_sym, setting.value

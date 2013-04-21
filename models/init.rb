@@ -33,5 +33,13 @@ if Setting.count == 0
 	Setting.create(:name => 'username', :value => 'admin')
 	Setting.create(:name => 'salt', :value => '')
 	Setting.create(:name => 'password', :value => Digest::SHA512.hexdigest('admin'))
+end
+unless Setting.first(:name => 'cleanup_after')
 	Setting.create(:name => 'cleanup_after', :value => '300')
+end
+unless Setting.first(:name => 'refresh_timeout')
+	Setting.create(:name => 'refresh_timeout', :value => '0')
+end
+unless Setting.first(:name => 'sync_timeout')
+	Setting.create(:name => 'sync_timeout', :value => '0')
 end

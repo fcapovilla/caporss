@@ -185,3 +185,17 @@ $(document).keyup(function(e) {
 		}
 	}
 });
+
+// Refresh timeout
+if(SETTINGS.refresh_timeout > 0) {
+	setInterval(function() {
+		folders.fetch();
+	}, SETTINGS.refresh_timeout*60*1000);
+}
+
+// Sync timeout
+if(SETTINGS.sync_timeout > 0) {
+	setInterval(function() {
+		$('#syncButton').click();
+	}, SETTINGS.sync_timeout*60*1000);
+}

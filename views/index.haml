@@ -87,35 +87,62 @@
       %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
         x
     .modal-body
-      .well
-        .control-group
-          %label.control-label
-            Username :
-          .controls
-            %input(class="input-block-level" type="text" name="username" value="#{settings.username}" aria-hidden="true")
-        .control-group
-          %label.control-label
-            Current password :
-          .controls
-            %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
-        .control-group
-          %label.control-label
-            New Password :
-          .controls
-            %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
-      %label
-        "Clean up" deletes items older than :
-      .input-append
-        %input(class="input-block-level" type="text" id="cleanup_after" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
-        %span.add-on
-          days
-      %button(class="btn pull-right" id="cleanupButton" data-dismiss="modal" title="Cleanup feeds")
-        Clean up feeds
-      .well
-        %button(class="btn" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal" title="Import OPML")
-          Import OPML file
-        %a(class="btn" href="/export.opml" title="Export to OPML")
-          Export feeds as OPML
+      %ul.nav.nav-tabs
+        %li.active
+          %a(href="#accountSettings" data-toggle="tab")
+            Account
+        %li
+          %a(href="#opmlSettings" data-toggle="tab")
+            OPML
+        %li
+          %a(href="#cleanupSettings" data-toggle="tab")
+            Cleanup
+        %li
+          %a(href="#syncSettings" data-toggle="tab")
+            Sync
+      .tab-content
+        .tab-pane.active#accountSettings
+          .well
+            .control-group
+              %label.control-label
+                Username :
+              .controls
+                %input(class="input-block-level" type="text" name="username" value="#{settings.username}" aria-hidden="true")
+            .control-group
+              %label.control-label
+                Current password :
+              .controls
+                %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
+            .control-group
+              %label.control-label
+                New Password :
+              .controls
+                %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
+        .tab-pane#opmlSettings
+          %button(class="btn" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal" title="Import OPML")
+            Import OPML file
+          %a(class="btn" href="/export.opml" title="Export to OPML")
+            Export feeds as OPML
+        .tab-pane#cleanupSettings
+          %label
+            "Clean up" deletes items older than :
+          .input-append
+            %input(class="input-block-level" type="text" id="cleanup_after" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
+            %span.add-on
+              days
+          %button(class="btn pull-right" id="cleanupButton" data-dismiss="modal" title="Cleanup feeds")
+            Clean up feeds
+        .tab-pane#syncSettings
+          .control-group
+            %label.control-label
+              Refresh timeout :
+            .controls
+              %input(class="input-block-level" type="text" name="refresh_timeout" value="#{settings.refresh_timeout}" aria-hidden="true")
+          .control-group
+            %label.control-label
+              Sync timeout :
+            .controls
+              %input(class="input-block-level" type="text" name="sync_timeout" value="#{settings.sync_timeout}" aria-hidden="true")
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         Save
@@ -218,3 +245,11 @@
       </div>
     <% } %>
   </script>
+
+-# Javascript settings
+
+:javascript
+  var SETTINGS = {
+    refresh_timeout: #{settings.refresh_timeout},
+    sync_timeout: #{settings.sync_timeout}
+  };
