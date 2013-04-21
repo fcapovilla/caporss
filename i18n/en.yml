@@ -1,0 +1,18 @@
+settings:
+    title: settings
+    account: Account
+    opml: OPML
+    cleanup: Cleanup
+    sync: Sync
+    username: "Username:"
+    current_password: "Current password:"
+    new_password: "New password:"
+    language: "Language:"
+    import_opml_file: Import an OPML file
+    export_as_opml: Export feeds as OPML
+    cleanup_older_than: Cleanup items older than 
+    days: days
+    refresh_every: Refresh feeds every
+    minutes: minutes
+    sync_every: Sync feeds every
+    save: Save
