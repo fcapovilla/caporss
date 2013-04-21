@@ -16,3 +16,16 @@ settings:
     minutes: minutes
     sync_every: Sync feeds every
     save: Save
+
+buttons:
+    back: Back
+    sync: Sync
+    subscribe: Subscribe
+    settings: Settings
+    previous: Previous
+    next: Next
+    mark_all_read: Mark all read
+    mark_all_unread: Mark all unread
+    edit: Edit
+    delete: Delete
+    mark_older_read: Mark older items read

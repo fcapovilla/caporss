@@ -1,21 +1,21 @@
 .side-bar
   .navbar
     .navbar-inner
-      %button(class="btn mobile-item-button visible-phone invisible" id="mobileBackButton" title="Back")
+      %button(class="btn mobile-item-button visible-phone invisible" id="mobileBackButton" title="#{t.buttons.back}")
         %i(class="icon-arrow-left")
       .btn-group
         %button(class="btn btn-inverse hidden-tiny-phone")
           %i(id="spinner" class="icon-spinner icon-large invisible")
-        %button(class="btn" id="syncButton" title="Sync")
+        %button(class="btn" id="syncButton" title="#{t.buttons.sync}")
           %i(class="icon-refresh")
-        %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal" title="Subscribe")
+        %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal" title="#{t.buttons.subscribe}")
           %i(class="icon-plus")
-        %button(class="btn hidden-tiny-phone" href="#settingsModal" role="button" data-toggle="modal" title="Settings")
+        %button(class="btn hidden-tiny-phone" href="#settingsModal" role="button" data-toggle="modal" title="#{t.buttons.settings}")
           %i(class="icon-cog")
       .btn-group
-        %button(class="btn mobile-item-button visible-phone invisible" id="mobileNextItem" title="Previous item")
+        %button(class="btn mobile-item-button visible-phone invisible" id="mobileNextItem" title="#{t.buttons.previous}")
           %i(class="icon-circle-arrow-left")
-        %button(class="btn mobile-item-button visible-phone invisible" id="mobilePrevItem" title="Next item")
+        %button(class="btn mobile-item-button visible-phone invisible" id="mobilePrevItem" title="#{t.buttons.next}")
           %i(class="icon-circle-arrow-right")
   .feed-list
     %ul(id="feed-list" class="nav nav-list")
@@ -191,11 +191,11 @@
       <i class="icon icon-caret-down menu-toggle"></i>
     </div>
     <div class="btn-group folderMenu hide">
-      <a class="btn markFolderReadAction" title="Mark all read"><i class="icon-eye-open"></i></a>
-      <a class="btn markFolderUnreadAction" title="Mark all unread"><i class="icon-eye-close"></i></a>
-      <a class="btn syncFolderAction" title="Sync"><i class="icon-refresh"></i></a>
-      <a class="btn editFolderAction" title="Edit"><i class="icon-edit"></i></a>
-      <a class="btn deleteFolderAction" title="Delete"><i class="icon-trash"></i></a>
+      <a class="btn markFolderReadAction" title="#{t.buttons.mark_all_read}"><i class="icon-eye-open"></i></a>
+      <a class="btn markFolderUnreadAction" title="#{t.buttons.mark_all_unread}"><i class="icon-eye-close"></i></a>
+      <a class="btn syncFolderAction" title="#{t.buttons.sync}"><i class="icon-refresh"></i></a>
+      <a class="btn editFolderAction" title="#{t.buttons.edit}"><i class="icon-edit"></i></a>
+      <a class="btn deleteFolderAction" title="#{t.buttons.delete}"><i class="icon-trash"></i></a>
     </div>
   </script>
 
@@ -210,11 +210,11 @@
       <% } %>
     </div>
     <div class="btn-group feedMenu hide">
-      <a class="btn markFeedReadAction" title="Mark all read"><i class="icon-eye-open"></i></a>
-      <a class="btn markFeedUnreadAction" title="Mark all unread"><i class="icon-eye-close"></i></a>
-      <a class="btn syncFeedAction" title="Sync"><i class="icon-refresh"></i></a>
-      <a class="btn editFeedAction" title="Edit"><i class="icon-edit"></i></a>
-      <a class="btn deleteFeedAction" title="Delete"><i class="icon-trash"></i></a>
+      <a class="btn markFeedReadAction" title="#{t.buttons.mark_all_read}"><i class="icon-eye-open"></i></a>
+      <a class="btn markFeedUnreadAction" title="#{t.buttons.mark_all_unread}"><i class="icon-eye-close"></i></a>
+      <a class="btn syncFeedAction" title="#{t.buttons.sync}"><i class="icon-refresh"></i></a>
+      <a class="btn editFeedAction" title="#{t.buttons.edit}"><i class="icon-edit"></i></a>
+      <a class="btn deleteFeedAction" title="#{t.buttons.delete}"><i class="icon-trash"></i></a>
     </div>
   </script>
 
@@ -224,7 +224,7 @@
         <span class="dropdown">
           <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
           <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= item.id %>-menu">
-            <li><a class="readOlderAction">Mark older items read</a></li>
+            <li><a class="readOlderAction">#{t.buttons.mark_older_read}</a></li>
           </ul>
         </span>
         <i class="readUnreadIcon icon-circle<% if(item.read){ %>-blank<% } %>"></i>

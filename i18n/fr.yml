@@ -16,3 +16,16 @@ settings:
     minutes: minutes
     sync_every: Synchroniser toutes les 
     save: Sauvegarder
+
+buttons:
+    back: Retour
+    sync: Synchroniser
+    subscribe: Abonnement
+    settings: Préférences
+    previous: Précédent
+    next: Suivant
+    mark_all_read: Marquer comme lu
+    mark_all_unread: Marquer comme non lu
+    edit: Modifier
+    delete: Supprimer
+    mark_older_read: Marquer les plus anciens comme lus
