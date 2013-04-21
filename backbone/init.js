@@ -25,7 +25,9 @@ $('#syncButton').click(function() {
 		success: function(result) {
 			folders.fetch({
 				success: function() {
-					$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+					if(result.new_items > 0) {
+						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+					}
 					icon.attr('class', 'icon-refresh');
 				}
 			});
@@ -189,7 +191,15 @@ $(document).keyup(function(e) {
 // Refresh timeout
 if(SETTINGS.refresh_timeout > 0) {
 	setInterval(function() {
-		folders.fetch();
+		old_unread_count = folders.getUnreadCount();
+		folders.fetch({
+			success: function() {
+				new_items = folders.getUnreadCount() - old_unread_count;
+				if(new_items > 0) {
+					$.pnotify({ text: new_items + ' new items.', type: 'success' });
+				}
+			}
+		});
 	}, SETTINGS.refresh_timeout*60*1000);
 }
 

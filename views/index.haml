@@ -125,7 +125,7 @@
             Export feeds as OPML
         .tab-pane#cleanupSettings
           %label
-            "Clean up" deletes items older than :
+            "Clean up" deletes items older than:
           .input-append
             %input(class="input-block-level" type="text" id="cleanup_after" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
             %span.add-on
@@ -135,14 +135,20 @@
         .tab-pane#syncSettings
           .control-group
             %label.control-label
-              Refresh timeout :
+              Refresh feeds every:
             .controls
-              %input(class="input-block-level" type="text" name="refresh_timeout" value="#{settings.refresh_timeout}" aria-hidden="true")
+              .input-append
+                %input(class="input-block-level" type="text" name="refresh_timeout" value="#{settings.refresh_timeout}" aria-hidden="true")
+                %span.add-on
+                  minutes
           .control-group
             %label.control-label
-              Sync timeout :
+              Sync feeds every:
             .controls
-              %input(class="input-block-level" type="text" name="sync_timeout" value="#{settings.sync_timeout}" aria-hidden="true")
+              .input-append
+                %input(class="input-block-level" type="text" name="sync_timeout" value="#{settings.sync_timeout}" aria-hidden="true")
+                %span.add-on
+                  minutes
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         Save
