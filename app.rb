@@ -28,21 +28,21 @@ end
 # Basic Auth
 if defined? settings.username and defined? settings.password
 	use Rack::Auth::Basic, "Access restricted" do |username, password|
-	    [username, Digest::SHA512.hexdigest(password + settings.salt)] == [settings.username, settings.password]
+		[username, Digest::SHA512.hexdigest(password + settings.salt)] == [settings.username, settings.password]
 	end
 end
 
 
 # Force UTF-8 and set locale
 before do
-    content_type :html, 'charset' => 'utf-8'
+	content_type :html, 'charset' => 'utf-8'
 	params[:locale] = settings.default_locale
 end
 
 # SCSS stylesheet
 get '/stylesheet.css' do
-    content_type :css, 'charset' => 'utf-8'
-    scss :stylesheet
+	content_type :css, 'charset' => 'utf-8'
+	scss :stylesheet
 end
 
 # Serve a concatenated version of the Backbone application
@@ -67,7 +67,7 @@ end
 
 # Render home page
 get '/' do
-    haml :index
+	haml :index
 end
 
 
@@ -282,11 +282,11 @@ end
 # Folders
 
 get '/folder' do
-    Folder.all.to_json
+	Folder.all.to_json
 end
 
 get '/folder/:id' do |id|
-    Folder.get(id).to_json
+	Folder.get(id).to_json
 end
 
 get '/folder/:id/feed' do |id|
@@ -300,7 +300,7 @@ end
 # post '/folder' do
 
 put '/folder/:id' do |id|
-    folder = Folder.get(id)
+	folder = Folder.get(id)
 	folder.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	if folder.save
 		folder.to_json
@@ -319,11 +319,11 @@ end
 # Feeds
 
 get '/feed' do
-    Feed.all.to_json
+	Feed.all.to_json
 end
 
 get '/feed/:id', '/folder/*/feed/:id' do
-    Feed.get(params[:id]).to_json
+	Feed.get(params[:id]).to_json
 end
 
 get '/feed/:id/item' do |id|
@@ -355,7 +355,7 @@ put '/feed/:id', '/folder/*/feed/:id' do
 		attributes[:folder_id] = folder.id
 	end
 
-    feed = Feed.get(params[:id])
+	feed = Feed.get(params[:id])
 	old_folder = feed.folder
 	feed.attributes = attributes
 	feed.save
@@ -404,17 +404,17 @@ end
 # Items
 
 get '/item' do
-    Item.all(:order => [:date.desc]).to_json
+	Item.all(:order => [:date.desc]).to_json
 end
 
 get '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
-    Item.get(params[:id]).to_json
+	Item.get(params[:id]).to_json
 end
 
 #post '/item' do
 
 put '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
-    item = Item.get(params[:id])
+	item = Item.get(params[:id])
 	item.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	item.save
 	item.feed.update_unread_count!
