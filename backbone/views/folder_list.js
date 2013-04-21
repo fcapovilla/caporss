@@ -4,6 +4,7 @@ var FolderListView = Backbone.View.extend({
 		this.views = [];
 
 		this.listenTo(this.collection, 'add', this.addOne);
+		this.listenTo(this.collection, 'remove', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
 	},
 	remove: function() {

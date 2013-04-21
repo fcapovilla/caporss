@@ -1,6 +1,6 @@
 var ItemView = Backbone.View.extend({
 	tagName: 'li',
-	template: _.template($('#tmpl-item').html()),
+	template: _.template($('#tmpl-item').html(), null, {variable:'item'}),
 	events: {
 		'click .readOlderAction' : 'readAllOlder',
 		'click .readUnreadIcon': 'toggleRead',

@@ -23,11 +23,6 @@ $('#syncButton').click(function() {
 		method: 'POST',
 		dataType: 'json',
 		success: function(result) {
-			if(items !== null) {
-				items.$el.empty();
-			}
-			currentSelection = null;
-
 			folders.fetch({
 				success: function() {
 					$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
@@ -49,10 +44,6 @@ $('#cleanupButton').click(function() {
 			cleanup_after: $('#cleanup_after').val()
 		},
 		success: function() {
-			if(items !== null) {
-				items.$el.empty();
-			}
-			currentSelection = null;
 			folders.fetch();
 		}
 	});
@@ -67,10 +58,6 @@ $('#subscribeButton').click(function() {
 			folder: $('#subscriptionFolder').val()
 		},
 		success: function() {
-			if(items !== null) {
-				items.$el.empty();
-			}
-			currentSelection = null;
 			folders.fetch();
 		}
 	});

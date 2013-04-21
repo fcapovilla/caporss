@@ -1,7 +1,5 @@
 var Folder = Backbone.Model.extend({
 	initialize: function() {
-		this.set('active', false);
-
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
 		this.feeds.fetch();

@@ -1,6 +1,6 @@
 var FolderView = Backbone.View.extend({
 	tagName: "li",
-	template: _.template($('#tmpl-folder').html()),
+	template: _.template($('#tmpl-folder').html(), null, {variable:'folder'}),
 	events: {
 		'click .markFolderReadAction' : 'markFolderRead',
 		'click .markFolderUnreadAction' : 'markFolderUnread',
@@ -33,6 +33,7 @@ var FolderView = Backbone.View.extend({
 	},
 	remove: function() {
 		this.removeAllSubviews();
+		this.$feedList.clear();
 		Backbone.View.prototype.remove.call(this);
 	},
 	removeAllSubviews: function() {
@@ -47,8 +48,8 @@ var FolderView = Backbone.View.extend({
 		this.views.push(view);
 	},
 	addAll: function() {
-		this.$feedList.empty();
 		this.removeAllSubviews();
+		this.$feedList.empty();
 		this.model.feeds.each(this.addOne, this);
 	},
 	toggleFolderOpen: function() {

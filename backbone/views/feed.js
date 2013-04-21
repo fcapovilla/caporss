@@ -1,7 +1,7 @@
 var FeedView = Backbone.View.extend({
 	tagName: 'li',
 	className: 'feed',
-	template: _.template($('#tmpl-feed').html()),
+	template: _.template($('#tmpl-feed').html(), null, {variable:'feed'}),
 	events: {
 		'click .markFeedReadAction' : 'markFeedRead',
 		'click .markFeedUnreadAction' : 'markFeedUnread',

@@ -1,7 +1,5 @@
 var Feed = Backbone.Model.extend({
 	initialize: function() {
-		this.set('active', false);
-
 		this.items = new ItemCollection();
 		this.items.url = '/feed/' + this.id + '/item';
 

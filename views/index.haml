@@ -139,13 +139,13 @@
 
 :plain
   <script id='tmpl-folder' type='text/template'>
-    <div class="folderTitle<% if(active){ %> active <% } %>">
-      <i class="folder-icon <% if(open){ %>icon-folder-open<% }else{ %>icon-folder-close<% } %>"></i>
-      <% if(unread_count > 0) { %>
-        <b><%= title %></b>
-        <span class="badge badge-info"><%= unread_count %></span>
+    <div class="folderTitle<% if(folder.active){ %> active <% } %>">
+      <i class="folder-icon <% if(folder.open){ %>icon-folder-open<% }else{ %>icon-folder-close<% } %>"></i>
+      <% if(folder.unread_count > 0) { %>
+        <b><%= folder.title %></b>
+        <span class="badge badge-info"><%= folder.unread_count %></span>
       <% }else{ %>
-        <%= title %>
+        <%= folder.title %>
       <% } %>
       <i class="icon icon-caret-down menu-toggle"></i>
     </div>
@@ -159,13 +159,13 @@
   </script>
 
   <script id='tmpl-feed' type='text/template'>
-    <div class="feedTitle<% if(active){ %> active<% } %>">
+    <div class="feedTitle<% if(feed.active){ %> active<% } %>">
       <i class="icon icon-caret-down menu-toggle"></i>
-      <% if(unread_count > 0) { %>
-        <b><%= title %></b>
-        <span class="badge badge-info"><%= unread_count %></span>
+      <% if(feed.unread_count > 0) { %>
+        <b><%= feed.title %></b>
+        <span class="badge badge-info"><%= feed.unread_count %></span>
       <% }else{ %>
-        <%= title %>
+        <%= feed.title %>
       <% } %>
     </div>
     <div class="btn-group feedMenu hide">
@@ -178,40 +178,40 @@
   </script>
 
   <script id='tmpl-item' type='text/template'>
-    <div class="item-container<% if(open){ %> active<% } %>">
+    <div class="item-container<% if(item.open){ %> active<% } %>">
       <div class="item-icons">
         <span class="dropdown">
           <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= id %>-menu">
+          <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= item.id %>-menu">
             <li><a class="readOlderAction">Mark older items read</a></li>
           </ul>
         </span>
-        <i class="readUnreadIcon icon-circle<% if(read){ %>-blank<% } %>"></i>
+        <i class="readUnreadIcon icon-circle<% if(item.read){ %>-blank<% } %>"></i>
       </div>
 
       <div class="item-date hidden-phone">
         <span class="label">
-          <%= formatDate(new Date(date)) %>
+          <%= formatDate(new Date(item.date)) %>
         </span>
       </div>
 
       <div class="item-title">
-        <% if(!read){ %>
-          <b><%= title %></b>
+        <% if(!item.read){ %>
+          <b><%= item.title %></b>
         <% }else{ %>
-          <%= title %>
+          <%= item.title %>
         <% } %>
       </div>
     </div>
 
-    <% if(open){ %>
+    <% if(item.open){ %>
       <div class="well item-content">
-        <a class="item-content-title" href="<%= url %>" target="_blank"><%= title %></a>
+        <a class="item-content-title" href="<%= item.url %>" target="_blank"><%= item.title %></a>
         <br>
-        <%= content %>
-        <% if(attachment_url){ %>
+        <%= item.content %>
+        <% if(item.attachment_url){ %>
           <br>
-          <a class="btn" href="<%= attachment_url %>">
+          <a class="btn" href="<%= item.attachment_url %>">
             <i class="icon-download"></i>Download file
           </a>
         <% } %>
