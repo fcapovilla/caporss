@@ -26,57 +26,57 @@
 
 %div(class="modal hide fade" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModal" aria-hidden="true")
   .modal-header
-    Subscribe
+    =t.subscribe.subscribe
     %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
       x
   .modal-body
     %label
-      URL :
+      =t.subscribe.url
     %input(class="input-block-level" type="text" id="subscriptionUrl" aria-hidden="true")
     %label
-      Folder :
+      =t.subscribe.folder
     %input(class="input-block-level" type="text" id="subscriptionFolder" aria-hidden="true")
   .modal-footer
     %button(type="button" id="subscribeButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
-      Subscribe
+      =t.subscribe.subscribe
 
 -# Edit feed form
 
 %div(class="modal hide fade" id="editFeedModal" tabindex="-1" role="dialog" aria-labelledby="editFeedModal" aria-hidden="true")
   .modal-header
-    Edit feed
+    =t.edit_feed.title
     %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
       x
   .modal-body
     %label
-      URL :
+      =t.edit_feed.url
     %input(class="input-block-level" type="text" id="feedUrl" aria-hidden="true")
     %label
-      Folder :
+      =t.edit_feed.folder
     %input(class="input-block-level" type="text" id="feedFolder" aria-hidden="true")
     %label.checkbox
       %input(type="checkbox" id="resetFeed" checked="checked")
-      Reset feed
+      =t.edit_feed.reset
     %input(type="hidden" id="feedId" value="")
   .modal-footer
     %button(type="button" id="editFeedButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
-      Save
+      =t.edit_feed.save
 
 -# Edit folder form
 
 %div(class="modal hide fade" id="editFolderModal" tabindex="-1" role="dialog" aria-labelledby="editFolderModal" aria-hidden="true")
   .modal-header
-    Edit feed
+    =t.edit_folder.title
     %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
       x
   .modal-body
     %label
-      Title :
+      =t.edit_folder.title_label
     %input(class="input-block-level" type="text" id="folderTitle" aria-hidden="true")
     %input(type="hidden" id="folderId" value="")
   .modal-footer
     %button(type="button" id="editFolderButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
-      Save
+      =t.edit_folder.save
 
 -# Settings form
 
@@ -166,14 +166,14 @@
 %form(class="upload-form" method="post" enctype="multipart/form-data" action="/opml_upload")
   %div(class="modal hide fade" id="opmlModal" tabindex="-1" role="dialog" aria-labelledby="opmlModal" aria-hidden="true")
     .modal-header
-      OPML Upload
+      =t.opml_import.title
       %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
         x
     .modal-body
       %input(type="file" name="file" aria-hidden="true")
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
-        Upload OPML
+        =t.opml_import.upload
 
 
 -# Underscore Templates

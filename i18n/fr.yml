@@ -29,3 +29,24 @@ buttons:
     edit: Modifier
     delete: Supprimer
     mark_older_read: Marquer les plus anciens comme lus
+
+subscribe:
+    subscribe: Abonnement
+    url: "URL&nbsp;:"
+    folder: "Dossier&nbsp;:"
+
+edit_feed:
+    title: Modifier l'abonnement
+    url: "URL&nbsp;:"
+    folder: "Dossier&nbsp:"
+    reset: Réinitialiser l'abonnement
+    save: Sauvegarder
+
+edit_folder:
+    title: Modifier le dossier
+    title_label: "Titre&nbsp;:"
+    save: Sauvegarder
+
+opml_import:
+    title: Importer un fichier OPML
+    upload: Envoyer

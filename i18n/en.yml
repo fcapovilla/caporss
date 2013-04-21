@@ -29,3 +29,24 @@ buttons:
     edit: Edit
     delete: Delete
     mark_older_read: Mark older items read
+
+subscribe:
+    subscribe: Subscribe
+    url: "URL:"
+    folder: "Dossier:"
+
+edit_feed:
+    title: Edit feed
+    url: "URL:"
+    folder: "Folder:"
+    reset: Reset feed
+    save: Save
+
+edit_folder:
+    title: Edit folder
+    title_label: "Title:"
+    save: Save
+
+opml_import:
+    title: Import an OPML file
+    upload: Upload
