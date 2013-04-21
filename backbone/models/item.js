@@ -1,8 +1,4 @@
 var Item = Backbone.Model.extend({
-	initialize: function() {
-		// Client-side attribute
-		this.set('open', false);
-	},
 	toJSON: function() {
 		// Syncable attributes
 		return {read: this.get('read')};
