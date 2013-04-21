@@ -1,5 +1,5 @@
 settings:
-    title: settings
+    title: Settings
     account: Account
     opml: OPML
     cleanup: Cleanup
@@ -12,9 +12,9 @@ settings:
     export_as_opml: Export feeds as OPML
     cleanup_older_than: Cleanup items older than 
     days: days
-    refresh_every: Refresh feeds every
+    refresh_every: Refresh feeds every 
     minutes: minutes
-    sync_every: Sync feeds every
+    sync_every: Sync feeds every 
     save: Save
 
 buttons:
@@ -28,7 +28,7 @@ buttons:
     mark_all_unread: Mark all unread
     edit: Edit
     delete: Delete
-    mark_older_read: Mark older items read
+    mark_older_read: Mark older items as read
 
 subscribe:
     subscribe: Subscribe
