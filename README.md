@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 0.1.3
+Version 0.1.5
 
 ## Description
 
@@ -15,6 +15,7 @@ CapoRSS is built on top of these great projects :
 * [Datamapper](http://datamapper.org/)
 * [Feedzirra](https://github.com/pauldix/feedzirra)
 * [Nokogiri](http://nokogiri.org/)
+* [R18n](https://github.com/ai/r18n)
 * [Bootstrap](http://twitter.github.com/bootstrap/)
 * [Font awesome](http://fortawesome.github.com/Font-Awesome/)
 * [Pines notify](http://pinesframework.org/pnotify/)
@@ -73,17 +74,18 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 Note: For security reasons, a SSL certificate is required for running CapoRSS in production mode.
 
-### Heroku
+### Heroku and AppFog
 
-CapoRSS is Heroku-ready, so you can push it like any other Sinatra-based application. See this page for more informations : [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
+CapoRSS is Heroku-ready and AppFog-ready, so you can push it on these services like any other Sinatra-based application.
+See these pages for more informations :
+* [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
+* [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
 
 ## TODO
 
 * Correct client-side memory leaks
-* Performance optimisations
+* Performance improvement
 * Drap-and-drop feed reordering
 * Recursive folders (more than one folder level)
 * Per-folder OPML export
-* Translation support
-* Automatic sync (cron or client-side timeouts)
 * Custom scrollbar styles
