@@ -1,4 +1,7 @@
 var ItemCollection = Backbone.Collection.extend({
 	model: Item,
-	url: '/item'
+	url: '/item',
+	comparator: function(item) {
+		return -Date.parse(item.get('date'));
+	}
 });
