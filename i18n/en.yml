@@ -29,6 +29,7 @@ buttons:
     edit: Edit
     delete: Delete
     mark_older_read: Mark older items as read
+    toggle_read: Show/Hide read items
 
 subscribe:
     subscribe: Subscribe

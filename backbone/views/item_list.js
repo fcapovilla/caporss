@@ -21,6 +21,10 @@ var ItemListView = Backbone.View.extend({
 		this.views.length = 0;
 	},
 	addOne: function(item) {
+		if(!SETTINGS.show_read && item.get('read') && !item.get('open')) {
+			return;
+		}
+
 		var view = new ItemView({model: item});
 		this.$el.append(view.render().el);
 		this.views.push(view);

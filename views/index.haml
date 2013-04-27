@@ -8,6 +8,8 @@
           %i(id="spinner" class="icon-spinner icon-large invisible")
         %button(class="btn" id="syncButton" title="#{t.buttons.sync}")
           %i(class="icon-refresh")
+        %button(class="btn hidden-phone" id="toggleReadVisibilityButton" title="#{t.buttons.toggle_read}")
+          %i(class="icon-eye-open")
         %button(class="btn" href="#subscriptionModal" role="button" data-toggle="modal" title="#{t.buttons.subscribe}")
           %i(class="icon-plus")
         %button(class="btn hidden-tiny-phone" href="#settingsModal" role="button" data-toggle="modal" title="#{t.buttons.settings}")
@@ -265,5 +267,6 @@
 :javascript
   var SETTINGS = {
     refresh_timeout: #{settings.refresh_timeout},
-    sync_timeout: #{settings.sync_timeout}
+    sync_timeout: #{settings.sync_timeout},
+    show_read: true
   };

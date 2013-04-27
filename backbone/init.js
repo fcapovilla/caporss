@@ -15,6 +15,21 @@ $.pnotify.defaults.stack = pnotify_stack;
 
 // Buttons and dialogs actions
 
+$('#toggleReadVisibilityButton').click(function() {
+	if(SETTINGS.show_read) {
+		SETTINGS.show_read = false;
+		$('#toggleReadVisibilityButton>i').attr('class', 'icon-eye-close');
+	}
+	else {
+		SETTINGS.show_read = true;
+		$('#toggleReadVisibilityButton>i').attr('class', 'icon-eye-open');
+	}
+
+	if(items !== null) {
+		items.addAll();
+	}
+});
+
 $('#syncButton').click(function() {
 	var icon = $(this).children('i');
 	icon.attr('class', 'icon-time');
