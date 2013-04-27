@@ -224,3 +224,26 @@ if(SETTINGS.sync_timeout > 0) {
 		$('#syncButton').click();
 	}, SETTINGS.sync_timeout*60*1000);
 }
+
+// Dragbar
+$('.dragbar').mousedown(function(e){
+	e.preventDefault();
+	$(document).mousemove(function(e){
+		var x = e.pageX;
+		var maxwidth = $(window).width()-300;
+
+		if(x < 250) {
+			x = 250;
+		}
+		if(x > maxwidth) {
+			x = maxwidth;
+		}
+
+		$('.side-bar').css("width",x+2);
+		$('.content').css("margin-left",x+2);
+		$('.feed-list').css("width",x-3);
+	});
+});
+$(document).mouseup(function(e){
+	$(document).unbind('mousemove');
+});
