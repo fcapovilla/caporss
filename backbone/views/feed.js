@@ -37,7 +37,9 @@ var FeedView = Backbone.View.extend({
 		$('.mobile-item-button').removeClass('invisible');
 	},
 	deleteFeed: function() {
-		this.model.destroy();
+		if(confirm(LANG.confirm_delete_feed)) {
+			this.model.destroy();
+		}
 		return this.closeMenu();
 	},
 	syncFeed: function() {

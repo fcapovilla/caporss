@@ -263,11 +263,16 @@
     <% } %>
   </script>
 
--# Javascript settings
+-# Javascript settings and translations
 
 :javascript
   var SETTINGS = {
     refresh_timeout: #{settings.refresh_timeout},
     sync_timeout: #{settings.sync_timeout},
     show_read: true
+  };
+
+  var LANG = {
+    confirm_delete_feed: "#{t.js.confirm_delete_feed}",
+    confirm_delete_folder: "#{t.js.confirm_delete_folder}",
   };

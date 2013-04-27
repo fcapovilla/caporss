@@ -57,7 +57,9 @@ var FolderView = Backbone.View.extend({
 		return false;
 	},
 	deleteFolder: function() {
-		this.model.destroy();
+		if(confirm(LANG.confirm_delete_folder)) {
+			this.model.destroy();
+		}
 		return this.closeMenu();
 	},
 	syncFolder: function() {
