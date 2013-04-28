@@ -142,19 +142,6 @@ $('#editFeedButton').click(function() {
 });
 
 $('#mobileBackButton').click(function() {
-	if(items !== null) {
-		items.$el.empty();
-	}
-
-	if(currentSelection !== null) {
-		currentSelection.set('active', false);
-		currentSelection = null;
-	}
-
-	$('.mobile-item-button').addClass('invisible');
-	$('#item-list').addClass('hidden-phone');
-	$('.feed-list').removeClass('hidden-phone');
-
 	router.navigate("", {trigger: true});
 });
 

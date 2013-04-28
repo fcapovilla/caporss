@@ -1,7 +1,22 @@
 var Router = Backbone.Router.extend({
 	routes: {
+		"": "clear",
 		"feed/:id": "viewFeed",
 		"folder/:id": "viewFolder"
+	},
+	clear: function() {
+		if(items !== null) {
+			items.$el.empty();
+		}
+
+		if(currentSelection !== null) {
+			currentSelection.set('active', false);
+			currentSelection = null;
+		}
+
+		$('.mobile-item-button').addClass('invisible');
+		$('#item-list').addClass('hidden-phone');
+		$('.feed-list').removeClass('hidden-phone');
 	},
 	updateItemList : function(model) {
 		if(items !== null) {
