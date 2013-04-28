@@ -21,20 +21,7 @@ var FeedView = Backbone.View.extend({
 		return this;
 	},
 	selectFeed: function() {
-		if(items !== null) {
-			items.remove();
-		}
-		items = new ItemListView({collection: this.model.items});
-		this.model.items.fetch();
-		if(currentSelection !== null) {
-			currentSelection.set('active', false);
-		}
-		this.model.set('active', true);
-		currentSelection = this.model;
-		window.scrollTo(0,0);
-		$('#item-list').removeClass('hidden-phone');
-		$('.feed-list').addClass('hidden-phone');
-		$('.mobile-item-button').removeClass('invisible');
+		router.navigate("feed/" + this.model.id, {trigger: true});
 	},
 	deleteFeed: function() {
 		if(confirm(LANG.confirm_delete_feed)) {

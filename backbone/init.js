@@ -1,9 +1,13 @@
 var items = null;
 var currentSelection = null;
+
+var router = new Router();
 var folders = new FolderCollection();
 var folderList = new FolderListView({collection: folders});
-folders.fetch();
 
+folders.fetch({success: function() {
+	Backbone.history.start();
+}});
 
 // Configure pnotify
 
@@ -150,6 +154,8 @@ $('#mobileBackButton').click(function() {
 	$('.mobile-item-button').addClass('invisible');
 	$('#item-list').addClass('hidden-phone');
 	$('.feed-list').removeClass('hidden-phone');
+
+	router.navigate("", {trigger: true});
 });
 
 $('#mobilePrevItem').click(function() {

@@ -58,7 +58,7 @@ get '/app.js' do
 
 	output += "$(function() {\n"
 
-	Dir["#{root}/models/*.js", "#{root}/collections/*.js", "#{root}/views/*.js", "#{root}/*.js"].each do |file|
+	Dir["#{root}/routers/*.js", "#{root}/models/*.js", "#{root}/collections/*.js", "#{root}/views/*.js", "#{root}/*.js"].each do |file|
 		output += File.open(file, 'r').read()
 	end
 
