@@ -45,15 +45,20 @@ var Feed = Backbone.Model.extend({
 	},
 	fetchChildren: function(options) {
 		if(this.get('active')) {
-			this.items.fetch(options);
+			return this.items.fetch(options);
 		}
 	},
 	fetch: function(options) {
-		var res = Backbone.Collection.prototype.fetch.call(this, options);
+		options = options ? options : {};
+		var callbacks = _.pick(options, 'success', 'error');
 		options = _.omit(options, 'success', 'error');
 
-		this.fetchChildren(options);
+		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
 
-		return res;
+		$.when(deferred).then(function() {
+			$.when(this.fetchChildren(options)).then(callbacks.success, callbacks.error);
+		}, callbacks.error);
+
+		return deferred;
 	}
 });

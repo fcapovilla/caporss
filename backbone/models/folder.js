@@ -31,18 +31,32 @@ var Folder = Backbone.Model.extend({
 		this.set('unread_count', count);
 	},
 	fetchChildren: function(options) {
-		if(this.get('active')) {
-			this.items.fetch(options);
-		}
-
-		this.feeds.fetch(options);
-	},
-	fetch: function(options) {
-		var res = Backbone.Collection.prototype.fetch.call(this, options);
+		options = options ? options : {};
+		var callbacks = _.pick(options, 'success', 'error');
 		options = _.omit(options, 'success', 'error');
 
-		this.fetchChildren(options);
+		var deferreds = []
+		if(this.get('active')) {
+			deferreds.push( this.items.fetch(options) );
+		}
+		deferreds.push( this.feeds.fetch(options) );
 
-		return res;
+		var deferred = $.when.apply($, deferreds);
+		deferred.then(callbacks.success, callbacks.error);
+
+		return deferred;
+	},
+	fetch: function(options) {
+		options = options ? options : {};
+		var callbacks = _.pick(options, 'success', 'error');
+		options = _.omit(options, 'success', 'error');
+
+		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
+
+		$.when(deferred).then(function() {
+			$.when(this.fetchChildren(options)).then(callbacks.success, callbacks.error);
+		}, callbacks.error);
+
+		return deferred;
 	}
 });

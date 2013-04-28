@@ -5,14 +5,23 @@ var FolderCollection = Backbone.Collection.extend({
 		this.listenTo(this, 'add remove change:unread_count', this.refreshUnreadCount);
 	},
 	fetch: function(options) {
-		var res = Backbone.Collection.prototype.fetch.call(this, options);
+		var that = this;
+
+		options = options ? options : {};
+		var callbacks = _.pick(options, 'success', 'error');
 		options = _.omit(options, 'success', 'error');
 
-		this.each(function(folder) {
-			folder.fetchChildren(options);
-		});
+		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
 
-		return res;
+		$.when(deferred).then(function() {
+			var deferreds = that.map(function(folder) {
+				return folder.fetchChildren(options);
+			});
+
+			$.when.apply($, deferreds).then(callbacks.success, callbacks.error);
+		}, callbacks.error);
+
+		return deferred;
 	},
 	refreshUnreadCount: function() {
 		document.title = 'CapoRSS (' + this.getUnreadCount() + ')';
