@@ -11,6 +11,7 @@ var ItemListView = Backbone.View.extend({
 		$(this.render().el).appendTo('#item-list');
 	},
 	remove: function() {
+		this.closeAll();
 		this.removeAllSubviews();
 		Backbone.View.prototype.remove.call(this);
 	},
