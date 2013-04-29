@@ -49,12 +49,23 @@ var ItemListView = Backbone.View.extend({
 		}
 		else {
 			var index = this.collection.indexOf(this.collection.get(this.cursor));
+			var dir = 0;
 
 			if(e.keyCode == 74) { // J (down)
-				item = this.collection.at(index+1);
+				dir = 1;
 			}
 			else if(e.keyCode == 75) { // K (Up)
-				item = this.collection.at(index-1);
+				dir = -1;
+			}
+
+			item = this.collection.at(index+dir);
+
+			// If read items are hidden, loop until we get an unread item
+			if(!SETTINGS.show_read) {
+				while(item !== null && item !== undefined && item.get('read')) {
+					index+=dir;
+					item = this.collection.at(index+dir);
+				}
 			}
 		}
 
