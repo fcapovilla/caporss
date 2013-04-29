@@ -189,11 +189,39 @@ $(window).on('resize orientationChanged', function() {
 
 // Keyboard shortcuts
 $(document).keyup(function(e) {
-	if(e.keyCode == 74 || e.keyCode == 75) {
-		if(items !== null) {
-			items.moveCursor(e);
+	if(e.shiftKey) {
+		var model = null;
+		if(e.keyCode == 74) { // SHIFT+J
+			model = folders.first();
+			if(currentSelection !== null) {
+				model = currentSelection.getNextInList();
+			}
+			router.goToModel(model);
+		}
+		if(e.keyCode == 75) { // SHIFT+K
+			model = folders.first();
+			if(currentSelection !== null) {
+				model = currentSelection.getPreviousInList();
+			}
+			router.goToModel(model);
 		}
 	}
+	else {
+		if(items !== null) {
+			if(e.keyCode == 74) { // J
+				items.moveCursor('down');
+			}
+			if(e.keyCode == 75) { // K
+				items.moveCursor('up');
+			}
+		}
+
+		if(e.keyCode == 82) { // R
+			$('#syncButton').click();
+		}
+	}
+
+
 });
 
 // Refresh timeout

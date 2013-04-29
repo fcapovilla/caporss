@@ -49,5 +49,13 @@ var Router = Backbone.Router.extend({
 		var model = folders.get(id);
 
 		this.updateItemList(model);
-	}
+	},
+	goToModel: function(model) {
+		if(model instanceof Folder) {
+			this.navigate('folder/' + model.id, {trigger: true});
+		}
+		else {
+			this.navigate('feed/' + model.id, {trigger: true});
+		}
+    }
 });

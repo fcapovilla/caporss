@@ -40,11 +40,11 @@ var ItemListView = Backbone.View.extend({
 			item.set('open', false);
 		});
 	},
-	moveCursor: function(e) {
+	moveCursor: function(direction) {
 		var item = null;
 
 		if(this.cursor === null) {
-			if(e.keyCode == 74) {
+			if(direction == 'up') {
 				item = this.collection.first();
 			}
 		}
@@ -52,10 +52,10 @@ var ItemListView = Backbone.View.extend({
 			var index = this.collection.indexOf(this.collection.get(this.cursor));
 			var dir = 0;
 
-			if(e.keyCode == 74) { // J (down)
+			if(direction == 'down') {
 				dir = 1;
 			}
-			else if(e.keyCode == 75) { // K (Up)
+			else if(direction == 'up') {
 				dir = -1;
 			}
 

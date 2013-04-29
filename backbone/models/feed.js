@@ -60,5 +60,32 @@ var Feed = Backbone.Model.extend({
 		}, callbacks.error);
 
 		return deferred;
-	}
+	},
+	// Get next feed/folder in the folder list
+	getNextInList: function() {
+		var next = this.collection.at(this.collection.indexOf(this) + 1);
+		if(next === null || next === undefined) {
+			var folder = folders.get(this.get('folder_id'));
+			next = folder.collection.at(folder.collection.indexOf(folder) + 1);
+		}
+
+		if(next === null || next === undefined) {
+			next = this;
+		}
+
+		return next;
+    },
+	// Get previous feed/folder in the folder list
+	getPreviousInList: function() {
+		var prev = this.collection.at(this.collection.indexOf(this) - 1);
+		if(prev === null || prev === undefined) {
+			prev = folders.get(this.get('folder_id'));
+		}
+
+		if(prev === null || prev === undefined) {
+			prev = this;
+		}
+
+		return prev;
+    }
 });

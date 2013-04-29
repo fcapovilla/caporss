@@ -35,7 +35,7 @@ var Folder = Backbone.Model.extend({
 		var callbacks = _.pick(options, 'success', 'error');
 		options = _.omit(options, 'success', 'error');
 
-		var deferreds = []
+		var deferreds = [];
 		if(this.get('active')) {
 			deferreds.push( this.items.fetch(options) );
 		}
@@ -58,5 +58,34 @@ var Folder = Backbone.Model.extend({
 		}, callbacks.error);
 
 		return deferred;
-	}
+	},
+	// Get next feed/folder in the folder list
+	getNextInList: function() {
+		var next = null;
+		if(this.get('open') && this.feeds.length !== 0) {
+			next = this.feeds.first();
+		}
+		else {
+			next = this.collection.at(this.collection.indexOf(this) + 1);
+		}
+
+		if(next === null || next === undefined) {
+			next = this;
+		}
+
+		return next;
+    },
+	// Get previous feed/folder in the folder list
+	getPreviousInList: function() {
+		var prev = this.collection.at(this.collection.indexOf(this) - 1);
+		if(prev !== null && prev !== undefined && prev.get('open') && prev.feeds.length !== 0) {
+			prev = prev.feeds.last();
+		}
+
+		if(prev === null || prev === undefined) {
+			prev = this;
+		}
+
+		return prev;
+    }
 });
