@@ -229,7 +229,6 @@ $(document).keyup(function(e) {
 					}
 				}
 
-				e.preventDefault();
 				return false;
 			}
 		}
@@ -260,7 +259,6 @@ $(document).keyup(function(e) {
 					}
 				}
 
-				e.preventDefault();
 				return false;
 			}
 		}
@@ -270,11 +268,16 @@ $(document).keyup(function(e) {
 		}
 	}
 });
+
 $(document).keydown(function(e) {
-	if(e.keyCode == 32) {
-		e.preventDefaults();
+	if(e.keyCode == 32) { // SPACE
 		return false;
 	}
+});
+
+// Disable keyboard events when in inputs
+$(':input').keyup(function(e) {
+	return false;
 });
 
 // Refresh timeout
