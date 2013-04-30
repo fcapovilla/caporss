@@ -270,6 +270,12 @@ $(document).keyup(function(e) {
 		}
 	}
 });
+$(document).keydown(function(e) {
+	if(e.keyCode == 32) {
+		e.preventDefaults();
+		return false;
+	}
+});
 
 // Refresh timeout
 if(SETTINGS.refresh_timeout > 0) {
