@@ -24,7 +24,8 @@ var Router = Backbone.Router.extend({
 		}
 
 		items = new ItemListView({collection: model.items});
-		model.items.fetch();
+		model.items.fetch({reset: true});
+
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
 		}

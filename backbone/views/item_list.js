@@ -5,7 +5,8 @@ var ItemListView = Backbone.View.extend({
 		this.cursor = null;
 		this.views = [];
 
-		this.listenTo(this.collection, 'sync', this.addAll);
+		this.listenTo(this.collection, 'add', this.addOne);
+		this.listenTo(this.collection, 'remove', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
 
 		$(this.render().el).appendTo('#item-list');
@@ -31,9 +32,14 @@ var ItemListView = Backbone.View.extend({
 		this.views.push(view);
 	},
 	addAll: function() {
+		// Keep scroll position
+		var scroll = $('#item-list').scrollTop();
+
 		this.$el.empty();
 		this.removeAllSubviews();
 		this.collection.each(this.addOne, this);
+
+		$('#item-list').scrollTop(scroll);
 	},
 	closeAll: function() {
 		this.collection.each(function(item) {
@@ -44,7 +50,7 @@ var ItemListView = Backbone.View.extend({
 		var item = null;
 
 		if(this.cursor === null) {
-			if(direction == 'up') {
+			if(direction == 'down') {
 				item = this.collection.first();
 			}
 		}
