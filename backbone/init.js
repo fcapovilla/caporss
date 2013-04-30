@@ -187,6 +187,14 @@ $(window).on('resize orientationChanged', function() {
 }).resize();
 
 
+// Disable keyboard events when in inputs
+$(':input').keyup(function(e) {
+	e.stopImmediatePropagation();
+});
+$(':input').keydown(function(e) {
+	e.stopImmediatePropagation();
+});
+
 // Keyboard shortcuts
 $(document).keyup(function(e) {
 	var container = null;
@@ -273,11 +281,6 @@ $(document).keydown(function(e) {
 	if(e.keyCode == 32) { // SPACE
 		return false;
 	}
-});
-
-// Disable keyboard events when in inputs
-$(':input').keyup(function(e) {
-	return false;
 });
 
 // Refresh timeout
