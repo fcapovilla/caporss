@@ -45,6 +45,7 @@ var Feed = Backbone.Model.extend({
 	},
 	fetchChildren: function(options) {
 		if(this.get('active')) {
+			options.reset = true;
 			return this.items.fetch(options);
 		}
 	},

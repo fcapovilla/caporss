@@ -36,10 +36,11 @@ var Folder = Backbone.Model.extend({
 		options = _.omit(options, 'success', 'error');
 
 		var deferreds = [];
+		deferreds.push( this.feeds.fetch(options) );
 		if(this.get('active')) {
+			options.reset = true;
 			deferreds.push( this.items.fetch(options) );
 		}
-		deferreds.push( this.feeds.fetch(options) );
 
 		var deferred = $.when.apply($, deferreds);
 		deferred.then(callbacks.success, callbacks.error);
