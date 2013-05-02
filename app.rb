@@ -39,6 +39,13 @@ before do
 	params[:locale] = settings.default_locale
 end
 
+# partial helper
+helpers do
+	def partial(page, options={})
+		haml page.to_sym, options.merge!(:layout => false)
+	end
+end
+
 # SCSS stylesheet
 get '/stylesheet.css' do
 	content_type :css, 'charset' => 'utf-8'

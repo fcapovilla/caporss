@@ -1,0 +1,82 @@
+-# Settings form
+
+%form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
+  %div(class="modal hide fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true")
+    .modal-header
+      =t.settings.title
+      %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+        x
+    .modal-body
+      %ul.nav.nav-tabs
+        %li.active
+          %a(href="#accountSettings" data-toggle="tab")
+            =t.settings.account
+        %li
+          %a(href="#opmlSettings" data-toggle="tab")
+            =t.settings.opml
+        %li
+          %a(href="#cleanupSettings" data-toggle="tab")
+            =t.settings.cleanup
+        %li
+          %a(href="#syncSettings" data-toggle="tab")
+            =t.settings.sync
+      .tab-content
+        .tab-pane.active#accountSettings
+          .well
+            .control-group
+              %label.control-label
+                =t.settings.username
+              .controls
+                %input(class="input-block-level" type="text" name="username" value="#{settings.username}" aria-hidden="true")
+            .control-group
+              %label.control-label
+                =t.settings.current_password
+              .controls
+                %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
+            .control-group
+              %label.control-label
+                =t.settings.new_password
+              .controls
+                %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
+          .control-group
+            %label.control-label
+              =t.settings.language
+            .controls
+              %select(name="default_locale")
+                - r18n.available_locales.each do |locale|
+                  %option(value="#{locale.code}"){selected: r18n.locale.code == locale.code}
+                    =locale.title
+        .tab-pane#opmlSettings
+          %button(class="btn" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal")
+            =t.settings.import_opml_file
+          %a(class="btn" href="/export.opml")
+            =t.settings.export_as_opml
+        .tab-pane#cleanupSettings
+          %label
+            =t.settings.cleanup_older_than
+          .input-append
+            %input(class="input-block-level" type="text" id="cleanup_after" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
+            %span.add-on
+              =t.settings.days
+          %button(class="btn pull-right" id="cleanupButton" data-dismiss="modal")
+            =t.settings.cleanup
+        .tab-pane#syncSettings
+          .control-group
+            %label.control-label
+              =t.settings.refresh_every
+            .controls
+              .input-append
+                %input(class="input-block-level" type="text" name="refresh_timeout" value="#{settings.refresh_timeout}" aria-hidden="true")
+                %span.add-on
+                  =t.settings.minutes
+          .control-group
+            %label.control-label
+              =t.settings.sync_every
+            .controls
+              .input-append
+                %input(class="input-block-level" type="text" name="sync_timeout" value="#{settings.sync_timeout}" aria-hidden="true")
+                %span.add-on
+                  =t.settings.minutes
+    .modal-footer
+      %button(type="submit" class="btn btn-primary" aria-hidden="true")
+        =t.settings.save

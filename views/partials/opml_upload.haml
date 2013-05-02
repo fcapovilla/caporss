@@ -1,0 +1,13 @@
+-# OPML Upload Modal Dialog
+
+%form(class="upload-form" method="post" enctype="multipart/form-data" action="/opml_upload")
+  %div(class="modal hide fade" id="opmlModal" tabindex="-1" role="dialog" aria-labelledby="opmlModal" aria-hidden="true")
+    .modal-header
+      =t.opml_import.title
+      %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+        x
+    .modal-body
+      %input(type="file" name="file" aria-hidden="true")
+    .modal-footer
+      %button(type="submit" class="btn btn-primary" aria-hidden="true")
+        =t.opml_import.upload

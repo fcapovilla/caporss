@@ -1,0 +1,17 @@
+-# Subscription form
+
+%div(class="modal hide fade" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModal" aria-hidden="true")
+  .modal-header
+    =t.subscribe.subscribe
+    %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+      x
+  .modal-body
+    %label
+      =t.subscribe.url
+    %input(class="input-block-level" type="text" id="subscriptionUrl" aria-hidden="true")
+    %label
+      =t.subscribe.folder
+    %input(class="input-block-level" type="text" id="subscriptionFolder" aria-hidden="true")
+  .modal-footer
+    %button(type="button" id="subscribeButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
+      =t.subscribe.subscribe
