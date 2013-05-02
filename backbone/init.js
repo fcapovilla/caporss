@@ -274,6 +274,14 @@ $(document).keyup(function(e) {
 		if(e.keyCode == 82) { // R
 			$('#syncButton').click();
 		}
+		if(e.keyCode == 72) { // H
+			$('#toggleReadVisibilityButton').click();
+		}
+		if(e.keyCode == 65) { // A
+			$('#subscriptionModal').modal().on('shown', function() {
+				$('#subscriptionUrl').focus();
+			});
+		}
 	}
 });
 

@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 0.2.1
+Version 0.2.2
 
 ## Description
 
@@ -22,6 +22,7 @@ CapoRSS is built on top of these great projects :
 * [Backbone.js](http://backbonejs.org/)
 * [Underscore.js](http://underscorejs.org/)
 * [JQuery](http://jquery.com/)
+* [JQuery-cookie](https://github.com/carhartl/jquery-cookie)
 * [Haml](http://haml.info/)
 * [Sass](http://sass-lang.com/)
 * [Thin](http://code.macournoyer.com/thin/)
@@ -80,6 +81,20 @@ CapoRSS is Heroku-ready and AppFog-ready, so you can push it on these services l
 See these pages for more informations :
 * [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 * [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
+
+## Keyboard shortcuts
+
+Here is a list of keyboard shortcuts currently supported by CapoRSS :
+
+* 'A' : Show the feed subscription dialog.
+* 'R' : Sync feeds
+* 'H' : Hide/Unhide read items
+* 'J' : Move down one item in the item list
+* 'K' : Move up one item in the item list
+* 'SHIFT+J' : Select the next feed/folder in the sidebar
+* 'SHIFT+K' : Select the previous feed/folder in the sidebar
+* 'SPACE' : Go down one page in the item list, changing the selected item if needed
+* 'SHIFT+SPACE' : Go up one page in the item list, changing the selected item if needed
 
 ## TODO
 
