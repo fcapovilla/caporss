@@ -146,11 +146,11 @@ $('#mobileBackButton').click(function() {
 });
 
 $('#mobilePrevItem').click(function() {
-	items.moveCursor({keyCode: 74});
+	items.moveCursor('up');
 });
 
 $('#mobileNextItem').click(function() {
-	items.moveCursor({keyCode: 75});
+	items.moveCursor('down');
 });
 
 // Add a spinner icon when an Ajax call is running

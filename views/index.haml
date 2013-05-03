@@ -15,10 +15,10 @@
         %button(class="btn hidden-tiny-phone" href="#settingsModal" role="button" data-toggle="modal" title="#{t.buttons.settings}")
           %i(class="icon-cog")
       .btn-group
-        %button(class="btn mobile-item-button visible-phone invisible" id="mobileNextItem" title="#{t.buttons.previous}")
-          %i(class="icon-circle-arrow-left")
         %button(class="btn mobile-item-button visible-phone invisible" id="mobilePrevItem" title="#{t.buttons.next}")
-          %i(class="icon-circle-arrow-right")
+          %i(class="icon-circle-arrow-up")
+        %button(class="btn mobile-item-button visible-phone invisible" id="mobileNextItem" title="#{t.buttons.previous}")
+          %i(class="icon-circle-arrow-down")
   .dragbar.hidden-phone
   .feed-list
     %ul(id="feed-list" class="nav nav-list")
