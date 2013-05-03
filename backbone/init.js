@@ -5,33 +5,40 @@ var router = new Router();
 var folders = new FolderCollection();
 var folderList = new FolderListView({collection: folders});
 
-folders.fetch({success: function() {
-	Backbone.history.start();
-}});
-
 // Configure pnotify
-
+//
 var pnotify_stack = {'dir1': 'up', 'dir2': 'left'};
 $.pnotify.defaults.addclass = 'stack-bottomright';
 $.pnotify.defaults.history = false;
 $.pnotify.defaults.stack = pnotify_stack;
 
-
-// Buttons and dialogs actions
-
-$('#toggleReadVisibilityButton').click(function() {
-	if(SETTINGS.show_read) {
-		SETTINGS.show_read = false;
-		$('#toggleReadVisibilityButton>i').attr('class', 'icon-eye-close');
-	}
-	else {
+// Show/Hide read items
+//
+var setReadVisibility = function(show_read) {
+	if(show_read) {
 		SETTINGS.show_read = true;
 		$('#toggleReadVisibilityButton>i').attr('class', 'icon-eye-open');
+		$.cookie('show_read', true, {expires: 10000});
+	}
+	else {
+		SETTINGS.show_read = false;
+		$('#toggleReadVisibilityButton>i').attr('class', 'icon-eye-close');
+		$.cookie('show_read', false, {expires: 10000});
 	}
 
 	if(items !== null) {
 		items.addAll();
 	}
+};
+
+if($.cookie('show_read') !== undefined) {
+	setReadVisibility($.cookie('show_read')=='true' ? true : false);
+}
+
+// Buttons and dialogs actions
+//
+$('#toggleReadVisibilityButton').click(function() {
+	setReadVisibility(!SETTINGS.show_read);
 });
 
 $('#syncButton').click(function() {
@@ -154,6 +161,7 @@ $('#mobileNextItem').click(function() {
 });
 
 // Add a spinner icon when an Ajax call is running
+//
 $(document).ajaxStart(function() {
 	$('#spinner').removeClass('invisible').addClass('icon-spin');
 }).ajaxStop(function() {
@@ -161,11 +169,13 @@ $(document).ajaxStart(function() {
 });
 
 // Manage AJAX errors
+//
 $(document).ajaxError(function(event, request, settings) {
 	$.pnotify({ text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.statusText, type: 'error' });
 });
 
 // Prevent double-submit in the OPML upload form
+//
 $('form.upload-form').submit(function(e) {
 	if($(this).data('submitted') === true) {
 		e.preventDefault();
@@ -176,6 +186,7 @@ $('form.upload-form').submit(function(e) {
 });
 
 // Resize the lists on viewport size changes
+//
 $(window).on('resize orientationChanged', function() {
 	$('.feed-list').css('height', $(window).height() - 42);
 	if($(window).width() <= 767) {
@@ -188,6 +199,7 @@ $(window).on('resize orientationChanged', function() {
 
 
 // Disable keyboard events when in inputs
+//
 $(':input').keyup(function(e) {
 	e.stopImmediatePropagation();
 });
@@ -196,6 +208,7 @@ $(':input').keydown(function(e) {
 });
 
 // Keyboard shortcuts
+//
 $(document).keyup(function(e) {
 	var container = null;
 	var currentItem = null;
@@ -292,6 +305,7 @@ $(document).keydown(function(e) {
 });
 
 // Refresh timeout
+//
 if(SETTINGS.refresh_timeout > 0) {
 	setInterval(function() {
 		old_unread_count = folders.getUnreadCount();
@@ -307,6 +321,7 @@ if(SETTINGS.refresh_timeout > 0) {
 }
 
 // Sync timeout
+//
 if(SETTINGS.sync_timeout > 0) {
 	setInterval(function() {
 		$('#syncButton').click();
@@ -314,6 +329,7 @@ if(SETTINGS.sync_timeout > 0) {
 }
 
 // Dragbar
+//
 if($.cookie('dragbar_x')) {
 	var x = parseInt($.cookie('dragbar_x'),10);
 
@@ -346,3 +362,9 @@ $('.dragbar').mousedown(function(e){
 $(document).mouseup(function(e){
 	$(document).unbind('mousemove');
 });
+
+// Everything is ready, fetch folders
+//
+folders.fetch({success: function() {
+	Backbone.history.start();
+}});
