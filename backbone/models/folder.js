@@ -48,6 +48,8 @@ var Folder = Backbone.Model.extend({
 		return deferred;
 	},
 	fetch: function(options) {
+		var that = this;
+
 		options = options ? options : {};
 		var callbacks = _.pick(options, 'success', 'error');
 		options = _.omit(options, 'success', 'error');
@@ -55,7 +57,7 @@ var Folder = Backbone.Model.extend({
 		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
 
 		$.when(deferred).then(function() {
-			$.when(this.fetchChildren(options)).then(callbacks.success, callbacks.error);
+			$.when(that.fetchChildren(options)).then(callbacks.success, callbacks.error);
 		}, callbacks.error);
 
 		return deferred;
