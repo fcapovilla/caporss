@@ -7,12 +7,13 @@ var ItemCollection = Backbone.Collection.extend({
 	},
 	fetchNextPage: function() {
 		if(this.all_loaded) {
+			that.trigger('all_items_loaded');
 			return false;
 		}
 
 		this.current_page++;
 		this.fetch({
-			data: {page: this.current_page},
+			data: {offset: (this.current_page-1) * SETTINGS.items_per_page},
 			remove: false
 		});
 
@@ -22,14 +23,25 @@ var ItemCollection = Backbone.Collection.extend({
 		var that=this;
 		var previous_count = this.length;
 
-		if(!options.data) {
-			options.data = {};
-		}
-		if(!options.data.page) {
+		if(options.reset_pagination) {
 			this.current_page = 1;
 			this.all_loaded = false;
 			previous_count = 0;
-			options.data.page = this.current_page;
+		}
+
+		if(!options.data) {
+			options.data = {};
+		}
+
+		if(!options.data.limit) {
+			if(options.data.offset) {
+				options.data.limit = SETTINGS.items_per_page;
+			}
+			else {
+				this.all_loaded = false;
+				previous_count = 0;
+				options.data.limit = SETTINGS.items_per_page * this.current_page;
+			}
 		}
 
 		var deferred = Backbone.Collection.prototype.fetch.call(this, options);

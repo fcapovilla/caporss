@@ -307,14 +307,11 @@ get '/folder/:id/feed' do |id|
 end
 
 get '/folder/:id/item' do |id|
-	if params[:page]
-		size = settings.items_per_page.to_i
-		page = params[:page].to_i-1
-		page = 0 if page < 0
-		Folder.get(id).feeds.items(:limit => size, :offset => page*size, :order => [:date.desc]).to_json
-	else
-		Folder.get(id).feeds.items(:order => [:date.desc]).to_json
-	end
+	Folder.get(id).feeds.items(
+		:order => [:date.desc],
+		:offset => params[:offset].to_i || 0,
+		:limit => params[:limit].to_i || nil
+	).to_json
 end
 
 # post '/folder' do
@@ -347,14 +344,11 @@ get '/feed/:id', '/folder/*/feed/:id' do
 end
 
 get '/feed/:id/item' do |id|
-	if params[:page]
-		size = settings.items_per_page.to_i
-		page = params[:page].to_i-1
-		page = 0 if page < 0
-		Feed.get(id).items(:limit => size, :offset => page*size, :order => [:date.desc]).to_json
-	else
-		Feed.get(id).items(:order => [:date.desc]).to_json
-	end
+	Feed.get(id).items(
+		:order => [:date.desc],
+		:offset => params[:offset].to_i || 0,
+		:limit => params[:limit].to_i || nil
+	).to_json
 end
 
 #post '/feed' do
@@ -431,14 +425,11 @@ end
 # Items
 
 get '/item' do
-	if params[:page]
-		size = settings.items_per_page.to_i
-		page = params[:page].to_i-1
-		page = 0 if page < 0
-		Item.all(:limit => size, :offset => page*size, :order => [:date.desc]).to_json
-	else
-		Item.all(:order => [:date.desc]).to_json
-	end
+	Item.all(
+		:order => [:date.desc],
+		:offset => params[:offset].to_i || 0,
+		:limit => params[:limit].to_i || nil
+	).to_json
 end
 
 get '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
