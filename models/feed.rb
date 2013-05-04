@@ -101,6 +101,11 @@ class Feed
 		uri.query = ''
 		uri.fragment = ''
 
+		# Exception for youtube
+		if uri.host =~ /youtube.com$/
+			uri.host = 'www.youtube.com'
+		end
+
 		curl = Curl::Easy.new
 		curl.timeout = 5
 		curl.follow_location = true
