@@ -122,9 +122,11 @@ body {
 		width: 300px - 5px;
 
 		.folder-icon,
+		.feed-icon
 		.menu-toggle {
 			padding: 4px;
 			margin: 0px;
+			width: 1em !important;
 		}
 	}
 
@@ -170,6 +172,7 @@ body {
 		width: 100% !important;
 
 		.folder-icon,
+		.feed-icon,
 		.menu-toggle {
 			padding: 7px;
 			margin: 0px;
