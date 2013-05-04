@@ -1,4 +1,8 @@
 # encoding: utf-8
+require 'base64'
+require 'uri'
+require 'curb'
+
 class Feed
 	include DataMapper::Resource
 
@@ -7,6 +11,7 @@ class Feed
 	property :url, String, :length => 1..2000
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
+	property :favicon, String, :length => 10000
 
 	belongs_to :folder
 	has n, :items, :constraint => :destroy
@@ -53,6 +58,7 @@ class Feed
 
 		self.last_update = newest unless newest.nil?
 
+		self.fetch_favicon!
 		self.update_unread_count!
 		return self
 	end
@@ -87,5 +93,30 @@ class Feed
 		end
 		self.update_unread_count!
 		return self
+	end
+
+	def fetch_favicon!
+		uri = URI.parse(self.url)
+		uri.path = '/favicon.ico'
+		uri.query = ''
+		uri.fragment = ''
+
+		curl = Curl::Easy.new
+		curl.timeout = 5
+		curl.follow_location = true
+		curl.url = uri.to_s
+		curl.on_success{ |resp|
+			if resp.content_type == 'image/x-icon'
+				self.favicon = Base64.encode64(resp.body_str)
+			else
+				self.favicon = nil
+			end
+		}
+		curl.on_failure{ |resp|
+			self.favicon = nil
+		}
+		curl.perform
+
+		self.save
 	end
 end

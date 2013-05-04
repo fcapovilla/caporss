@@ -3,7 +3,11 @@
   <script id='tmpl-feed' type='text/template'>
     <div class="feedTitle<% if(feed.active){ %> active<% } %>">
       <i class="menu-toggle icon icon-caret-down"></i>
-      <i class="feed-icon icon icon-rss"></i>
+      <% if(feed.favicon) { %>
+        <img class="feed-icon" src="data:image/x-icon;base64,<%= feed.favicon %>" />
+      <% } else { %>
+        <i class="feed-icon icon icon-rss"></i>
+      <% } %>
       <% if(feed.unread_count > 0) { %>
         <b><%= feed.title %></b>
         <span class="badge badge-info"><%= feed.unread_count %></span>
