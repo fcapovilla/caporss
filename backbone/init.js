@@ -363,6 +363,16 @@ $(document).mouseup(function(e){
 	$(document).unbind('mousemove');
 });
 
+// Automatic page fetching
+$('#item-list').scroll(function() {
+	if(items !== null) {
+		var elem = $('#item-list');
+		if(elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
+			items.collection.fetchNextPage();
+		}
+	}
+});
+
 // Everything is ready, fetch folders
 //
 folders.fetch({success: function() {

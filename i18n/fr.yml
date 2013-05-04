@@ -57,3 +57,4 @@ opml_import:
 js:
     confirm_delete_feed: Êtes-vous sûr de vouloir supprimer cet abonnement?
     confirm_delete_folder: Êtes-vous sûr de vouloir supprimer ce dossier?
+    show_more_items: Afficher plus d'items...

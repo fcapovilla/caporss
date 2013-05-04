@@ -2,19 +2,31 @@ var ItemListView = Backbone.View.extend({
 	tagName: 'ul',
 	className: 'nav nav-list',
 	initialize: function() {
+		var that = this;
 		this.cursor = null;
 		this.views = [];
 
 		this.listenTo(this.collection, 'add', this.addOne);
 		this.listenTo(this.collection, 'remove', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
+		this.listenTo(this.collection, 'all_items_loaded', function() {
+			that.$next_page.remove();
+		});
 
 		$(this.render().el).appendTo('#item-list');
+
+		this.$next_page = $('<div class="show_more_items">').text(LANG.show_more_items).click(function() {
+			that.collection.fetchNextPage();
+		});
+		this.$el.after(this.$next_page);
 	},
 	remove: function() {
 		this.closeAll();
 		this.removeAllSubviews();
 		Backbone.View.prototype.remove.call(this);
+
+		this.$next_page.remove();
+		delete this.$next_page;
 	},
 	removeAllSubviews: function() {
 		_.each(this.views, function(view) {
