@@ -16,6 +16,8 @@ settings:
     minutes: minutes
     sync_every: Synchroniser toutes les 
     save: Sauvegarder
+    items_per_page: Items par page
+    general: Général
 
 buttons:
     back: Retour

@@ -16,6 +16,8 @@ settings:
     minutes: minutes
     sync_every: Sync feeds every 
     save: Save
+    items_per_page: Items per page
+    general: General
 
 buttons:
     back: Back

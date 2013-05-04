@@ -20,6 +20,9 @@
         %li
           %a(href="#syncSettings" data-toggle="tab")
             =t.settings.sync
+        %li
+          %a(href="#generalSettings" data-toggle="tab")
+            =t.settings.general
       .tab-content
         .tab-pane.active#accountSettings
           .well
@@ -77,6 +80,12 @@
                 %input(class="input-block-level" type="text" name="sync_timeout" value="#{settings.sync_timeout}" aria-hidden="true")
                 %span.add-on
                   =t.settings.minutes
+        .tab-pane#generalSettings
+          .control-group
+            %label.control-label
+              =t.settings.items_per_page
+            .controls
+              %input(class="input-block-level" type="text" name="items_per_page" value="#{settings.items_per_page}" aria-hidden="true")
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         =t.settings.save
