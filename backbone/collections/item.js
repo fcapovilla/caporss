@@ -34,7 +34,7 @@ var ItemCollection = Backbone.Collection.extend({
 		var previous_count = this.length;
 		$.when(deferred).then(function() {
 			if(that.length - previous_count < SETTINGS.items_per_page) {
-				this.all_loaded = true;
+				that.all_loaded = true;
 				that.trigger('all_items_loaded');
 			}
 		});
