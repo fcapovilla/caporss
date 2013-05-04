@@ -46,3 +46,6 @@ end
 unless Setting.first(:name => 'default_locale')
 	Setting.create(:name => 'default_locale', :value => 'en')
 end
+unless Setting.first(:name => 'items_per_page')
+	Setting.create(:name => 'items_per_page', :value => 50)
+end

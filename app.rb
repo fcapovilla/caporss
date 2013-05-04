@@ -127,6 +127,12 @@ post '/save_settings' do
 		default_locale.save
 	end
 
+	if params[:items_per_page]
+		items_per_page = Setting.first_or_create(:name => 'items_per_page')
+		items_per_page.value = params[:items_per_page]
+		items_per_page.save
+	end
+
 	# Reset settings
 	Setting.all.each do |setting|
 		set setting.name.to_sym, setting.value
@@ -301,7 +307,14 @@ get '/folder/:id/feed' do |id|
 end
 
 get '/folder/:id/item' do |id|
-	Folder.get(id).feeds.items(:order => [:date.desc]).to_json
+	if params[:page]
+		size = settings.items_per_page.to_i
+		page = params[:page].to_i-1
+		page = 0 if page < 0
+		Folder.get(id).feeds.items(:limit => size, :offset => page*size, :order => [:date.desc]).to_json
+	else
+		Folder.get(id).feeds.items(:order => [:date.desc]).to_json
+	end
 end
 
 # post '/folder' do
@@ -334,7 +347,14 @@ get '/feed/:id', '/folder/*/feed/:id' do
 end
 
 get '/feed/:id/item' do |id|
-	Feed.get(id).items(:order => [:date.desc]).to_json
+	if params[:page]
+		size = settings.items_per_page.to_i
+		page = params[:page].to_i-1
+		page = 0 if page < 0
+		Feed.get(id).items(:limit => size, :offset => page*size, :order => [:date.desc]).to_json
+	else
+		Feed.get(id).items(:order => [:date.desc]).to_json
+	end
 end
 
 #post '/feed' do
@@ -411,7 +431,14 @@ end
 # Items
 
 get '/item' do
-	Item.all(:order => [:date.desc]).to_json
+	if params[:page]
+		size = settings.items_per_page.to_i
+		page = params[:page].to_i-1
+		page = 0 if page < 0
+		Item.all(:limit => size, :offset => page*size, :order => [:date.desc]).to_json
+	else
+		Item.all(:order => [:date.desc]).to_json
+	end
 end
 
 get '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
