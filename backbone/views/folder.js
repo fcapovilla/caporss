@@ -7,8 +7,8 @@ var FolderView = Backbone.View.extend({
 		'click .syncFolderAction' : 'syncFolder',
 		'click .editFolderAction' : 'showFolderEditDialog',
 		'click .deleteFolderAction' : 'deleteFolder',
-		'click .folder-icon' : 'toggleFolderOpen',
-		'click .menu-toggle': 'openMenu',
+		'click .folder-toggle' : 'toggleFolderOpen',
+		'click .folder-icon': 'openMenu',
 		'click .folderTitle' : 'selectFolder'
 	},
 	initialize: function() {

@@ -8,7 +8,7 @@ var FeedView = Backbone.View.extend({
 		'click .syncFeedAction' : 'syncFeed',
 		'click .editFeedAction' : 'showFeedEditDialog',
 		'click .deleteFeedAction' : 'deleteFeed',
-		'click .menu-toggle': 'openMenu',
+		'click .feed-icon': 'openMenu',
 		'click .feedTitle' : 'selectFeed'
 	},
 	initialize: function() {
