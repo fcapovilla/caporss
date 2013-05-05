@@ -216,14 +216,14 @@ $(document).keyup(function(e) {
 	if(e.shiftKey) {
 		var model = null;
 		if(e.keyCode == 74) { // SHIFT+J
-			model = folders.first();
+			model = folderList.allItemsFolder;
 			if(currentSelection !== null) {
 				model = currentSelection.getNextInList();
 			}
 			router.goToModel(model);
 		}
 		if(e.keyCode == 75) { // SHIFT+K
-			model = folders.first();
+			model = folderList.allItemsFolder;
 			if(currentSelection !== null) {
 				model = currentSelection.getPreviousInList();
 			}

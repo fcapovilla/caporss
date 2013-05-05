@@ -1,0 +1,8 @@
+-# Folder underscore template
+:plain
+  <script id='tmpl-special-folder' type='text/template'>
+    <div class="folderTitle<% if(folder.active){ %> active <% } %>">
+      <i class="folder-icon icon <%= folder.iconclass %>"></i>
+      <%= folder.name %>
+    </div>
+  </script>

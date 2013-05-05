@@ -2,7 +2,8 @@ var Router = Backbone.Router.extend({
 	routes: {
 		"": "clear",
 		"feed/:id": "viewFeed",
-		"folder/:id": "viewFolder"
+		"folder/:id": "viewFolder",
+		"item": "viewAllItems"
 	},
 	clear: function() {
 		if(items !== null) {
@@ -52,12 +53,19 @@ var Router = Backbone.Router.extend({
 
 		this.updateItemList(model);
 	},
+	viewAllItems: function() {
+		var model = folderList.allItemsFolder;
+		this.updateItemList(model);
+	},
 	goToModel: function(model) {
 		if(model instanceof Folder) {
 			this.navigate('folder/' + model.id, {trigger: true});
 		}
-		else {
+		else if(model instanceof Feed) {
 			this.navigate('feed/' + model.id, {trigger: true});
+		}
+		else {
+			this.navigate('item', {trigger: true});
 		}
     }
 });

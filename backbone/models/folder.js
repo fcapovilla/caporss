@@ -86,7 +86,7 @@ var Folder = Backbone.Model.extend({
 		}
 
 		if(prev === null || prev === undefined) {
-			prev = this;
+			prev = folderList.allItemsFolder;
 		}
 
 		return prev;
