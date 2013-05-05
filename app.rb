@@ -296,7 +296,7 @@ end
 get '/favicon/:id.ico' do |id|
 	content_type 'image/x-icon'
 	expires Time.now + (60*60*24*7), :public
-	Favicon.get(id).data
+	Favicon.get(id).data_decoded
 end
 
 get '/favicon/fetch_all' do

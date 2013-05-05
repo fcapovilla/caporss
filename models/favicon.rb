@@ -25,27 +25,27 @@ class Favicon
 			}
 			curl.perform
 
-			unless self.data or self.url =~ /www/
+			if self.data.nil? and not self.url =~ /www/
 				# Try the url with a "www"
 				if self.url =~ /^https?:\/\/([^.\/]+)\.[^.\/]+(\.[^.\/]+)+\//
 					curl.url = self.url.sub($1, 'www')
 					curl.perform
 				end
 			end
-
-			self.save
 		rescue Curl::Err::TimeoutError
 			# Do nothing on timeout
 		end
 
+		self.save
+
 		return self
 	end
 
-	def data
-		if @data.nil?
+	def data_decoded
+		if self.data.nil?
 			nil
 		else
-			Base64.decode64(@data)
+			Base64.decode64(self.data)
 		end
 	end
 end
