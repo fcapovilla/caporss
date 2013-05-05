@@ -7,7 +7,7 @@ var ItemCollection = Backbone.Collection.extend({
 	},
 	fetchNextPage: function() {
 		if(this.all_loaded) {
-			that.trigger('all_items_loaded');
+			this.trigger('all_items_loaded');
 			return false;
 		}
 
