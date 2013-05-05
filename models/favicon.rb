@@ -12,26 +12,31 @@ class Favicon
 	has n, :feeds
 
 	def fetch!
-		curl = Curl::Easy.new
-		curl.timeout = 10
-		curl.follow_location = true
-		curl.url = self.url
-		curl.on_success{ |resp|
-			if resp.content_type == 'image/x-icon'
-				self.data = Base64.encode64(resp.body_str)
-			end
-		}
-		curl.perform
+		begin
+			curl = Curl::Easy.new
+			curl.timeout = 5
+			curl.follow_location = true
+			curl.url = self.url
+			curl.on_success{ |resp|
+				if resp.content_type == 'image/x-icon'
+					data = Base64.encode64(resp.body_str)
+					self.data = data if data.length < 65535
+				end
+			}
+			curl.perform
 
-		unless self.data or self.url =~ /www/
-			# Try the url with a "www"
-			if self.url =~ /^https?:\/\/([^.\/]+)\.[^.\/]+(\.[^.\/]+)+\//
-				curl.url = self.url.sub($1, 'www')
-				curl.perform
+			unless self.data or self.url =~ /www/
+				# Try the url with a "www"
+				if self.url =~ /^https?:\/\/([^.\/]+)\.[^.\/]+(\.[^.\/]+)+\//
+					curl.url = self.url.sub($1, 'www')
+					curl.perform
+				end
 			end
+
+			self.save
+		rescue Curl::Err::TimeoutError
+			# Do nothing on timeout
 		end
-
-		self.save
 
 		return self
 	end
