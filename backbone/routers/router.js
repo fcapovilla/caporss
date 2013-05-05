@@ -35,6 +35,7 @@ var Router = Backbone.Router.extend({
 		$('#item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
 		$('.mobile-item-button').removeClass('invisible');
+		$('#item-list').focus();
 	},
 	viewFeed: function(id) {
 		var model = null;
