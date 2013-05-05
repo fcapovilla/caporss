@@ -56,7 +56,7 @@ class Feed
 
 		self.last_update = newest unless newest.nil?
 
-		self.fetch_favicon!
+		self.update_favicon!
 		self.update_unread_count!
 		return self
 	end
@@ -93,23 +93,20 @@ class Feed
 		return self
 	end
 
-	def fetch_favicon!
+	def update_favicon!
 		uri = URI.parse(self.url)
 		uri.path = '/favicon.ico'
 		uri.query = nil
 		uri.fragment = nil
 
-		# Exception for youtube
-		if uri.host =~ /youtube.com$/
-			uri.host = 'www.youtube.com'
-		end
-
 		self.favicon = Favicon.first(:url => uri.to_s)
 		unless self.favicon
 			self.favicon = Favicon.new(:url => uri.to_s)
-			unless self.favicon.fetch!
-				self.favicon = nil
-			end
+			self.favicon.fetch!
+		end
+
+		if self.favicon.data.nil?
+			self.favicon = nil
 		end
 
 		self.save
