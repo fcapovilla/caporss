@@ -77,6 +77,16 @@ $('#cleanupButton').click(function() {
 	});
 });
 
+$('#updateFaviconsButton').click(function() {
+	$.ajax({
+		url: '/favicon/fetch_all',
+		method: 'POST',
+		success: function() {
+			window.location.reload(true);
+		}
+	});
+});
+
 $('#subscribeButton').click(function() {
 	$.ajax({
 		url: '/subscribe',

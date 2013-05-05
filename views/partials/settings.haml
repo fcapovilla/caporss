@@ -86,6 +86,8 @@
               =t.settings.items_per_page
             .controls
               %input(class="input-block-level" type="text" name="items_per_page" value="#{settings.items_per_page}" aria-hidden="true")
+          %button(class="btn" id="updateFaviconsButton" data-dismiss="modal")
+            =t.settings.update_favicons
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         =t.settings.save

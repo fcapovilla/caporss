@@ -18,6 +18,7 @@ settings:
     save: Sauvegarder
     items_per_page: Items par page
     general: Général
+    update_favicons: Mettre à jour les favicons
 
 buttons:
     back: Retour

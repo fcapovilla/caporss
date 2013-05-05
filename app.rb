@@ -299,7 +299,7 @@ get '/favicon/:id.ico' do |id|
 	Favicon.get(id).data_decoded
 end
 
-get '/favicon/fetch_all' do
+post '/favicon/fetch_all' do
 	Favicon.all.each { |favicon| favicon.fetch! }
 	return 'done'
 end
