@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'uri'
 require 'curb'
 require 'base64'
 
@@ -19,7 +18,7 @@ class Favicon
 		curl.url = self.url
 		curl.on_success{ |resp|
 			if resp.content_type == 'image/x-icon'
-				@data = Base64.encode64(resp.body_str)
+				self.data = Base64.encode64(resp.body_str)
 				self.save
 			end
 		}
@@ -29,6 +28,10 @@ class Favicon
 	end
 
 	def data
-		Base64.decode64(@data)
+		if @data.nil?
+			nil
+		else
+			Base64.decode64(@data)
+		end
 	end
 end

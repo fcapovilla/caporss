@@ -1,4 +1,6 @@
 # encoding: utf-8
+require 'uri'
+
 class Feed
 	include DataMapper::Resource
 
@@ -94,8 +96,8 @@ class Feed
 	def fetch_favicon!
 		uri = URI.parse(self.url)
 		uri.path = '/favicon.ico'
-		uri.query = ''
-		uri.fragment = ''
+		uri.query = nil
+		uri.fragment = nil
 
 		# Exception for youtube
 		if uri.host =~ /youtube.com$/

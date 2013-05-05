@@ -299,6 +299,11 @@ get '/favicon/:id.ico' do |id|
 	Favicon.get(id).data
 end
 
+get '/favicon/fetch_all' do
+	Favicon.all.each { |favicon| favicon.fetch! }
+	return 'done'
+end
+
 
 # Folders
 
