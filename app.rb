@@ -320,11 +320,13 @@ get '/folder/:id/feed' do |id|
 end
 
 get '/folder/:id/item' do |id|
-	Folder.get(id).feeds.items(
+	options = {
 		:order => [:date.desc],
 		:offset => params[:offset].to_i || 0,
-		:limit => params[:limit].to_i || nil
-	).to_json
+		:limit => params[:limit].to_i || nil,
+	}
+	options[:read] = false if params[:show_read] == 'false'
+	Folder.get(id).feeds.items(options).to_json
 end
 
 # post '/folder' do
@@ -357,11 +359,13 @@ get '/feed/:id', '/folder/*/feed/:id' do
 end
 
 get '/feed/:id/item' do |id|
-	Feed.get(id).items(
+	options = {
 		:order => [:date.desc],
 		:offset => params[:offset].to_i || 0,
-		:limit => params[:limit].to_i || nil
-	).to_json
+		:limit => params[:limit].to_i || nil,
+	}
+	options[:read] = false if params[:show_read] == 'false'
+	Feed.get(id).items(options).to_json
 end
 
 #post '/feed' do
@@ -438,11 +442,13 @@ end
 # Items
 
 get '/item' do
-	Item.all(
+	options = {
 		:order => [:date.desc],
 		:offset => params[:offset].to_i || 0,
-		:limit => params[:limit].to_i || nil
-	).to_json
+		:limit => params[:limit].to_i || nil,
+	}
+	options[:read] = false if params[:show_read] == 'false'
+	Item.all(options).to_json
 end
 
 get '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do

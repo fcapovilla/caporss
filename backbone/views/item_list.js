@@ -38,10 +38,6 @@ var ItemListView = Backbone.View.extend({
 		this.views.length = 0;
 	},
 	addOne: function(item) {
-		if(!SETTINGS.show_read && item.get('read') && !item.get('open')) {
-			return;
-		}
-
 		var view = new ItemView({model: item});
 		this.$el.append(view.render().el);
 		this.views.push(view);
@@ -81,14 +77,6 @@ var ItemListView = Backbone.View.extend({
 			}
 
 			item = this.collection.at(index+dir);
-
-			// If read items are hidden, loop until we get an unread item
-			if(!SETTINGS.show_read) {
-				while(item !== null && item !== undefined && item.get('read')) {
-					index+=dir;
-					item = this.collection.at(index+dir);
-				}
-			}
 		}
 
 		if(item !== null && item !== undefined) {

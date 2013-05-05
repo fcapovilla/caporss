@@ -27,7 +27,7 @@ var setReadVisibility = function(show_read) {
 	}
 
 	if(items !== null) {
-		items.addAll();
+		items.collection.fetch({reset: true, reset_pagination: true});
 	}
 };
 

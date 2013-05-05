@@ -44,6 +44,10 @@ var ItemCollection = Backbone.Collection.extend({
 			}
 		}
 
+		if(!options.data.show_read && SETTINGS.show_read == false) {
+			options.data.show_read = false;
+		}
+
 		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
 
 		$.when(deferred).then(function() {
