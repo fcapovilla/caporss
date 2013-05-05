@@ -1,8 +1,4 @@
 # encoding: utf-8
-require 'base64'
-require 'uri'
-require 'curb'
-
 class Feed
 	include DataMapper::Resource
 
@@ -11,9 +7,9 @@ class Feed
 	property :url, String, :length => 1..2000
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
-	property :favicon, String, :length => 10000
 
 	belongs_to :folder
+	belongs_to :favicon, :required => false
 	has n, :items, :constraint => :destroy
 	is :list, :scope => :folder_id
 
@@ -106,21 +102,13 @@ class Feed
 			uri.host = 'www.youtube.com'
 		end
 
-		curl = Curl::Easy.new
-		curl.timeout = 5
-		curl.follow_location = true
-		curl.url = uri.to_s
-		curl.on_success{ |resp|
-			if resp.content_type == 'image/x-icon'
-				self.favicon = Base64.encode64(resp.body_str)
-			else
+		self.favicon = Favicon.first(:url => uri.to_s)
+		unless self.favicon
+			self.favicon = Favicon.new(:url => uri.to_s)
+			unless self.favicon.fetch!
 				self.favicon = nil
 			end
-		}
-		curl.on_failure{ |resp|
-			self.favicon = nil
-		}
-		curl.perform
+		end
 
 		self.save
 	end

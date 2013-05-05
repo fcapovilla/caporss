@@ -3,8 +3,8 @@
   <script id='tmpl-feed' type='text/template'>
     <div class="feedTitle<% if(feed.active){ %> active<% } %>">
       <i class="menu-toggle icon icon-caret-down"></i>
-      <% if(feed.favicon) { %>
-        <img class="feed-icon" src="data:image/x-icon;base64,<%= feed.favicon %>" />
+      <% if(feed.favicon_id) { %>
+        <img class="feed-icon" src="/favicon/<%= feed.favicon_id %>.ico" />
       <% } else { %>
         <i class="feed-icon icon icon-rss"></i>
       <% } %>

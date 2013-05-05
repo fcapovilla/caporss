@@ -292,6 +292,14 @@ post '/subscribe' do
 end
 
 
+# Favicons
+get '/favicon/:id.ico' do |id|
+	content_type 'image/x-icon'
+	expires Time.now + (60*60*24*7), :public
+	Favicon.get(id).data
+end
+
+
 # Folders
 
 get '/folder' do

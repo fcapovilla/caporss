@@ -22,6 +22,7 @@ DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')
 require_relative 'setting'
 require_relative 'folder'
 require_relative 'feed'
+require_relative 'favicon'
 require_relative 'item'
 
 # Upgrade the database
