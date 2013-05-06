@@ -94,6 +94,10 @@ body {
 		padding: 5px;
 		background-color: #EEE;
 	}
+
+	&:focus {
+		outline: 0;
+	}
 }
 
 .item-container {
