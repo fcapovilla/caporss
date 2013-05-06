@@ -44,7 +44,7 @@ var ItemCollection = Backbone.Collection.extend({
 			}
 		}
 
-		if(!options.data.show_read && SETTINGS.show_read == false) {
+		if(!options.data.show_read && !SETTINGS.show_read) {
 			options.data.show_read = false;
 		}
 
