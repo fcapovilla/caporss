@@ -2,6 +2,8 @@ var AllItemsFolder = Backbone.Model.extend({
 	initialize: function() {
 		this.items = new ItemCollection();
 		this.items.url = '/item';
+		this.listenTo(this.items, 'itemRead', this.itemRead);
+		this.listenTo(this.items, 'itemUnread', this.itemUnread);
 
 		this.set({
 			name: LANG.all_items_folder,
@@ -14,5 +16,21 @@ var AllItemsFolder = Backbone.Model.extend({
     },
 	getPreviousInList: function() {
 		return this;
-    }
+    },
+	itemRead: function(feed_id) {
+		folders.each(function(folder) {
+			var feed = folder.feeds.get(feed_id);
+			if(feed) {
+				feed.decrementReadCount();
+			}
+		});
+	},
+	itemUnread: function(feed_id) {
+		folders.each(function(folder) {
+			var feed = folder.feeds.get(feed_id);
+			if(feed) {
+				feed.incrementReadCount();
+			}
+		});
+	}
 });
