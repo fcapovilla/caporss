@@ -39,7 +39,7 @@ var ItemCollection = Backbone.Collection.extend({
 			}
 			else {
 				this.all_loaded = false;
-				previous_count = 0;
+				previous_count = SETTINGS.items_per_page * (this.current_page-1);
 				options.data.limit = SETTINGS.items_per_page * this.current_page;
 			}
 		}

@@ -17,7 +17,9 @@ var ItemListView = Backbone.View.extend({
 			that.collection.fetchNextPage();
 		});
 		this.listenTo(this.collection, 'sync', function() {
-			this.$el.after(this.$next_page);
+			if(!this.collection.all_loaded) {
+				this.$el.after(this.$next_page);
+			}
 		});
 		this.listenTo(this.collection, 'all_items_loaded', function() {
 			this.$next_page.remove();
