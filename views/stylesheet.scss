@@ -30,11 +30,15 @@ body {
 		cursor: pointer;
 	}
 	.feed-icon {
-		max-width: 16px;
-		max-height: 16px;
+		width: 16px;
+		height: 16px;
 	}
 	.nav-list {
 		padding-right: 0px;
+		padding-left: 5px;
+		&>.feed {
+			padding-left: 0px;
+		}
 	}
 }
 
@@ -129,11 +133,14 @@ body {
 	.feed-list {
 		width: 300px - 5px;
 
+		.feed-icon,
 		.folder-icon,
-		.feed-icon
-		.menu-toggle {
-			padding: 4px;
+		.folder-toggle {
+			padding: 2px;
 			margin: 0px;
+		}
+		.folder-icon,
+		.folder-toggle {
 			width: 1em !important;
 		}
 	}
@@ -155,6 +162,10 @@ body {
 
 	.content {
 		margin-left: 300px;
+	}
+
+	.feedTitle {
+		padding-left: 30px;
 	}
 }
 
@@ -179,9 +190,9 @@ body {
 	.feed-list {
 		width: 100% !important;
 
-		.folder-icon,
 		.feed-icon,
-		.menu-toggle {
+		.folder-icon,
+		.folder-toggle {
 			padding: 7px;
 			margin: 0px;
 		}
@@ -217,6 +228,10 @@ body {
 				padding: 7px 1px;
 			}
 		}
+	}
+
+	.feedTitle {
+		padding-left: 35px;
 	}
 
 }
