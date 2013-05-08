@@ -26,7 +26,7 @@ Setting.all.each do |setting|
 end
 
 # Basic Auth
-if defined? settings.username and defined? settings.password
+if settings.username != '' and settings.password != ''
 	use Rack::Auth::Basic, "Access restricted" do |username, password|
 		[username, Digest::SHA512.hexdigest(password + settings.salt)] == [settings.username, settings.password]
 	end
