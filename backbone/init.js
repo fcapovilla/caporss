@@ -144,10 +144,7 @@ $('#editFeedButton').click(function() {
 				folder: feedFolder
 			},{
 				success: function() {
-					if(items !== null) {
-						items.$el.empty();
-					}
-					currentSelection = null;
+					router.navigate("", {trigger: true});
 
 					if(reset) {
 						$.ajax({

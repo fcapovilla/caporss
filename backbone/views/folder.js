@@ -33,7 +33,7 @@ var FolderView = Backbone.View.extend({
 	},
 	remove: function() {
 		this.removeAllSubviews();
-		this.$feedList.clear();
+		this.$feedList.remove();
 		Backbone.View.prototype.remove.call(this);
 	},
 	removeAllSubviews: function() {
@@ -58,6 +58,9 @@ var FolderView = Backbone.View.extend({
 	},
 	deleteFolder: function() {
 		if(confirm(LANG.confirm_delete_folder)) {
+			if(this.model == currentSelection) {
+				router.navigate("", {trigger: true});
+			}
 			this.model.destroy({success: function() {
 				if(currentSelection !== null) {
 					currentSelection.items.fetch({reset: true});

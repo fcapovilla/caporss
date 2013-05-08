@@ -25,6 +25,9 @@ var FeedView = Backbone.View.extend({
 	},
 	deleteFeed: function() {
 		if(confirm(LANG.confirm_delete_feed)) {
+			if(this.model == currentSelection) {
+				router.navigate("", {trigger: true});
+			}
 			this.model.destroy({success: function() {
 				if(currentSelection !== null) {
 					currentSelection.items.fetch({reset: true});
