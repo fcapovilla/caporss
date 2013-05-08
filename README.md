@@ -98,9 +98,7 @@ Here is a list of keyboard shortcuts currently supported by CapoRSS :
 
 ## TODO
 
-* Correct client-side memory leaks
-* Performance improvement
+* Optimisations, performance improvements and bugfixes
 * Drap-and-drop feed reordering
-* Recursive folders (more than one folder level)
 * Per-folder OPML export
-* Custom scrollbar styles
+* Example scripts for automatic background feed updates (cron)
