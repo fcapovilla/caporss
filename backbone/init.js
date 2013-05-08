@@ -57,6 +57,9 @@ $('#syncButton').click(function() {
 					icon.attr('class', 'icon-refresh');
 				}
 			});
+			if(currentSelection !== null) {
+				currentSelection.items.fetch({reset: true});
+			}
 		},
 		error: function() {
 			icon.attr('class', 'icon-refresh');
@@ -73,6 +76,9 @@ $('#cleanupButton').click(function() {
 		},
 		success: function() {
 			folders.fetch();
+			if(currentSelection !== null) {
+				currentSelection.items.fetch({reset: true});
+			}
 		}
 	});
 });
@@ -97,6 +103,9 @@ $('#subscribeButton').click(function() {
 		},
 		success: function() {
 			folders.fetch();
+			if(currentSelection !== null) {
+				currentSelection.items.fetch({reset: true});
+			}
 		}
 	});
 	$('#subscriptionUrl').val('');
@@ -327,6 +336,9 @@ if(SETTINGS.refresh_timeout > 0) {
 				}
 			}
 		});
+		if(currentSelection !== null) {
+			currentSelection.items.fetch({reset: true});
+		}
 	}, SETTINGS.refresh_timeout*60*1000);
 }
 

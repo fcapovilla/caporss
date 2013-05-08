@@ -25,7 +25,11 @@ var FeedView = Backbone.View.extend({
 	},
 	deleteFeed: function() {
 		if(confirm(LANG.confirm_delete_feed)) {
-			this.model.destroy();
+			this.model.destroy({success: function() {
+				if(currentSelection !== null) {
+					currentSelection.items.fetch({reset: true});
+				}
+			}});
 		}
 		return this.closeMenu();
 	},
@@ -41,16 +45,27 @@ var FeedView = Backbone.View.extend({
 						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 					}
 				});
+				if(currentSelection !== null) {
+					currentSelection.items.fetch({reset: true});
+				}
 			}
 		});
 		return this.closeMenu();
 	},
 	markFeedRead: function() {
-		this.model.markRead();
+		$.when(this.model.markRead()).then(function() {
+			if(currentSelection !== null) {
+				currentSelection.items.fetch({reset: true});
+			}
+		});
 		return this.closeMenu();
 	},
 	markFeedUnread: function() {
-		this.model.markUnread();
+		$.when(this.model.markUnread()).then(function() {
+			if(currentSelection !== null) {
+				currentSelection.items.fetch({reset: true});
+			}
+		});
 		return this.closeMenu();
 	},
 	showFeedEditDialog: function() {

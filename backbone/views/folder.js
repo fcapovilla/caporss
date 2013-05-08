@@ -58,7 +58,11 @@ var FolderView = Backbone.View.extend({
 	},
 	deleteFolder: function() {
 		if(confirm(LANG.confirm_delete_folder)) {
-			this.model.destroy();
+			this.model.destroy({success: function() {
+				if(currentSelection !== null) {
+					currentSelection.items.fetch({reset: true});
+				}
+			}});
 		}
 		return this.closeMenu();
 	},
@@ -74,20 +78,37 @@ var FolderView = Backbone.View.extend({
 						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 					}
 				});
+				if(currentSelection !== null) {
+					currentSelection.items.fetch({reset: true});
+				}
 			}
 		});
 		return this.closeMenu();
 	},
 	markFolderRead: function() {
-		this.model.feeds.each(function(feed) {
-			feed.markRead();
+		var deferreds = this.model.feeds.map(function(feed) {
+			return feed.markRead();
 		});
+
+		$.when.apply($, deferreds).then(function() {
+			if(currentSelection !== null) {
+				currentSelection.items.fetch({reset: true});
+			}
+		});
+
 		return this.closeMenu();
 	},
 	markFolderUnread: function() {
-		this.model.feeds.each(function(feed) {
-			feed.markUnread();
+		var deferreds = this.model.feeds.map(function(feed) {
+			return feed.markUnread();
 		});
+
+		$.when.apply($, deferreds).then(function() {
+			if(currentSelection !== null) {
+				currentSelection.items.fetch({reset: true});
+			}
+		});
+
 		return this.closeMenu();
 	},
 	openMenu: function() {

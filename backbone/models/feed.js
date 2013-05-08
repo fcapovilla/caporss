@@ -16,20 +16,17 @@ var Feed = Backbone.Model.extend({
 	},
 	markRead: function() {
 		var that = this;
-		$.ajax({
+		return $.ajax({
 			method: 'PUT',
 			url: 'read/feed/' + this.id,
 			success: function() {
 				that.set('unread_count', 0);
-				if(that.get('active')) {
-					that.items.fetch();
-				}
 			}
 		});
 	},
 	markUnread: function() {
 		var that = this;
-		$.ajax({
+		return $.ajax({
 			method: 'PUT',
 			url: 'unread/feed/' + this.id,
 			success: function() {
@@ -42,27 +39,6 @@ var Feed = Backbone.Model.extend({
 	},
 	decrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') - 1);
-	},
-	fetchChildren: function(options) {
-		if(this.get('active')) {
-			options.reset = true;
-			return this.items.fetch(options);
-		}
-	},
-	fetch: function(options) {
-		var that = this;
-
-		options = options ? options : {};
-		var callbacks = _.pick(options, 'success', 'error');
-		options = _.omit(options, 'success', 'error');
-
-		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
-
-		$.when(deferred).then(function() {
-			$.when(that.fetchChildren(options)).then(callbacks.success, callbacks.error);
-		}, callbacks.error);
-
-		return deferred;
 	},
 	// Get next feed/folder in the folder list
 	getNextInList: function() {

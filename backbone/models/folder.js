@@ -31,21 +31,7 @@ var Folder = Backbone.Model.extend({
 		this.set('unread_count', count);
 	},
 	fetchChildren: function(options) {
-		options = options ? options : {};
-		var callbacks = _.pick(options, 'success', 'error');
-		options = _.omit(options, 'success', 'error');
-
-		var deferreds = [];
-		deferreds.push( this.feeds.fetch(options) );
-		if(this.get('active')) {
-			options.reset = true;
-			deferreds.push( this.items.fetch(options) );
-		}
-
-		var deferred = $.when.apply($, deferreds);
-		deferred.then(callbacks.success, callbacks.error);
-
-		return deferred;
+		return this.feeds.fetch(options);
 	},
 	fetch: function(options) {
 		var that = this;
