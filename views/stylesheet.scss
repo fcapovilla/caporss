@@ -109,7 +109,7 @@ body {
 	.item-icons {
 		position: absolute;
 	}
-	.item-labels {
+	.item-date {
 		float: right;
 		text-align: right;
 	}
@@ -157,6 +157,12 @@ body {
 			float: right;
 			width: 5px;
 			cursor: col-resize;
+		}
+	}
+
+	#item-list {
+		.item-feed-title {
+			margin-right: 5px;
 		}
 	}
 
@@ -220,11 +226,6 @@ body {
 			margin-left: 55px;
 			line-height: 22px;
 			padding: 5px 0;
-		}
-
-		.item-feed-title {
-			line-height: 25px;
-			max-width: 100px;
 		}
 
 		&>ul {
