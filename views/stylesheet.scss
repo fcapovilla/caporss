@@ -109,7 +109,7 @@ body {
 	.item-icons {
 		position: absolute;
 	}
-	.item-date {
+	.item-labels {
 		float: right;
 		text-align: right;
 	}
@@ -220,6 +220,11 @@ body {
 			margin-left: 55px;
 			line-height: 22px;
 			padding: 5px 0;
+		}
+
+		.item-feed-title {
+			line-height: 25px;
+			max-width: 100px;
 		}
 
 		&>ul {

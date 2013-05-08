@@ -32,5 +32,14 @@ var FolderCollection = Backbone.Collection.extend({
 			count += folder.get('unread_count');
 		});
 		return count;
+	},
+	getFeedTitles: function() {
+		var feed_titles = {};
+		this.each(function(folder) {
+			folder.feeds.each(function(feed) {
+				feed_titles[feed.id] = feed.get('title');
+			});
+		});
+		return feed_titles;
 	}
 });

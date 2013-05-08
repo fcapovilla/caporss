@@ -6,7 +6,7 @@ var Folder = Backbone.Model.extend({
 
 		this.listenTo(this.feeds, 'add remove change:unread_count', this.recalculateReadCount);
 
-		this.items = new ItemCollection();
+		this.items = new ItemCollection({show_feed_titles: true});
 		this.items.url = '/folder/' + this.id + '/item';
 		this.listenTo(this.items, 'itemRead', this.itemRead);
 		this.listenTo(this.items, 'itemUnread', this.itemUnread);

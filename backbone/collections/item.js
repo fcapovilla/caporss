@@ -1,9 +1,13 @@
 var ItemCollection = Backbone.Collection.extend({
 	model: Item,
 	url: '/item',
-	initialize: function() {
+	initialize: function(options) {
 		this.current_page = 1;
 		this.all_loaded = false;
+
+		if(options !== undefined && options.show_feed_titles) {
+			this.show_feed_titles = true;
+		}
 	},
 	fetchNextPage: function() {
 		if(this.all_loaded) {
@@ -54,6 +58,12 @@ var ItemCollection = Backbone.Collection.extend({
 			if(that.length - previous_count < SETTINGS.items_per_page) {
 				that.all_loaded = true;
 				that.trigger('all_items_loaded');
+			}
+			if(that.show_feed_titles) {
+				var feed_titles = folders.getFeedTitles();
+				that.each(function(item) {
+					item.set('feed_title', feed_titles[item.get('feed_id')]);
+				});
 			}
 		});
 

@@ -1,6 +1,6 @@
 var AllItemsFolder = Backbone.Model.extend({
 	initialize: function() {
-		this.items = new ItemCollection();
+		this.items = new ItemCollection({show_feed_titles: true});
 		this.items.url = '/item';
 		this.listenTo(this.items, 'itemRead', this.itemRead);
 		this.listenTo(this.items, 'itemUnread', this.itemUnread);
