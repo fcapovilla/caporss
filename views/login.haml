@@ -1,0 +1,13 @@
+.container
+  .row
+    .span4.offset4.well
+      %h2
+        =t.login.login
+      %form(class="form-horizontal" method="post" action="/login")
+        %fieldset
+          .clearfix
+            %input(class="input-block-level" type="text" name="username" aria-hidden="true" placeholder="#{t.login.username}")
+          .clearfix
+            %input(class="input-block-level" type="password" name="password" aria-hidden="true" placeholder="#{t.login.password}")
+          %button(type="submit" class="btn btn-primary" aria-hidden="true")
+            =t.login.connect

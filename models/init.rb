@@ -35,7 +35,7 @@ DataMapper.auto_upgrade!
 unless User.first(:username => 'admin')
 	User.new(
 		:username => 'admin',
-		:password => '',
+		:password => 'admin',
 		:roles => [:admin],
 	).save
 end
@@ -43,7 +43,7 @@ end
 unless User.first(:username => 'sync')
 	User.new(
 		:username => 'sync',
-		:password => '',
+		:password => 'sync',
 		:roles => [:sync],
 	).save
 end

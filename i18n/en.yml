@@ -60,3 +60,9 @@ js:
     confirm_delete_folder: Are you sure you want to delete this folder?
     show_more_items: Show more items...
     all_items_folder: All items
+
+login:
+    username: Username
+    password: Password
+    connect: Connect
+    login: Login

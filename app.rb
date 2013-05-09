@@ -20,29 +20,45 @@ configure :production do
 	use Rack::SslEnforcer
 end
 
+configure do
+    enable :sessions
+    #use Rack::Session::Pool, :expire_after => 2592000
+end
+
 # Load settings
 Setting.all.each do |setting|
 	set setting.name.to_sym, setting.value
 end
 
 # Basic Auth
-if settings.username != '' and settings.password != ''
-	use Rack::Auth::Basic, "Access restricted" do |username, password|
-		[username, Digest::SHA512.hexdigest(password + settings.salt)] == [settings.username, settings.password]
-	end
-end
+#if settings.username != '' and settings.password != ''
+#	use Rack::Auth::Basic, "Access restricted" do |username, password|
+#		[username, Digest::SHA512.hexdigest(password + settings.salt)] == [settings.username, settings.password]
+#	end
+#end
 
 
 # Force UTF-8 and set locale
 before do
 	content_type :html, 'charset' => 'utf-8'
 	params[:locale] = settings.default_locale
+
+	# Fetch the current user
+	if session[:username]
+		@user = User.first(:username => session[:username])
+	end
 end
 
 # partial helper
 helpers do
 	def partial(page, options={})
 		haml page.to_sym, options.merge!(:layout => false)
+	end
+
+	def authorize!(*roles)
+		unless @user and @user.authorize(roles)
+			redirect '/login'
+		end
 	end
 end
 
@@ -74,7 +90,22 @@ end
 
 # Render home page
 get '/' do
+	authorize! :user
 	haml :index
+end
+
+get '/login' do
+	haml :login
+end
+
+post '/login' do
+	user = User.first(:username => params[:username])
+	if user and user.password == params[:password]
+		session[:username] = params[:username]
+		redirect '/'
+	else
+		haml :login
+	end
 end
 
 

@@ -28,11 +28,6 @@
           .well
             .control-group
               %label.control-label
-                =t.settings.username
-              .controls
-                %input(class="input-block-level" type="text" name="username" value="#{settings.username}" aria-hidden="true")
-            .control-group
-              %label.control-label
                 =t.settings.current_password
               .controls
                 %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
@@ -58,7 +53,7 @@
           %label
             =t.settings.cleanup_older_than
           .input-append
-            %input(class="input-block-level" type="text" id="cleanup_after" name="cleanup_after" value="#{settings.cleanup_after}" aria-hidden="true")
+            %input(class="input-block-level" type="text" id="cleanup_after" name="cleanup_after" value="#{@user.cleanup_after}" aria-hidden="true")
             %span.add-on
               =t.settings.days
           %button(class="btn pull-right" id="cleanupButton" data-dismiss="modal")
@@ -69,7 +64,7 @@
               =t.settings.refresh_every
             .controls
               .input-append
-                %input(class="input-block-level" type="text" name="refresh_timeout" value="#{settings.refresh_timeout}" aria-hidden="true")
+                %input(class="input-block-level" type="text" name="refresh_timeout" value="#{@user.refresh_timeout}" aria-hidden="true")
                 %span.add-on
                   =t.settings.minutes
           .control-group
@@ -77,7 +72,7 @@
               =t.settings.sync_every
             .controls
               .input-append
-                %input(class="input-block-level" type="text" name="sync_timeout" value="#{settings.sync_timeout}" aria-hidden="true")
+                %input(class="input-block-level" type="text" name="sync_timeout" value="#{@user.sync_timeout}" aria-hidden="true")
                 %span.add-on
                   =t.settings.minutes
         .tab-pane#generalSettings
@@ -85,7 +80,7 @@
             %label.control-label
               =t.settings.items_per_page
             .controls
-              %input(class="input-block-level" type="text" name="items_per_page" value="#{settings.items_per_page}" aria-hidden="true")
+              %input(class="input-block-level" type="text" name="items_per_page" value="#{@user.items_per_page}" aria-hidden="true")
           %button(class="btn" id="updateFaviconsButton" data-dismiss="modal")
             =t.settings.update_favicons
     .modal-footer

@@ -40,10 +40,10 @@ subscribe:
     folder: "Dossier&nbsp;:"
 
 edit_feed:
-    title: Modifier l'abonnement
+    title: "Modifier l'abonnement"
     url: "URL&nbsp;:"
     folder: "Dossier&nbsp:"
-    reset: Réinitialiser l'abonnement
+    reset: "Réinitialiser l'abonnement"
     save: Sauvegarder
 
 edit_folder:
@@ -58,5 +58,11 @@ opml_import:
 js:
     confirm_delete_feed: Êtes-vous sûr de vouloir supprimer cet abonnement?
     confirm_delete_folder: Êtes-vous sûr de vouloir supprimer ce dossier?
-    show_more_items: Afficher plus d'items...
+    show_more_items: "Afficher plus d'items..."
     all_items_folder: Tous les items
+
+login:
+    username: Utilisateur
+    password: Mot de passe
+    connect: Connexion
+    login: Connexion
