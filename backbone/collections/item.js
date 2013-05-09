@@ -27,14 +27,14 @@ var ItemCollection = Backbone.Collection.extend({
 		var that=this;
 		var previous_count = this.length;
 
+		if(!options.data) {
+			options.data = {};
+		}
+
 		if(options.reset_pagination) {
 			this.current_page = 1;
 			this.all_loaded = false;
 			previous_count = 0;
-		}
-
-		if(!options.data) {
-			options.data = {};
 		}
 
 		if(!options.data.limit) {
@@ -62,7 +62,9 @@ var ItemCollection = Backbone.Collection.extend({
 			if(that.show_feed_titles) {
 				var feed_titles = folders.getFeedTitles();
 				that.each(function(item) {
-					item.set('feed_title', feed_titles[item.get('feed_id')]);
+					if(!item.has('feed_title')) {
+						item.set('feed_title', feed_titles[item.get('feed_id')]);
+					}
 				});
 			}
 		});

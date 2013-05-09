@@ -7,13 +7,15 @@ var Router = Backbone.Router.extend({
 	},
 	clear: function() {
 		if(items !== null) {
-			items.$el.empty();
+			items.remove();
+			items = null;
 		}
 
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
 			currentSelection = null;
 		}
+		window.scrollTo(0,0);
 
 		$('.mobile-item-button').addClass('invisible');
 		$('#item-list').addClass('hidden-phone');
