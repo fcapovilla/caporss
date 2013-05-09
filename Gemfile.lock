@@ -121,6 +121,7 @@ DEPENDENCIES
   dm-is-list
   dm-postgres-adapter
   dm-sqlite-adapter
+  dm-types
   feedzirra (~> 0.2.0.rc2)
   haml
   json

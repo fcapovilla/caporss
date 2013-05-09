@@ -10,5 +10,6 @@ class Item
 	property :read, Boolean, :default => false
 	property :date, DateTime
 
+	belongs_to :user, :required => false
 	belongs_to :feed
 end

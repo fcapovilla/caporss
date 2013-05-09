@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'data_mapper'
+require 'dm-types'
 require 'dm-is-list'
 require 'feedzirra'
 
@@ -20,6 +21,7 @@ DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')
 
 # Load all models
 require_relative 'setting'
+require_relative 'user'
 require_relative 'folder'
 require_relative 'feed'
 require_relative 'favicon'
@@ -29,24 +31,19 @@ require_relative 'item'
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
-# Set default settings
-if Setting.count == 0
-	Setting.create(:name => 'username', :value => 'admin')
-	Setting.create(:name => 'salt', :value => '')
-	Setting.create(:name => 'password', :value => Digest::SHA512.hexdigest('admin'))
+# Set default users
+unless User.first(:username => 'admin')
+	User.new(
+		:username => 'admin',
+		:password => '',
+		:roles => [:admin],
+	).save
 end
-unless Setting.first(:name => 'cleanup_after')
-	Setting.create(:name => 'cleanup_after', :value => '300')
-end
-unless Setting.first(:name => 'refresh_timeout')
-	Setting.create(:name => 'refresh_timeout', :value => '0')
-end
-unless Setting.first(:name => 'sync_timeout')
-	Setting.create(:name => 'sync_timeout', :value => '0')
-end
-unless Setting.first(:name => 'default_locale')
-	Setting.create(:name => 'default_locale', :value => 'en')
-end
-unless Setting.first(:name => 'items_per_page')
-	Setting.create(:name => 'items_per_page', :value => 50)
+
+unless User.first(:username => 'sync')
+	User.new(
+		:username => 'sync',
+		:password => '',
+		:roles => [:sync],
+	).save
 end
