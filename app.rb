@@ -57,6 +57,7 @@ helpers do
 
 	def authorize!(*roles)
 		unless @user and @user.authorize(roles)
+			session[:login_redirect] = request.fullpath
 			redirect '/login'
 		end
 	end
@@ -101,11 +102,20 @@ get '/login' do
 	haml :login
 end
 
+get '/logout' do
+	session.clear
+	redirect '/login'
+end
+
 post '/login' do
 	user = User.first(:username => params[:username])
 	if user and user.password == params[:password]
 		session[:username] = params[:username]
-		redirect '/'
+		if session[:login_redirect]
+			redirect session.delete(:login_redirect)
+		else
+			redirect '/'
+		end
 	else
 		haml :login
 	end
