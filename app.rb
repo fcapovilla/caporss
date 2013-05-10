@@ -415,10 +415,9 @@ end
 
 get '/folder/:id/item' do |id|
 	options = {
-		:user => @user,
 		:order => [:date.desc],
 		:offset => params[:offset].to_i || 0,
-		:limit => params[:limit].to_i || nil,
+		:limit => params[:limit].to_i || nil
 	}
 	options[:read] = false if params[:show_read] == 'false'
 	Folder.first(:user => @user, :id => id).feeds.items(options).to_json
@@ -461,7 +460,7 @@ get '/feed/:id/item' do |id|
 	options = {
 		:order => [:date.desc],
 		:offset => params[:offset].to_i || 0,
-		:limit => params[:limit].to_i || nil,
+		:limit => params[:limit].to_i || nil
 	}
 	options[:read] = false if params[:show_read] == 'false'
 	Feed.first(:user => @user, :id => id).items(options).to_json
@@ -555,7 +554,7 @@ get '/item' do
 		:user => @user,
 		:order => [:date.desc],
 		:offset => params[:offset].to_i || 0,
-		:limit => params[:limit].to_i || nil,
+		:limit => params[:limit].to_i || nil
 	}
 	options[:read] = false if params[:show_read] == 'false'
 	Item.all(options).to_json
