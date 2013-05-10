@@ -10,7 +10,7 @@ class Feed
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
 
-	belongs_to :user
+	belongs_to :user, :required => false
 	belongs_to :folder
 	belongs_to :favicon, :required => false
 	has n, :items, :constraint => :destroy

@@ -7,7 +7,7 @@ class Folder
 	property :open, Boolean, :default => true
 	property :unread_count, Integer, :default => 0
 
-	belongs_to :user
+	belongs_to :user, :required => false
 	has n, :feeds, :constraint => :destroy
 	is :list
 

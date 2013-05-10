@@ -28,22 +28,7 @@ require_relative 'favicon'
 require_relative 'item'
 
 # Upgrade the database
-DataMapper.finalize
-DataMapper.auto_upgrade!
+DataMapper.finalize.auto_upgrade!
 
-# Set default users
-unless User.first(:username => 'admin')
-	User.new(
-		:username => 'admin',
-		:password => 'admin',
-		:roles => [:admin],
-	).save
-end
-
-unless User.first(:username => 'sync')
-	User.new(
-		:username => 'sync',
-		:password => 'sync',
-		:roles => [:sync],
-	).save
-end
+# Apply migrations
+require_relative 'migrations'

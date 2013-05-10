@@ -27,7 +27,7 @@ end
 
 configure do
 	# TODO: Configurable secret option
-    use Rack::Session::Pool, :expire_after => 2592000, :secret => 'needs_to_be_changed...'
+	use Rack::Session::Pool, :expire_after => 2592000, :secret => 'needs_to_be_changed...'
 end
 
 # Basic Auth
