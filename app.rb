@@ -315,7 +315,8 @@ post '/opml_upload' do
 			folder.save
 		else
 			# The root node is a folder. Get all his feeds.
-			folder = Folder.first_or_create(:user => @user, :title => root_node['title'])
+			title = root_node['title'] || root_node['text']
+			folder = Folder.first_or_create(:user => @user, :title => title)
 			root_node.css('outline').each do |node|
 				feed = Feed.new(
 					:user => @user,
