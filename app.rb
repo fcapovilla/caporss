@@ -38,14 +38,14 @@ end
 #end
 
 
-# Force UTF-8 and set locale
 before do
+	# Force UTF-8
 	content_type :html, 'charset' => 'utf-8'
-	params[:locale] = settings.default_locale
 
-	# Fetch the current user
+	# Fetch the current user and set locale
 	if session[:username]
 		@user = User.first(:username => session[:username])
+		params[:locale] = @user.default_locale
 	end
 end
 
@@ -138,19 +138,21 @@ end
 post '/full_sync' do
 	authorize! :sync
 
-	urls = Feed.all.map{ |feed| feed.url }
+	urls = Feed.all.map{ |feed| feed.url }.u
+	urls.uniq!
 	feeds = Feedzirra::Feed.fetch_and_parse(urls)
 	updated_count = 0
 	new_items = 0
 	feeds.each do |url, xml|
 		next if xml.kind_of?(Fixnum)
-		feed = Feed.first(:url => url)
-		old_count = feed.items.count
+		Feed.all(:url => url).each_with_index do |feed, i|
+			old_count = feed.items.count if i==0
 
-		feed.update_feed!(xml) if feed
+			feed.update_feed!(xml)
+			updated_count+=1
 
-		updated_count+=1
-		new_items += feed.items.count - old_count
+			new_items += feed.items.count - old_count if i==0
+		end
 	end
 	{ :updated => updated_count, :new_items => new_items }.to_json
 end
@@ -326,7 +328,7 @@ namespace '/favicon' do
 	get '/:id.ico' do |id|
 		content_type 'image/x-icon'
 		expires Time.now + (60*60*24*7), :public
-		Favicon.first(:user => @user, :id => id).data_decoded
+		Favicon.get(id).data_decoded
 	end
 
 	post '/fetch_all' do
