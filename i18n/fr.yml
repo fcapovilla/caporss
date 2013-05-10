@@ -33,6 +33,7 @@ buttons:
     delete: Supprimer
     mark_older_read: Marquer les plus anciens comme lus
     toggle_read: Afficher/Cacher les items lus
+    logout: Déconnexion
 
 subscribe:
     subscribe: Abonnement
@@ -66,3 +67,14 @@ login:
     password: Mot de passe
     connect: Connexion
     login: Connexion
+
+admin:
+    title: Administration
+    user:
+        username: Identifiant
+        password: Mot de passe
+        roles: Rôles
+        action: Action
+        add: Ajouter
+        delete: Supprimer
+        edit: Modifier

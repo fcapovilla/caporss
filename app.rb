@@ -99,7 +99,7 @@ end
 
 # Login page
 get '/login' do
-	haml :login
+	haml :login, :layout => false
 end
 
 get '/logout' do
@@ -117,7 +117,7 @@ post '/login' do
 			redirect '/'
 		end
 	else
-		haml :login
+		haml :login, :layout => false
 	end
 end
 
@@ -126,13 +126,13 @@ end
 get '/admin' do
 	authorize! :admin
 
-	haml :admin
+	haml :admin, :layout => false
 end
 
 post '/admin' do
 	authorize! :admin
 
-	haml :admin
+	haml :admin, :layout => false
 end
 
 # User setup
@@ -144,9 +144,18 @@ namespace '/user' do
 	post do
 		user = User.new(
 			:username => params[:username],
-			:password => params[:password],
-			:roles => params[:roles]
+			:password => params[:password]
 		).save
+
+		redirect '/admin'
+	end
+
+	post '/:id' do |id|
+		if params[:password] and params[:password].length >= 4
+			user = User.get(id)
+			user.password = params[:password]
+			user.save
+		end
 
 		redirect '/admin'
 	end

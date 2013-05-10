@@ -1,16 +1,28 @@
-.container
-  .row
-    .span8.offset2.well
-      %h2
-        =t.admin.title
-      %form(action="/user" method="post")
-        %table.table
+!!! 5
+%head
+  %title CapoRSS - Login
+  %link(rel="stylesheet" media="screen" href="css/bootstrap.min.css")
+  %link(rel="stylesheet" media="screen" href="css/bootstrap-responsive.min.css")
+  %link(rel="stylesheet" media="screen" href="css/font-awesome.min.css")
+  %meta(content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" name="viewport")
+  %script(src="js/jquery-1.9.1.min.js")
+  %script(src="js/bootstrap.min.js")
+%body
+  .container
+    .row
+      .span8.offset2.well
+        %a(class="btn" href="/logout" title="#{t.buttons.logout}")
+          %i.icon.icon-signout
+          Logout
+        %h2
+          =t.admin.title
+        %table.table.table-bordered
           %thead
             %tr
-              %th Username
-              %th Password
-              %th Roles
-              %th Delete
+              %th= t.admin.user.username
+              %th= t.admin.user.password
+              %th= t.admin.user.roles
+              %th= t.admin.user.action
           %tbody
             - User.all.each do |user|
               %tr
@@ -18,34 +30,40 @@
                   &= user.username
                   %input(type="hidden" class="id" value="#{user.id}")
                 %td
-                  ********
+                  %form(action="/user/#{user.id}" method="post")
+                    .input-append
+                      %input(class="input-small" type="password" name="password" placeholder="********")
+                      %button(type="submit" class="btn" title="#{t.admin.user.edit}")
+                        %i.icon.icon-pencil
                 %td
                   %ul
                     - user.roles.each do |role|
                       %li&= role
                 %td
                   -unless user.username == 'admin' or user.username == 'sync'
-                    %button(class="btn icon icon-trash" onclick="deleteUser(this);")
-            %tr
-              %td
-                %input(type="text" name="username" id="username")
-              %td
-                %input(type="text" name="password" id="password")
-              %td
-                %input(type="text" name="roles" id="roles")
-              %td
-                %button(type="submit" class="btn icon icon-plus" onclick="addUser(this);")
+                    %button(class="btn" onclick="deleteUser(this);" title="#{t.admin.user.delete}")
+                      %i.icon.icon-trash
+            %form(action="/user" method="post")
+              %tr
+                %td
+                  %input(type="text" name="username" placeholder="#{t.admin.user.username}")
+                %td
+                  %input(type="password" name="password" placeholder="#{t.admin.user.password}")
+                %td
+                %td
+                  %button(type="submit" class="btn" onclick="addUser(this);" title="#{t.admin.user.add}")
+                    %i.icon.icon-plus
 
-:javascript
-  function deleteUser(elem) {
-    var id = $(elem).closest('tr').find('.id').val();
+  :javascript
+    function deleteUser(elem) {
+      var id = $(elem).closest('tr').find('.id').val();
 
-    $.ajax({
-      url: '/user/' + id,
-      method: 'DELETE',
-      success: function() {
-        $(elem).closest('tr').remove();
-      }
-    });
-  }
+      $.ajax({
+        url: '/user/' + id,
+        method: 'DELETE',
+        success: function() {
+          $(elem).closest('tr').remove();
+        }
+      });
+    }
 

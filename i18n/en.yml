@@ -33,6 +33,7 @@ buttons:
     delete: Delete
     mark_older_read: Mark older items as read
     toggle_read: Show/Hide read items
+    logout: Log out
 
 subscribe:
     subscribe: Subscribe
@@ -66,3 +67,14 @@ login:
     password: Password
     connect: Connect
     login: Login
+
+admin:
+    title: Administration
+    user:
+        username: Username
+        password: Password
+        roles: Roles
+        action: Action
+        add: Add
+        delete: Delete
+        edit: Edit

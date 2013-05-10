@@ -1,13 +1,23 @@
-.container
-  .row
-    .span4.offset4.well
-      %h2
-        =t.login.login
-      %form(class="form-horizontal" method="post" action="/login")
-        %fieldset
-          .clearfix
-            %input(class="input-block-level" type="text" name="username" aria-hidden="true" placeholder="#{t.login.username}")
-          .clearfix
-            %input(class="input-block-level" type="password" name="password" aria-hidden="true" placeholder="#{t.login.password}")
-          %button(type="submit" class="btn btn-primary" aria-hidden="true")
-            =t.login.connect
+!!! 5
+%head
+  %title CapoRSS - Login
+  %link(rel="stylesheet" media="screen" href="css/bootstrap.min.css")
+  %link(rel="stylesheet" media="screen" href="css/bootstrap-responsive.min.css")
+  %link(rel="stylesheet" media="screen" href="css/font-awesome.min.css")
+  %meta(content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" name="viewport")
+  %script(src="js/jquery-1.9.1.min.js")
+  %script(src="js/bootstrap.min.js")
+%body
+  .container
+    .row
+      .span4.offset4.well
+        %h2
+          =t.login.login
+        %form(class="form-horizontal" method="post" action="/login")
+          %fieldset
+            .clearfix
+              %input(class="input-block-level" type="text" name="username" aria-hidden="true" placeholder="#{t.login.username}")
+            .clearfix
+              %input(class="input-block-level" type="password" name="password" aria-hidden="true" placeholder="#{t.login.password}")
+            %button(type="submit" class="btn btn-primary" aria-hidden="true")
+              =t.login.connect
