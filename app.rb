@@ -88,12 +88,15 @@ get '/app.js' do
 	output + "});"
 end
 
+
 # Render home page
 get '/' do
 	authorize! :user
 	haml :index
 end
 
+
+# Login page
 get '/login' do
 	haml :login
 end
@@ -111,6 +114,7 @@ end
 
 # Save settings form
 post '/save_settings' do
+	authorize! :user
 	# Password protected settings
 	if not defined? settings.password or Digest::SHA512.hexdigest(params[:old_password] + settings.salt) == settings.password
 		if params[:username]
@@ -175,6 +179,10 @@ end
 
 # Sync
 namespace '/sync' do
+	before do
+		authorize! :user, :sync
+	end
+
 	post '/all' do
 		urls = Feed.all.map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
@@ -226,6 +234,8 @@ end
 # Cleanup
 namespace '/cleanup' do
 	before do
+		authorize! :user
+
 		if params[:cleanup_after]
 			cleanup_after = Setting.first_or_create(:name => 'cleanup_after')
 			cleanup_after.value = params[:cleanup_after]
@@ -255,6 +265,8 @@ end
 
 # Import OPML Files
 post '/opml_upload' do
+	authorize! :user
+
 	opml = Nokogiri::XML(params[:file][:tempfile].read)
 	opml.css('body>outline').each do |root_node|
 		# If the root node is a feed, add it to the "Feeds" folder
@@ -287,6 +299,8 @@ end
 
 # OPML Export
 get '/export.opml' do
+	authorize! :user
+
 	headers "Content-Disposition" => "attachment;filename=export.opml"
 	content_type 'text/x-opml', 'charset' => 'utf-8'
 
@@ -307,6 +321,8 @@ end
 
 # Subscription
 post '/subscribe' do
+	authorize! :user
+
 	params[:folder] = 'Feeds' if params[:folder].empty?
 	folder = Folder.first_or_create(:title => params[:folder])
 	feed = Feed.new(
@@ -324,19 +340,29 @@ end
 
 
 # Favicons
-get '/favicon/:id.ico' do |id|
-	content_type 'image/x-icon'
-	expires Time.now + (60*60*24*7), :public
-	Favicon.get(id).data_decoded
-end
+namespace '/favicon' do
+	before do
+		authorize! :user
+	end
 
-post '/favicon/fetch_all' do
-	Favicon.all.each { |favicon| favicon.fetch! }
-	return 'done'
+	get '/:id.ico' do |id|
+		content_type 'image/x-icon'
+		expires Time.now + (60*60*24*7), :public
+		Favicon.get(id).data_decoded
+	end
+
+	post '/fetch_all' do
+		Favicon.all.each { |favicon| favicon.fetch! }
+		return 'done'
+	end
 end
 
 
 # Folders
+
+before '/folder*' do
+	authorize! :user
+end
 
 get '/folder' do
 	Folder.all.to_json
@@ -381,6 +407,10 @@ end
 
 # Feeds
 
+before '/feed*' do
+	authorize! :user
+end
+
 get '/feed' do
 	Feed.all.to_json
 end
@@ -402,6 +432,8 @@ end
 #post '/feed' do
 
 post '/reset/feed/:id' do
+	authorize! :user
+
 	feed = Feed.get(params[:id])
 	feed.items.destroy
 	feed.last_update = DateTime.new(2000,1,1)
@@ -437,6 +469,8 @@ end
 
 # Mark all items in this feed as "read"
 put '/read/feed/:id' do |id|
+	authorize! :user
+
 	feed = Feed.get(id)
 	feed.items.each do |item|
 		item.read = true
@@ -450,6 +484,8 @@ end
 
 # Mark all items in this feed as "unread"
 put '/unread/feed/:id' do |id|
+	authorize! :user
+
 	feed = Feed.get(id)
 	feed.items.each do |item|
 		item.read = false
@@ -471,6 +507,10 @@ end
 
 
 # Items
+#
+before '/item*' do
+	authorize! :user
+end
 
 get '/item' do
 	options = {
