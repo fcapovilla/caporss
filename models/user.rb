@@ -17,7 +17,7 @@ class User
 	has n, :feeds, :constraint => :destroy
 	has n, :folders, :constraint => :destroy
 
-	def authorize(*roles)
+	def authorize(roles)
 		return true if self.roles.include?(:admin)
 
 		roles.each do |role|

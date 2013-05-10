@@ -3,11 +3,11 @@ class Folder
 	include DataMapper::Resource
 
 	property :id, Serial
-	property :title, String, :length => 1..200, :unique => true
+	property :title, String, :length => 1..200
 	property :open, Boolean, :default => true
 	property :unread_count, Integer, :default => 0
 
-	belongs_to :user, :required => false
+	belongs_to :user
 	has n, :feeds, :constraint => :destroy
 	is :list
 
