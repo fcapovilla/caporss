@@ -14,6 +14,11 @@ require_relative 'models/init'
 # Force enclosure parsing on all Feedzirra feed entries
 Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
 
+# Load settings
+Setting.all.each do |setting|
+	set setting.name.to_sym, setting.value
+end
+
 # Force SSL in production
 configure :production do
 	require 'rack/ssl-enforcer'
@@ -21,13 +26,8 @@ configure :production do
 end
 
 configure do
-    enable :sessions
-    #use Rack::Session::Pool, :expire_after => 2592000
-end
-
-# Load settings
-Setting.all.each do |setting|
-	set setting.name.to_sym, setting.value
+	# TODO: Configurable secret option
+    use Rack::Session::Pool, :expire_after => 2592000, :secret => 'needs_to_be_changed...'
 end
 
 # Basic Auth
@@ -115,82 +115,59 @@ end
 # Save settings form
 post '/save_settings' do
 	authorize! :user
+
 	# Password protected settings
-	if not defined? settings.password or Digest::SHA512.hexdigest(params[:old_password] + settings.salt) == settings.password
-		if params[:username]
-			username = Setting.first_or_create(:name => 'username')
-			username.value = params[:username]
-			username.save
-		end
-
-		if params[:new_password]
-			salt = ''
-			64.times { salt << (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }
-
-			salt_object = Setting.first_or_create(:name => 'salt')
-			salt_object.value = salt
-			salt_object.save
-
-			password = Setting.first_or_create(:name => 'password')
-			password.value = Digest::SHA512.hexdigest(params[:new_password] + salt)
-			password.save
-		end
+	if @user.password == params[:old_password]
+		@user.password = params[:new_password] if params[:new_password]
 	end
 
 	# Other settings
-	if params[:cleanup_after]
-		cleanup_after = Setting.first_or_create(:name => 'cleanup_after')
-		cleanup_after.value = params[:cleanup_after]
-		cleanup_after.save
-	end
+	@user.cleanup_after = params[:cleanup_after] if params[:cleanup_after]
+	@user.refresh_timeout = params[:refresh_timeout] if params[:refresh_timeout]
+	@user.sync_timeout = params[:sync_timeout] if params[:sync_timeout]
+	@user.default_locale = params[:default_locale] if params[:default_locale]
+	@user.items_per_page = params[:items_per_page] if params[:items_per_page]
 
-	if params[:refresh_timeout]
-		refresh_timeout = Setting.first_or_create(:name => 'refresh_timeout')
-		refresh_timeout.value = params[:refresh_timeout]
-		refresh_timeout.save
-	end
-
-	if params[:sync_timeout]
-		sync_timeout = Setting.first_or_create(:name => 'sync_timeout')
-		sync_timeout.value = params[:sync_timeout]
-		sync_timeout.save
-	end
-
-	if params[:default_locale]
-		default_locale = Setting.first_or_create(:name => 'default_locale')
-		default_locale.value = params[:default_locale]
-		default_locale.save
-	end
-
-	if params[:items_per_page]
-		items_per_page = Setting.first_or_create(:name => 'items_per_page')
-		items_per_page.value = params[:items_per_page]
-		items_per_page.save
-	end
-
-	# Reset settings
-	Setting.all.each do |setting|
-		set setting.name.to_sym, setting.value
-	end
+	@user.save
 
 	redirect '/'
 end
 
 
 # Sync
+post '/full_sync' do
+	authorize! :sync
+
+	urls = Feed.all.map{ |feed| feed.url }
+	feeds = Feedzirra::Feed.fetch_and_parse(urls)
+	updated_count = 0
+	new_items = 0
+	feeds.each do |url, xml|
+		next if xml.kind_of?(Fixnum)
+		feed = Feed.first(:url => url)
+		old_count = feed.items.count
+
+		feed.update_feed!(xml) if feed
+
+		updated_count+=1
+		new_items += feed.items.count - old_count
+	end
+	{ :updated => updated_count, :new_items => new_items }.to_json
+end
+
 namespace '/sync' do
 	before do
-		authorize! :user, :sync
+		authorize! :user
 	end
 
 	post '/all' do
-		urls = Feed.all.map{ |feed| feed.url }
+		urls = Feed.all(:user => @user).map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
 		updated_count = 0
 		new_items = 0
 		feeds.each do |url, xml|
 			next if xml.kind_of?(Fixnum)
-			feed = Feed.first(:url => url)
+			feed = Feed.first(:user => @user, :url => url)
 			old_count = feed.items.count
 
 			feed.update_feed!(xml) if feed
@@ -202,13 +179,13 @@ namespace '/sync' do
 	end
 
 	post '/folder/:id' do |id|
-		urls = Folder.get(id).feeds.map{ |feed| feed.url }
+		urls = Folder.first(:user => @user, :id => id).feeds.map{ |feed| feed.url }
 		feeds = Feedzirra::Feed.fetch_and_parse(urls)
 		updated_count = 0
 		new_items = 0
 		feeds.each do |url, xml|
 			next if xml.kind_of?(Fixnum)
-			feed = Feed.first(:url => url)
+			feed = Feed.first(:user => @user, :url => url)
 			old_count = feed.items.count
 
 			feed.update_feed!(xml) if feed
@@ -220,7 +197,7 @@ namespace '/sync' do
 	end
 
 	post '/feed/:id' do |id|
-		feed = Feed.get(id)
+		feed = Feed.first(:user => @user, :id => id)
 		old_count = feed.items.count
 
 		feed.sync!
@@ -237,27 +214,25 @@ namespace '/cleanup' do
 		authorize! :user
 
 		if params[:cleanup_after]
-			cleanup_after = Setting.first_or_create(:name => 'cleanup_after')
-			cleanup_after.value = params[:cleanup_after]
-			cleanup_after.save
-			set :cleanup_after, params[:cleanup_after]
+			@user.cleanup_after = params[:cleanup_after]
+			@user.save
 		end
 	end
 
 	post '/all' do
 		Folder.all.each do |folder|
-			folder.cleanup!(settings.cleanup_after)
+			folder.cleanup!(@user.cleanup_after)
 		end
 		return 'done'
 	end
 
 	post '/folder/:id' do |id|
-		Folder.get(id).cleanup!(settings.cleanup_after)
+		Folder.first(:user => @user, :id => id).cleanup!(@user.cleanup_after)
 		return 'done'
 	end
 
 	post '/feed/:id' do |id|
-		Feed.get(id).cleanup!(settings.cleanup_after)
+		Feed.first(:user => @user, :id => id).cleanup!(@user.cleanup_after)
 		return 'done'
 	end
 end
@@ -271,8 +246,9 @@ post '/opml_upload' do
 	opml.css('body>outline').each do |root_node|
 		# If the root node is a feed, add it to the "Feeds" folder
 		if root_node['type'] == 'rss'
-			folder = Folder.first_or_create(:title => 'Feeds')
+			folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
 			feed = Feed.new(
+				:user => @user,
 				:title => root_node['title'],
 				:url => root_node['xmlUrl'],
 				:last_update => DateTime.new(2000,1,1)
@@ -281,9 +257,10 @@ post '/opml_upload' do
 			folder.save
 		else
 			# The root node is a folder. Get all his feeds.
-			folder = Folder.first_or_create(:title => root_node['title'])
+			folder = Folder.first_or_create(:user => @user, :title => root_node['title'])
 			root_node.css('outline').each do |node|
 				feed = Feed.new(
+					:user => @user,
 					:title => node['title'],
 					:url => node['xmlUrl'],
 					:last_update => DateTime.new(2000,1,1)
@@ -310,7 +287,7 @@ get '/export.opml' do
 				xml.title "OPML Export"
 			}
 			xml.body {
-				Folder.all.each { |folder|
+				Folder.all(:user => @user).each { |folder|
 					xml.__send__ :insert, folder.to_opml
 				}
 			}
@@ -324,8 +301,9 @@ post '/subscribe' do
 	authorize! :user
 
 	params[:folder] = 'Feeds' if params[:folder].empty?
-	folder = Folder.first_or_create(:title => params[:folder])
+	folder = Folder.first_or_create(:user => @user, :title => params[:folder])
 	feed = Feed.new(
+		:user => @user,
 		:title => params[:url],
 		:url => params[:url],
 		:last_update => DateTime.new(2000,1,1)
@@ -348,7 +326,7 @@ namespace '/favicon' do
 	get '/:id.ico' do |id|
 		content_type 'image/x-icon'
 		expires Time.now + (60*60*24*7), :public
-		Favicon.get(id).data_decoded
+		Favicon.first(:user => @user, :id => id).data_decoded
 	end
 
 	post '/fetch_all' do
@@ -365,31 +343,32 @@ before '/folder*' do
 end
 
 get '/folder' do
-	Folder.all.to_json
+	Folder.all(:user => @user).to_json
 end
 
 get '/folder/:id' do |id|
-	Folder.get(id).to_json
+	Folder.first(:user => @user, :id => id).to_json
 end
 
 get '/folder/:id/feed' do |id|
-	Folder.get(id).feeds.to_json
+	Folder.first(:user => @user, :id => id).feeds.to_json
 end
 
 get '/folder/:id/item' do |id|
 	options = {
+		:user => @user,
 		:order => [:date.desc],
 		:offset => params[:offset].to_i || 0,
 		:limit => params[:limit].to_i || nil,
 	}
 	options[:read] = false if params[:show_read] == 'false'
-	Folder.get(id).feeds.items(options).to_json
+	Folder.first(:user => @user, :id => id).feeds.items(options).to_json
 end
 
 # post '/folder' do
 
 put '/folder/:id' do |id|
-	folder = Folder.get(id)
+	folder = Folder.first(:user => @user, :id => id)
 	folder.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	if folder.save
 		folder.to_json
@@ -399,7 +378,7 @@ put '/folder/:id' do |id|
 end
 
 delete '/folder/:id' do |id|
-	Folder.get(id).destroy
+	Folder.first(:user => @user, :id => id).destroy
 
 	return '{}'
 end
@@ -412,11 +391,11 @@ before '/feed*' do
 end
 
 get '/feed' do
-	Feed.all.to_json
+	Feed.all(:user => @user).to_json
 end
 
 get '/feed/:id', '/folder/*/feed/:id' do
-	Feed.get(params[:id]).to_json
+	Feed.first(:user => @user, :id => params[:id]).to_json
 end
 
 get '/feed/:id/item' do |id|
@@ -426,7 +405,7 @@ get '/feed/:id/item' do |id|
 		:limit => params[:limit].to_i || nil,
 	}
 	options[:read] = false if params[:show_read] == 'false'
-	Feed.get(id).items(options).to_json
+	Feed.first(:user => @user, :id => id).items(options).to_json
 end
 
 #post '/feed' do
@@ -434,7 +413,7 @@ end
 post '/reset/feed/:id' do
 	authorize! :user
 
-	feed = Feed.get(params[:id])
+	feed = Feed.first(:user => @user, :id => params[:id])
 	feed.items.destroy
 	feed.last_update = DateTime.new(2000,1,1)
 	feed.save
@@ -449,14 +428,14 @@ put '/feed/:id', '/folder/*/feed/:id' do
 
 	# Convert the folder name into a folder_id
 	if attributes.has_key?(:folder)
-		folder = Folder.first_or_create(:title => attributes[:folder])
+		folder = Folder.first_or_create(:user => @user, :title => attributes[:folder])
 		folder.save
 		attributes.delete(:folder_id)
 		attributes.delete(:folder)
 		attributes[:folder_id] = folder.id
 	end
 
-	feed = Feed.get(params[:id])
+	feed = Feed.first(:user => @user, :id => params[:id])
 	old_folder = feed.folder
 	feed.attributes = attributes
 	feed.save
@@ -471,7 +450,7 @@ end
 put '/read/feed/:id' do |id|
 	authorize! :user
 
-	feed = Feed.get(id)
+	feed = Feed.first(:user => @user, :id => id)
 	feed.items.each do |item|
 		item.read = true
 	end
@@ -486,7 +465,7 @@ end
 put '/unread/feed/:id' do |id|
 	authorize! :user
 
-	feed = Feed.get(id)
+	feed = Feed.first(:user => @user, :id => id)
 	feed.items.each do |item|
 		item.read = false
 	end
@@ -497,7 +476,7 @@ put '/unread/feed/:id' do |id|
 end
 
 delete '/feed/:id', '/folder/*/feed/:id' do
-	feed = Feed.get(params[:id])
+	feed = Feed.first(:user => @user, :id => params[:id])
 	old_folder = feed.folder
 	feed.destroy
 	old_folder.update_unread_count!
@@ -514,6 +493,7 @@ end
 
 get '/item' do
 	options = {
+		:user => @user,
 		:order => [:date.desc],
 		:offset => params[:offset].to_i || 0,
 		:limit => params[:limit].to_i || nil,
@@ -523,13 +503,13 @@ get '/item' do
 end
 
 get '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
-	Item.get(params[:id]).to_json
+	Item.first(:user => @user, :id => params[:id]).to_json
 end
 
 #post '/item' do
 
 put '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
-	item = Item.get(params[:id])
+	item = Item.first(:user => @user, :id => params[:id])
 	item.attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	item.save
 	item.feed.update_unread_count!

@@ -34,6 +34,7 @@ class Feed
 			if entry.published > self.last_update.to_time
 				entry.sanitize!
 				item = Item.new(
+					:user => self.user,
 					:title => entry.title,
 					:url => entry.url,
 					:content => (entry.content || entry.summary || entry.description),
