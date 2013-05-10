@@ -112,6 +112,43 @@ post '/login' do
 end
 
 
+# Admin page
+get '/admin' do
+	authorize! :admin
+
+	haml :admin
+end
+
+post '/admin' do
+	authorize! :admin
+
+	haml :admin
+end
+
+# User setup
+namespace '/user' do
+	before do
+		authorize! :admin
+	end
+
+	post do
+		user = User.new(
+			:username => params[:username],
+			:password => params[:password],
+			:roles => params[:roles]
+		).save
+
+		redirect '/admin'
+	end
+
+	delete '/:id' do |id|
+		User.get(id).destroy
+
+		return 'done'
+	end
+end
+
+
 # Save settings form
 post '/save_settings' do
 	authorize! :user

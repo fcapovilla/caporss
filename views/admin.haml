@@ -1,0 +1,51 @@
+.container
+  .row
+    .span8.offset2.well
+      %h2
+        =t.admin.title
+      %form(action="/user" method="post")
+        %table.table
+          %thead
+            %tr
+              %th Username
+              %th Password
+              %th Roles
+              %th Delete
+          %tbody
+            - User.all.each do |user|
+              %tr
+                %td
+                  &= user.username
+                  %input(type="hidden" class="id" value="#{user.id}")
+                %td
+                  ********
+                %td
+                  %ul
+                    - user.roles.each do |role|
+                      %li&= role
+                %td
+                  -unless user.username == 'admin' or user.username == 'sync'
+                    %button(class="btn icon icon-trash" onclick="deleteUser(this);")
+            %tr
+              %td
+                %input(type="text" name="username" id="username")
+              %td
+                %input(type="text" name="password" id="password")
+              %td
+                %input(type="text" name="roles" id="roles")
+              %td
+                %button(type="submit" class="btn icon icon-plus" onclick="addUser(this);")
+
+:javascript
+  function deleteUser(elem) {
+    var id = $(elem).closest('tr').find('.id').val();
+
+    $.ajax({
+      url: '/user/' + id,
+      method: 'DELETE',
+      success: function() {
+        $(elem).closest('tr').remove();
+      }
+    });
+  }
+
