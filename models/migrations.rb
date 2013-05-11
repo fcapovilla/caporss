@@ -69,4 +69,16 @@ migration 2, :multi_user_support do
 	end
 end
 
+migration 3, :folder_title_not_unique do
+	up do
+		begin
+			execute(<<-SQL)
+				DROP INDEX 'unique_folders_title';
+			SQL
+		rescue
+			puts ">> Index doesn't exist. Nothing to do."
+		end
+	end
+end
+
 migrate_up!
