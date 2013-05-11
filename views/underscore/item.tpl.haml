@@ -14,7 +14,7 @@
 
       <div class="item-labels hidden-phone">
         <% if(item.feed_title) { %>
-          <span class="item-feed-title label label-info">
+          <span class="item-feed-title label<% if(!item.read){ %> label-info<% } %>">
             <%= item.feed_title %>
           </span>
         <% } %>
