@@ -3,7 +3,7 @@ class User
 	include DataMapper::Resource
 
 	property :id, Serial
-	property :username, String, :length => 100, :required => true
+	property :username, String, :length => 100, :required => true, :unique => true
 	property :password, BCryptHash, :required => true
 	property :roles, Flag[:admin, :user, :sync], :default => :user
 

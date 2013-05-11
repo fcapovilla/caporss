@@ -27,8 +27,12 @@
             - User.all.each do |user|
               %tr
                 %td
-                  &= user.username
                   %input(type="hidden" class="id" value="#{user.id}")
+                  %form(action="/user/#{user.id}" method="post")
+                    .input-append
+                      %input(class="input-small" type="text" name="username" value="#{user.username}")
+                      %button(type="submit" class="btn" title="#{t.admin.user.edit}")
+                        %i.icon.icon-pencil
                 %td
                   %form(action="/user/#{user.id}" method="post")
                     .input-append
@@ -40,7 +44,7 @@
                     - user.roles.each do |role|
                       %li&= role
                 %td
-                  -unless user.username == 'admin' or user.username == 'sync'
+                  -unless user.roles.include?(:admin) or user.roles.include?(:sync)
                     %button(class="btn" onclick="deleteUser(this);" title="#{t.admin.user.delete}")
                       %i.icon.icon-trash
             %form(action="/user" method="post")

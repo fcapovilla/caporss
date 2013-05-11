@@ -36,8 +36,9 @@ before do
 
 	# Fetch the current user and set locale
 	if session[:username]
-		@user = User.first(:username => session[:username])
-		params[:locale] = @user.default_locale
+		if @user = User.first(:username => session[:username])
+			params[:locale] = @user.default_locale
+		end
 	end
 end
 
@@ -158,17 +159,25 @@ namespace '/user' do
 	end
 
 	post '/:id' do |id|
+		user = User.get(id)
+
 		if params[:password] and params[:password].length >= 4
-			user = User.get(id)
 			user.password = params[:password]
-			user.save
 		end
 
+		if params[:username] and params[:username].length > 0
+			user.username = params[:username]
+		end
+
+		user.save
 		redirect '/admin'
 	end
 
 	delete '/:id' do |id|
-		User.get(id).destroy
+		user = User.get(id)
+		unless user.roles.include?(:admin) or user.roles.include?(:sync)
+			user.destroy
+		end
 
 		return 'done'
 	end
