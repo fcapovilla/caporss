@@ -37,7 +37,7 @@ class Feed
 					:user => self.user,
 					:title => entry.title,
 					:url => entry.url,
-					:content => (entry.content || entry.summary || entry.description),
+					:content => (entry.content || entry.summary),
 					:date => entry.published
 				)
 
