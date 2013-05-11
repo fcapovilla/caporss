@@ -19,6 +19,7 @@ settings:
     items_per_page: Items par page
     general: Général
     update_favicons: Mettre à jour les favicons
+    admin_page: Administration
 
 buttons:
     back: Retour
@@ -34,6 +35,7 @@ buttons:
     mark_older_read: Marquer les plus anciens comme lus
     toggle_read: Afficher/Cacher les items lus
     logout: Déconnexion
+    return_to_feedlist: Retour à la liste des abonnements
 
 subscribe:
     subscribe: Abonnement

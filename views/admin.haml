@@ -11,9 +11,10 @@
   .container
     .row
       .span8.offset2.well
+        %a(class="btn" href="/" title="#{t.buttons.return_to_feedlist}")
+          %i.icon.icon-arrow-left
         %a(class="btn" href="/logout" title="#{t.buttons.logout}")
           %i.icon.icon-signout
-          Logout
         %h2
           =t.admin.title
         %table.table.table-bordered

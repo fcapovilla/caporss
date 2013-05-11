@@ -83,6 +83,9 @@
               %input(class="input-block-level" type="text" name="items_per_page" value="#{@user.items_per_page}" aria-hidden="true")
           %button(class="btn" id="updateFaviconsButton" data-dismiss="modal")
             =t.settings.update_favicons
+          - if @user.roles.include?(:admin)
+            %a(class="btn" href="/admin")
+              =t.settings.admin_page
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         =t.settings.save
