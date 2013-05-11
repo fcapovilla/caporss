@@ -17,7 +17,8 @@ migration 2, :multi_user_support do
 			:username => 'admin',
 			:password => 'admin',
 			:roles => [:admin]
-		).save
+		)
+		admin.save
 
 		User.new(
 			:username => 'sync',
@@ -29,6 +30,41 @@ migration 2, :multi_user_support do
 		Folder.all(:user => nil).update!(:user => admin)
 		Feed.all(:user => nil).update!(:user => admin)
 		Item.all(:user => nil).update!(:user => admin)
+
+		# Move settings to the admin user
+		if setting = Setting.first(:name => 'cleanup_after')
+			admin.cleanup_after = setting.value.to_i
+			setting.destroy
+		end
+		if setting = Setting.first(:name => 'refresh_timeout')
+			admin.refresh_timeout = setting.value.to_i
+			setting.destroy
+		end
+		if setting = Setting.first(:name => 'sync_timeout')
+			admin.sync_timeout = setting.value.to_i
+			setting.destroy
+		end
+		if setting = Setting.first(:name => 'default_locale')
+			admin.default_locale = setting.value
+			setting.destroy
+		end
+		if setting = Setting.first(:name => 'items_per_page')
+			admin.items_per_page = setting.value.to_i
+			setting.destroy
+		end
+
+		admin.save
+
+		# Delete old username settings
+		if setting = Setting.first(:name => 'username')
+			setting.destroy
+		end
+		if setting = Setting.first(:name => 'salt')
+			setting.destroy
+		end
+		if setting = Setting.first(:name => 'password')
+			setting.destroy
+		end
 	end
 end
 
