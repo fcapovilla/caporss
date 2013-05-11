@@ -95,7 +95,7 @@ $('#updateFaviconsButton').click(function() {
 
 $('#subscribeButton').click(function() {
 	$.ajax({
-		url: '/subscribe',
+		url: '/feed',
 		method: 'POST',
 		data: {
 			url: $('#subscriptionUrl').val(),

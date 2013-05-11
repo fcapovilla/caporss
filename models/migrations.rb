@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'dm-migrations/migration_runner'
 
 if repository(:default).adapter.options[:adapter] != 'sqlite3'
