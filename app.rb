@@ -30,14 +30,6 @@ configure do
 	use Rack::Session::Pool, :expire_after => 2592000, :secret => 'needs_to_be_changed...'
 end
 
-# Basic Auth
-#if settings.username != '' and settings.password != ''
-#	use Rack::Auth::Basic, "Access restricted" do |username, password|
-#		[username, Digest::SHA512.hexdigest(password + settings.salt)] == [settings.username, settings.password]
-#	end
-#end
-
-
 before do
 	# Force UTF-8
 	content_type :html, 'charset' => 'utf-8'
@@ -57,9 +49,24 @@ helpers do
 
 	def authorize!(*roles)
 		unless @user and @user.authorize(roles)
-			session[:login_redirect] = request.fullpath
+			session[:login_redirect] = request.url
 			redirect '/login'
 		end
+	end
+
+	def authorize_basic!(*roles)
+		return if @user and @user.authorize(roles)
+
+		auth ||= Rack::Auth::Basic::Request.new(request.env)
+		if auth.provided? and auth.basic? and auth.credentials
+			if @user = User.find(:username => auth.username)
+				if @user.password == auth.credentials[1] and @user.authorize(roles)
+					return
+				end
+			end
+		end
+
+		halt 403
 	end
 end
 
@@ -170,7 +177,7 @@ end
 
 # Save settings form
 post '/save_settings' do
-	authorize! :user
+	authorize_basic! :user
 
 	# Password protected settings
 	if @user.password == params[:old_password]
@@ -192,7 +199,7 @@ end
 
 # Sync
 post '/full_sync' do
-	authorize! :sync
+	authorize_basic! :sync
 
 	urls = Feed.all.map{ |feed| feed.url }.u
 	urls.uniq!
@@ -215,7 +222,7 @@ end
 
 namespace '/sync' do
 	before do
-		authorize! :user
+		authorize_basic! :user
 	end
 
 	post '/all' do
@@ -269,7 +276,7 @@ end
 # Cleanup
 namespace '/cleanup' do
 	before do
-		authorize! :user
+		authorize_basic! :user
 
 		if params[:cleanup_after]
 			@user.cleanup_after = params[:cleanup_after]
@@ -298,7 +305,7 @@ end
 
 # Import OPML Files
 post '/opml_upload' do
-	authorize! :user
+	authorize_basic! :user
 
 	opml = Nokogiri::XML(params[:file][:tempfile].read)
 	opml.css('body>outline').each do |root_node|
@@ -335,7 +342,7 @@ end
 
 # OPML Export
 get '/export.opml' do
-	authorize! :user
+	authorize_basic! :user
 
 	headers "Content-Disposition" => "attachment;filename=export.opml"
 	content_type 'text/x-opml', 'charset' => 'utf-8'
@@ -357,7 +364,7 @@ end
 
 # Subscription
 post '/subscribe' do
-	authorize! :user
+	authorize_basic! :user
 
 	params[:folder] = 'Feeds' if params[:folder].empty?
 	folder = Folder.first_or_create(:user => @user, :title => params[:folder])
@@ -379,7 +386,7 @@ end
 # Favicons
 namespace '/favicon' do
 	before do
-		authorize! :user
+		authorize_basic! :user
 	end
 
 	get '/:id.ico' do |id|
@@ -398,7 +405,7 @@ end
 # Folders
 
 before '/folder*' do
-	authorize! :user
+	authorize_basic! :user
 end
 
 get '/folder' do
@@ -445,7 +452,7 @@ end
 # Feeds
 
 before '/feed*' do
-	authorize! :user
+	authorize_basic! :user
 end
 
 get '/feed' do
@@ -469,7 +476,7 @@ end
 #post '/feed' do
 
 post '/reset/feed/:id' do
-	authorize! :user
+	authorize_basic! :user
 
 	feed = Feed.first(:user => @user, :id => params[:id])
 	feed.items.destroy
@@ -506,7 +513,7 @@ end
 
 # Mark all items in this feed as "read"
 put '/read/feed/:id' do |id|
-	authorize! :user
+	authorize_basic! :user
 
 	feed = Feed.first(:user => @user, :id => id)
 	feed.items.each do |item|
@@ -521,7 +528,7 @@ end
 
 # Mark all items in this feed as "unread"
 put '/unread/feed/:id' do |id|
-	authorize! :user
+	authorize_basic! :user
 
 	feed = Feed.first(:user => @user, :id => id)
 	feed.items.each do |item|
@@ -546,7 +553,7 @@ end
 # Items
 #
 before '/item*' do
-	authorize! :user
+	authorize_basic! :user
 end
 
 get '/item' do
