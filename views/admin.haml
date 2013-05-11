@@ -71,12 +71,14 @@
     function deleteUser(elem) {
       var id = $(elem).closest('tr').find('.id').val();
 
-      $.ajax({
-        url: '/user/' + id,
-        method: 'DELETE',
-        success: function() {
-          $(elem).closest('tr').remove();
-        }
-      });
+      if(confirm("#{t.admin.user.confirm_delete}")) {
+        $.ajax({
+          url: '/user/' + id,
+          method: 'DELETE',
+          success: function() {
+            $(elem).closest('tr').remove();
+          }
+        });
+      }
     }
 

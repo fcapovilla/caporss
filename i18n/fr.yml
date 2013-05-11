@@ -80,3 +80,4 @@ admin:
         add: Ajouter
         delete: Supprimer
         edit: Modifier
+        confirm_delete: Êtes-vous sûr de vouloir supprimer cet utilisateur?
