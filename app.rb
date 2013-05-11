@@ -48,10 +48,10 @@ helpers do
 	end
 
 	def authorize!(*roles)
-		unless @user and @user.authorize(roles)
-			session[:login_redirect] = request.url
-			redirect '/login'
-		end
+		return if @user and @user.authorize(roles)
+
+		session[:login_redirect] = request.url
+		redirect '/login'
 	end
 
 	def authorize_basic!(*roles)
@@ -59,7 +59,7 @@ helpers do
 
 		auth ||= Rack::Auth::Basic::Request.new(request.env)
 		if auth.provided? and auth.basic? and auth.credentials
-			if @user = User.find(:username => auth.username)
+			if @user = User.first(:username => auth.username)
 				if @user.password == auth.credentials[1] and @user.authorize(roles)
 					return
 				end
@@ -201,7 +201,7 @@ end
 post '/full_sync' do
 	authorize_basic! :sync
 
-	urls = Feed.all.map{ |feed| feed.url }.u
+	urls = Feed.all.map{ |feed| feed.url }
 	urls.uniq!
 	feeds = Feedzirra::Feed.fetch_and_parse(urls)
 	updated_count = 0
