@@ -28,20 +28,18 @@ namespace '/user' do
 	end
 
 	post '/:id' do |id|
-		if params[:password].length < 1
-			flash[:error] = t.flash.new_password_cannot_be_empty
-			redirect '/admin'
-		end
-
 		user = User.get(id)
 
-		if params[:password] and params[:password].length >= 4
-			user.password = params[:password]
+		unless params[:password].nil?
+			if params[:password].length > 0
+				user.password = params[:password]
+			else
+				flash[:error] = t.flash.new_password_cannot_be_empty
+				redirect '/admin'
+			end
 		end
 
-		if params[:username] and params[:username].length > 0
-			user.username = params[:username]
-		end
+		user.username = params[:username] unless params[:username].nil?
 
 		if user.save
 			flash[:success] = t.flash.user_updated

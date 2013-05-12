@@ -88,5 +88,6 @@ flash:
     user_created: User successfully created
     user_updated: User successfully updated
     new_password_cannot_be_empty: New password cannot be empty
+    username_cannot_be_empty: Username cannot be empty
     access_denied: Access denied
     invalid_credentials: Invalid credentials
