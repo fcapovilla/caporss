@@ -27,6 +27,7 @@ CapoRSS is built on top of these great projects :
 * [Sass](http://sass-lang.com/)
 * [Thin](http://code.macournoyer.com/thin/)
 * [rack-ssl-enforcer](https://github.com/tobmatth/rack-ssl-enforcer)
+* [sinatra-flash](https://github.com/SFEley/sinatra-flash)
 
 Most dependencies are already included in the Gemfile and in the application's public directory.
 
@@ -73,13 +74,16 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 	export SESSION\_SECRET="My session secret..."
 
-5. Run CapoRSS using Thin:
+6. Run CapoRSS using Thin:
 
     thin start -R config.ru
 
+7. Open a web browser and go to "http://localhost:3000"
+8. The default username/password is "admin"/"admin"
+
 Notes:
 * For security reasons, a SSL certificate is required for running CapoRSS in production mode.
-* The Postgres adapter is used in the production configuration by default. If you want to use MySQL, modify the Gemfile, comment the "dm-postgres-adapter" gem and uncomment the "dm-mysql-adapter" gem.
+* The Postgres adapter is used in the production configuration by default. If you want to use MySQL, comment the "dm-postgres-adapter" gem and uncomment the "dm-mysql-adapter" gem in the Gemfile.
 
 ### Heroku and AppFog
 
@@ -108,3 +112,6 @@ Here is a list of keyboard shortcuts currently supported by CapoRSS :
 * Drap-and-drop feed reordering
 * Per-folder OPML export
 * In-app documentation
+
+## Release notes
+* 0.5.0 : This version brings a lots of modifications to the database structure to add multi-user support. Automatic migrations are included to move all single-user configurations to the 'admin/admin' user, but starting from a clean database is recommended.
