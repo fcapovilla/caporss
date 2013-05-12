@@ -10,7 +10,7 @@ class User
 	property :cleanup_after, Integer, :default => 300
 	property :refresh_timeout, Integer, :default => 0
 	property :sync_timeout, Integer, :default => 0
-	property :default_locale, String, :length => 3, :default => 'en'
+	property :default_locale, String, :length => 5, :default => 'en'
 	property :items_per_page, Integer, :default => 50
 
 	has n, :items, :constraint => :destroy
@@ -26,4 +26,5 @@ class User
 
 		return false
 	end
+
 end

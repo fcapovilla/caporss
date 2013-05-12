@@ -81,4 +81,14 @@ migration 3, :folder_title_not_unique do
 	end
 end
 
+if repository(:default).adapter.options[:adapter] != 'sqlite3'
+	migration 4, :update_default_locale_size do
+		up do
+			execute(<<-SQL)
+				ALTER TABLE users ALTER COLUMN default_locale TYPE VARCHAR(5);
+			SQL
+		end
+	end
+end
+
 migrate_up!
