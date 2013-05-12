@@ -10,14 +10,14 @@ DataMapper::Logger.new(STDOUT, :warn)
 if ENV['VCAP_SERVICES']
 	require 'json'
 	svcs = JSON.parse ENV['VCAP_SERVICES']
-	postgres = svcs.detect { |k,v| k =~ /^postgres/ }.last.first
-	mysql = svcs.detect { |k,v| k =~ /^mysql/ }.last.first
+	postgres = svcs.detect { |k,v| k =~ /^postgres/ }
+	mysql = svcs.detect { |k,v| k =~ /^mysql/ }
 	if postgres
-		creds = postgres['credentials']
+		creds = postgres.last.first['credentials']
 		user, pass, host, name = %w(user password host name).map { |key| creds[key] }
 		ENV['DATABASE_URL'] = "postgres://#{user}:#{pass}@#{host}/#{name}"
 	elsif mysql
-		creds = postgres['credentials']
+		creds = mysql.last.first['credentials']
 		user, pass, host, name = %w(user password host name).map { |key| creds[key] }
 		ENV['DATABASE_URL'] = "mysql://#{user}:#{pass}@#{host}/#{name}"
 	end
