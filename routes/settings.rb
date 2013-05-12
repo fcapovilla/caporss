@@ -16,7 +16,12 @@ post '/save_settings' do
 	@user.default_locale = params[:default_locale] if params[:default_locale]
 	@user.items_per_page = params[:items_per_page] if params[:items_per_page]
 
-	@user.save
+	if @user.save
+		flash[:success] = t.flash.settings_saved
+	else
+		errors = @user.errors.map{|e| e.first.to_s}
+		flash[:error] = errors.join("<br>")
+	end
 
 	redirect '/'
 end

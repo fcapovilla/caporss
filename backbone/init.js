@@ -12,6 +12,14 @@ $.pnotify.defaults.addclass = 'stack-bottomright';
 $.pnotify.defaults.history = false;
 $.pnotify.defaults.stack = pnotify_stack;
 
+// Show flash messages
+if(FLASH.success) {
+	$.pnotify({ text: FLASH.success, type: 'success' });
+}
+if(FLASH.error) {
+	$.pnotify({ text: '<b>Error</b><br>' + FLASH.error, type: 'error' });
+}
+
 // Show/Hide read items
 //
 var setReadVisibility = function(show_read) {

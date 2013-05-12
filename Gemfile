@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-r18n'
+gem 'sinatra-flash'
 
 gem 'active_support'
 

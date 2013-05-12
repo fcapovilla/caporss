@@ -3,6 +3,7 @@ require 'sinatra'
 require 'sinatra/multi_route'
 require 'sinatra/namespace'
 require 'sinatra/r18n'
+require 'sinatra/flash'
 
 require 'haml'
 require 'sass'

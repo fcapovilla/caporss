@@ -40,7 +40,7 @@
 =partial 'underscore/item.tpl'
 =partial 'underscore/special_folder.tpl'
 
--# Javascript settings and translations
+-# Javascript settings, translations and flash messages
 
 :javascript
   var SETTINGS = {
@@ -55,4 +55,9 @@
     confirm_delete_folder: "#{t.js.confirm_delete_folder}",
     show_more_items: "#{t.js.show_more_items}",
     all_items_folder: "#{t.js.all_items_folder}"
+  };
+
+  var FLASH = {
+    success: "#{flash[:success]}",
+    error: "#{flash[:error]}"
   };
