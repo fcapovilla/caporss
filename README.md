@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 0.4.0
+Version 0.5.0
 
 ## Description
 
@@ -67,13 +67,19 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
 
-    export DATABASE\_URL="postgres://username:password@hostname/database
+    export DATABASE\_URL="postgres://username:password@hostname/database"
+
+5. Set the SESSION\_SECRET environment variable to secure your sessions:
+
+	export SESSION\_SECRET="My session secret..."
 
 5. Run CapoRSS using Thin:
 
     thin start -R config.ru
 
-Note: For security reasons, a SSL certificate is required for running CapoRSS in production mode.
+Notes:
+* For security reasons, a SSL certificate is required for running CapoRSS in production mode.
+* The Postgres adapter is used in the production configuration by default. If you want to use MySQL, modify the Gemfile, comment the "dm-postgres-adapter" gem and uncomment the "dm-mysql-adapter" gem.
 
 ### Heroku and AppFog
 
@@ -101,4 +107,4 @@ Here is a list of keyboard shortcuts currently supported by CapoRSS :
 * Optimisations, performance improvements and bugfixes
 * Drap-and-drop feed reordering
 * Per-folder OPML export
-* Example scripts for automatic background feed updates (cron)
+* In-app documentation
