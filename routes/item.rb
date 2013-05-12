@@ -3,6 +3,7 @@
 
 before '/item*' do
 	authorize_basic! :user
+	content_type :json, 'charset' => 'utf-8'
 end
 
 get '/item' do

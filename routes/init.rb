@@ -47,6 +47,7 @@ end
 # Load all routes
 require_relative 'login'
 require_relative 'admin'
+require_relative 'settings'
 require_relative 'user'
 require_relative 'sync'
 require_relative 'cleanup'

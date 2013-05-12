@@ -4,6 +4,7 @@
 namespace '/cleanup' do
 	before do
 		authorize_basic! :user
+		content_type :json, 'charset' => 'utf-8'
 
 		if params[:cleanup_after]
 			@user.cleanup_after = params[:cleanup_after]
@@ -15,17 +16,17 @@ namespace '/cleanup' do
 		Folder.all(:user => @user).each do |folder|
 			folder.cleanup!(@user.cleanup_after)
 		end
-		return 'done'
+		return '"done"'
 	end
 
 	post '/folder/:id' do |id|
 		Folder.first(:user => @user, :id => id).cleanup!(@user.cleanup_after)
-		return 'done'
+		return '"done"'
 	end
 
 	post '/feed/:id' do |id|
 		Feed.first(:user => @user, :id => id).cleanup!(@user.cleanup_after)
-		return 'done'
+		return '"done"'
 	end
 end
 

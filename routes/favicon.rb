@@ -13,7 +13,8 @@ namespace '/favicon' do
 	end
 
 	post '/fetch_all' do
+		content_type :json, 'charset' => 'utf-8'
 		Favicon.all.each { |favicon| favicon.fetch! }
-		return 'done'
+		return '"done"'
 	end
 end

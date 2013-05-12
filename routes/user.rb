@@ -31,11 +31,13 @@ namespace '/user' do
 	end
 
 	delete '/:id' do |id|
+		content_type :json, 'charset' => 'utf-8'
+
 		user = User.get(id)
 		unless user.roles.include?(:admin) or user.roles.include?(:sync)
 			user.destroy
 		end
 
-		return 'done'
+		return '{}'
 	end
 end

@@ -4,6 +4,7 @@
 # All users sync
 post '/full_sync' do
 	authorize_basic! :sync
+	content_type :json, 'charset' => 'utf-8'
 
 	urls = Feed.all.map{ |feed| feed.url }
 	urls.uniq!
@@ -28,6 +29,7 @@ end
 namespace '/sync' do
 	before do
 		authorize_basic! :user
+		content_type :json, 'charset' => 'utf-8'
 	end
 
 	post '/all' do
