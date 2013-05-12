@@ -6,7 +6,11 @@ post '/save_settings' do
 
 	# Password protected settings
 	if @user.password == params[:old_password]
-		@user.password = params[:new_password] if params[:new_password]
+		if params[:new_password].length > 1
+			@user.password = params[:new_password] if params[:new_password]
+		else
+			flash[:error] = t.flash.new_password_cannot_be_empty
+		end
 	end
 
 	# Other settings

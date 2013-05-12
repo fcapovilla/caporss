@@ -13,6 +13,14 @@
       .span4.offset4.well
         %h2
           =t.login.login
+        -if flash[:error]
+          .alert.alert-error
+            %b Error
+            %br
+            = flash[:error]
+        -if flash[:success]
+          .alert.alert-success
+            = flash[:success]
         %form(class="form-horizontal" method="post" action="/login")
           %fieldset
             .clearfix

@@ -84,3 +84,7 @@ admin:
 
 flash:
     settings_saved: Settings saved
+    opml_import_success: OPML file successfully imported
+    user_created: User successfully created
+    user_updated: User successfully updated
+    new_password_cannot_be_empty: New password cannot be empty

@@ -7,15 +7,32 @@ namespace '/user' do
 	end
 
 	post do
+		if params[:password].length < 1
+			flash[:error] = t.flash.new_password_cannot_be_empty
+			redirect '/admin'
+		end
+
 		user = User.new(
 			:username => params[:username],
 			:password => params[:password]
-		).save
+		)
+
+		if user.save
+			flash[:success] = t.flash.user_created
+		else
+			errors = user.errors.map{|e| e.first.to_s}
+			flash[:error] = errors.join("<br>")
+		end
 
 		redirect '/admin'
 	end
 
 	post '/:id' do |id|
+		if params[:password].length < 1
+			flash[:error] = t.flash.new_password_cannot_be_empty
+			redirect '/admin'
+		end
+
 		user = User.get(id)
 
 		if params[:password] and params[:password].length >= 4
@@ -26,7 +43,13 @@ namespace '/user' do
 			user.username = params[:username]
 		end
 
-		user.save
+		if user.save
+			flash[:success] = t.flash.user_updated
+		else
+			errors = user.errors.map{|e| e.first.to_s}
+			flash[:error] = errors.join("<br>")
+		end
+
 		redirect '/admin'
 	end
 

@@ -84,3 +84,7 @@ admin:
 
 flash:
     settings_saved: Préférences sauvegardées
+    opml_import_success: Fichier OPML importé avec succès
+    user_created: Utilisateur créé avec succès
+    user_updated: Utilisateur modifié avec succès
+    new_password_cannot_be_empty: Le nouveau mot de passe ne peut pas être vide

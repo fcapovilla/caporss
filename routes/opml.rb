@@ -35,6 +35,8 @@ post '/opml_upload' do
 		end
 	end
 
+	flash[:success] = t.flash.opml_import_success
+
 	redirect '/'
 end
 

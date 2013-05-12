@@ -1,6 +1,6 @@
 !!! 5
 %head
-  %title CapoRSS - Login
+  %title CapoRSS - #{t.admin.title}
   %link(rel="stylesheet" media="screen" href="css/bootstrap.min.css")
   %link(rel="stylesheet" media="screen" href="css/bootstrap-responsive.min.css")
   %link(rel="stylesheet" media="screen" href="css/font-awesome.min.css")
@@ -25,6 +25,14 @@
           %i.icon.icon-signout
         %h2
           =t.admin.title
+        -if flash[:error]
+          .alert.alert-error
+            %b Error
+            %br
+            = flash[:error]
+        -if flash[:success]
+          .alert.alert-success
+            = flash[:success]
         %table.table.table-bordered
           %thead
             %tr
