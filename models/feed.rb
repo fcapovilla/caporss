@@ -7,7 +7,7 @@ class Feed
 
 	property :id, Serial
 	property :title, String, :length => 100
-	property :url, String, :length => 2000, :format => :url
+	property :url, String, :length => 1..2000, :format => :url
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
 

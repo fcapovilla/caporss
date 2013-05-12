@@ -188,7 +188,12 @@ $(document).ajaxStart(function() {
 // Manage AJAX errors
 //
 $(document).ajaxError(function(event, request, settings) {
-	$.pnotify({ text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.statusText, type: 'error' });
+	if(request.responseText) {
+		$.pnotify({ text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.responseText, type: 'error' });
+	}
+	else {
+		$.pnotify({ text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.statusText, type: 'error' });
+	}
 });
 
 // Prevent double-submit in the OPML upload form
