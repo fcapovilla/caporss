@@ -31,12 +31,16 @@ end
 
 put '/folder/:id' do |id|
 	folder = Folder.first(:user => @user, :id => id)
-	folder.attributes = JSON.parse(request.body.string, :symbolize_names => true)
-	if folder.save
-		folder.to_json
-	else
-		409
+	attributes = JSON.parse(request.body.string, :symbolize_names => true)
+
+	folder.attributes = attributes.slice(:title, :open)
+
+	unless folder.save
+		errors = folder.errors.map{|e| e.first.to_s}
+		return 400, errors.to_json
 	end
+
+	folder.to_json
 end
 
 delete '/folder/:id' do |id|
