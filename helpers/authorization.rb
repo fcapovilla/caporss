@@ -3,6 +3,7 @@
 def authorize!(*roles)
 	return if @user and @user.authorize(roles)
 
+	flash[:error] = t.flash.access_denied
 	session[:login_redirect] = request.url
 	redirect '/login'
 end

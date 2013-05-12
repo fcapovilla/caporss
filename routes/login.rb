@@ -15,7 +15,8 @@ post '/login' do
 			redirect '/'
 		end
 	else
-		haml :login, :layout => false
+		flash[:error] = t.flash.invalid_credentials
+		redirect '/login'
 	end
 end
 

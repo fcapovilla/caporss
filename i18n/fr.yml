@@ -88,3 +88,5 @@ flash:
     user_created: Utilisateur créé avec succès
     user_updated: Utilisateur modifié avec succès
     new_password_cannot_be_empty: Le nouveau mot de passe ne peut pas être vide
+    access_denied: Accès refusé
+    invalid_credentials: Nom d'utilisateur ou mot de passe invalide
