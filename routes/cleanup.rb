@@ -12,7 +12,7 @@ namespace '/cleanup' do
 	end
 
 	post '/all' do
-		Folder.all.each do |folder|
+		Folder.all(:user => @user).each do |folder|
 			folder.cleanup!(@user.cleanup_after)
 		end
 		return 'done'

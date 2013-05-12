@@ -148,8 +148,9 @@ $('#editFeedButton').click(function() {
 
 					if(reset) {
 						$.ajax({
-							url: '/reset/feed/' + feedId,
-							method: 'POST',
+							url: '/feed/' + feedId,
+							method: 'PUT',
+							data: JSON.stringify({action: 'reset'}),
 							success: function() {
 								folders.fetch();
 							}

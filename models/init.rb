@@ -1,8 +1,6 @@
 # encoding: utf-8
 require 'data_mapper'
-require 'dm-types'
 require 'dm-is-list'
-require 'feedzirra'
 
 DataMapper::Logger.new(STDOUT, :warn)
 

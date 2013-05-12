@@ -1,12 +1,13 @@
 # encoding: utf-8
 require 'uri'
+require 'feedzirra'
 
 class Feed
 	include DataMapper::Resource
 
 	property :id, Serial
 	property :title, String, :length => 100
-	property :url, String, :length => 1..2000
+	property :url, String, :length => 2000, :format => :url
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
 
@@ -15,6 +16,10 @@ class Feed
 	belongs_to :favicon, :required => false
 	has n, :items, :constraint => :destroy
 	is :list, :scope => :folder_id
+
+	before :create do |feed|
+		feed.last_update = DateTime.new(2000,1,1)
+	end
 
 	# Fetch the feed using feedzirra and update it
 	def sync!
@@ -112,5 +117,11 @@ class Feed
 		end
 
 		self.save
+	end
+
+	def reset!
+		self.items.destroy
+		self.last_update = DateTime.new(2000,1,1)
+		self.sync!
 	end
 end

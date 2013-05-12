@@ -3,11 +3,13 @@ require 'sinatra'
 require 'sinatra/multi_route'
 require 'sinatra/namespace'
 require 'sinatra/r18n'
+
 require 'haml'
 require 'sass'
+
 require 'json'
 require 'open-uri'
-require 'digest/sha2'
+require 'active_support/core_ext/hash/slice'
 
 require_relative 'models/init'
 require_relative 'helpers/init'

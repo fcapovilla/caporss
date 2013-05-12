@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    active_support (3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
     addressable (2.2.8)
     backports (3.3.0)
     bcrypt-ruby (3.0.1)
@@ -117,11 +120,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_support
   datamapper
   dm-is-list
   dm-postgres-adapter
   dm-sqlite-adapter
-  dm-types
   feedzirra (~> 0.2.0.rc2)
   haml
   json

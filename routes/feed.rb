@@ -23,44 +23,37 @@ get '/feed/:id/item' do |id|
 	Feed.first(:user => @user, :id => id).items(options).to_json
 end
 
-# Subscription
 post '/feed' do
-	authorize_basic! :user
-
 	params[:folder] = 'Feeds' if params[:folder].empty?
 	folder = Folder.first_or_create(:user => @user, :title => params[:folder])
+
 	feed = Feed.new(
 		:user => @user,
 		:title => params[:url],
 		:url => params[:url],
-		:last_update => DateTime.new(2000,1,1)
 	)
 	folder.feeds << feed
+
+	unless feed.valid?
+		errors = feed.errors.map{|e| e.first.to_s}
+		return 400, errors.to_json
+	end
+
 	folder.save
-
 	feed.sync!
 
-	return 'done'
-end
-
-post '/reset/feed/:id' do
-	authorize_basic! :user
-
-	feed = Feed.first(:user => @user, :id => params[:id])
-	feed.items.destroy
-	feed.last_update = DateTime.new(2000,1,1)
-	feed.save
-
-	feed.sync!
-
-	return 'done'
+	feed.to_json
 end
 
 put '/feed/:id', '/folder/*/feed/:id' do
+	feed = Feed.first(:user => @user, :id => params[:id])
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
+	action = attributes.delete(:action)
 
 	# Convert the folder name into a folder_id
 	if attributes.has_key?(:folder)
+		attributes[:folder] = 'Feeds' if attributes[:folder].empty?
+
 		folder = Folder.first_or_create(:user => @user, :title => attributes[:folder])
 		folder.save
 		attributes.delete(:folder_id)
@@ -68,42 +61,36 @@ put '/feed/:id', '/folder/*/feed/:id' do
 		attributes[:folder_id] = folder.id
 	end
 
-	feed = Feed.first(:user => @user, :id => params[:id])
-	old_folder = feed.folder
-	feed.attributes = attributes
-	feed.save
+	# Keep the old folder if the feed's folder changed
+	old_folder = nil
+	if feed.folder_id != attributes[:folder_id]
+		old_folder = feed.folder
+	end
+
+	feed.attributes = attributes.slice(:folder_id, :url)
+
+	unless feed.valid?
+		errors = feed.errors.map{|e| e.first.to_s}
+		return 400, errors.to_json
+	end
+
+	case action
+	when 'read'
+		feed.items.each do |item|
+			item.read = true
+		end
+		feed.save
+	when 'unread'
+		feed.items.each do |item|
+			item.read = false
+		end
+		feed.save
+	when 'reset'
+		feed.reset!
+	end
 
 	feed.update_unread_count!
-	old_folder.update_unread_count!
-
-	feed.to_json
-end
-
-# Mark all items in this feed as "read"
-put '/read/feed/:id' do |id|
-	authorize_basic! :user
-
-	feed = Feed.first(:user => @user, :id => id)
-	feed.items.each do |item|
-		item.read = true
-	end
-	feed.unread_count = 0
-	feed.save
-	feed.folder.update_unread_count!
-
-	feed.to_json
-end
-
-# Mark all items in this feed as "unread"
-put '/unread/feed/:id' do |id|
-	authorize_basic! :user
-
-	feed = Feed.first(:user => @user, :id => id)
-	feed.items.each do |item|
-		item.read = false
-	end
-	feed.save
-	feed.update_unread_count!
+	old_folder.update_unread_count! if old_folder
 
 	feed.to_json
 end

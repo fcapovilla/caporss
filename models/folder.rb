@@ -20,7 +20,7 @@ class Folder
 		return self
 	end
 
-	# Return an OPML XML DocumentFragment representing this feed
+	# Return an OPML XML DocumentFragment representing this folder
 	def to_opml
 		doc = Nokogiri::XML::DocumentFragment.parse ""
 		Nokogiri::XML::Builder.with(doc) { |xml|
