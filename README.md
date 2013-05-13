@@ -29,6 +29,8 @@ CapoRSS is built on top of these great projects :
 * [rack-ssl-enforcer](https://github.com/tobmatth/rack-ssl-enforcer)
 * [sinatra-flash](https://github.com/SFEley/sinatra-flash)
 
+Also, CapoRSS's favicon is from the [RRZE Icon Set](http://rrze-icon-set.berlios.de/)
+
 Most dependencies are already included in the Gemfile and in the application's public directory.
 
 ## Installation
