@@ -55,7 +55,9 @@ var ItemCollection = Backbone.Collection.extend({
 		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
 
 		$.when(deferred).then(function() {
-			if(that.length - previous_count < SETTINGS.items_per_page) {
+			var new_items = that.length - previous_count;
+			if( (that.current_page === 1 && new_items < SETTINGS.items_per_page) ||
+				(that.current_page > 1 && new_items === 0)){
 				that.all_loaded = true;
 				that.trigger('all_items_loaded');
 			}
