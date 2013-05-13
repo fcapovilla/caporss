@@ -24,7 +24,9 @@ var FolderCollection = Backbone.Collection.extend({
 		return deferred;
 	},
 	refreshUnreadCount: function() {
-		document.title = 'CapoRSS (' + this.getUnreadCount() + ')';
+		var count = this.getUnreadCount();
+		document.title = 'CapoRSS (' + count + ')';
+		folderList.allItemsFolder.set('unread_count', count);
 	},
 	getUnreadCount: function() {
 		var count = 0;
