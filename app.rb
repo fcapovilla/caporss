@@ -24,7 +24,8 @@ configure :production do
 end
 
 configure do
-	use Rack::Session::Pool, :expire_after => 2592000, :secret => (ENV['SESSION_SECRET'] || 'Default secret... Set the SESSION_SECRET environment variable!')
+	set :session_secret, ENV['SESSION_SECRET'] if ENV['SESSION_SECRET']
+	enable :sessions
 
 	# Force enclosure parsing on all Feedzirra feed entries
 	Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
