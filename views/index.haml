@@ -23,7 +23,7 @@
   .feed-list
     %ul(id="feed-list" class="nav nav-list")
 .content
-  #item-list.hidden-phone(tabindex="100")
+  #item-list.hidden-phone(tabindex="100" ng-view)
 
 -# Modal dialogs
 
@@ -32,13 +32,6 @@
 =partial 'partials/edit_feed'
 =partial 'partials/edit_folder'
 =partial 'partials/opml_upload'
-
--# Underscore templates
-
-=partial 'underscore/folder.tpl'
-=partial 'underscore/feed.tpl'
-=partial 'underscore/item.tpl'
-=partial 'underscore/special_folder.tpl'
 
 -# Javascript settings, translations and flash messages
 

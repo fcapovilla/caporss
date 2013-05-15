@@ -20,22 +20,16 @@ end
 
 # Serve a concatenated version of the Backbone application
 get '/app.js' do
-	root = settings.root + '/backbone'
+	root = settings.root + '/angular'
 	content_type :js, 'charset' => 'utf-8'
-	last_modified File.mtime("#{root}/init.js")
+	last_modified File.mtime("#{root}/app.js")
 	output = ''
 
-	Dir["#{root}/lib/*.js"].each do |file|
+	Dir["#{root}/app.js","#{root}/services.js","#{root}/controllers.js","#{root}/filters.js","#{root}/directives.js",].each do |file|
 		output += File.open(file, 'r').read()
 	end
 
-	output += "$(function() {\n"
-
-	Dir["#{root}/routers/*.js", "#{root}/models/*.js", "#{root}/collections/*.js", "#{root}/views/*.js", "#{root}/*.js"].each do |file|
-		output += File.open(file, 'r').read()
-	end
-
-	output + "});"
+	output
 end
 
 # Render home page

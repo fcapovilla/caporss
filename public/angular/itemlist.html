@@ -1,0 +1,40 @@
+<ul class="nav nav-list">
+	<li ng-repeat="item in items">
+	<div class="item-container" ng-class="item.open && 'active'" ng-click="item.open = !item.open">
+		<div class="item-icons">
+			<span class="dropdown">
+				<i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="item-{{ item.id }}-menu">
+					<li><a class="readOlderAction">#{t.buttons.mark_older_read}</a></li>
+				</ul>
+			</span>
+			<i class="readUnreadIcon" ng-class="(item.read && 'icon-circle-blank') || 'icon-circle'" ng-click="item.read = !item.read"></i>
+		</div>
+
+		<div class="item-labels hidden-phone">
+			<span ng-show="item.feed_title" class="item-feed-title label" ng-class="!item.read && 'label-info'">
+				{{ item.feed_title }}
+			</span>
+			<span class="item-date label">
+				{{ item.date }}
+			</span>
+		</div>
+
+		<div class="item-title" ng-switch on="item.read">
+			<span ng-switch-when="false"><b>{{ item.title }}</b></span>
+			<span ng-switch-when="true">{{ item.title }}</span>
+		</div>
+	</div>
+
+	<div class="well item-content" ng-show="item.open">
+		<a class="item-content-title" href="{{ item.url }}" target="_blank">{{ item.title }}</a>
+		<br>
+		<span ng-bind-html="item.content"></span>
+		<p ng-show="item.attachment_url">
+			<a class="btn" href="{{ item.attachment_url }}">
+				<i class="icon-download"></i>Download file
+			</a>
+		</p>
+	</div>
+	</li>
+</ul>
