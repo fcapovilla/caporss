@@ -1,0 +1,59 @@
+<ul class="nav nav-list" id="feed-list" ng-controller="FeedListCtrl">
+	<li>
+		<div class="folderTitle" ng-class="all_items_active && 'active'" ng-click="go('/item')">
+			<i class="folder-icon icon icon-asterisk"></i>
+			All items
+			<span ng-show="folder.unread_count > 0" class="badge badge-info">{{ total_unread_count }}</span>
+		</div>
+	</li>
+	<li ng-repeat="folder in folders">
+		<div class="folderTitle" ng-class="folder.active && 'active'" ng-click="go('/folder/'+folder.id)">
+			<i class="folder-toggle icon" ng-class="(folder.open && 'icon-caret-down') || 'icon-caret-right'" ng-click="folder.open=!folder.open"></i>
+			<i class="folder-icon icon" ng-class="(folder.open && 'icon-folder-open') || 'icon-folder-close'" ng-click="folder.menu_open=!folder.menu_open"></i>
+			<span ng-switch on="folder.unread_count">
+				<span ng-switch-when="0">
+					{{ folder.title }}
+				</span>
+				<span ng-switch-default>
+					<b>{{ folder.title }}</b>
+					<span class="badge badge-info">{{ folder.unread_count }}</span>
+				</span>
+			</span>
+		</div>
+		<div ng-show="folder.menu_open" class="btn-group folderMenu">
+			<a class="btn markFolderReadAction" title="#{t.buttons.mark_all_read}"><i class="icon-eye-open"></i></a>
+			<a class="btn markFolderUnreadAction" title="#{t.buttons.mark_all_unread}"><i class="icon-eye-close"></i></a>
+			<a class="btn syncFolderAction" title="#{t.buttons.sync}"><i class="icon-refresh"></i></a>
+			<a class="btn editFolderAction" title="#{t.buttons.edit}"><i class="icon-edit"></i></a>
+			<a class="btn deleteFolderAction" title="#{t.buttons.delete}"><i class="icon-trash"></i></a>
+		</div>
+		<ul class="nav nav-list" ng-show="folder.open">
+			<li ng-repeat="feed in folder.feeds">
+				<div class="feedTitle" ng-class="feed.active && 'active'" ng-click="go('/feed/'+feed.id)">
+					<i class="icon"></i>
+
+					<span ng-click="feed.menu_open=!feed.menu_open">
+						<img ng-show="feed.favicon_id" class="feed-icon" src="/favicon/{{ feed.favicon_id }}.ico" />
+						<i ng-hide="feed.favicon_id" class="feed-icon icon icon-rss"></i>
+					</span>
+
+					<span ng-show="feed.unread_count > 0">
+						<b>{{ feed.title }}</b>
+						<span class="badge badge-info">{{ feed.unread_count }}</span>
+					</span>
+					<span ng-hide="feed.unread_count > 0">
+						{{ feed.title }}
+					</span>
+
+				</div>
+				<div ng-show="feed.menu_open" class="btn-group feedMenu">
+					<a class="btn markFeedReadAction" title="#{t.buttons.mark_all_read}"><i class="icon-eye-open"></i></a>
+					<a class="btn markFeedUnreadAction" title="#{t.buttons.mark_all_unread}"><i class="icon-eye-close"></i></a>
+					<a class="btn syncFeedAction" title="#{t.buttons.sync}"><i class="icon-refresh"></i></a>
+					<a class="btn editFeedAction" title="#{t.buttons.edit}"><i class="icon-edit"></i></a>
+					<a class="btn deleteFeedAction" title="#{t.buttons.delete}"><i class="icon-trash"></i></a>
+				</div>
+			</li>
+		</ul>
+	</li>
+</ul>

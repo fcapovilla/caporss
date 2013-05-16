@@ -21,7 +21,7 @@
           %i.icon.icon-circle-arrow-down
   .dragbar.hidden-phone
   .feed-list
-    %ul(id="feed-list" class="nav nav-list")
+    %ul(id="feed-list" class="nav nav-list" ng-include="'angular/feedlist.html'")
 .content
   #item-list.hidden-phone(tabindex="100" ng-view)
 

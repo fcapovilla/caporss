@@ -1,6 +1,6 @@
 <ul class="nav nav-list">
 	<li ng-repeat="item in items">
-	<div class="item-container" ng-class="item.open && 'active'" ng-click="item.open = !item.open">
+	<div class="item-container" ng-class="item.open && 'active'" ng-click="openItem(item)">
 		<div class="item-icons">
 			<span class="dropdown">
 				<i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
@@ -8,7 +8,7 @@
 					<li><a class="readOlderAction">#{t.buttons.mark_older_read}</a></li>
 				</ul>
 			</span>
-			<i class="readUnreadIcon" ng-class="(item.read && 'icon-circle-blank') || 'icon-circle'" ng-click="item.read = !item.read"></i>
+			<i class="readUnreadIcon" ng-class="(item.read && 'icon-circle-blank') || 'icon-circle'" ng-click="toggleRead(item)"></i>
 		</div>
 
 		<div class="item-labels hidden-phone">
