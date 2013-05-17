@@ -1,7 +1,7 @@
-var FeedView = Backbone.View.extend({
+var FeedView = Backbone.Marionette.ItemView.extend({
 	tagName: 'li',
 	className: 'feed',
-	template: _.template($('#tmpl-feed').html(), null, {variable:'feed'}),
+	template: '#tmpl-feed',
 	events: {
 		'click .markFeedReadAction' : 'markFeedRead',
 		'click .markFeedUnreadAction' : 'markFeedUnread',
@@ -11,15 +11,17 @@ var FeedView = Backbone.View.extend({
 		'click .feed-icon': 'openMenu',
 		'click .feedTitle' : 'selectFeed'
 	},
+	modelEvents: {
+		'destroy': 'remove',
+		'change': 'render'
+	},
 	initialize: function() {
 		_.bindAll(this);
-		this.listenTo(this.model, 'destroy', this.remove);
-		this.listenTo(this.model, 'change', this.render);
 	},
-	render: function() {
-		this.$el.html(this.template(this.model.attributes));
-		return this;
-	},
+	serializeData: function() {
+		return {'feed': this.model.attributes};
+    },
+
 	selectFeed: function() {
 		router.navigate("feed/" + this.model.id, {trigger: true});
 	},

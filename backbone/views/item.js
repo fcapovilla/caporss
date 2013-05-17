@@ -1,24 +1,26 @@
-var ItemView = Backbone.View.extend({
+var ItemView = Backbone.Marionette.ItemView.extend({
 	tagName: 'li',
-	template: _.template($('#tmpl-item').html(), null, {variable:'item'}),
+	template: '#tmpl-item',
 	events: {
 		'click .readOlderAction' : 'readAllOlder',
 		'click .readUnreadIcon': 'toggleRead',
 		'click .dropdown': 'showDropdownMenu',
 		'click .item-container': 'toggleContent'
 	},
-	initialize: function() {
-		this.listenTo(this.model, 'destroy', this.remove);
-		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model, 'change:open', this.openChanged);
+	modelEvents: {
+		'destroy': 'remove',
+		'change': 'render',
+		'change:open': 'openChanged'
 	},
-	render: function() {
-		this.$el.html(this.template(this.model.attributes));
+	onRender: function() {
 		if(this.model.get('open')) {
 			this.$el.find('.item-content a').attr('target', '_blank');
 		}
-		return this;
 	},
+	serializeData: function() {
+		return {'item': this.model.attributes};
+    },
+
 	toggleContent: function() {
 		if(this.model.get('open')) {
 			this.model.set('open', false);
