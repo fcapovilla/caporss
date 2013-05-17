@@ -2,7 +2,9 @@ var Folder = Backbone.Model.extend({
 	initialize: function() {
 		this.feeds = new FeedCollection();
 		this.feeds.url = '/folder/' + this.id + '/feed';
-		this.feeds.fetch();
+		if(this.get('open')) {
+			this.feeds.fetch();
+		}
 
 		this.listenTo(this.feeds, 'add remove change:unread_count', this.recalculateReadCount);
 
@@ -13,6 +15,12 @@ var Folder = Backbone.Model.extend({
 	},
 	toggle: function() {
 		this.save({open : !this.get('open')});
+		if(this.get('open')) {
+			this.feeds.fetch();
+		}
+		else {
+			this.feeds.reset();
+		}
 	},
 	toJSON: function() {
 		return {open: this.get('open'), title: this.get('title')};
@@ -31,7 +39,9 @@ var Folder = Backbone.Model.extend({
 		this.set('unread_count', count);
 	},
 	fetchChildren: function(options) {
-		return this.feeds.fetch(options);
+		if(this.get('open')) {
+			return this.feeds.fetch(options);
+		}
 	},
 	fetch: function(options) {
 		var that = this;

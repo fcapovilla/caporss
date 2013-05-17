@@ -1,6 +1,7 @@
-var FolderView = Backbone.View.extend({
+var FolderView = Backbone.Marionette.CompositeView.extend({
 	tagName: "li",
-	template: _.template($('#tmpl-folder').html(), null, {variable:'folder'}),
+	itemViewContainer: 'ul.nav.nav-list',
+	template: '#tmpl-folder',
 	events: {
 		'click .markFolderReadAction' : 'markFolderRead',
 		'click .markFolderUnreadAction' : 'markFolderUnread',
@@ -11,47 +12,20 @@ var FolderView = Backbone.View.extend({
 		'click .folder-icon': 'openMenu',
 		'click .folderTitle' : 'selectFolder'
 	},
+	modelEvents: {
+		'change': 'render',
+		'destroy': 'remove'
+	},
 	initialize: function() {
-		this.views = [];
+		this.collection = this.model.feeds;
+		this.itemView = FeedView;
 
 		_.bindAll(this);
-		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model, 'destroy', this.remove);
-		this.listenTo(this.model.feeds, 'add', this.addOne);
-		this.listenTo(this.model.feeds, 'remove', this.addAll);
-		this.listenTo(this.model.feeds, 'reset', this.addAll);
+	},
+	serializeData: function() {
+		return {'folder': this.model.attributes};
+    },
 
-		this.$feedList = $('<ul class="nav nav-list"></ul>');
-	},
-	render: function() {
-		this.$el.html(this.template(this.model.attributes));
-		if(this.model.get('open')) {
-			this.addAll();
-			this.$el.append(this.$feedList);
-		}
-		return this;
-	},
-	remove: function() {
-		this.removeAllSubviews();
-		this.$feedList.remove();
-		Backbone.View.prototype.remove.call(this);
-	},
-	removeAllSubviews: function() {
-		_.each(this.views, function(view) {
-			view.remove();
-		});
-		this.views.length = 0;
-	},
-	addOne: function(feed) {
-		var view = new FeedView({model: feed});
-		this.$feedList.append(view.render().el);
-		this.views.push(view);
-	},
-	addAll: function() {
-		this.removeAllSubviews();
-		this.$feedList.empty();
-		this.model.feeds.each(this.addOne, this);
-	},
 	toggleFolderOpen: function() {
 		this.model.toggle();
 		return false;
