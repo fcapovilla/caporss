@@ -1,15 +1,10 @@
-var ItemListView = Backbone.View.extend({
+var ItemListView = Backbone.Marionette.CollectionView.extend({
+	//TODO: Manage "Next page" button
+	//TODO: Keep scroll position on render
 	tagName: 'ul',
 	className: 'nav nav-list',
 	initialize: function() {
 		this.cursor = null;
-		this.views = [];
-
-		this.listenTo(this.collection, 'add', this.addOne);
-		this.listenTo(this.collection, 'remove', this.addAll);
-		this.listenTo(this.collection, 'reset', this.addAll);
-
-		$(this.render().el).appendTo('#item-list');
 
 		// Setup the "Show more items" button
 		var that = this;
@@ -25,39 +20,11 @@ var ItemListView = Backbone.View.extend({
 			this.$next_page.remove();
 		});
 	},
-	remove: function() {
-		this.closeAll();
-		this.removeAllSubviews();
-		Backbone.View.prototype.remove.call(this);
 
-		this.$next_page.remove();
-		delete this.$next_page;
-	},
-	removeAllSubviews: function() {
-		_.each(this.views, function(view) {
-			view.remove();
-		});
-		this.views.length = 0;
-	},
-	addOne: function(item) {
-		var view = new ItemView({model: item});
-		this.$el.append(view.render().el);
-		this.views.push(view);
-	},
-	addAll: function() {
-		// Keep scroll position
-		var scroll = $('#item-list').scrollTop();
-
-		this.$el.empty();
-		this.removeAllSubviews();
-		this.collection.each(this.addOne, this);
-
-		$('#item-list').scrollTop(scroll);
-	},
-	closeAll: function() {
-		this.collection.each(function(item) {
-			item.set('open', false);
-		});
+	closeCursor: function() {
+		if(this.cursor !== null) {
+			this.cursor.set('open', false);
+		}
 	},
 	moveCursor: function(direction) {
 		var item = null;
@@ -68,7 +35,7 @@ var ItemListView = Backbone.View.extend({
 			}
 		}
 		else {
-			var index = this.collection.indexOf(this.collection.get(this.cursor));
+			var index = this.collection.indexOf(this.collection.get(this.cursor.id));
 			var dir = 0;
 
 			if(direction == 'down') {
@@ -82,12 +49,12 @@ var ItemListView = Backbone.View.extend({
 		}
 
 		if(item !== null && item !== undefined) {
-			this.closeAll();
+			this.closeCursor();
 			item.set('open', true);
 			if(!item.get('read')) {
 				item.toggleRead();
 			}
-			this.cursor = item.id;
+			this.cursor = item;
 		}
 	}
 });

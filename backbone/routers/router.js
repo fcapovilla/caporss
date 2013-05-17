@@ -26,7 +26,8 @@ var Router = Backbone.Router.extend({
 			items.remove();
 		}
 
-		items = new ItemListView({collection: model.items});
+		items = new ItemListView({collection: model.items, itemView: ItemView});
+		items.$el.appendTo('#item-list');
 		model.items.fetch({reset: true, reset_pagination: true});
 
 		if(currentSelection !== null) {
