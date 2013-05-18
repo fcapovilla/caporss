@@ -1,8 +1,9 @@
 var ItemListView = Backbone.Marionette.CollectionView.extend({
-	//TODO: Manage "Next page" button
-	//TODO: Keep scroll position on render
 	tagName: 'ul',
 	className: 'nav nav-list',
+	collectionEvents: {
+		'sync': 'onSync'
+	},
 	initialize: function() {
 		this.cursor = null;
 
@@ -11,15 +12,15 @@ var ItemListView = Backbone.Marionette.CollectionView.extend({
 		this.$next_page = $('<div class="show_more_items">').text(LANG.show_more_items).click(function() {
 			that.collection.fetchNextPage();
 		});
-		this.listenTo(this.collection, 'sync', function() {
-			if(!this.collection.all_loaded) {
-				this.$el.after(this.$next_page);
-			}
-		});
 		this.listenTo(this.collection, 'all_items_loaded', function() {
 			this.$next_page.remove();
 		});
 	},
+	onSync: function() {
+		this.$next_page = this.$next_page.detach();
+		this.$next_page.appendTo(this.$el);
+	},
+	//TODO: Keep scroll position on render
 
 	closeCursor: function() {
 		if(this.cursor !== null) {

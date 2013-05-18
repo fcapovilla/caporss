@@ -5,11 +5,13 @@ var Router = Backbone.Router.extend({
 		"folder/:id": "viewFolder",
 		"item": "viewAllItems"
 	},
+	initialize: function() {
+		this.itemList = new Backbone.Marionette.Region({
+			el: '#item-list'
+		});
+	},
 	clear: function() {
-		if(items !== null) {
-			items.remove();
-			items = null;
-		}
+		this.itemList.close();
 
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
@@ -22,13 +24,10 @@ var Router = Backbone.Router.extend({
 		$('.feed-list').removeClass('hidden-phone');
 	},
 	updateItemList : function(model) {
-		if(items !== null) {
-			items.remove();
-		}
-
 		items = new ItemListView({collection: model.items, itemView: ItemView});
-		items.$el.appendTo('#item-list');
 		model.items.fetch({reset: true, reset_pagination: true});
+
+		this.itemList.show(items);
 
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
