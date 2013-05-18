@@ -1,18 +1,17 @@
-var SpecialFolderView = Backbone.View.extend({
+var SpecialFolderView = Backbone.Marionette.ItemView.extend({
 	tagName: "li",
-	template: _.template($('#tmpl-special-folder').html(), null, {variable:'folder'}),
+	template: '#tmpl-special-folder',
 	events: {
 		'click .folderTitle' : 'selectFolder'
 	},
-	initialize: function() {
-		_.bindAll(this);
-		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model, 'destroy', this.remove);
+	modelEvents: {
+		'change': 'render',
+		'destroy': 'remove'
 	},
-	render: function() {
-		this.$el.html(this.template(this.model.attributes));
-		return this;
-	},
+	serializeData: function() {
+		return {'folder': this.model.attributes};
+    },
+
 	selectFolder: function() {
 		router.navigate(this.model.get('route'), {trigger: true});
 	}
