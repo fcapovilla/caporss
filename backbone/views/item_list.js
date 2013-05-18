@@ -1,6 +1,7 @@
 var ItemListView = Backbone.Marionette.CollectionView.extend({
 	tagName: 'ul',
 	className: 'nav nav-list',
+	itemView: ItemView,
 	collectionEvents: {
 		'sync': 'onSync'
 	},

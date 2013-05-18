@@ -31,7 +31,16 @@ get '/app.js' do
 
 	output += "$(function() {\n"
 
-	Dir["#{root}/routers/*.js", "#{root}/models/*.js", "#{root}/collections/*.js", "#{root}/views/*.js", "#{root}/*.js"].each do |file|
+	Dir[
+		"#{root}/routers/*.js",
+		"#{root}/models/*.js",
+		"#{root}/collections/*.js",
+		"#{root}/views/item.js",
+		"#{root}/views/feed.js",
+		"#{root}/views/folder.js",
+		"#{root}/views/*.js",
+		"#{root}/*.js"
+	].uniq.each do |file|
 		output += File.open(file, 'r').read()
 	end
 

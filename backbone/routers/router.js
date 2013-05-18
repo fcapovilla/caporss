@@ -24,7 +24,7 @@ var Router = Backbone.Router.extend({
 		$('.feed-list').removeClass('hidden-phone');
 	},
 	updateItemList : function(model) {
-		items = new ItemListView({collection: model.items, itemView: ItemView});
+		items = new ItemListView({collection: model.items});
 		model.items.fetch({reset: true, reset_pagination: true});
 
 		this.itemList.show(items);

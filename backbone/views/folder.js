@@ -1,6 +1,7 @@
 var FolderView = Backbone.Marionette.CompositeView.extend({
 	tagName: "li",
 	itemViewContainer: 'ul.nav.nav-list',
+	itemView: FeedView,
 	template: '#tmpl-folder',
 	events: {
 		'click .markFolderReadAction' : 'markFolderRead',
@@ -17,7 +18,6 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		'destroy': 'remove'
 	},
 	initialize: function() {
-		this.itemView = FeedView;
 		if(this.model.get('open')) {
 			this.collection = this.model.feeds;
 		}
