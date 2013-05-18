@@ -8,6 +8,7 @@ var ItemListView = Backbone.View.extend({
 		this.listenTo(this.collection, 'add', this.addOne);
 		this.listenTo(this.collection, 'remove', this.addAll);
 		this.listenTo(this.collection, 'reset', this.addAll);
+		this.listenTo(this.collection, 'sync', this.onSync);
 
 		$(this.render().el).appendTo('#item-list');
 
@@ -26,7 +27,7 @@ var ItemListView = Backbone.View.extend({
 		});
 	},
 	remove: function() {
-		this.closeAll();
+		this.closeCursor();
 		this.removeAllSubviews();
 		Backbone.View.prototype.remove.call(this);
 
@@ -54,10 +55,14 @@ var ItemListView = Backbone.View.extend({
 
 		$('#item-list').scrollTop(scroll);
 	},
-	closeAll: function() {
-		this.collection.each(function(item) {
-			item.set('open', false);
-		});
+	onSync: function() {
+		this.$next_page = this.$next_page.detach();
+		this.$next_page.appendTo(this.$el);
+	},
+	closeCursor: function() {
+		if(this.cursor !== null) {
+			this.cursor.set('open', false);
+		}
 	},
 	moveCursor: function(direction) {
 		var item = null;
@@ -68,7 +73,7 @@ var ItemListView = Backbone.View.extend({
 			}
 		}
 		else {
-			var index = this.collection.indexOf(this.collection.get(this.cursor));
+			var index = this.collection.indexOf(this.collection.get(this.cursor.id));
 			var dir = 0;
 
 			if(direction == 'down') {
@@ -82,12 +87,12 @@ var ItemListView = Backbone.View.extend({
 		}
 
 		if(item !== null && item !== undefined) {
-			this.closeAll();
+			this.closeCursor();
 			item.set('open', true);
 			if(!item.get('read')) {
 				item.toggleRead();
 			}
-			this.cursor = item.id;
+			this.cursor = item;
 		}
 	}
 });
