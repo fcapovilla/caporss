@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 0.5.1
+Version 0.5.2
 
 ## Description
 
@@ -20,6 +20,7 @@ CapoRSS is built on top of these great projects :
 * [Font awesome](http://fortawesome.github.com/Font-Awesome/)
 * [Pines notify](http://pinesframework.org/pnotify/)
 * [Backbone.js](http://backbonejs.org/)
+* [Marionette.js](http://marionettejs.com/)
 * [Underscore.js](http://underscorejs.org/)
 * [JQuery](http://jquery.com/)
 * [JQuery-cookie](https://github.com/carhartl/jquery-cookie)
