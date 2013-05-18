@@ -17,8 +17,10 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		'destroy': 'remove'
 	},
 	initialize: function() {
-		this.collection = this.model.feeds;
 		this.itemView = FeedView;
+		if(this.model.get('open')) {
+			this.collection = this.model.feeds;
+		}
 
 		_.bindAll(this);
 	},
@@ -28,6 +30,16 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 
 	toggleFolderOpen: function() {
 		this.model.toggle();
+
+		if(this.model.get('open')) {
+			this.collection = this.model.feeds;
+		}
+		else {
+			this.collection = null;
+		}
+
+		this.render();
+
 		return false;
 	},
 	deleteFolder: function() {
