@@ -24,10 +24,11 @@ var Router = Backbone.Router.extend({
 		$('.feed-list').removeClass('hidden-phone');
 	},
 	updateItemList : function(model) {
+		var that = this;
 		items = new ItemListView({collection: model.items});
-		model.items.fetch({reset: true, reset_pagination: true});
-
-		this.itemList.show(items);
+		model.items.fetch({reset: true, reset_pagination: true, success: function() {
+			that.itemList.show(items);
+		}});
 
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
