@@ -12,7 +12,6 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 	initialize: function() {
 		this.cursor = null;
 	},
-	//TODO: Keep scroll position on render
 
 	onAllItemsLoaded: function() {
 		this.$el.find('.show_more_items').addClass('hide');
