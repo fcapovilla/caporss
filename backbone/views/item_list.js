@@ -7,7 +7,7 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 		'reset': 'onReset'
 	},
 	events: {
-		'click .show_more_items': 'fetchNextPage'
+		'click .show_more_items': function(){ this.collection.fetchNextPage(); }
 	},
 	initialize: function() {
 		this.cursor = null;
@@ -19,13 +19,15 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 	},
 	onReset: function() {
 		this.$el.find('.show_more_items').removeClass('hide');
+
+		if(this.cursor !== null) {
+			this.collection.get(this.cursor).set('open', 'true');
+		}
 	},
-	fetchNextPage: function() {
-		this.collection.fetchNextPage();
-	},
+
 	closeCursor: function() {
 		if(this.cursor !== null) {
-			this.cursor.set('open', false);
+			this.collection.get(this.cursor).set('open', false);
 		}
 	},
 	moveCursor: function(direction) {
@@ -37,7 +39,7 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 			}
 		}
 		else {
-			var index = this.collection.indexOf(this.collection.get(this.cursor.id));
+			var index = this.collection.indexOf(this.collection.get(this.cursor));
 			var dir = 0;
 
 			if(direction == 'down') {
@@ -56,7 +58,7 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 			if(!item.get('read')) {
 				item.toggleRead();
 			}
-			this.cursor = item;
+			this.cursor = item.id;
 		}
 	}
 });

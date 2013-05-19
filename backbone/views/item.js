@@ -32,7 +32,7 @@ var ItemView = Backbone.Marionette.ItemView.extend({
 			if(!this.model.get('read')) {
 				this.model.toggleRead();
 			}
-			items.cursor = this.model;
+			items.cursor = this.model.id;
 		}
 	},
 	toggleRead: function() {
