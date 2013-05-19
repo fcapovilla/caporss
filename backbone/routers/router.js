@@ -11,13 +11,14 @@ var Router = Backbone.Router.extend({
 		});
 	},
 	clear: function() {
+		$('#item-list').scrollTop(0);
+
 		this.itemList.close();
 
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
 			currentSelection = null;
 		}
-		window.scrollTo(0,0);
 
 		$('.mobile-item-button').addClass('invisible');
 		$('#item-list').addClass('hidden-phone');
@@ -25,6 +26,8 @@ var Router = Backbone.Router.extend({
 	},
 	updateItemList : function(model) {
 		var that = this;
+		$('#item-list').scrollTop(0);
+
 		items = new ItemListView({collection: model.items});
 		model.items.fetch({reset: true, reset_pagination: true, success: function() {
 			that.itemList.show(items);
@@ -35,7 +38,7 @@ var Router = Backbone.Router.extend({
 		}
 		model.set('active', true);
 		currentSelection = model;
-		window.scrollTo(0,0);
+
 		$('#item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
 		$('.mobile-item-button').removeClass('invisible');

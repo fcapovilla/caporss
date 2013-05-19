@@ -1,28 +1,28 @@
-var ItemListView = Backbone.Marionette.CollectionView.extend({
-	tagName: 'ul',
-	className: 'nav nav-list',
+var ItemListView = Backbone.Marionette.CompositeView.extend({
 	itemView: ItemView,
+	itemViewContainer: 'ul',
+	template: '#tmpl-itemlist',
 	collectionEvents: {
-		'sync': 'onSync'
+		'all_items_loaded': 'onAllItemsLoaded',
+		'reset': 'onReset'
+	},
+	events: {
+		'click .show_more_items': 'fetchNextPage'
 	},
 	initialize: function() {
 		this.cursor = null;
-
-		// Setup the "Show more items" button
-		var that = this;
-		this.$next_page = $('<div class="show_more_items">').text(LANG.show_more_items).click(function() {
-			that.collection.fetchNextPage();
-		});
-		this.listenTo(this.collection, 'all_items_loaded', function() {
-			this.$next_page.remove();
-		});
-	},
-	onSync: function() {
-		this.$next_page = this.$next_page.detach();
-		this.$next_page.appendTo(this.$el);
 	},
 	//TODO: Keep scroll position on render
 
+	onAllItemsLoaded: function() {
+		this.$el.find('.show_more_items').addClass('hide');
+	},
+	onReset: function() {
+		this.$el.find('.show_more_items').removeClass('hide');
+	},
+	fetchNextPage: function() {
+		this.collection.fetchNextPage();
+	},
 	closeCursor: function() {
 		if(this.cursor !== null) {
 			this.cursor.set('open', false);
