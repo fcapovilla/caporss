@@ -52,14 +52,45 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 	},
 	onDrop: function(e) {
 		e.stopPropagation();
-		var folder_id = e.originalEvent.dataTransfer.getData('folder_id');
-		var folder = folders.get(folder_id);
 
-		folder.save({
-			position: this.model.get('position') + 1
-		}, { success: function() {
-			folders.fetch({reset: true});
-		}});
+		var folder_id = e.originalEvent.dataTransfer.getData('folder_id');
+		var folder = null;
+
+		if(folder_id) {
+			folder = folders.get(folder_id);
+		}
+
+		if(folder) {
+			var new_position = this.model.get('position');
+			if(new_position < folder.get('position')) {
+				new_position += 1;
+			}
+			folder.save({
+				position: new_position
+			}, { success: function() {
+				folders.fetch({reset: true});
+			}});
+		}
+
+		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
+		var feed = null;
+
+		if(feed_id) {
+			folders.each(function(folder) {
+				if(folder.feeds.get(feed_id)) {
+					feed = folder.feeds.get(feed_id);
+				}
+			});
+		}
+
+		if(feed) {
+			feed.save({
+				folder_id: this.model.id,
+				position: 1
+			}, { success: function() {
+				folders.fetch({reset: true});
+			}});
+		}
 
 		this.onDragLeave();
 	},

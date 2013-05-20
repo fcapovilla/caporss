@@ -11,8 +11,14 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		'click .syncFeedAction' : 'syncFeed',
 		'click .editFeedAction' : 'showFeedEditDialog',
 		'click .deleteFeedAction' : 'deleteFeed',
-		'click .feed-icon': 'openMenu',
-		'click .feedTitle' : 'selectFeed'
+		'click .feed-icon' : 'openMenu',
+		'click .feedTitle' : 'selectFeed',
+	    'dragstart' : 'onDragStart',
+	    'dragenter' : 'onDragEnter',
+        'dragover' : 'onDragOver',
+	    'dragleave' : 'onDragLeave',
+        'drop' : 'onDrop',
+	    'dragend' : 'onDragEnd'
 	},
 	modelEvents: {
 		'destroy': 'remove',
@@ -24,6 +30,52 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 	serializeData: function() {
 		return {'feed': this.model.attributes};
     },
+
+	onDragStart: function(e) {
+		e.stopPropagation();
+		this.$el.css({opacity: 0.5});
+		e.originalEvent.dataTransfer.setData('feed_id', this.model.id);
+	},
+	onDragEnter: function(e) {
+		this.$el.css({borderBottom: "2px solid orange"});
+	},
+	onDragOver: function(e) {
+		e.preventDefault();
+	},
+	onDragLeave: function(e) {
+		this.$el.css({borderBottom: ""});
+	},
+	onDrop: function(e) {
+		e.stopPropagation();
+		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
+		var feed = null;
+
+		if(feed_id) {
+			folders.each(function(folder) {
+				if(folder.feeds.get(feed_id)) {
+					feed = folder.feeds.get(feed_id);
+				}
+			});
+		}
+
+		if(feed) {
+			var new_position = this.model.get('position');
+			if(new_position < feed.get('position')) {
+				new_position += 1;
+			}
+			feed.save({
+				folder_id: this.model.get('folder_id'),
+				position: new_position
+			}, { success: function() {
+				folders.fetch({reset: true});
+			}});
+		}
+
+		this.onDragLeave();
+	},
+	onDragEnd: function(e) {
+		this.$el.css({opacity: ""});
+	},
 
 	selectFeed: function() {
 		router.navigate("feed/" + this.model.id, {trigger: true});
