@@ -1,5 +1,8 @@
 var FolderView = Backbone.Marionette.CompositeView.extend({
 	tagName: "li",
+	attributes: {
+		'draggable': true
+	},
 	itemViewContainer: 'ul.nav.nav-list',
 	itemView: FeedView,
 	template: '#tmpl-folder',
@@ -10,8 +13,14 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		'click .editFolderAction' : 'showFolderEditDialog',
 		'click .deleteFolderAction' : 'deleteFolder',
 		'click .folder-toggle' : 'toggleFolderOpen',
-		'click .folder-icon': 'openMenu',
-		'click .folderTitle' : 'selectFolder'
+		'click .folder-icon' : 'openMenu',
+		'click .folderTitle' : 'selectFolder',
+	    'dragstart' : 'onDragStart',
+	    'dragenter' : 'onDragEnter',
+        'dragover' : 'onDragOver',
+	    'dragleave' : 'onDragLeave',
+        'drop' : 'onDrop',
+	    'dragend' : 'onDragEnd'
 	},
 	modelEvents: {
 		'change': 'render',
@@ -27,6 +36,36 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 	serializeData: function() {
 		return {'folder': this.model.attributes};
     },
+
+	onDragStart: function(e) {
+		this.$el.css({opacity: 0.5});
+		e.originalEvent.dataTransfer.setData('folder_id', this.model.id);
+	},
+	onDragEnter: function(e) {
+		this.$el.css({borderBottom: "2px solid orange"});
+	},
+	onDragOver: function(e) {
+		e.preventDefault();
+	},
+	onDragLeave: function(e) {
+		this.$el.css({borderBottom: ""});
+	},
+	onDrop: function(e) {
+		e.stopPropagation();
+		var folder_id = e.originalEvent.dataTransfer.getData('folder_id');
+		var folder = folders.get(folder_id);
+
+		folder.save({
+			position: this.model.get('position') + 1
+		}, { success: function() {
+			folders.fetch({reset: true});
+		}});
+
+		this.onDragLeave();
+	},
+	onDragEnd: function(e) {
+		this.$el.css({opacity: ""});
+	},
 
 	toggleFolderOpen: function() {
 		this.model.toggle();

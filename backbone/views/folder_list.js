@@ -3,13 +3,16 @@ var FolderListView = Backbone.Marionette.CollectionView.extend({
 	itemView: FolderView,
 	initialize: function() {
 		this.allItemsFolder = new AllItemsFolder();
-		this.addSpecialFolders();
+
+		this.views = [];
+		this.views.push(new SpecialFolderView({model: this.allItemsFolder}));
+
+		this.render();
 	},
-	onRender: function() {
-		this.addSpecialFolders();
-	},
-	addSpecialFolders: function() {
-		var view = new SpecialFolderView({model: this.allItemsFolder});
-		this.$el.append(view.render().el);
+	onBeforeRender: function() {
+		var that = this;
+		_.each(this.views, function(view) {
+			that.$el.append(view.render().el);
+		});
 	}
 });

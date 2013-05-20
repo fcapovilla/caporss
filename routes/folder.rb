@@ -34,7 +34,7 @@ put '/folder/:id' do |id|
 	folder = Folder.first(:user => @user, :id => id)
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
 
-	folder.move(attributes[:position]) if attributes.has_key?(:position)
+	folder.move(:to => attributes[:position]) if attributes.has_key?(:position)
 
 	folder.attributes = attributes.slice(:title, :open)
 

@@ -1,5 +1,8 @@
 var FeedView = Backbone.Marionette.ItemView.extend({
 	tagName: 'li',
+	attributes: {
+		'draggable': true
+	},
 	className: 'feed',
 	template: '#tmpl-feed',
 	events: {
