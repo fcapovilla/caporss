@@ -147,6 +147,7 @@ $('#editFeedButton').click(function() {
 	folders.each(function(folder) {
 		var feed = folder.feeds.get(feedId);
 		if(feed) {
+			feed.unset('position')
 			feed.save({
 				url: feedUrl,
 				folder: feedFolder
