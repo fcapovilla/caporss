@@ -60,7 +60,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 
 		if(feed) {
 			var new_position = this.model.get('position');
-			if(new_position < feed.get('position')) {
+			if(this.model.get('folder_id') == feed.get('folder_id') && new_position < feed.get('position')) {
 				new_position += 1;
 			}
 			feed.save({
