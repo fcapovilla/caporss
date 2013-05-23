@@ -16,7 +16,9 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		'click .folder-icon' : 'openMenu',
 		'click .folderTitle' : 'selectFolder',
 	    'dragstart' : 'onDragStart',
-        'dragover' : 'onDragOver',
+	    'dragenter .folderTitle' : 'onDragEnter',
+        'dragover .folderTitle' : 'onDragOver',
+	    'dragleave .folderTitle' : 'onDragLeave',
         'drop' : 'onDrop',
 	    'dragend' : 'onDragEnd'
 	},
@@ -39,8 +41,21 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		this.$el.css({opacity: 0.5});
 		e.originalEvent.dataTransfer.setData('folder_id', this.model.id);
 	},
+	onDragEnter: function(e) {
+		e.preventDefault();
+		console.log(e);
+		this.$el.find('>.folderTitle').addClass('drag-hovered');
+	},
 	onDragOver: function(e) {
 		e.preventDefault();
+	},
+	onDragLeave: function(e) {
+		var rect = e.currentTarget.getBoundingClientRect();
+		var oe = e.originalEvent;
+
+		if(oe.x >= rect.right || oe.x <= rect.left || oe.y >= rect.bottom || oe.y <= rect.top) {
+			this.$el.find('>.folderTitle').removeClass('drag-hovered');
+		}
 	},
 	onDrop: function(e) {
 		e.stopPropagation();
@@ -55,6 +70,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		if(folder) {
 			var new_position = this.model.get('position');
 			if(new_position == folder.get('position')) {
+				this.$el.find('>.folderTitle').removeClass('drag-hovered');
 				return;
 			}
 			else if(new_position < folder.get('position')) {
@@ -86,6 +102,8 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 				folders.fetch({reset: true});
 			}});
 		}
+
+		this.$el.find('>.folderTitle').removeClass('drag-hovered');
 	},
 	onDragEnd: function(e) {
 		this.$el.css({opacity: ""});

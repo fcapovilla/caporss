@@ -14,7 +14,9 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		'click .feed-icon' : 'openMenu',
 		'click .feedTitle' : 'selectFeed',
 	    'dragstart' : 'onDragStart',
+	    'dragenter' : 'onDragEnter',
         'dragover' : 'onDragOver',
+	    'dragleave' : 'onDragLeave',
         'drop' : 'onDrop',
 	    'dragend' : 'onDragEnd'
 	},
@@ -34,8 +36,20 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		this.$el.css({opacity: 0.5});
 		e.originalEvent.dataTransfer.setData('feed_id', this.model.id);
 	},
+	onDragEnter: function(e) {
+		e.preventDefault();
+		this.$el.addClass('drag-hovered');
+	},
 	onDragOver: function(e) {
 		e.preventDefault();
+	},
+	onDragLeave: function(e) {
+		var rect = e.currentTarget.getBoundingClientRect();
+		var oe = e.originalEvent;
+
+		if(oe.x >= rect.right || oe.x <= rect.left || oe.y >= rect.bottom || oe.y <= rect.top) {
+			this.$el.removeClass('drag-hovered');
+		}
 	},
 	onDrop: function(e) {
 		e.stopPropagation();
@@ -54,6 +68,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 			var new_position = this.model.get('position');
 			if(this.model.get('folder_id') == feed.get('folder_id')) {
 				if(new_position == feed.get('position')) {
+					this.$el.removeClass('drag-hovered');
 					return;
 				}
 				else if(new_position < feed.get('position')) {
@@ -70,6 +85,8 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 				folders.fetch({reset: true});
 			}});
 		}
+
+		this.$el.removeClass('drag-hovered');
 	},
 	onDragEnd: function(e) {
 		this.$el.css({opacity: ""});
