@@ -82,6 +82,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 				folder_id: this.model.get('folder_id'),
 				position: new_position
 			}, { success: function() {
+				router.navigate("", {trigger: true});
 				var scroll = $('.feed-list').scrollTop();
 				folders.fetch({reset: true, success: function() {
 					$('.feed-list').scrollTop(scroll);
