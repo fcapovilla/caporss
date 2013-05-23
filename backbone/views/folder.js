@@ -15,12 +15,12 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		'click .folder-toggle' : 'toggleFolderOpen',
 		'click .folder-icon' : 'openMenu',
 		'click .folderTitle' : 'selectFolder',
-	    'dragstart' : 'onDragStart',
-	    'dragenter .folderTitle' : 'onDragEnter',
-        'dragover .folderTitle' : 'onDragOver',
-	    'dragleave .folderTitle' : 'onDragLeave',
-        'drop' : 'onDrop',
-	    'dragend' : 'onDragEnd'
+		'dragstart' : 'onDragStart',
+		'dragenter .folderTitle' : 'onDragEnter',
+		'dragover .folderTitle' : 'onDragOver',
+		'dragleave .folderTitle' : 'onDragLeave',
+		'drop' : 'onDrop',
+		'dragend' : 'onDragEnd'
 	},
 	modelEvents: {
 		'change': 'render',

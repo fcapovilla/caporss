@@ -13,12 +13,12 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		'click .deleteFeedAction' : 'deleteFeed',
 		'click .feed-icon' : 'openMenu',
 		'click .feedTitle' : 'selectFeed',
-	    'dragstart' : 'onDragStart',
-	    'dragenter' : 'onDragEnter',
-        'dragover' : 'onDragOver',
-	    'dragleave' : 'onDragLeave',
-        'drop' : 'onDrop',
-	    'dragend' : 'onDragEnd'
+		'dragstart' : 'onDragStart',
+		'dragenter' : 'onDragEnter',
+		'dragover' : 'onDragOver',
+		'dragleave' : 'onDragLeave',
+		'drop' : 'onDrop',
+		'dragend' : 'onDragEnd'
 	},
 	modelEvents: {
 		'destroy': 'remove',
