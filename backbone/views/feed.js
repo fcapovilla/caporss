@@ -14,9 +14,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		'click .feed-icon' : 'openMenu',
 		'click .feedTitle' : 'selectFeed',
 	    'dragstart' : 'onDragStart',
-	    'dragenter' : 'onDragEnter',
         'dragover' : 'onDragOver',
-	    'dragleave' : 'onDragLeave',
         'drop' : 'onDrop',
 	    'dragend' : 'onDragEnd'
 	},
@@ -36,14 +34,8 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		this.$el.css({opacity: 0.5});
 		e.originalEvent.dataTransfer.setData('feed_id', this.model.id);
 	},
-	onDragEnter: function(e) {
-		this.$el.css({borderBottom: "2px solid orange"});
-	},
 	onDragOver: function(e) {
 		e.preventDefault();
-	},
-	onDragLeave: function(e) {
-		this.$el.css({borderBottom: ""});
 	},
 	onDrop: function(e) {
 		e.stopPropagation();
@@ -60,7 +52,16 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 
 		if(feed) {
 			var new_position = this.model.get('position');
-			if(this.model.get('folder_id') == feed.get('folder_id') && new_position < feed.get('position')) {
+			if(this.model.get('folder_id') == feed.get('folder_id')) {
+				if(new_position == feed.get('position')) {
+					this.onDragLeave();
+					return;
+				}
+				else if(new_position < feed.get('position')) {
+					new_position += 1;
+				}
+			}
+			else {
 				new_position += 1;
 			}
 			feed.save({

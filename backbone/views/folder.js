@@ -16,9 +16,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		'click .folder-icon' : 'openMenu',
 		'click .folderTitle' : 'selectFolder',
 	    'dragstart' : 'onDragStart',
-	    'dragenter' : 'onDragEnter',
         'dragover' : 'onDragOver',
-	    'dragleave' : 'onDragLeave',
         'drop' : 'onDrop',
 	    'dragend' : 'onDragEnd'
 	},
@@ -41,14 +39,8 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		this.$el.css({opacity: 0.5});
 		e.originalEvent.dataTransfer.setData('folder_id', this.model.id);
 	},
-	onDragEnter: function(e) {
-		this.$el.css({borderBottom: "2px solid orange"});
-	},
 	onDragOver: function(e) {
 		e.preventDefault();
-	},
-	onDragLeave: function(e) {
-		this.$el.css({borderBottom: ""});
 	},
 	onDrop: function(e) {
 		e.stopPropagation();
@@ -62,7 +54,11 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 
 		if(folder) {
 			var new_position = this.model.get('position');
-			if(new_position < folder.get('position')) {
+			if(new_position == folder.get('position')) {
+				this.onDragLeave();
+				return;
+			}
+			else if(new_position < folder.get('position')) {
 				new_position += 1;
 			}
 			folder.save({
