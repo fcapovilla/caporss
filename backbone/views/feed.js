@@ -47,7 +47,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		var rect = e.currentTarget.getBoundingClientRect();
 		var oe = e.originalEvent;
 
-		if(oe.x >= rect.right || oe.x <= rect.left || oe.y >= rect.bottom || oe.y <= rect.top) {
+		if(oe.clientX >= rect.right || oe.clientX <= rect.left || oe.clientY >= rect.bottom || oe.clientY <= rect.top) {
 			this.$el.removeClass('drag-hovered');
 		}
 	},
