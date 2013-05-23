@@ -43,7 +43,6 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 	},
 	onDragEnter: function(e) {
 		e.preventDefault();
-		console.log(e);
 		this.$el.find('>.folderTitle').addClass('drag-hovered');
 	},
 	onDragOver: function(e) {
@@ -79,7 +78,10 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 			folder.save({
 				position: new_position
 			}, { success: function() {
-				folders.fetch({reset: true});
+				var scroll = $('.feed-list').scrollTop();
+				folders.fetch({reset: true, success: function() {
+					$('.feed-list').scrollTop(scroll);
+				}});
 			}});
 		}
 
@@ -99,7 +101,10 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 				folder_id: this.model.id,
 				position: 1
 			}, { success: function() {
-				folders.fetch({reset: true});
+				var scroll = $('.feed-list').scrollTop();
+				folders.fetch({reset: true, success: function() {
+					$('.feed-list').scrollTop(scroll);
+				}});
 			}});
 		}
 
