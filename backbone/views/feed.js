@@ -54,7 +54,6 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 			var new_position = this.model.get('position');
 			if(this.model.get('folder_id') == feed.get('folder_id')) {
 				if(new_position == feed.get('position')) {
-					this.onDragLeave();
 					return;
 				}
 				else if(new_position < feed.get('position')) {
@@ -71,8 +70,6 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 				folders.fetch({reset: true});
 			}});
 		}
-
-		this.onDragLeave();
 	},
 	onDragEnd: function(e) {
 		this.$el.css({opacity: ""});

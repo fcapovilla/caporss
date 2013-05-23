@@ -55,7 +55,6 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		if(folder) {
 			var new_position = this.model.get('position');
 			if(new_position == folder.get('position')) {
-				this.onDragLeave();
 				return;
 			}
 			else if(new_position < folder.get('position')) {
@@ -87,8 +86,6 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 				folders.fetch({reset: true});
 			}});
 		}
-
-		this.onDragLeave();
 	},
 	onDragEnd: function(e) {
 		this.$el.css({opacity: ""});
