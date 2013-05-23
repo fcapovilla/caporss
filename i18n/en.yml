@@ -36,6 +36,7 @@ buttons:
     toggle_read: Show/Hide read items
     logout: Log out
     return_to_feedlist: Return to feed list
+    show_more_items: Show more items...
 
 subscribe:
     subscribe: Subscribe
@@ -61,7 +62,6 @@ opml_import:
 js:
     confirm_delete_feed: Are you sure you want to delete this feed?
     confirm_delete_folder: Are you sure you want to delete this folder?
-    show_more_items: Show more items...
     all_items_folder: All items
 
 login:
