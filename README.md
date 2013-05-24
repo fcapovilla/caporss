@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 0.5.2
+Version 0.6.0
 
 ## Description
 
@@ -112,9 +112,8 @@ Here is a list of keyboard shortcuts currently supported by CapoRSS :
 ## TODO
 
 * Optimisations, performance improvements and bugfixes
-* Drap-and-drop feed reordering
-* Per-folder OPML export
 * In-app documentation
+* Add unit tests
 
 ## Release notes
 * 0.5.0 : This version brings a lots of modifications to the database structure to add multi-user support. Automatic migrations are included to move all single-user configurations to the 'admin/admin' user, but starting from a clean database is recommended.
