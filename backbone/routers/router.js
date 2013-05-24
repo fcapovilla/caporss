@@ -5,36 +5,40 @@ var Router = Backbone.Router.extend({
 		"folder/:id": "viewFolder",
 		"item": "viewAllItems"
 	},
+	initialize: function() {
+		this.itemList = new Backbone.Marionette.Region({
+			el: '#item-list'
+		});
+	},
 	clear: function() {
-		if(items !== null) {
-			items.remove();
-			items = null;
-		}
+		$('#item-list').scrollTop(0);
+
+		this.itemList.close();
 
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
 			currentSelection = null;
 		}
-		window.scrollTo(0,0);
 
 		$('.mobile-item-button').addClass('invisible');
 		$('#item-list').addClass('hidden-phone');
 		$('.feed-list').removeClass('hidden-phone');
 	},
 	updateItemList : function(model) {
-		if(items !== null) {
-			items.remove();
-		}
+		var that = this;
+		$('#item-list').scrollTop(0);
 
 		items = new ItemListView({collection: model.items});
-		model.items.fetch({reset: true, reset_pagination: true});
+		model.items.fetch({reset: true, reset_pagination: true, success: function() {
+			that.itemList.show(items);
+		}});
 
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
 		}
 		model.set('active', true);
 		currentSelection = model;
-		window.scrollTo(0,0);
+
 		$('#item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
 		$('.mobile-item-button').removeClass('invisible');

@@ -15,7 +15,11 @@ var Folder = Backbone.Model.extend({
 		this.save({open : !this.get('open')});
 	},
 	toJSON: function() {
-		return {open: this.get('open'), title: this.get('title')};
+		return {
+			open: this.get('open'),
+			title: this.get('title'),
+			position: this.get('position')
+		};
 	},
 	itemRead: function(feed_id) {
 		this.feeds.get(feed_id).decrementReadCount();

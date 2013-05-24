@@ -1,6 +1,11 @@
-var FolderView = Backbone.View.extend({
+var FolderView = Backbone.Marionette.CompositeView.extend({
 	tagName: "li",
-	template: _.template($('#tmpl-folder').html(), null, {variable:'folder'}),
+	attributes: {
+		'draggable': true
+	},
+	itemViewContainer: 'ul.nav.nav-list',
+	itemView: FeedView,
+	template: '#tmpl-folder',
 	events: {
 		'click .markFolderReadAction' : 'markFolderRead',
 		'click .markFolderUnreadAction' : 'markFolderUnread',
@@ -8,52 +13,121 @@ var FolderView = Backbone.View.extend({
 		'click .editFolderAction' : 'showFolderEditDialog',
 		'click .deleteFolderAction' : 'deleteFolder',
 		'click .folder-toggle' : 'toggleFolderOpen',
-		'click .folder-icon': 'openMenu',
-		'click .folderTitle' : 'selectFolder'
+		'click .folder-icon' : 'openMenu',
+		'click .folderTitle' : 'selectFolder',
+		'dragstart' : 'onDragStart',
+		'dragenter .folderTitle' : 'onDragEnter',
+		'dragover .folderTitle' : 'onDragOver',
+		'dragleave .folderTitle' : 'onDragLeave',
+		'drop' : 'onDrop',
+		'dragend' : 'onDragEnd'
+	},
+	modelEvents: {
+		'change': 'render',
+		'destroy': 'remove'
 	},
 	initialize: function() {
-		this.views = [];
+		if(this.model.get('open')) {
+			this.collection = this.model.feeds;
+		}
 
 		_.bindAll(this);
-		this.listenTo(this.model, 'change', this.render);
-		this.listenTo(this.model, 'destroy', this.remove);
-		this.listenTo(this.model.feeds, 'add', this.addOne);
-		this.listenTo(this.model.feeds, 'remove', this.addAll);
-		this.listenTo(this.model.feeds, 'reset', this.addAll);
+	},
+	serializeData: function() {
+		return {'folder': this.model.attributes};
+    },
 
-		this.$feedList = $('<ul class="nav nav-list"></ul>');
+	onDragStart: function(e) {
+		this.$el.css({opacity: 0.5});
+		e.originalEvent.dataTransfer.setData('folder_id', this.model.id);
 	},
-	render: function() {
-		this.$el.html(this.template(this.model.attributes));
-		if(this.model.get('open')) {
-			this.addAll();
-			this.$el.append(this.$feedList);
+	onDragEnter: function(e) {
+		e.preventDefault();
+		this.$el.find('>.folderTitle').addClass('drag-hovered');
+	},
+	onDragOver: function(e) {
+		e.preventDefault();
+	},
+	onDragLeave: function(e) {
+		var rect = e.currentTarget.getBoundingClientRect();
+		var oe = e.originalEvent;
+
+		if(oe.clientX >= rect.right || oe.clientX <= rect.left || oe.clientY >= rect.bottom || oe.clientY <= rect.top) {
+			this.$el.find('>.folderTitle').removeClass('drag-hovered');
 		}
-		return this;
 	},
-	remove: function() {
-		this.removeAllSubviews();
-		this.$feedList.remove();
-		Backbone.View.prototype.remove.call(this);
+	onDrop: function(e) {
+		e.stopPropagation();
+
+		var folder_id = e.originalEvent.dataTransfer.getData('folder_id');
+		var folder = null;
+
+		if(folder_id) {
+			folder = folders.get(folder_id);
+		}
+
+		if(folder) {
+			var new_position = this.model.get('position');
+			if(new_position == folder.get('position')) {
+				this.$el.find('>.folderTitle').removeClass('drag-hovered');
+				return;
+			}
+			else if(new_position < folder.get('position')) {
+				new_position += 1;
+			}
+			folder.save({
+				position: new_position
+			}, { success: function() {
+				router.navigate("", {trigger: true});
+				var scroll = $('.feed-list').scrollTop();
+				folders.fetch({reset: true, success: function() {
+					$('.feed-list').scrollTop(scroll);
+				}});
+			}});
+		}
+
+		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
+		var feed = null;
+
+		if(feed_id) {
+			folders.each(function(folder) {
+				if(folder.feeds.get(feed_id)) {
+					feed = folder.feeds.get(feed_id);
+				}
+			});
+		}
+
+		if(feed) {
+			feed.save({
+				folder_id: this.model.id,
+				position: 1
+			}, { success: function() {
+				router.navigate("", {trigger: true});
+				var scroll = $('.feed-list').scrollTop();
+				folders.fetch({reset: true, success: function() {
+					$('.feed-list').scrollTop(scroll);
+				}});
+			}});
+		}
+
+		this.$el.find('>.folderTitle').removeClass('drag-hovered');
 	},
-	removeAllSubviews: function() {
-		_.each(this.views, function(view) {
-			view.remove();
-		});
-		this.views.length = 0;
+	onDragEnd: function(e) {
+		this.$el.css({opacity: ""});
 	},
-	addOne: function(feed) {
-		var view = new FeedView({model: feed});
-		this.$feedList.append(view.render().el);
-		this.views.push(view);
-	},
-	addAll: function() {
-		this.removeAllSubviews();
-		this.$feedList.empty();
-		this.model.feeds.each(this.addOne, this);
-	},
+
 	toggleFolderOpen: function() {
 		this.model.toggle();
+
+		if(this.model.get('open')) {
+			this.collection = this.model.feeds;
+		}
+		else {
+			this.collection = null;
+		}
+
+		this.render();
+
 		return false;
 	},
 	deleteFolder: function() {

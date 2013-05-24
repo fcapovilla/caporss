@@ -11,6 +11,7 @@ var Feed = Backbone.Model.extend({
 		return {
 			position: this.get('position'),
 			folder: this.get('folder'),
+			folder_id: this.get('folder_id'),
 			url: this.get('url')
 		};
 	},

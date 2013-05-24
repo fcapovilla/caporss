@@ -7,7 +7,7 @@ before '/folder*' do
 end
 
 get '/folder' do
-	Folder.all(:user => @user).to_json
+	Folder.all(:user => @user, :order => :position.asc).to_json
 end
 
 get '/folder/:id' do |id|
@@ -15,7 +15,7 @@ get '/folder/:id' do |id|
 end
 
 get '/folder/:id/feed' do |id|
-	Folder.first(:user => @user, :id => id).feeds.to_json
+	Folder.first(:user => @user, :id => id).feeds(:order => :position.asc).to_json
 end
 
 get '/folder/:id/item' do |id|
@@ -33,6 +33,8 @@ end
 put '/folder/:id' do |id|
 	folder = Folder.first(:user => @user, :id => id)
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
+
+	folder.move(attributes[:position]) if attributes.has_key?(:position)
 
 	folder.attributes = attributes.slice(:title, :open)
 

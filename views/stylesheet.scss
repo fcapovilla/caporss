@@ -40,6 +40,9 @@ body {
 			padding-left: 0px;
 		}
 	}
+	.drag-hovered {
+		border-bottom: 2px solid black;
+	}
 }
 
 .feedTitle,
@@ -75,8 +78,9 @@ body {
 		padding: 0 5px;
 	}
 
-	&>ul {
+	.item-list {
 		padding: 0;
+		margin: 0;
 
 		&>li {
 			border-bottom: 1px solid lightgrey;

@@ -62,13 +62,22 @@ put '/feed/:id', '/folder/*/feed/:id' do
 		attributes[:folder_id] = folder.id
 	end
 
-	# Keep the old folder if the feed's folder changed
+	# Manage position change
 	old_folder = nil
-	if feed.folder_id != attributes[:folder_id]
+	if attributes.has_key?(:folder_id) and attributes[:folder_id] != feed.folder_id
+		# Keep the old folder if the feed's folder changed
 		old_folder = feed.folder
+
+		if attributes.has_key?(:position)
+			feed.move_to_list(attributes[:folder_id], attributes[:position])
+		else
+			feed.move_to_list(attributes[:folder_id])
+		end
+	else
+		feed.move(attributes[:position]) if attributes.has_key?(:position)
 	end
 
-	feed.attributes = attributes.slice(:folder_id, :url)
+	feed.attributes = attributes.slice(:url)
 
 	unless feed.valid?
 		errors = feed.errors.map{|e| e.first.to_s}

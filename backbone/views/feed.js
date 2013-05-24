@@ -1,25 +1,101 @@
-var FeedView = Backbone.View.extend({
+var FeedView = Backbone.Marionette.ItemView.extend({
 	tagName: 'li',
+	attributes: {
+		'draggable': true
+	},
 	className: 'feed',
-	template: _.template($('#tmpl-feed').html(), null, {variable:'feed'}),
+	template: '#tmpl-feed',
 	events: {
 		'click .markFeedReadAction' : 'markFeedRead',
 		'click .markFeedUnreadAction' : 'markFeedUnread',
 		'click .syncFeedAction' : 'syncFeed',
 		'click .editFeedAction' : 'showFeedEditDialog',
 		'click .deleteFeedAction' : 'deleteFeed',
-		'click .feed-icon': 'openMenu',
-		'click .feedTitle' : 'selectFeed'
+		'click .feed-icon' : 'openMenu',
+		'click .feedTitle' : 'selectFeed',
+		'dragstart' : 'onDragStart',
+		'dragenter' : 'onDragEnter',
+		'dragover' : 'onDragOver',
+		'dragleave' : 'onDragLeave',
+		'drop' : 'onDrop',
+		'dragend' : 'onDragEnd'
+	},
+	modelEvents: {
+		'destroy': 'remove',
+		'change': 'render'
 	},
 	initialize: function() {
 		_.bindAll(this);
-		this.listenTo(this.model, 'destroy', this.remove);
-		this.listenTo(this.model, 'change', this.render);
 	},
-	render: function() {
-		this.$el.html(this.template(this.model.attributes));
-		return this;
+	serializeData: function() {
+		return {'feed': this.model.attributes};
+    },
+
+	onDragStart: function(e) {
+		e.stopPropagation();
+		this.$el.css({opacity: 0.5});
+		e.originalEvent.dataTransfer.setData('feed_id', this.model.id);
 	},
+	onDragEnter: function(e) {
+		e.preventDefault();
+		this.$el.addClass('drag-hovered');
+	},
+	onDragOver: function(e) {
+		e.preventDefault();
+	},
+	onDragLeave: function(e) {
+		var rect = e.currentTarget.getBoundingClientRect();
+		var oe = e.originalEvent;
+
+		if(oe.clientX >= rect.right || oe.clientX <= rect.left || oe.clientY >= rect.bottom || oe.clientY <= rect.top) {
+			this.$el.removeClass('drag-hovered');
+		}
+	},
+	onDrop: function(e) {
+		e.stopPropagation();
+		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
+		var feed = null;
+
+		if(feed_id) {
+			folders.each(function(folder) {
+				if(folder.feeds.get(feed_id)) {
+					feed = folder.feeds.get(feed_id);
+				}
+			});
+		}
+
+		if(feed) {
+			var new_position = this.model.get('position');
+			if(this.model.get('folder_id') == feed.get('folder_id')) {
+				if(new_position == feed.get('position')) {
+					this.$el.removeClass('drag-hovered');
+					return;
+				}
+				else if(new_position < feed.get('position')) {
+					new_position += 1;
+				}
+			}
+			else {
+				new_position += 1;
+			}
+			feed.save({
+				folder_id: this.model.get('folder_id'),
+				position: new_position
+			}, { success: function() {
+				router.navigate("", {trigger: true});
+				var scroll = $('.feed-list').scrollTop();
+				folders.fetch({reset: true, success: function() {
+					$('.feed-list').scrollTop(scroll);
+				}});
+			}});
+		}
+
+		this.$el.removeClass('drag-hovered');
+	},
+	onDragEnd: function(e) {
+		this.$el.css({opacity: ""});
+	},
+
 	selectFeed: function() {
 		router.navigate("feed/" + this.model.id, {trigger: true});
 	},
