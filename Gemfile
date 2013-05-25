@@ -20,6 +20,13 @@ group :development do
 	gem 'dm-sqlite-adapter'
 end
 
+group :test do
+	gem 'dm-sqlite-adapter'
+	gem 'dm-postgres-adapter'
+	gem 'dm-mysql-adapter'
+	gem 'rspec'
+end
+
 group :production do
 	gem 'dm-postgres-adapter'
 	#gem 'dm-mysql-adapter'
