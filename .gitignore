@@ -2,3 +2,4 @@
 .sass-cache/*
 rss.db
 manifest.yml
+coverage/*
