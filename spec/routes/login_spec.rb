@@ -2,14 +2,14 @@ require_relative '../spec_helper'
 
 describe "Login page" do
 
-  it "should respond to GET" do
+  it "responds to GET" do
     get '/login'
     last_response.should be_ok
 	last_response.body.should =~ /name='username'/
 	last_response.body.should =~ /name='password'/
   end
 
-  it "should block bad credentials" do
+  it "blocks bad credentials" do
 	  post '/login', :username => 'abcd', :password => 'abcd'
 	  last_response.should be_redirect
 	  follow_redirect!
@@ -18,7 +18,7 @@ describe "Login page" do
 	  last_response.body.should =~ /Invalid credentials/
   end
 
-  it "should block empty credentials" do
+  it "blocks empty credentials" do
 	  post '/login', :username => '', :password => ''
 	  last_response.should be_redirect
 	  follow_redirect!
@@ -27,7 +27,7 @@ describe "Login page" do
 	  last_response.body.should =~ /Invalid credentials/
   end
 
-  it "should accept good credentials (admin)" do
+  it "accepts good credentials (admin)" do
 	  post '/login', :username => 'admin', :password => 'admin'
 	  last_response.should be_redirect
 	  follow_redirect!
@@ -39,7 +39,7 @@ describe "Login page" do
 	  last_response.body.should =~ /Admin/
   end
 
-  it "should log out on logout" do
+  it "logs out on logout" do
 	  get '/logout'
 	  last_response.should be_redirect
 	  follow_redirect!
@@ -53,7 +53,7 @@ describe "Login page" do
 	  last_request.url.should =~ /login$/
   end
 
-  it "should redirect to the original page on login" do
+  it "redirects to the original page" do
 	  get '/admin'
 	  last_response.should be_redirect
 	  follow_redirect!

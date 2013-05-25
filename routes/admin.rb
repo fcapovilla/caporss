@@ -7,9 +7,3 @@ get '/admin' do
 	haml :admin, :layout => false
 end
 
-post '/admin' do
-	authorize! :admin
-
-	haml :admin, :layout => false
-end
-
