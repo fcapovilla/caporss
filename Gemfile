@@ -25,6 +25,7 @@ group :test do
 	gem 'dm-postgres-adapter'
 	gem 'dm-mysql-adapter'
 	gem 'rspec'
+	gem 'coveralls', require: false
 end
 
 group :production do

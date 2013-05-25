@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
+
 require_relative '../app.rb'
 
 require 'rspec'
