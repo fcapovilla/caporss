@@ -76,7 +76,11 @@ end
 migration 3, :folder_title_not_unique do
 	up do
 		begin
-			execute 'DROP INDEX "unique_folders_title"'
+			if adapter == 'mysql'
+				execute 'DROP INDEX "unique_folders_title" ON folders'
+			elsif adapter == 'postgresql'
+				execute 'DROP INDEX "unique_folders_title"'
+			end
 		rescue
 			puts ">> Index doesn't exist. Nothing to do."
 		end
