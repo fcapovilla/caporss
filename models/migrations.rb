@@ -76,7 +76,7 @@ end
 migration 3, :folder_title_not_unique do
 	up do
 		begin
-			execute 'DROP INDEX unique_folders_title'
+			execute 'DROP INDEX "unique_folders_title"'
 		rescue
 			puts ">> Index doesn't exist. Nothing to do."
 		end
@@ -86,7 +86,11 @@ end
 if ['mysql', 'postgresql'].include? adapter
 	migration 4, :update_default_locale_size do
 		up do
-			execute 'ALTER TABLE users ALTER COLUMN default_locale TYPE VARCHAR(5)'
+			if adapter == 'mysql'
+				execute 'ALTER TABLE users MODIFY default_locale VARCHAR(5)'
+			elsif adapter == 'postgresql'
+				execute 'ALTER TABLE users ALTER COLUMN default_locale TYPE VARCHAR(5)'
+			end
 		end
 	end
 end
