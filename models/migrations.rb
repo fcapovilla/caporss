@@ -1,12 +1,16 @@
 # encoding: utf-8
 require 'dm-migrations/migration_runner'
 
-if repository(:default).adapter.options[:adapter] != 'sqlite3'
+adapter = repository(:default).adapter.options[:adapter]
+
+if ['mysql', 'postgresql'].include? adapter
 	migration 1, :update_favicon_data_column do
 		up do
-			execute(<<-SQL)
-				ALTER TABLE favicons ALTER COLUMN data TYPE text;
-			SQL
+			if adapter == 'mysql'
+				execute 'ALTER TABLE favicons MODIFY data TEXT'
+			elsif adapter == 'postgresql'
+				execute 'ALTER TABLE favicons ALTER COLUMN data TYPE text'
+			end
 		end
 	end
 end
@@ -72,21 +76,17 @@ end
 migration 3, :folder_title_not_unique do
 	up do
 		begin
-			execute(<<-SQL)
-				DROP INDEX 'unique_folders_title';
-			SQL
+			execute 'DROP INDEX unique_folders_title'
 		rescue
 			puts ">> Index doesn't exist. Nothing to do."
 		end
 	end
 end
 
-if repository(:default).adapter.options[:adapter] != 'sqlite3'
+if ['mysql', 'postgresql'].include? adapter
 	migration 4, :update_default_locale_size do
 		up do
-			execute(<<-SQL)
-				ALTER TABLE users ALTER COLUMN default_locale TYPE VARCHAR(5);
-			SQL
+			execute 'ALTER TABLE users ALTER COLUMN default_locale TYPE VARCHAR(5)'
 		end
 	end
 end
