@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 describe "Admin page" do
 
-	before do
+	before :all do
 		User.new(
 			:username => 'user',
 			:password => 'user',
@@ -26,7 +26,7 @@ describe "Admin page" do
 		last_request.url.should =~ /login$/
 	end
 
-	after do
+	after :all do
 		User.first(:username => 'user').destroy
 	end
 

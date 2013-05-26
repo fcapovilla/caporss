@@ -17,6 +17,10 @@ def app
   Sinatra::Application
 end
 
+def session
+  last_request.env['rack.session']
+end
+
 RSpec.configure do |config|
   config.include Rack::Test::Methods
 end
