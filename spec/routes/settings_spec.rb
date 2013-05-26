@@ -10,6 +10,12 @@ describe "Settings route" do
 		).save
 	end
 
+	it "blocks access by sync user" do
+		authorize 'sync', 'sync'
+		post '/save_settings', :cleanup_after => 100
+		last_response.status.should == 403
+	end
+
 	it "saves settings" do
 		authorize 'user', 'user'
 		post '/save_settings',
