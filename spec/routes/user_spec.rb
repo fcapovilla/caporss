@@ -25,6 +25,14 @@ describe "Admin user page" do
 		last_response.body.should_not =~ /User successfully created/
 	end
 
+	it "won't create duplicate users" do
+		post '/login', :username => 'admin', :password => 'admin'
+		post '/user', :username => 'user', :password => 'user'
+		follow_redirect!
+		last_response.body.should_not =~ /User successfully created/
+		last_response.body.should =~ /Username is already taken/
+	end
+
 	it "can modify users" do
 		post '/login', :username => 'admin', :password => 'admin'
 		id = User.first(:username => 'user').id
@@ -38,11 +46,17 @@ describe "Admin user page" do
 		follow_redirect!
 		last_response.body.should =~ /User successfully updated/
 		User.get(id).password.should == 'testuser'
+
+		post "/user/#{id}", :username => 'testuser2', :password => 'testuser2'
+		follow_redirect!
+		last_response.body.should =~ /User successfully updated/
+		User.get(id).username.should == 'testuser2'
+		User.get(id).password.should == 'testuser2'
 	end
 
 	it "won't modify user using invalid values" do
 		post '/login', :username => 'admin', :password => 'admin'
-		id = User.first(:username => 'testuser').id
+		id = User.first(:username => 'testuser2').id
 
 		post "/user/#{id}", :username => ''
 		follow_redirect!
@@ -57,17 +71,19 @@ describe "Admin user page" do
 		post "/user/#{id}", :username => 'newusername', :password => ''
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully updated/
+		User.get(id).username.should_not == 'newusername'
 		User.get(id).password.should_not == ''
 
 		post "/user/#{id}", :username => '', :password => 'newusername'
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully updated/
 		User.get(id).username.should_not == ''
+		User.get(id).password.should_not == 'newusername'
 	end
 
 	it "can delete users" do
 		post '/login', :username => 'admin', :password => 'admin'
-		id = User.first(:username => 'testuser').id
+		id = User.first(:username => 'testuser2').id
 
 		delete "/user/#{id}"
         User.get(id).should be_nil
