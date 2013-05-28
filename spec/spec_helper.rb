@@ -5,6 +5,7 @@ require_relative '../app.rb'
 
 require 'rspec'
 require 'rack/test'
+require 'webmock/rspec'
 require 'sinatra'
 
 # setup test environment
@@ -19,6 +20,20 @@ end
 
 def session
   last_request.env['rack.session']
+end
+
+def generate_sample_feeds
+	admin = User.first(:username => 'admin')
+	5.times do |i|
+		folder = Folder.create(:title => "Folder #{i}", :user => admin)
+
+		5.times do |j|
+			feed = Feed.create(:title => "Feed #{j}", :url => "http://www.example.com/#{j}.rss", :user => admin)
+			folder.feeds << feed
+		end
+
+		folder.save
+	end
 end
 
 RSpec.configure do |config|
