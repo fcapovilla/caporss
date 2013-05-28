@@ -62,6 +62,51 @@ describe "Feed route" do
 		Feed.first(:title => 'Feed 0').position.should == 2
 	end
 
+	it "moves feeds between folders" do
+		authorize 'admin', 'admin'
+		folder_from = Folder.first(:title => "Folder 1")
+		folder_to = Folder.first(:title => "Folder 2")
+		feed_id = Feed.first(:title => 'Feed 1', :folder => folder_from).id
+
+		put "/feed/#{feed_id}", {:position => 4, :folder_id => folder_to.id}.to_json
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		last_response.body.should =~ /Feed 1/
+		data[:position].should == 4
+		data[:folder_id].should == folder_to.id
+
+		feed = Feed.get(feed_id)
+		feed.position.should == 4
+		feed.folder_id.should == folder_to.id
+
+		folder_feeds = folder_to.feeds(:order => :position)
+		folder_feeds[0].title.should == "Feed 0"
+		folder_feeds[1].title.should == "Feed 1"
+		folder_feeds[2].title.should == "Feed 2"
+		folder_feeds[3].title.should == "Feed 1"
+		folder_feeds[4].title.should == "Feed 3"
+		folder_feeds[5].title.should == "Feed 4"
+
+		folder_feeds = folder_from.feeds(:order => :position)
+		folder_feeds[0].title.should == "Feed 0"
+		folder_feeds[1].title.should == "Feed 2"
+		folder_feeds[2].title.should == "Feed 3"
+		folder_feeds[3].title.should == "Feed 4"
+
+
+		folder_to_2 = Folder.first(:title => "Folder 3")
+		put "/feed/#{feed_id}", {:folder_id => folder_to_2.id}.to_json
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		last_response.body.should =~ /Feed 1/
+		data[:position].should == 6
+		data[:folder_id].should == folder_to_2.id
+
+		feed = Feed.get(feed_id)
+		feed.position.should == 6
+		feed.folder_id.should == folder_to_2.id
+	end
+
 	it "changes feed's url" do
 		authorize 'admin', 'admin'
 		feed_id = Feed.first(:title => 'Feed 0').id
@@ -81,6 +126,12 @@ describe "Feed route" do
 	end
 
 	it "won't create invalid feeds" do
+	end
+
+	it "can make all of the feed's item read" do
+	end
+
+	it "can make all of the feed's item unread" do
 	end
 
 	it "deletes feeds" do
