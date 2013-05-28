@@ -25,7 +25,7 @@ get '/feed/:id/item' do |id|
 end
 
 post '/feed' do
-	params[:folder] = 'Feeds' if params[:folder].empty?
+	params[:folder] = 'Feeds' if params[:folder].nil? or params[:folder].empty?
 	folder = Folder.first_or_create(:user => @user, :title => params[:folder])
 
 	feed = Feed.new(

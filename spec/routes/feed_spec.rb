@@ -119,21 +119,6 @@ describe "Feed route" do
 	it "resets feeds" do
 	end
 
-	it "creates feeds" do
-	end
-
-	it "automatically creates new folders" do
-	end
-
-	it "won't create invalid feeds" do
-	end
-
-	it "can make all of the feed's item read" do
-	end
-
-	it "can make all of the feed's item unread" do
-	end
-
 	it "deletes feeds" do
 		authorize 'admin', 'admin'
 		feed_id = Feed.first(:title => 'Feed 4').id
@@ -146,6 +131,58 @@ describe "Feed route" do
 
 		data.length.should == 24
 		Feed.get(feed_id).should be_nil
+	end
+
+	it "creates feeds (No folder title)" do
+		authorize 'admin', 'admin'
+		post '/feed', :url => 'http://www.example.com/test.rss'
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		last_response.status.should == 200
+		data[:url].should == 'http://www.example.com/test.rss'
+		data[:title].should == 'http://www.example.com/test.rss'
+
+		feed = Feed.get(data[:id])
+		feed.folder.title.should == 'Feeds'
+		feed.folder.feeds.count.should == 1
+	end
+
+	it "creates feeds (New folder title)" do
+		authorize 'admin', 'admin'
+		post '/feed', :url => 'http://www.example.com/test.rss', :folder => 'Folder X'
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		last_response.status.should == 200
+		data[:url].should == 'http://www.example.com/test.rss'
+		data[:title].should == 'http://www.example.com/test.rss'
+
+		feed = Feed.get(data[:id])
+		feed.folder.title.should == 'Folder X'
+		feed.folder.feeds.count.should == 1
+	end
+
+	it "creates feeds (Existing folder title)" do
+		authorize 'admin', 'admin'
+		folder = Folder.first(:title => 'Folder 4')
+		post '/feed', :url => 'http://www.example.com/test.rss', :folder => 'Folder 4'
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		last_response.status.should == 200
+		data[:url].should == 'http://www.example.com/test.rss'
+		data[:title].should == 'http://www.example.com/test.rss'
+		data[:folder_id].should == folder.id
+	end
+
+	it "won't create invalid feeds" do
+	end
+
+	it "automatically creates new folders" do
+	end
+
+	it "can make all of the feed's item read" do
+	end
+
+	it "can make all of the feed's item unread" do
 	end
 
 	after :all do
