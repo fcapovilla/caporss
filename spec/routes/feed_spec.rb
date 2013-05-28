@@ -177,7 +177,7 @@ describe "Feed route" do
 		authorize 'admin', 'admin'
 		post '/feed', :url => ''
 		last_response.status.should == 400
-		feed.first(:url => '').should be_nil
+		Feed.first(:url => '').should be_nil
 	end
 
 	it "automatically creates new folders" do
