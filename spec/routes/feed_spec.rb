@@ -107,6 +107,16 @@ describe "Feed route" do
 		feed.folder_id.should == folder_to_2.id
 	end
 
+	it "can change a feed's folder using a folder title" do
+		authorize 'admin', 'admin'
+		folder_to = Folder.first(:title => "Folder 4")
+		feed_id = Feed.first(:title => 'Feed 3').id
+		put "/feed/#{feed_id}", {:folder => folder_to.title}.to_json
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		data[:folder_id].should == folder_to.id
+	end
+
 	it "changes feed's url" do
 		authorize 'admin', 'admin'
 		feed_id = Feed.first(:title => 'Feed 0').id
@@ -114,6 +124,15 @@ describe "Feed route" do
 		put "/feed/#{feed_id}", {:url => "http://www.example.com/4.rss"}.to_json
 		last_response.body.should =~ /http:\/\/www\.example\.com\/4\.rss/
 		Feed.get(feed_id).url.should == "http://www.example.com/4.rss"
+	end
+
+	it "won't update feed with invalid values" do
+		authorize 'admin', 'admin'
+		feed_id = Feed.first(:title => 'Feed 0').id
+
+		put "/feed/#{feed_id}", {:url => ''}.to_json
+		last_response.status.should == 400
+		Feed.get(feed_id).url.should_not == ''
 	end
 
 	it "resets feeds" do
@@ -178,9 +197,6 @@ describe "Feed route" do
 		post '/feed', :url => ''
 		last_response.status.should == 400
 		Feed.first(:url => '').should be_nil
-	end
-
-	it "automatically creates new folders" do
 	end
 
 	it "can make all of the feed's item read" do
