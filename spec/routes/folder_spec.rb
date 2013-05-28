@@ -6,6 +6,12 @@ describe "Folder route" do
 		generate_sample_feeds
 	end
 
+	it "blocks access by sync user" do
+		authorize 'sync', 'sync'
+		get '/folder'
+		last_response.status.should == 403
+	end
+
 	it "lists folders" do
 		authorize 'admin', 'admin'
 		get '/folder'
@@ -110,6 +116,7 @@ describe "Folder route" do
 
 		data.length.should == 4
 		last_response.should_not =~ /Folder 4/
+		Folder.get(folder_id).should be_nil
 	end
 
 	it "doesn't respond to POST" do
