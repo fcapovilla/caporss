@@ -26,7 +26,6 @@ group :test do
 	gem 'dm-mysql-adapter'
 	gem 'rspec'
 	gem 'coveralls', require: false
-	gem 'webmock'
 end
 
 group :production do

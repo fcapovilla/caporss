@@ -5,7 +5,6 @@ require_relative '../app.rb'
 
 require 'rspec'
 require 'rack/test'
-require 'webmock/rspec'
 require 'sinatra'
 
 # setup test environment
