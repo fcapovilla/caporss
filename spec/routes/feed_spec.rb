@@ -39,7 +39,7 @@ describe "Feed route" do
 
 	it "lists feed's items" do
 		authorize 'admin', 'admin'
-		feed = Feed.first(:title => 'Feed 0')
+		feed = Feed.last(:title => 'Feed 0')
 		feed.sync!
 
 		get "/feed/#{feed.id}/item"

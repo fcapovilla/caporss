@@ -4,7 +4,7 @@ Coveralls.wear!
 # Start test server (For fake rss feeds)
 @server_thread = Thread.new do
   require_relative 'support/test_server.rb'
-  TestServer.run!
+  TestServer.run! { trap(:INT, 'DEFAULT') }
 end
 sleep 1
 
