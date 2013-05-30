@@ -1,12 +1,12 @@
-require 'coveralls'
-Coveralls.wear!
-
 # Start test server (For fake rss feeds)
 @server_thread = Thread.new do
   require_relative 'support/test_server.rb'
   TestServer.run! { trap(:INT, 'DEFAULT') }
 end
 sleep 1
+
+require 'coveralls'
+Coveralls.wear!
 
 require 'rspec'
 require 'rack/test'
