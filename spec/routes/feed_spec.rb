@@ -39,10 +39,12 @@ describe "Feed route" do
 
 	it "lists feed's items" do
 		authorize 'admin', 'admin'
-		feed = Feed.last(:title => 'Feed 0')
-		feed.sync!
+		feed_id = Feed.last(:title => 'Feed 4').id
 
-		get "/feed/#{feed.id}/item"
+		# Need to sync feed before listing
+		post "/sync/feed/#{feed_id}"
+
+		get "/feed/#{feed_id}/item"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data.length.should == 3

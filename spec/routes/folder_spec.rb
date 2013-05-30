@@ -52,6 +52,19 @@ describe "Folder route" do
 	end
 
 	it "lists folder's items" do
+		authorize 'admin', 'admin'
+		folder_id = Folder.first(:title => 'Folder 4').id
+
+		# Need to sync folder before listing
+		post "/sync/folder/#{folder_id}"
+
+		get "/folder/#{folder_id}/item"
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		data.length.should == 15
+		data[0][:title].should == 'Item 2'
+		data[4][:title].should == 'Item 2'
+		data[5][:title].should == 'Item 1'
 	end
 
 	it "opens/closes folders" do
