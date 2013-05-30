@@ -7,7 +7,7 @@ class Feed
 
 	property :id, Serial
 	property :title, String, :length => 100
-	property :url, String, :length => 1..2000, :format => :url
+	property :url, String, :length => 1..2000
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
 
@@ -16,6 +16,8 @@ class Feed
 	belongs_to :favicon, :required => false
 	has n, :items, :constraint => :destroy
 	is :list, :scope => :folder_id
+
+	validates_with_method :validate_url
 
 	before :create do |feed|
 		feed.last_update = DateTime.new(2000,1,1)
@@ -123,5 +125,13 @@ class Feed
 		self.items.destroy
 		self.last_update = DateTime.new(2000,1,1)
 		self.sync!
+	end
+
+	def validate_url
+		if self.url =~ /(^$)|(^(http|https):\/\/[a-z0-9]+((\:[0-9]{1,5})?\/?.*)?$)/ix
+			true
+		else
+			[false, "Url is not a valid URL."]
+		end
 	end
 end
