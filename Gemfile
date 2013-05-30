@@ -21,6 +21,7 @@ group :development do
 end
 
 group :test do
+	gem 'thin'
 	gem 'dm-sqlite-adapter'
 	gem 'dm-postgres-adapter'
 	gem 'dm-mysql-adapter'

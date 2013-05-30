@@ -32,12 +32,22 @@ describe "Feed route" do
 		data[:title].should == 'Feed 0'
 		data[:position].should == 1
 		data[:unread_count].should == 0
-		data[:url].should == "http://www.example.com/0.rss"
+		data[:url].should == "http://localhost:4567/0.rss?items=3"
 		data[:user_id].should == User.first(:username => 'admin').id
 		data[:last_update].should == DateTime.new(2000,1,1).to_s
 	end
 
 	it "lists feed's items" do
+		authorize 'admin', 'admin'
+		feed = Feed.first(:title => 'Feed 0')
+		feed.sync!
+
+		get "/feed/#{feed.id}/item"
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		data.length.should == 3
+		data[0][:title].should == 'Item 2'
+		data[2][:title].should == 'Item 0'
 	end
 
 	it "can't rename feeds" do

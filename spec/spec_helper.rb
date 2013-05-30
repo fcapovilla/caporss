@@ -1,11 +1,17 @@
 require 'coveralls'
 Coveralls.wear!
 
-require_relative '../app.rb'
+# Start test server (For fake rss feeds)
+@server_thread = Thread.new do
+  require_relative 'support/test_server.rb'
+  TestServer.run!
+end
+sleep 1
 
 require 'rspec'
 require 'rack/test'
-require 'sinatra'
+
+require_relative '../app.rb'
 
 # setup test environment
 set :environment, :test
@@ -27,7 +33,7 @@ def generate_sample_feeds
 		folder = Folder.create(:title => "Folder #{i}", :user => admin)
 
 		5.times do |j|
-			feed = Feed.create(:title => "Feed #{j}", :url => "http://www.example.com/#{j}.rss", :user => admin)
+			feed = Feed.create(:title => "Feed #{j}", :url => "http://localhost:4567/#{j}.rss?items=3", :user => admin)
 			folder.feeds << feed
 		end
 
