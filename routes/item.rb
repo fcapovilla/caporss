@@ -10,9 +10,9 @@ get '/item' do
 	options = {
 		:user => @user,
 		:order => [:date.desc],
-		:offset => params[:offset].to_i || 0,
-		:limit => params[:limit].to_i || nil
+		:offset => params[:offset].to_i || 0
 	}
+	options[:limit] = params[:limit].to_i unless params[:limit].nil?
 	options[:read] = false if params[:show_read] == 'false'
 	Item.all(options).to_json
 end

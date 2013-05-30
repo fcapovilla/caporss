@@ -17,9 +17,9 @@ end
 get '/feed/:id/item' do |id|
 	options = {
 		:order => [:date.desc],
-		:offset => params[:offset].to_i || 0,
-		:limit => params[:limit].to_i || nil
+		:offset => params[:offset].to_i || 0
 	}
+	options[:limit] = params[:limit].to_i unless params[:limit].nil?
 	options[:read] = false if params[:show_read] == 'false'
 	Feed.first(:user => @user, :id => id).items(options).to_json
 end
