@@ -49,6 +49,16 @@ describe "Item route" do
 		Item.first.read.should == false
 	end
 
+	it "won't accept invalid read values" do
+		authorize 'admin', 'admin'
+		item = Item.first
+
+		put "/item/#{item.id}", {:read => 'test'}.to_json
+		last_response.status.should == 400
+
+		Item.first.read.should_not == 'test'
+	end
+
 	it "can't change other item informations" do
 		authorize 'admin', 'admin'
 		item = Item.first
