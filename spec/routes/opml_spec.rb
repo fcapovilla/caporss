@@ -18,6 +18,26 @@ describe "OPML route" do
 		opml.css('outline[type="rss"][title="Feed 0"]').length.should == 5
 	end
 
+	it 'imports opml files' do
+		authorize 'admin', 'admin'
+		file = Rack::Test::UploadedFile.new("spec/support/sample.opml", "application/octet-stream")
+		post "/opml_upload", :file => file
+
+		Folder.first(:title => 'Folder 1').feeds.count.should == 6
+
+		folder2 = Folder.first(:title => 'Folder 2')
+		folder2.feeds.count.should == 7
+		folder2.feeds.first(:title => 'NewFeed 2').should_not be_nil
+		folder2.feeds.first(:title => 'NewFeed 2-2').should_not be_nil
+
+		Folder.first(:title => 'NewFolder 3').should_not be_nil
+		Folder.first(:title => 'NewFolder 3').feeds.first(:title => 'NewFeed 3').should_not be_nil
+
+		newfeed4 = Feed.first(:title => 'NewFeed 4')
+		newfeed4.folder.title.should == 'Feeds'
+		newfeed4.url.should == "http://localhost:4567/test.rss?items=4"
+	end
+
 	after :all do
 		Folder.all.destroy
 	end

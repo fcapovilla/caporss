@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+  <head>
+    <title>OPML Export</title>
+  </head>
+  <body>
+    <outline title="Folder 1" text="Folder 1">
+      <outline title="NewFeed 1" text="NewFeed 1" type="rss" xmlUrl="http://localhost:4567/test.rss?items=1"/>
+    </outline>
+    <outline title="Folder 2" text="Folder 2">
+      <outline title="NewFeed 2" text="NewFeed 2" type="rss" xmlUrl="http://localhost:4567/test.rss?items=2"/>
+      <outline title="NewFeed 2-2" text="NewFeed 2-2" type="rss" xmlUrl="http://localhost:4567/test.rss?items=2"/>
+    </outline>
+    <outline title="NewFolder 3" text="Folder 3">
+      <outline title="NewFeed 3" text="NewFeed 3" type="rss" xmlUrl="http://localhost:4567/test.rss?items=3"/>
+    </outline>
+	<outline title="NewFeed 4" text="NewFeed 4" type="rss" xmlUrl="http://localhost:4567/test.rss?items=4"/>
+  </body>
+</opml>
