@@ -18,7 +18,7 @@ class Favicon
 			curl.follow_location = true
 			curl.url = self.url
 			curl.on_success{ |resp|
-				if resp.content_type == 'image/x-icon'
+				if resp.content_type =~ /^image\/.*icon$/
 					data = Base64.encode64(resp.body_str)
 					self.data = data if data.length < 65535
 				end
