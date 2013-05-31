@@ -36,6 +36,9 @@ describe "OPML route" do
 		newfeed4 = Feed.first(:title => 'NewFeed 4')
 		newfeed4.folder.title.should == 'Feeds'
 		newfeed4.url.should == "http://localhost:4567/test.rss?items=4"
+		newfeed4.items.count.should == 0
+		newfeed4.sync!
+		newfeed4.items.count.should == 4
 	end
 
 	after :all do
