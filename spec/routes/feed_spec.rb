@@ -143,12 +143,51 @@ describe "Feed route" do
 		authorize 'admin', 'admin'
 		feed_id = Feed.first(:title => 'Feed 0').id
 
-		put "/feed/#{feed_id}", {:url => ''}.to_json
+		put "/feed/#{feed_id}", {:url => "file://test.txt"}.to_json
 		last_response.status.should == 400
-		Feed.get(feed_id).url.should_not == ''
+		Feed.get(feed_id).url.should_not == "file://test.txt"
 	end
 
 	it "resets feeds" do
+		authorize 'admin', 'admin'
+		feed = Feed.first(:title => 'Feed 3')
+		feed.sync!
+		feed.items.count.should == 3
+
+		put "/feed/#{feed.id}", {:action => 'reset', :url => "http://localhost:4567/test.rss?items=1"}.to_json
+		Feed.get(feed.id).items.count.should == 1
+	end
+
+	it "can make all of the feed's item read" do
+		authorize 'admin', 'admin'
+		feed = Feed.first(:title => 'Feed 4')
+		feed.sync!
+
+		feed.unread_count.should == 3
+		feed.items.first.read.should == false
+
+		put "/feed/#{feed.id}", {:action => 'read'}.to_json
+		feed = Feed.get(feed.id)
+
+		feed.unread_count.should == 0
+		feed.items.first.read.should == true
+
+		feed.title = "Feed 4"
+		feed.save
+	end
+
+	it "can make all of the feed's item unread" do
+		authorize 'admin', 'admin'
+		feed = Feed.first(:title => 'Feed 4')
+
+		feed.unread_count.should == 0
+		feed.items.first.read.should == true
+
+		put "/feed/#{feed.id}", {:action => 'unread'}.to_json
+		feed = Feed.get(feed.id)
+
+		feed.unread_count.should == 3
+		feed.items.first.read.should == false
 	end
 
 	it "deletes feeds" do
@@ -210,12 +249,6 @@ describe "Feed route" do
 		post '/feed', :url => ''
 		last_response.status.should == 400
 		Feed.first(:url => '').should be_nil
-	end
-
-	it "can make all of the feed's item read" do
-	end
-
-	it "can make all of the feed's item unread" do
 	end
 
 	after :all do
