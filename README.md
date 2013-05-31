@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.6.0
+Version 0.6.1
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -116,7 +116,7 @@ Here is a list of keyboard shortcuts currently supported by CapoRSS :
 
 * Optimisations, performance improvements and bugfixes
 * In-app documentation
-* Add unit tests
+* Add javascript tests
 
 ## Release notes
 * 0.5.0 : This version brings a lots of modifications to the database structure to add multi-user support. Automatic migrations are included to move all single-user configurations to the 'admin/admin' user, but starting from a clean database is recommended.
