@@ -24,7 +24,7 @@ class TestServer < Sinatra::Base
 							xml.title "Item #{i}"
 							xml.link request.url
 							xml.description "Description - Item #{i}"
-							xml.pubDate DateTime.new(2000,1,1,1,i).rfc822
+							xml.pubDate DateTime.new(DateTime.now.year-1+i,1,1,1).rfc822
 							xml.guid i.to_s
 						end
 					end
