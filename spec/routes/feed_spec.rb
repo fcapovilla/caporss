@@ -57,6 +57,7 @@ describe "Feed route" do
 		feed_id = Feed.first(:title => 'Feed 0').id
 
 		put "/feed/#{feed_id}", {:title => "FeedTest 0"}.to_json
+
 		last_response.body.should_not =~ /FeedTest 0/
 		Feed.get(feed_id).title.should_not == "FeedTest 0"
 	end
