@@ -15,38 +15,68 @@ describe "Sync route" do
 
 		it "syncs a single feed" do
 			authorize 'admin', 'admin'
-			feed_id = Feed.first(:title => 'Feed 0').id
+			feed = Feed.first(:title => 'Feed 0')
 
-			post "/sync/feed/#{feed_id}"
+			post "/sync/feed/#{feed.id}"
 			data = JSON.parse(last_response.body, :symbolize_names => true)
 
 			data[:updated].should == 1
 			data[:new_items].should == 3
 
 			# Title should have been updated after sync
-			feed = Feed.get(feed_id)
+			feed.reload
 			feed.title.should == 'Test title'
 			feed.items.count.should == 3
 		end
 
 		it "syncs all of a folder's feeds" do
 			authorize 'admin', 'admin'
-			folder_id = Folder.first(:title => 'Folder 1').id
+			folder = Folder.first(:title => 'Folder 1')
+			feed = folder.feeds.first
 
-			post "/sync/folder/#{folder_id}"
+			folder.feeds.items.count.should == 0
+			folder.unread_count.should == 0
+
+			feed.title.should_not == 'Test title'
+			feed.items.count.should == 0
+			feed.unread_count.should == 0
+
+
+			post "/sync/folder/#{folder.id}"
 			data = JSON.parse(last_response.body, :symbolize_names => true)
 
 			data[:updated].should == 5
 			data[:new_items].should == 15
 
-			# Feed titles should have been updated after sync
-			feed = Folder.get(folder_id).feeds.first
+
+			folder.reload
+			folder.feeds.items.count.should == 15
+			folder.unread_count.should == 15
+
+			feed.reload
 			feed.title.should == 'Test title'
 			feed.items.count.should == 3
+			feed.unread_count.should == 3
 		end
 
 		it "syncs all of a user's feeds" do
 			authorize 'admin', 'admin'
+			folder = Folder.first(:title => 'Folder 2')
+			folder2 = Folder.first(:title => 'Folder 3')
+			feed = folder.feeds.first
+
+			folder.feeds.items.count.should == 0
+			folder.unread_count.should == 0
+
+			folder2.feeds.items.count.should == 0
+			folder2.unread_count.should == 0
+
+			feed.title.should_not == 'Test title'
+			feed.items.count.should == 0
+			feed.unread_count.should == 0
+
+			Folder.all.feeds.items.count.should == 18
+
 
 			post "/sync/all"
 			data = JSON.parse(last_response.body, :symbolize_names => true)
@@ -54,10 +84,20 @@ describe "Sync route" do
 			data[:updated].should == 25
 			data[:new_items].should == 57  # 75 - 15 - 3
 
-			# Feed titles should have been updated after sync
-			feed = Folder.first(:title => 'Folder 2').feeds.first
+
+			folder.reload
+			folder.feeds.items.count.should == 15
+			folder.unread_count.should == 15
+
+			folder2.reload
+			folder2.feeds.items.count.should == 15
+			folder2.unread_count.should == 15
+
+			feed.reload
 			feed.title.should == 'Test title'
 			feed.items.count.should == 3
+
+			Folder.all.feeds.items.count.should == 75
 		end
 
 		it "fetches new feeds and updates feed title" do
@@ -74,13 +114,14 @@ describe "Sync route" do
 			data[:new_items].should == 2
 
 			# Title should have been updated after sync
-			feed = Feed.get(feed.id)
+			feed.reload
 			feed.title.should == 'AAAAA'
 			feed.items.count.should == 5
 		end
 
 		it "prevents non-sync users from syncing all feeds" do
 			authorize 'user', 'user'
+
 			post "/full_sync"
 			last_response.status.should == 403
 		end
@@ -105,6 +146,8 @@ describe "Sync route" do
 
 			data[:updated].should == 25
 			data[:new_items].should == 75
+
+			Folder.all.feeds.items.count.should == 75
 		end
 
 		after :all do

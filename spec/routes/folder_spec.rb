@@ -25,24 +25,25 @@ describe "Folder route" do
 
 	it "shows folder's informations" do
 		authorize 'admin', 'admin'
-		folder_id = Folder.first(:title => 'Folder 0').id
+		folder = Folder.first(:title => 'Folder 0')
+		user = User.first(:username => 'admin')
 
-		get "/folder/#{folder_id}"
+		get "/folder/#{folder.id}"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
-		data[:id].should == folder_id
+		data[:id].should == folder.id
 		data[:title].should == 'Folder 0'
 		data[:position].should == 1
 		data[:open].should == true
 		data[:unread_count].should == 0
-		data[:user_id].should == User.first(:username => 'admin').id
+		data[:user_id].should == user.id
 	end
 
 	it "lists folder's feeds" do
 		authorize 'admin', 'admin'
-		folder_id = Folder.first(:title => 'Folder 0').id
+		folder = Folder.first(:title => 'Folder 0')
 
-		get "/folder/#{folder_id}/feed"
+		get "/folder/#{folder.id}/feed"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Feed 0/
@@ -53,12 +54,12 @@ describe "Folder route" do
 
 	it "lists folder's items" do
 		authorize 'admin', 'admin'
-		folder_id = Folder.first(:title => 'Folder 4').id
+		folder = Folder.first(:title => 'Folder 4')
 
 		# Need to sync folder before listing
-		post "/sync/folder/#{folder_id}"
+		post "/sync/folder/#{folder.id}"
 
-		get "/folder/#{folder_id}/item"
+		get "/folder/#{folder.id}/item"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data.length.should == 15
@@ -69,48 +70,56 @@ describe "Folder route" do
 
 	it "opens/closes folders" do
 		authorize 'admin', 'admin'
-		folder_id = Folder.first(:title => 'Folder 0').id
+		folder = Folder.first(:title => 'Folder 0')
 
-		put "/folder/#{folder_id}", {:open => false}.to_json
+		put "/folder/#{folder.id}", {:open => false}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
+
 		data[:open].should == false
-		Folder.get(folder_id).open.should == false
+		folder.reload.open.should == false
 
-		put "/folder/#{folder_id}", {:open => true}.to_json
+		put "/folder/#{folder.id}", {:open => true}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
+
 		data[:open].should == true
-		Folder.get(folder_id).open.should == true
+		folder.reload.open.should == true
 	end
 
 	it "renames folders" do
 		authorize 'admin', 'admin'
-		folder_id = Folder.first(:title => 'Folder 0').id
+		folder = Folder.first(:title => 'Folder 0')
 
-		put "/folder/#{folder_id}", {:title => "FolderTest 0"}.to_json
+		put "/folder/#{folder.id}", {:title => "FolderTest 0"}.to_json
+
 		last_response.body.should =~ /FolderTest 0/
-		Folder.get(folder_id).title.should == "FolderTest 0"
+		folder.reload.title.should == "FolderTest 0"
 	end
 
 	it "moves folders" do
 		authorize 'admin', 'admin'
-		folder_id = Folder.first(:title => 'Folder 1').id
+		folder = Folder.first(:title => 'Folder 1')
+		folder2 = Folder.first(:title => 'FolderTest 0')
 
-		put "/folder/#{folder_id}", {:position => 1}.to_json
+		folder.position.should == 2
+		folder2.position.should == 1
+
+		put "/folder/#{folder.id}", {:position => 1}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Folder 1/
 		data[:position].should == 1
-		Folder.get(folder_id).position.should == 1
-		Folder.first(:title => 'FolderTest 0').position.should == 2
+
+		folder.reload.position.should == 1
+		folder2.reload.position.should == 2
 	end
 
 	it "won't create invalid folders" do
 		authorize 'admin', 'admin'
-		folder_id = Folder.first(:title => 'Folder 2').id
+		folder = Folder.first(:title => 'Folder 2')
 
-		put "/folder/#{folder_id}", {:title => ""}.to_json
+		put "/folder/#{folder.id}", {:title => ""}.to_json
 		last_response.status.should == 400
-		Folder.get(folder_id).title.should_not == ""
+		folder.reload.title.should_not == ""
 
 		#put "/folder/#{folder_id}", {:position => "abcd"}.to_json
 		#last_response.status.should == 400
@@ -119,22 +128,20 @@ describe "Folder route" do
 
 	it "deletes folders" do
 		authorize 'admin', 'admin'
-		folder_id = Folder.first(:title => 'Folder 4').id
+		folder = Folder.first(:title => 'Folder 4')
 
-		delete "/folder/#{folder_id}"
+		delete "/folder/#{folder.id}"
 		last_response.status.should == 200
 
-		get '/folder'
-		data = JSON.parse(last_response.body, :symbolize_names => true)
-
-		data.length.should == 4
-		last_response.should_not =~ /Folder 4/
-		Folder.get(folder_id).should be_nil
+		Folder.all.count.should == 4
+		Folder.get(folder.id).should be_nil
 	end
 
 	it "doesn't respond to POST" do
 		authorize 'admin', 'admin'
+
 		post '/folder', :title => 'test'
+
 		last_response.status.should == 404
 	end
 

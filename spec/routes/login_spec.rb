@@ -40,6 +40,12 @@ describe "Login page" do
 	end
 
 	it "logs out on logout" do
+		post '/login', :username => 'admin', :password => 'admin'
+		last_response.should be_redirect
+		follow_redirect!
+
+		last_request.url.should_not =~ /login$/
+
 		get '/logout'
 		last_response.should be_redirect
 		follow_redirect!

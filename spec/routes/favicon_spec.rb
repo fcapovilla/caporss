@@ -28,7 +28,7 @@ describe "Favicon route" do
 		post "/favicon/fetch_all"
 		last_response.status.should == 200
 
-		favicon = Favicon.first
+		favicon.reload
 		favicon.data.length.should >= 1
 	end
 

@@ -13,13 +13,12 @@ describe "Cleanup route" do
 
 		post "/cleanup/feed/#{feed.id}", :cleanup_after => 400
 		last_response.body.should == '"done"'
-		User.first(:username => 'admin').cleanup_after.should == 400
+		user = User.first(:username => 'admin')
+		user.cleanup_after.should == 400
 
-		get "/feed/#{feed.id}/item"
-		data = JSON.parse(last_response.body, :symbolize_names => true)
-
-		data.length.should <= 2
-		data.length.should >= 1
+		feed.reload
+		feed.items.count.should >= 1
+		feed.items.count.should <= 2
 	end
 
 	it "cleans up folders" do
@@ -31,13 +30,12 @@ describe "Cleanup route" do
 
 		post "/cleanup/folder/#{folder.id}", :cleanup_after => 400
 		last_response.body.should == '"done"'
-		User.first(:username => 'admin').cleanup_after.should == 400
+		user = User.first(:username => 'admin')
+		user.cleanup_after.should == 400
 
-		get "/folder/#{folder.id}/item"
-		data = JSON.parse(last_response.body, :symbolize_names => true)
-
-		data.length.should <= 10
-		data.length.should >= 5
+		folder.reload
+		folder.feeds.items.count.should >= 5
+		folder.feeds.items.count.should <= 10
 	end
 
 	it "cleans up all feeds" do
@@ -49,13 +47,12 @@ describe "Cleanup route" do
 
 		post "/cleanup/all"
 		last_response.body.should == '"done"'
-		User.first(:username => 'admin').cleanup_after.should == 400
+		user = User.first(:username => 'admin')
+		user.cleanup_after.should == 400
 
-		get "/folder/#{folder.id}/item"
-		data = JSON.parse(last_response.body, :symbolize_names => true)
-
-		data.length.should <= 10
-		data.length.should >= 5
+		folder.reload
+		folder.feeds.items.count.should >= 5
+		folder.feeds.items.count.should <= 10
 	end
 
 	after :all do

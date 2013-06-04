@@ -4,6 +4,7 @@ describe "Admin user page" do
 
 	it "can add a new user" do
 		post '/login', :username => 'admin', :password => 'admin'
+
 		post '/user', :username => 'user', :password => 'user'
 		follow_redirect!
 		last_response.body.should =~ /User successfully created/
@@ -15,90 +16,98 @@ describe "Admin user page" do
 		post '/user', :username => '', :password => ''
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully created/
+		User.first(:username => '').should be_nil
 
 		post '/user', :username => 'test_user_without_password', :password => ''
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully created/
+		User.first(:username => 'test_user_without_password').should be_nil
 
 		post '/user', :username => '', :password => 'no_username'
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully created/
+		User.first(:username => '').should be_nil
 	end
 
 	it "won't create duplicate users" do
 		post '/login', :username => 'admin', :password => 'admin'
+
 		post '/user', :username => 'user', :password => 'user'
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully created/
 		last_response.body.should =~ /Username is already taken/
+		User.all(:username => 'user').count.should == 1
 	end
 
 	it "can modify users" do
 		post '/login', :username => 'admin', :password => 'admin'
-		id = User.first(:username => 'user').id
+		user = User.first(:username => 'user')
 
-		post "/user/#{id}", :username => 'testuser'
+		post "/user/#{user.id}", :username => 'testuser'
 		follow_redirect!
 		last_response.body.should =~ /User successfully updated/
-		User.get(id).username.should == 'testuser'
+		user.reload.username.should == 'testuser'
 
-		post "/user/#{id}", :password => 'testuser'
+		post "/user/#{user.id}", :password => 'testuser'
 		follow_redirect!
 		last_response.body.should =~ /User successfully updated/
-		User.get(id).password.should == 'testuser'
+		user.reload.password.should == 'testuser'
 
-		post "/user/#{id}", :username => 'testuser2', :password => 'testuser2'
+		post "/user/#{user.id}", :username => 'testuser2', :password => 'testuser2'
 		follow_redirect!
 		last_response.body.should =~ /User successfully updated/
-		User.get(id).username.should == 'testuser2'
-		User.get(id).password.should == 'testuser2'
+		user.reload
+		user.username.should == 'testuser2'
+		user.password.should == 'testuser2'
 	end
 
 	it "won't modify user using invalid values" do
 		post '/login', :username => 'admin', :password => 'admin'
-		id = User.first(:username => 'testuser2').id
+		user = User.first(:username => 'testuser2')
 
-		post "/user/#{id}", :username => ''
+		post "/user/#{user.id}", :username => ''
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully updated/
-		User.get(id).username.should_not == ''
+		user.reload.username.should_not == ''
 
-		post "/user/#{id}", :password => ''
+		post "/user/#{user.id}", :password => ''
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully updated/
-		User.get(id).password.should_not == ''
+		user.reload.password.should_not == ''
 
-		post "/user/#{id}", :username => 'newusername', :password => ''
+		post "/user/#{user.id}", :username => 'newusername', :password => ''
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully updated/
-		User.get(id).username.should_not == 'newusername'
-		User.get(id).password.should_not == ''
+		user.reload
+		user.username.should_not == 'newusername'
+		user.password.should_not == ''
 
-		post "/user/#{id}", :username => '', :password => 'newusername'
+		post "/user/#{user.id}", :username => '', :password => 'newusername'
 		follow_redirect!
 		last_response.body.should_not =~ /User successfully updated/
-		User.get(id).username.should_not == ''
-		User.get(id).password.should_not == 'newusername'
+		user.reload
+		user.username.should_not == ''
+		user.password.should_not == 'newusername'
 	end
 
 	it "can delete users" do
 		post '/login', :username => 'admin', :password => 'admin'
-		id = User.first(:username => 'testuser2').id
+		user = User.first(:username => 'testuser2')
 
-		delete "/user/#{id}"
-        User.get(id).should be_nil
+		delete "/user/#{user.id}"
+        User.get(user.id).should be_nil
 	end
 
 	it "won't delete admin or sync users" do
 		post '/login', :username => 'admin', :password => 'admin'
+		admin = User.first(:roles => [:admin])
+		sync = User.first(:roles => [:sync])
 
-		id = User.first(:roles => [:admin]).id
-		delete "/user/#{id}"
-		User.get(id).should_not be_nil
+		delete "/user/#{admin.id}"
+		User.get(admin.id).should_not be_nil
 
-		id = User.first(:roles => [:sync]).id
-		delete "/user/#{id}"
-		User.get(id).should_not be_nil
+		delete "/user/#{sync.id}"
+		User.get(sync.id).should_not be_nil
 	end
 
 end

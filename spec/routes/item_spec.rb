@@ -40,13 +40,13 @@ describe "Item route" do
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data[:read].should == true
-		Item.first.read.should == true
+		item.reload.read.should == true
 
 		put "/item/#{item.id}", {:read => false}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data[:read].should == false
-		Item.first.read.should == false
+		item.reload.read.should == false
 	end
 
 	it "won't accept invalid read values" do
@@ -56,7 +56,7 @@ describe "Item route" do
 		put "/item/#{item.id}", {:read => 'test'}.to_json
 		last_response.status.should == 400
 
-		Item.first.read.should_not == 'test'
+		item.reload.read.should_not == 'test'
 	end
 
 	it "can't change other item informations" do
@@ -67,7 +67,7 @@ describe "Item route" do
 		put "/item/#{item.id}", {:title => 'AAAAA'}.to_json
 
 		last_response.body.should_not =~ /AAAAA/
-		Item.first.title.should_not == 'AAAAA'
+		item.reload.title.should_not == 'AAAAA'
 	end
 
 	after :all do
