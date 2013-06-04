@@ -3,10 +3,6 @@ body {
 	overflow: hidden;
 }
 
-.clear {
-	clear: both;
-}
-
 .feed-list {
 	display: block;
 	position: absolute;
@@ -182,12 +178,8 @@ body {
 
 @media screen and (max-width:767px) {
 	body {
-		font-size: 1em;
 		padding: 0px;
-	}
-
-	.ui-pnotify-history-container {
-		display: none;
+		font-size: 0.75em;
 	}
 
 	.btn {
@@ -233,10 +225,11 @@ body {
 			padding: 5px 0;
 		}
 
-		&>ul {
+		.item-list {
 			.readUnreadIcon,
 			.dropdown-toggle {
-				padding: 7px 1px;
+				padding: 8px 4px;
+				margin: 0px;
 			}
 		}
 	}
