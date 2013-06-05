@@ -1,0 +1,51 @@
+h1. Raccourcis clavier
+
+* *A* : Afficher la fenêtre d'abonnement
+* *R* : Synchroniser tous les abonnements
+* *H* : Cacher/Afficher les items lus
+* *J* : Voir le prochain item dans la liste des items
+* *K* : Voir l'item précédent dans la liste des items
+* *SHIFT+J* : Sélectionner le prochain dossier/abonnement dans la barre latérale
+* *SHIFT+K* : Sélectionner le dossier/abonnement précédent dans la barre latérale
+* *SPACE* : Descendre d'une page dans la liste des items en changenant d'item si nécessaire
+* *SHIFT+SPACE* : Monter d'une page dans la liste des items en changenant d'item si nécessaire
+
+h1. Préférences
+
+* *Importer/Exporter un ficher OPML* : Un fichier OPML contient des informations sur les abonnements. Vous pouvez importer un fichier OPML d'une source externe ou exporter une liste de vos abonnements sous la forme d'un fichier OPML pouvant être importé dans un autre lecteur RSS.
+* *Nettoyage* : Supprime les vieux items dans la base de données locale. Vous pouvez spécifier une limite d'âge en jours. Seul les items dont la date dépasse cette limite seront supprimés lors d'un clic sur le bouton "Nettoyage".
+* *Synchroniser toutes les...* : Va chercher les nouveaux items sur les serveurs distants à un certain intervalle.
+* *Rafraîchir toutes les...* : Va chercher les nouveaux items dans la base de données locale à un intervalle spécifié. À utiliser avec un "worker" de synchronisation automatique qui va chercher les items sur les serveur distant avec un intervalle spécifique.
+* *Mettre à jour les favicons* : Les favicons des abonnements sont seulement récupérés sur les serveurs distants lors de l'ajout d'un abonnement. Vous pouvez utiliser ce bouton pour forcer une mise à jour de tous les favicons.
+* *Administration* : Cette page vous permet d'ajouter et de modifier les comptes usager. Veuillez noter que cette fonctionnalité peut seulement être accédée par l'usager admin.
+
+h1. Menu principal
+
+* *Synchroniser* : Va chercher les nouveaux items sur les serveurs distants. Appliqué sur tous les abonnements.
+* *Afficher/Cacher les items lus* : Vous permet de spécifier si les items qui ont déjà été lus seront affichés dans la liste des items.
+* *Abonnement* : Vous permet d'ajouter un nouvel abonnement à un flux. Si aucun nom de dossier n'est entré, le nouvel abonnement sera automatiquement ajouté au dossier "Feeds".
+* *Préférences* : Affiche la fenêtre de préférences.
+
+h1. Menu dossier
+
+* *Marquer comme lu/non lu* : Marques tous les items du dossier sélectionné comme lus/non lus.
+* *Synchroniser* : Va chercher les nouveaux items sur les serveurs distants. Appliqué sur tous les abonnements du dossier sélectionné.
+* *Modifier* : Vous permet de changer le nom d'un dossier.
+* *Supprimer* : Vous permet de supprimer un dossier. Veuillez noter que cette action est irréversibe.
+
+h1. Menu abonnement
+
+* *Marquer comme lu/non lu* : Marques tous les items de l'abonnement sélectionné comme lus/non lus.
+* *Synchroniser* : Va chercher les nouveaux items sur les serveurs distants. Appliqué sur l'abonnement sélectionné.
+* *Modifier* : Vous permet de changer l'url ou le dossier d'un abonnement
+** *Réinitialiser l'abonnement* : Si cette option est cochée lors de l'édition d'un abonnement, tous les items de cet abonnement seront supprimés et l'abonnement sera resynchronisé. Les informations sur les items lus/non lus seront perdues.
+* *Supprimer* : Vous permet de supprimer un abonnement. Veuillez noter que cette action est irréversibe.
+
+h1. Liste des items
+
+* *Marquer les plus anciens comme lus* : Cette option vous permet de marquer tous les items plus vieux que l'item choisi comme "lus".
+* *Icône "cercle" (Marquer comme lu/non lu)* : Un clic sur cette icône a pour effet de marquer l'item sélectionner comme lu/non lu.
+
+h1. Support du "glisser-déplacer"
+
+Vous pouvez facilement changer l'ordre des abonnements et des dossier en les glissant à l'aide de votre souris. Vous pouvez aussi changer les abonnements de dossier de cette façon.

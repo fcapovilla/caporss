@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    RedCloth (4.2.9)
     active_support (3.0.0)
       activesupport (= 3.0.0)
     activesupport (3.0.0)
@@ -151,6 +152,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth
   active_support
   coveralls
   datamapper

@@ -9,6 +9,7 @@ gem 'active_support'
 
 gem 'haml'
 gem 'sass'
+gem 'RedCloth'
 
 gem 'datamapper'
 gem 'dm-is-list'

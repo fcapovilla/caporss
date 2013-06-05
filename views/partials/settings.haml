@@ -23,6 +23,9 @@
         %li
           %a(href="#generalSettings" data-toggle="tab")
             =t.settings.general
+        %li
+          %a(href="#help" data-toggle="tab")
+            =t.settings.help
       .tab-content
         .tab-pane.active#accountSettings
           .well
@@ -86,6 +89,8 @@
           - if @user.roles.include?(:admin)
             %a(class="btn" href="/admin")
               =t.settings.admin_page
+        .tab-pane#help
+          #{documentation}
     .modal-footer
       %button(type="submit" class="btn btn-primary" aria-hidden="true")
         =t.settings.save

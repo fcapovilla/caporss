@@ -20,6 +20,7 @@ settings:
     general: Général
     update_favicons: Mettre à jour les favicons
     admin_page: Administration
+    help: Aide
 
 buttons:
     back: Retour

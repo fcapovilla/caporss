@@ -3,6 +3,14 @@ body {
 	overflow: hidden;
 }
 
+h1 {
+	font-size: 2.5em;
+}
+
+h2 {
+	font-size: 2.25em;
+}
+
 .feed-list {
 	display: block;
 	position: absolute;
@@ -71,7 +79,7 @@ body {
 		.item-content-title {
 			font-size: 20px;
 		}
-		padding: 0 5px;
+		padding: 0px;
 	}
 
 	.item-list {

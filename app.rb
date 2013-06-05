@@ -7,6 +7,7 @@ require 'sinatra/flash'
 
 require 'haml'
 require 'sass'
+require 'RedCloth'
 
 require 'json'
 require 'open-uri'
