@@ -11,7 +11,6 @@ require 'RedCloth'
 
 require 'json'
 require 'open-uri'
-require 'active_support/core_ext/hash/slice'
 
 require_relative 'models/init'
 require_relative 'helpers/init'

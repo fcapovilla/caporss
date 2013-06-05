@@ -2,9 +2,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
-    active_support (3.0.0)
-      activesupport (= 3.0.0)
-    activesupport (3.0.0)
     addressable (2.2.8)
     backports (3.3.0)
     bcrypt-ruby (3.0.1)
@@ -153,7 +150,6 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
-  active_support
   coveralls
   datamapper
   dm-is-list

@@ -5,8 +5,6 @@ gem 'sinatra-contrib'
 gem 'sinatra-r18n'
 gem 'sinatra-flash'
 
-gem 'active_support'
-
 gem 'haml'
 gem 'sass'
 gem 'RedCloth'
