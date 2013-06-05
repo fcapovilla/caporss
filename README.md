@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.6.1
+Version 0.6.2
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -98,24 +98,9 @@ See these pages for more informations :
 * [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 * [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
 
-## Keyboard shortcuts
-
-Here is a list of keyboard shortcuts currently supported by CapoRSS :
-
-* 'A' : Show the feed subscription dialog.
-* 'R' : Sync feeds
-* 'H' : Hide/Unhide read items
-* 'J' : Move down one item in the item list
-* 'K' : Move up one item in the item list
-* 'SHIFT+J' : Select the next feed/folder in the sidebar
-* 'SHIFT+K' : Select the previous feed/folder in the sidebar
-* 'SPACE' : Go down one page in the item list, changing the selected item if needed
-* 'SHIFT+SPACE' : Go up one page in the item list, changing the selected item if needed
-
 ## TODO
 
 * Optimisations, performance improvements and bugfixes
-* In-app documentation
 * Add javascript tests
 
 ## Release notes
