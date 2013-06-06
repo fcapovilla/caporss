@@ -48,16 +48,16 @@ var Router = Backbone.Router.extend({
 			}
 		}
 
-		items = new ItemListView({collection: model.items});
-		model.items.fetch(options);
-
-		if(currentSelection !== null && currentSelection !== model) {
+		if(currentSelection !== null) {
 			currentSelection.set('active', false);
 			currentSelection.items.query = '';
 			currentSelection.items.search_title = false;
 		}
 		model.set('active', true);
 		currentSelection = model;
+
+		items = new ItemListView({collection: model.items});
+		model.items.fetch(options);
 
 		$('#item-list').removeClass('hidden-phone');
 		$('.feed-list').addClass('hidden-phone');
