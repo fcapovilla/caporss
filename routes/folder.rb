@@ -25,6 +25,13 @@ get '/folder/:id/item' do |id|
 	}
 	options[:limit] = params[:limit].to_i unless params[:limit].nil?
 	options[:read] = false if params[:show_read] == 'false'
+	unless params[:query].nil?
+		if params[:search_title] == 'true'
+			options[:title.like] = "%#{params[:query]}%"
+		else
+			options[:content.like] = "%#{params[:query]}%"
+		end
+	end
 	Folder.first(:user => @user, :id => id).feeds.items(options).to_json
 end
 

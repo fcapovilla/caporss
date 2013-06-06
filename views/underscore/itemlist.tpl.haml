@@ -1,6 +1,9 @@
 -# ItemList underscore template
 :plain
   <script id='tmpl-itemlist' type='text/template'>
+    <% if(itemList.query){ %>
+      <div class="current_query">#{t.search.current_search} : <%= itemList.query %></div>
+    <% } %>
     <ul class="item-list"></ul>
     <div class="show_more_items">#{t.buttons.show_more_items}</div>
   </script>

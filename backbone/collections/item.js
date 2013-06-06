@@ -5,6 +5,9 @@ var ItemCollection = Backbone.Collection.extend({
 		this.current_page = 1;
 		this.all_loaded = false;
 
+		this.query = '';
+		this.search_title = true;
+
 		if(options !== undefined && options.show_feed_titles) {
 			this.show_feed_titles = true;
 		}
@@ -45,6 +48,17 @@ var ItemCollection = Backbone.Collection.extend({
 				this.all_loaded = false;
 				previous_count = SETTINGS.items_per_page * (this.current_page-1);
 				options.data.limit = SETTINGS.items_per_page * this.current_page;
+			}
+		}
+		
+		if(options.data.query) {
+			this.query = options.data.query;
+			this.search_title = (options.data.search_title == true)
+		}
+		else {
+			if(this.query) {
+				options.data.query = this.query;
+				options.data.search_title = this.search_title;
 			}
 		}
 

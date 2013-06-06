@@ -174,6 +174,33 @@ $('#editFeedButton').click(function() {
 	});
 });
 
+$('#searchButton').click(function() {
+	var query = $('#searchQuery').val();
+	var search_title = $('#searchInTitle').is(':checked');
+
+	var current_route = 'item';
+	var result = Backbone.history.fragment.match(/^[^\/]+/);
+	if(result !== null) {
+		current_route = result[0]
+
+		if(current_route == 'feed' || current_route == 'folder') {
+			current_route = Backbone.history.fragment.match(/^[^\/]+\/([^\/]+)/)[0];
+		}
+	}
+
+	var search_part = '/search/';
+	if(search_title) {
+		search_part += 'title/';
+	}
+	search_part += query;
+
+	router.navigate(current_route + search_part, {trigger: true});
+
+	$('#searchModal').modal('hide');
+
+	return false;
+});
+
 $('#mobileBackButton').click(function() {
 	router.navigate("", {trigger: true});
 });
@@ -229,13 +256,17 @@ $(window).on('resize orientationChanged', function() {
 }).resize();
 
 
-// Disable keyboard events when in inputs
+// Disable keyboard events but ESC when in inputs
 //
 $(':input').keyup(function(e) {
-	e.stopImmediatePropagation();
+	if(e.keyCode != 27) { // ESC
+		e.stopImmediatePropagation();
+	}
 });
 $(':input').keydown(function(e) {
-	e.stopImmediatePropagation();
+	if(e.keyCode != 27) { // ESC
+		e.stopImmediatePropagation();
+	}
 });
 
 // Keyboard shortcuts
@@ -315,6 +346,13 @@ $(document).keyup(function(e) {
 			}
 		}
 
+		if(e.keyCode == 111 || e.keyCode == 191) { // /
+			$('#searchModal').modal().on('shown', function() {
+				$('#searchQuery').focus();
+			}).on('hidden', function() {
+				$('#searchQuery').blur();
+			});
+		}
 		if(e.keyCode == 82) { // R
 			$('#syncButton').click();
 		}
@@ -324,6 +362,8 @@ $(document).keyup(function(e) {
 		if(e.keyCode == 65) { // A
 			$('#subscriptionModal').modal().on('shown', function() {
 				$('#subscriptionUrl').focus();
+			}).on('hidden', function() {
+				$('#subscriptionUrl').blur();
 			});
 		}
 	}

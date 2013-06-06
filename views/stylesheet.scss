@@ -101,7 +101,8 @@ h2 {
 		}
 	}
 
-	.show_more_items {
+	.show_more_items,
+	.current_query {
 		cursor: pointer;
 		padding: 5px;
 		background-color: #EEE;

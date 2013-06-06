@@ -23,6 +23,9 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 			this.collection.get(this.cursor).set('open', 'true');
 		}
 	},
+	serializeData: function() {
+		return {'itemList': {query: this.collection.query}};
+	},
 
 	closeCursor: function() {
 		if(this.cursor !== null) {

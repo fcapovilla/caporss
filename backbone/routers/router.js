@@ -1,9 +1,9 @@
 var Router = Backbone.Router.extend({
 	routes: {
 		"": "clear",
-		"feed/:id": "viewFeed",
-		"folder/:id": "viewFolder",
-		"item": "viewAllItems"
+		"feed/:id(/search/*query)": "viewFeed",
+		"folder/:id(/search/*query)": "viewFolder",
+		"item(/search/*query)": "viewAllItems"
 	},
 	initialize: function() {
 		this.itemList = new Backbone.Marionette.Region({
@@ -24,17 +24,37 @@ var Router = Backbone.Router.extend({
 		$('#item-list').addClass('hidden-phone');
 		$('.feed-list').removeClass('hidden-phone');
 	},
-	updateItemList : function(model) {
+	updateItemList : function(model, query) {
 		var that = this;
 		$('#item-list').scrollTop(0);
 
+		var options = {
+			reset: true,
+			reset_pagination: true,
+			success: function() {
+				that.itemList.show(items);
+			}
+		};
+
+		// Prepare search query
+		if(query !== null) {
+			options.data = {};
+			if(query.match(/^title/)) {
+				options.data.search_title = true;
+				options.data.query = query.split('/')[1];
+			}
+			else {
+				options.data.query = query;
+			}
+		}
+
 		items = new ItemListView({collection: model.items});
-		model.items.fetch({reset: true, reset_pagination: true, success: function() {
-			that.itemList.show(items);
-		}});
+		model.items.fetch(options);
 
 		if(currentSelection !== null) {
 			currentSelection.set('active', false);
+			currentSelection.items.query = false;
+			currentSelection.items.search_title = false;
 		}
 		model.set('active', true);
 		currentSelection = model;
@@ -44,7 +64,7 @@ var Router = Backbone.Router.extend({
 		$('.mobile-item-button').removeClass('invisible');
 		$('#item-list').focus();
 	},
-	viewFeed: function(id) {
+	viewFeed: function(id, query) {
 		var model = null;
 		folders.each(function(folder) {
 			if(folder.feeds.get(id)) {
@@ -52,16 +72,16 @@ var Router = Backbone.Router.extend({
 			}
 		});
 
-		this.updateItemList(model);
+		this.updateItemList(model, query);
 	},
-	viewFolder: function(id) {
+	viewFolder: function(id, query) {
 		var model = folders.get(id);
 
-		this.updateItemList(model);
+		this.updateItemList(model, query);
 	},
-	viewAllItems: function() {
+	viewAllItems: function(query) {
 		var model = folderList.allItemsFolder;
-		this.updateItemList(model);
+		this.updateItemList(model, query);
 	},
 	goToModel: function(model) {
 		if(model instanceof Folder) {

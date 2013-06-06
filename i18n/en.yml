@@ -92,3 +92,8 @@ flash:
     username_cannot_be_empty: Username cannot be empty
     access_denied: Access denied
     invalid_credentials: Invalid credentials
+
+search:
+    current_search: current search filter
+    title: Search
+    in_title: Search in titles only

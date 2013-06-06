@@ -92,3 +92,8 @@ flash:
     username_cannot_be_empty: Le nom d'utilisateur ne peut pas être vide
     access_denied: Accès refusé
     invalid_credentials: Nom d'utilisateur ou mot de passe invalide
+
+search:
+    current_search: Filtre de recherche courant
+    title: Recherche
+    in_title: Recherche dans les titres seulement

@@ -1,0 +1,16 @@
+-# Search form
+
+%form(id="searchForm" method="get" action="#")
+  %div(class="modal hide fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true")
+    .modal-header
+      =t.search.title
+      %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+        x
+    .modal-body
+      .input-append
+        %input(class="span3" type="text" id="searchQuery" aria-hidden="true")
+        %button(type="submit" id="searchButton" class="btn" aria-hidden="true")
+          %i.icon.icon-search
+      %label.checkbox
+        %input(type="checkbox" id="searchInTitle" checked="checked")
+        =t.search.in_title
