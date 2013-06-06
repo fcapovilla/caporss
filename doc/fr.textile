@@ -1,5 +1,6 @@
 h1. Raccourcis clavier
 
+* */* : Effectuer une recherche d'items
 * *A* : Afficher la fenêtre d'abonnement
 * *R* : Synchroniser tous les abonnements
 * *H* : Cacher/Afficher les items lus
@@ -44,7 +45,7 @@ h1. Menu abonnement
 h1. Liste des items
 
 * *Marquer les plus anciens comme lus* : Cette option vous permet de marquer tous les items plus vieux que l'item choisi comme "lus".
-* *Icône "cercle" (Marquer comme lu/non lu)* : Un clic sur cette icône a pour effet de marquer l'item sélectionner comme lu/non lu.
+* *Icône "cercle" (Marquer comme lu/non lu)* : Un clic sur cette icône a pour effet de marquer l'item sélectionné comme lu/non lu.
 
 h1. Support du "glisser-déplacer"
 

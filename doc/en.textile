@@ -1,5 +1,6 @@
 h1. Keyboard shortcuts
 
+* */* : Do an item search
 * *A* : Show the feed subscription dialog.
 * *R* : Sync feeds
 * *H* : Hide/Unhide read items
