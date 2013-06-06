@@ -14,7 +14,6 @@ var ItemCollection = Backbone.Collection.extend({
 	},
 	fetchNextPage: function() {
 		if(this.all_loaded) {
-			this.trigger('all_items_loaded');
 			return false;
 		}
 
@@ -73,7 +72,7 @@ var ItemCollection = Backbone.Collection.extend({
 			if( (that.current_page === 1 && new_items < SETTINGS.items_per_page) ||
 				(that.current_page > 1 && new_items === 0)){
 				that.all_loaded = true;
-				that.trigger('all_items_loaded');
+				that.trigger('all_loaded');
 			}
 			if(that.show_feed_titles) {
 				var feed_titles = folders.getFeedTitles();

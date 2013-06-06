@@ -3,8 +3,8 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 	itemViewContainer: 'ul',
 	template: '#tmpl-itemlist',
 	collectionEvents: {
-		'all_items_loaded': 'onAllItemsLoaded',
-		'reset': 'onReset'
+		'reset': 'onReset',
+		'all_loaded': 'render'
 	},
 	events: {
 		'click .show_more_items': function(){ this.collection.fetchNextPage(); }
@@ -13,18 +13,17 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 		this.cursor = null;
 	},
 
-	onAllItemsLoaded: function() {
-		this.$el.find('.show_more_items').addClass('hide');
-	},
 	onReset: function() {
-		this.$el.find('.show_more_items').removeClass('hide');
-
 		if(this.cursor !== null) {
 			this.collection.get(this.cursor).set('open', 'true');
 		}
 	},
 	serializeData: function() {
-		return {'itemList': {query: this.collection.query}};
+		var data = {
+			query: this.collection.query,
+			all_loaded: this.collection.all_loaded
+		};
+		return {item_list: data};
 	},
 
 	closeCursor: function() {

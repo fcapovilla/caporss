@@ -51,9 +51,9 @@ var Router = Backbone.Router.extend({
 		items = new ItemListView({collection: model.items});
 		model.items.fetch(options);
 
-		if(currentSelection !== null) {
+		if(currentSelection !== null && currentSelection !== model) {
 			currentSelection.set('active', false);
-			currentSelection.items.query = false;
+			currentSelection.items.query = '';
 			currentSelection.items.search_title = false;
 		}
 		model.set('active', true);
