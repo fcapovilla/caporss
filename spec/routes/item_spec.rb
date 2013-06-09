@@ -19,6 +19,41 @@ describe "Item route" do
 		data.length.should == 75
 	end
 
+	it "filters items" do
+		authorize 'admin', 'admin'
+
+		Item.first.update(:read => true)
+
+		get "/item", :limit => 5
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		data.length.should == 5
+
+		get "/item", :offset => 5, :limit => 100
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		data.length.should == 70
+
+		get "/item", :query => 'Item 0', :search_title => 'true'
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		data.length.should == 25
+		data[0][:title].should == 'Item 0'
+
+		get "/item", :query => 'Description - Item 0'
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		data.length.should == 25
+		data[0][:content].should == 'Description - Item 0'
+
+		get "/item", :show_read => 'false'
+		data = JSON.parse(last_response.body, :symbolize_names => true)
+
+		data.length.should ==74
+
+		Item.first.update(:read => false)
+	end
+
 	it "fetches single items" do
 		authorize 'admin', 'admin'
 
