@@ -84,6 +84,37 @@ describe "Item route" do
 		item.reload.read.should == false
 	end
 
+	it "marks older/newer items read/unread" do
+		authorize 'admin', 'admin'
+		first = Feed.first.items.all(:order => [:date.desc])[0]
+		middle = Feed.first.items.all(:order => [:date.desc])[1]
+		last = Feed.first.items.all(:order => [:date.desc])[2]
+
+		first.read.should == false
+		middle.read.should == false
+		last.read.should == false
+
+		put "/item/#{middle.id}", {:action => 'read_older'}.to_json
+		first.reload.read.should == false
+		middle.reload.read.should == false
+		last.reload.read.should == true
+
+		put "/item/#{middle.id}", {:action => 'read_newer'}.to_json
+		first.reload.read.should == true
+		middle.reload.read.should == false
+		last.reload.read.should == true
+
+		put "/item/#{middle.id}", {:action => 'unread_older'}.to_json
+		first.reload.read.should == true
+		middle.reload.read.should == false
+		last.reload.read.should == false
+
+		put "/item/#{middle.id}", {:action => 'unread_newer'}.to_json
+		first.reload.read.should == false
+		middle.reload.read.should == false
+		last.reload.read.should == false
+	end
+
 	it "won't accept invalid read values" do
 		authorize 'admin', 'admin'
 		item = Item.first
