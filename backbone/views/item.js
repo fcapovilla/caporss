@@ -3,6 +3,9 @@ var ItemView = Backbone.Marionette.ItemView.extend({
 	template: '#tmpl-item',
 	events: {
 		'click .readOlderAction' : 'readAllOlder',
+		'click .readNewerAction' : 'readAllNewer',
+		'click .unreadOlderAction' : 'unreadAllOlder',
+		'click .unreadNewerAction' : 'unreadAllNewer',
 		'click .readUnreadIcon': 'toggleRead',
 		'click .dropdown': 'showDropdownMenu',
 		'click .item-container': 'toggleContent'
@@ -39,14 +42,24 @@ var ItemView = Backbone.Marionette.ItemView.extend({
 		this.model.toggleRead();
 		return false;
 	},
-	readAllOlder: function() {
-		var cursorDate = new Date(this.model.get('date'));
-		items.collection.each(function(item) {
-			var date = new Date(item.get('date'));
-			if(date < cursorDate && !item.get('read')) {
-				item.toggleRead();
+	_sendAction: function(action) {
+		$.when(this.model.sendAction(action)).then(function() {
+			if(currentSelection !== null) {
+				currentSelection.items.fetch({reset: true});
 			}
 		});
+	},
+	readAllOlder: function() {
+		this._sendAction('read_older');
+	},
+	readAllNewer: function() {
+		this._sendAction('read_newer');
+	},
+	unreadAllOlder: function() {
+		this._sendAction('unread_older');
+	},
+	unreadAllNewer: function() {
+		this._sendAction('unread_newer');
 	},
 	showDropdownMenu: function() {
 		this.$el.find('.dropdown-toggle').dropdown('toggle');

@@ -34,6 +34,9 @@ buttons:
     edit: Edit
     delete: Delete
     mark_older_read: Mark older items as read
+    mark_newer_read: Mark newer items as read
+    mark_older_unread: Mark older items as unread
+    mark_newer_unread: Mark newer items as unread
     toggle_read: Show/Hide read items
     logout: Log out
     return_to_feedlist: Return to feed list

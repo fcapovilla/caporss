@@ -34,6 +34,9 @@ buttons:
     edit: Modifier
     delete: Supprimer
     mark_older_read: Marquer les plus anciens comme lus
+    mark_newer_read: Marquer les plus récents comme lus
+    mark_older_unread: Marquer les plus anciens comme non lus
+    mark_newer_unread: Marquer les plus récents comme non lus
     toggle_read: Afficher/Cacher les items lus
     logout: Déconnexion
     return_to_feedlist: Retour à la liste des abonnements

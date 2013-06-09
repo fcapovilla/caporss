@@ -7,6 +7,9 @@
           <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
           <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= item.id %>-menu">
             <li><a class="readOlderAction">#{t.buttons.mark_older_read}</a></li>
+            <li><a class="readNewerAction">#{t.buttons.mark_newer_read}</a></li>
+            <li><a class="unreadOlderAction">#{t.buttons.mark_older_unread}</a></li>
+            <li><a class="unreadNewerAction">#{t.buttons.mark_newer_unread}</a></li>
           </ul>
         </span>
         <i class="readUnreadIcon icon icon-circle<% if(item.read){ %>-blank<% } %>"></i>
