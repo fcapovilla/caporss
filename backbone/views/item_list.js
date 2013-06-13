@@ -51,6 +51,11 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 			}
 
 			item = this.collection.at(index+dir);
+
+			// Try to fetch next page if we are at the end of the collection
+			if(dir == 1 && this.collection.length == index+dir+1) {
+				items.collection.fetchNextPage();
+			}
 		}
 
 		if(item !== null && item !== undefined) {
