@@ -197,6 +197,7 @@ $('#searchButton').click(function() {
 	router.navigate(current_route + search_part, {trigger: true});
 
 	$('#searchModal').modal('hide');
+	$('#searchQuery').val('');
 
 	return false;
 });

@@ -190,11 +190,11 @@ h2 {
 		padding: 0px;
 		font-size: 0.75em;
 		.icon {
-			font-size: 1em;
+			font-size: 16px;
 		}
 	}
 
-	.btn {
+	.btn .icon{
 		font-size: 20px !important;
 	}
 
@@ -240,7 +240,7 @@ h2 {
 		.item-list {
 			.readUnreadIcon,
 			.dropdown-toggle {
-				padding: 8px 4px;
+				padding: 6px 2px;
 				margin: 0px;
 			}
 		}
