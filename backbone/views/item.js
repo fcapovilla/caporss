@@ -67,8 +67,11 @@ var ItemView = Backbone.Marionette.ItemView.extend({
 	},
 	openChanged: function(item, opened) {
 		if(opened) {
-			var elem = $('#item-list').eq(0);
-			elem.scrollTop(this.$el.position().top + elem.scrollTop());
+			var that = this;
+			this.once('render', function() {
+				var elem = $('#item-list').eq(0);
+				elem.scrollTop(that.$el.position().top + elem.scrollTop());
+			});
 		}
 	}
 });

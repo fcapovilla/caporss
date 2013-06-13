@@ -441,7 +441,7 @@ $(document).mouseup(function(e){
 // Automatic page fetching
 $('#item-list').scroll(function() {
 	if(items !== null) {
-		var elem = $('#item-list');
+		var elem = $('#item-list').eq(0);
 		if(elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
 			items.collection.fetchNextPage();
 		}
