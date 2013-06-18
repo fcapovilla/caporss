@@ -18,7 +18,10 @@ var Item = Backbone.Model.extend({
 		return $.ajax({
 			method: 'PUT',
 			url: 'item/' + this.id,
-			data: JSON.stringify({action: action})
+			data: JSON.stringify({action: action}),
+			success: function() {
+				currentSelection.fetch();
+			}
 		});
 	}
 });
