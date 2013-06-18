@@ -442,7 +442,7 @@ $(document).mouseup(function(e){
 $('#item-list').scroll(function() {
 	if(items !== null) {
 		var elem = $('#item-list').eq(0);
-		if(elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
+		if(elem[0].scrollHeight - elem.scrollTop() >= elem.outerHeight()-200) {
 			items.collection.fetchNextPage();
 		}
 	}
