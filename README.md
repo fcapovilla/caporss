@@ -55,7 +55,7 @@ This procedure will run CapoRSS in development mode using an SQLite database
 
 4. Start CapoRSS using this command:
 
-    ruby app.rb
+    bundle exec ruby app.rb
 
 5. Open a web browser and go to "http://localhost:4567"
 6. The default username/password is "admin"/"admin"
