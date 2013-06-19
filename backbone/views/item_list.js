@@ -61,7 +61,7 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 
 			// Try to fetch next page if we are at the end of the collection
 			if(dir == 1 && this.collection.length == index+dir+1) {
-				items.collection.fetchNextPage();
+				this.collection.fetchNextPage();
 			}
 		}
 

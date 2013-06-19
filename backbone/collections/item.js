@@ -12,16 +12,18 @@ var ItemCollection = Backbone.Collection.extend({
 			this.show_feed_titles = true;
 		}
 	},
-	fetchNextPage: function() {
+	fetchNextPage: function(options) {
 		if(this.all_loaded) {
 			return false;
 		}
 
 		this.current_page++;
-		this.fetch({
-			data: {offset: (this.current_page-1) * SETTINGS.items_per_page},
-			remove: false
-		});
+
+		options || (options = {});
+		options.data = {offset: (this.current_page-1) * SETTINGS.items_per_page};
+		options.remove = false;
+
+		this.fetch(options);
 
 		return true;
 	},
