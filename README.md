@@ -51,7 +51,7 @@ This procedure will run CapoRSS in development mode using an SQLite database
 
 3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-    bundle install --without=production
+    bundle install --without=production test
 
 4. Start CapoRSS using this command:
 
@@ -71,7 +71,7 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 3. Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-    bundle install --without=development
+    bundle install --without=development test
 
 4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
 
