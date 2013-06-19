@@ -83,7 +83,7 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 6. Run CapoRSS using Thin:
 
-    thin start -R config.ru
+    bundle exec thin start -R config.ru
 
 7. Open a web browser and go to "http://localhost:3000"
 8. The default username/password is "admin"/"admin"
