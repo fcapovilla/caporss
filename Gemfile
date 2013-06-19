@@ -27,6 +27,7 @@ group :test do
 	gem 'rspec'
 	gem 'coveralls', require: false
 	gem 'jasmine'
+	gem 'rake'
 end
 
 group :production do

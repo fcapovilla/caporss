@@ -112,6 +112,7 @@ GEM
     rack-ssl-enforcer (0.2.5)
     rack-test (0.6.2)
       rack (>= 1.0)
+    rake (10.0.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.13.0)
@@ -177,6 +178,7 @@ DEPENDENCIES
   jasmine
   json
   rack-ssl-enforcer
+  rake
   rspec
   sass
   sinatra
