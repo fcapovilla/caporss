@@ -26,6 +26,7 @@ group :test do
 	gem 'dm-mysql-adapter'
 	gem 'rspec'
 	gem 'coveralls', require: false
+	gem 'jasmine'
 end
 
 group :production do

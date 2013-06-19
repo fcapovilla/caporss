@@ -5,6 +5,8 @@ GEM
     addressable (2.2.8)
     backports (3.3.1)
     bcrypt-ruby (3.0.1)
+    childprocess (0.3.9)
+      ffi (~> 1.0, >= 1.0.11)
     colorize (0.5.8)
     coveralls (0.6.7)
       colorize
@@ -85,10 +87,17 @@ GEM
       loofah (~> 1.2.1)
       nokogiri (~> 1.5.3)
       sax-machine (~> 0.2.0.rc1)
+    ffi (1.9.0)
     gorillib (0.1.11)
       json
     haml (4.0.3)
       tilt
+    jasmine (1.3.2)
+      jasmine-core (~> 1.3.1)
+      rack (~> 1.0)
+      rspec (>= 1.3.1)
+      selenium-webdriver (>= 0.1.3)
+    jasmine-core (1.3.1)
     json (1.8.0)
     json_pure (1.8.0)
     loofah (1.2.1)
@@ -113,9 +122,15 @@ GEM
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.13.1)
+    rubyzip (0.9.9)
     sass (3.2.9)
     sax-machine (0.2.0.rc1)
       nokogiri (~> 1.5.2)
+    selenium-webdriver (2.33.0)
+      childprocess (>= 0.2.5)
+      multi_json (~> 1.0)
+      rubyzip
+      websocket (~> 1.0.4)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -144,6 +159,7 @@ GEM
     thor (0.18.1)
     tilt (1.4.1)
     uuidtools (2.1.4)
+    websocket (1.0.7)
 
 PLATFORMS
   ruby
@@ -158,6 +174,7 @@ DEPENDENCIES
   dm-sqlite-adapter
   feedzirra (~> 0.2.0.rc2)
   haml
+  jasmine
   json
   rack-ssl-enforcer
   rspec
