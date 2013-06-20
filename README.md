@@ -10,33 +10,10 @@ Version 0.7.3
 
 CapoRSS is a simple self-hosted RSS aggregator written in Ruby.
 
-## Dependencies
+## Screenshots
 
-CapoRSS is built on top of these great projects :
-
-* [Ruby 1.9.3](http://www.ruby-lang.org/)
-* [Sinatra](http://www.sinatrarb.com/)
-* [Datamapper](http://datamapper.org/)
-* [Feedzirra](https://github.com/pauldix/feedzirra)
-* [Nokogiri](http://nokogiri.org/)
-* [R18n](https://github.com/ai/r18n)
-* [Bootstrap](http://twitter.github.com/bootstrap/)
-* [Font awesome](http://fortawesome.github.com/Font-Awesome/)
-* [Pines notify](http://pinesframework.org/pnotify/)
-* [Backbone.js](http://backbonejs.org/)
-* [Marionette.js](http://marionettejs.com/)
-* [Underscore.js](http://underscorejs.org/)
-* [JQuery](http://jquery.com/)
-* [JQuery-cookie](https://github.com/carhartl/jquery-cookie)
-* [Haml](http://haml.info/)
-* [Sass](http://sass-lang.com/)
-* [Thin](http://code.macournoyer.com/thin/)
-* [rack-ssl-enforcer](https://github.com/tobmatth/rack-ssl-enforcer)
-* [sinatra-flash](https://github.com/SFEley/sinatra-flash)
-
-Also, CapoRSS's favicon is from the [RRZE Icon Set](http://rrze-icon-set.berlios.de/)
-
-Most dependencies are already included in the Gemfile and in the application's public directory.
+![](github/screenshot.png)
+![](github/mobile.png)
 
 ## Installation
 
@@ -98,6 +75,34 @@ CapoRSS is Heroku-ready and AppFog-ready, so you can push it on these services l
 See these pages for more informations :
 * [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 * [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
+
+## Dependencies
+
+CapoRSS is built on top of these great projects :
+
+* [Ruby 1.9.3](http://www.ruby-lang.org/)
+* [Sinatra](http://www.sinatrarb.com/)
+* [Datamapper](http://datamapper.org/)
+* [Feedzirra](https://github.com/pauldix/feedzirra)
+* [Nokogiri](http://nokogiri.org/)
+* [R18n](https://github.com/ai/r18n)
+* [Bootstrap](http://twitter.github.com/bootstrap/)
+* [Font awesome](http://fortawesome.github.com/Font-Awesome/)
+* [Pines notify](http://pinesframework.org/pnotify/)
+* [Backbone.js](http://backbonejs.org/)
+* [Marionette.js](http://marionettejs.com/)
+* [Underscore.js](http://underscorejs.org/)
+* [JQuery](http://jquery.com/)
+* [JQuery-cookie](https://github.com/carhartl/jquery-cookie)
+* [Haml](http://haml.info/)
+* [Sass](http://sass-lang.com/)
+* [Thin](http://code.macournoyer.com/thin/)
+* [rack-ssl-enforcer](https://github.com/tobmatth/rack-ssl-enforcer)
+* [sinatra-flash](https://github.com/SFEley/sinatra-flash)
+
+Also, CapoRSS's favicon is from the [RRZE Icon Set](http://rrze-icon-set.berlios.de/)
+
+Most dependencies are already included in the Gemfile and in the application's public directory.
 
 ## TODO
 
