@@ -19,7 +19,7 @@ var Feed = Backbone.Model.extend({
 		var that = this;
 		return $.ajax({
 			method: 'PUT',
-			url: 'feed/' + this.id,
+			url: '/feed/' + this.id,
 			data: JSON.stringify({action: 'read'}),
 			success: function() {
 				that.set('unread_count', 0);
@@ -30,7 +30,7 @@ var Feed = Backbone.Model.extend({
 		var that = this;
 		return $.ajax({
 			method: 'PUT',
-			url: 'feed/' + this.id,
+			url: '/feed/' + this.id,
 			data: JSON.stringify({action: 'unread'}),
 			success: function() {
 				that.fetch();
