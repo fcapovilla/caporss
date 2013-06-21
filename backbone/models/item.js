@@ -17,7 +17,7 @@ var Item = Backbone.Model.extend({
 	sendAction: function(action) {
 		return $.ajax({
 			method: 'PUT',
-			url: 'item/' + this.id,
+			url: '/item/' + this.id,
 			data: JSON.stringify({action: action}),
 			success: function() {
 				currentSelection.fetch();
