@@ -12,6 +12,7 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 	},
 	initialize: function() {
 		this.cursor = null;
+		this.fetchingItems = false;
 	},
 
 	onReset: function() {
@@ -22,7 +23,13 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 	onSync: function() {
 		var elem = $('#item-list').eq(0);
 		if(elem[0].scrollHeight <= elem.outerHeight()+200) {
-			this.collection.fetchNextPage();
+			this.fetchNextPage();
+		}
+	},
+	onItemListScroll: function() {
+		var elem = $('#item-list').eq(0);
+		if(this.fetchingItems === false && elem[0].scrollHeight - elem.scrollTop() <= elem.outerHeight()+200) {
+			this.fetchNextPage();
 		}
 	},
 	serializeData: function() {
@@ -33,6 +40,15 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 		return {item_list: data};
 	},
 
+	fetchNextPage: function() {
+		var that = this;
+		this.fetchingItems = true;
+		this.collection.fetchNextPage({
+			success: function() {
+				that.fetchingItems = false;
+			}
+		});
+	},
 	closeCursor: function() {
 		if(this.cursor !== null) {
 			this.collection.get(this.cursor).set('open', false);

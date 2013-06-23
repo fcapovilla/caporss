@@ -181,7 +181,7 @@ $('#searchButton').click(function() {
 	var current_route = 'item';
 	var result = Backbone.history.fragment.match(/^[^\/]+/);
 	if(result !== null) {
-		current_route = result[0]
+		current_route = result[0];
 
 		if(current_route == 'feed' || current_route == 'folder') {
 			current_route = Backbone.history.fragment.match(/^[^\/]+\/([^\/]+)/)[0];
@@ -441,10 +441,7 @@ $(document).mouseup(function(e){
 // Automatic page fetching
 $('#item-list').scroll(function() {
 	if(items !== null) {
-		var elem = $('#item-list').eq(0);
-		if(elem[0].scrollHeight - elem.scrollTop() <= elem.outerHeight()+200) {
-			items.collection.fetchNextPage();
-		}
+		items.onItemListScroll();
 	}
 });
 
