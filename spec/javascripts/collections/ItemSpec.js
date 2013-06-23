@@ -1,4 +1,4 @@
-describe("Item collection", function() {
+describe("Item Collection", function() {
 	beforeEach(function() {
 		this.server = sinon.fakeServer.create();
 		this.server.respondWith("GET", "/item?limit=2", [200, '',
