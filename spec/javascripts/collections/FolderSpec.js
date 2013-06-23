@@ -66,5 +66,6 @@ describe("Folder Collection", function() {
 
 	afterEach(function() {
 		this.server.restore();
+		document.title = "Jasmine suite";
 	});
 });
