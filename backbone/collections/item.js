@@ -31,9 +31,8 @@ var ItemCollection = Backbone.Collection.extend({
 		var that=this;
 		var previous_count = this.length;
 
-		if(!options.data) {
-			options.data = {};
-		}
+		options || (options = {});
+		options.data || (options.data = {});
 
 		if(options.reset_pagination) {
 			this.current_page = 1;
@@ -54,7 +53,7 @@ var ItemCollection = Backbone.Collection.extend({
 		
 		if(options.data.query) {
 			this.query = options.data.query;
-			this.search_title = (options.data.search_title == true)
+			this.search_title = (options.data.search_title === true);
 		}
 		else {
 			if(this.query) {
