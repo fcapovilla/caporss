@@ -67,12 +67,7 @@ var Router = Backbone.Router.extend({
 		$('#item-list').focus();
 	},
 	viewFeed: function(id, query) {
-		var model = null;
-		folders.each(function(folder) {
-			if(folder.feeds.get(id)) {
-				model = folder.feeds.get(id);
-			}
-		});
+		var model = folders.getFeed(id);
 
 		this.updateItemList(model, query);
 	},

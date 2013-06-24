@@ -18,19 +18,15 @@ var AllItemsFolder = Backbone.Model.extend({
 		return this;
     },
 	itemRead: function(feed_id) {
-		folders.each(function(folder) {
-			var feed = folder.feeds.get(feed_id);
-			if(feed) {
-				feed.decrementReadCount();
-			}
-		});
+		var feed = folders.getFeed(feed_id);
+		if(feed) {
+			feed.decrementReadCount();
+		}
 	},
 	itemUnread: function(feed_id) {
-		folders.each(function(folder) {
-			var feed = folder.feeds.get(feed_id);
-			if(feed) {
-				feed.incrementReadCount();
-			}
-		});
+		var feed = folders.getFeed(feed_id);
+		if(feed) {
+			feed.incrementReadCount();
+		}
 	}
 });

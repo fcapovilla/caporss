@@ -54,15 +54,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 	onDrop: function(e) {
 		e.stopPropagation();
 		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
-		var feed = null;
-
-		if(feed_id) {
-			folders.each(function(folder) {
-				if(folder.feeds.get(feed_id)) {
-					feed = folder.feeds.get(feed_id);
-				}
-			});
-		}
+		var feed = folders.getFeed(feed_id);
 
 		if(feed) {
 			var new_position = this.model.get('position');

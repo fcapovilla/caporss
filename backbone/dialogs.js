@@ -69,34 +69,32 @@ $('#editFeedButton').click(function() {
 	var feedUrl = dialog.find('#feedUrl').val();
 	var reset = dialog.find('#resetFeed').is(':checked');
 
-	folders.each(function(folder) {
-		var feed = folder.feeds.get(feedId);
-		if(feed) {
-			feed.unset('position');
-			feed.save({
-				url: feedUrl,
-				folder: feedFolder
-			},{
-				success: function() {
-					router.navigate("", {trigger: true});
+	var feed = folders.getFeed(feedId);
+	if(feed) {
+		feed.unset('position');
+		feed.save({
+			url: feedUrl,
+			folder: feedFolder
+		},{
+			success: function() {
+				router.navigate("", {trigger: true});
 
-					if(reset) {
-						$.ajax({
-							url: '/feed/' + feedId,
-							method: 'PUT',
-							data: JSON.stringify({action: 'reset'}),
-							success: function() {
-								folders.fetch();
-							}
-						});
-					}
-					else {
-						folders.fetch();
-					}
+				if(reset) {
+					$.ajax({
+						url: '/feed/' + feedId,
+						method: 'PUT',
+						data: JSON.stringify({action: 'reset'}),
+						success: function() {
+							folders.fetch();
+						}
+					});
 				}
-			});
-		}
-	});
+				else {
+					folders.fetch();
+				}
+			}
+		});
+	}
 });
 
 $('#searchButton').click(function() {

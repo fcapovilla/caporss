@@ -87,15 +87,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		}
 
 		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
-		var feed = null;
-
-		if(feed_id) {
-			folders.each(function(folder) {
-				if(folder.feeds.get(feed_id)) {
-					feed = folder.feeds.get(feed_id);
-				}
-			});
-		}
+		var feed = folders.getFeed(feed_id);
 
 		if(feed) {
 			feed.save({
