@@ -1,0 +1,32 @@
+-# Main menu underscore template
+:plain
+  <script id='tmpl-mainmenu' type='text/template'>
+    <div class="btn-group">
+      <button class="btn btn-inverse hidden-tiny-phone">
+        <i id="spinner" class="icon-spinner icon-large invisible"></i>
+      </button>
+      <button class="btn" id="syncButton" title="#{t.buttons.sync}">
+        <i class="icon icon-refresh"></i>
+      </button>
+      <button class="btn hidden-phone" id="toggleReadVisibility" title="#{t.buttons.toggle_read}">
+        <i class="icon icon-eye-open"></i>
+      </button>
+      <button class="btn" href="#subscriptionModal" role="button" data-toggle="modal" title="#{t.buttons.subscribe}">
+        <i class="icon icon-plus"></i>
+      </button>
+      <button class="btn hidden-tiny-phone" href="#settingsModal" role="button" data-toggle="modal" title="#{t.buttons.settings}">
+        <i class="icon icon-cog"></i>
+      </button>
+      <a class="btn" href="/logout" title="#{t.buttons.logout}">
+        <i class="icon icon-signout"></i>
+      </a>
+    </div>
+    <div class="btn-group">
+      <button class="btn mobile-item-button visible-phone invisible" id="mobilePrevItem" title="#{t.buttons.next}">
+        <i class="icon icon-circle-arrow-up"></i>
+      </button>
+      <button class="btn mobile-item-button visible-phone invisible" id="mobileNextItem" title="#{t.buttons.previous}">
+        <i class="icon icon-circle-arrow-down"></i>
+      </button>
+    </div>
+  </script>
