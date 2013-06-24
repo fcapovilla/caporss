@@ -33,13 +33,8 @@ get '/app.js' do
 	root = settings.root + '/backbone'
 	content_type :js, 'charset' => 'utf-8'
 	last_modified File.mtime("#{root}/init.js")
-	output = ''
 
-	Dir["#{root}/lib/*.js"].each do |file|
-		output += File.open(file, 'r').read()
-	end
-
-	output += "$(function() {\n"
+	output = "$(function() {\n"
 
 	Dir[
 		"#{root}/routers/*.js",
