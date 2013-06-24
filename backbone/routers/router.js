@@ -29,6 +29,7 @@ var Router = Backbone.Router.extend({
 	updateItemList : function(model, query) {
 		var that = this;
 		$('#item-list').scrollTop(0);
+		this.itemListRegion.close();
 
 		var options = {
 			reset: true,
