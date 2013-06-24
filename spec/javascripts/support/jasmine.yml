@@ -20,7 +20,6 @@ src_files:
     - public/js/underscore-min.js
     - public/js/backbone-min.js
     - public/js/backbone.marionette.min.js
-    - backbone/lib/*.js
     - backbone/routers/*.js
     - backbone/models/*.js
     - backbone/collections/*.js
@@ -28,7 +27,6 @@ src_files:
     - backbone/views/feed.js
     - backbone/views/folder.js
     - backbone/views/*.js
-    - backbone/*.js
 
 # stylesheets
 #
