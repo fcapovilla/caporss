@@ -38,15 +38,15 @@ var ItemView = Backbone.Marionette.ItemView.extend({
 	toggleContent: function() {
 		if(this.model.get('open')) {
 			this.model.set('open', false);
-			items.cursor = null;
+			router.itemList.cursor = null;
 		}
 		else {
-			items.closeCursor();
+			router.itemList.closeCursor();
 			this.model.set('open', true);
 			if(!this.model.get('read')) {
 				this.model.toggleRead();
 			}
-			items.cursor = this.model;
+			router.itemList.cursor = this.model;
 		}
 	},
 	toggleRead: function() {
@@ -55,8 +55,8 @@ var ItemView = Backbone.Marionette.ItemView.extend({
 	},
 	_sendAction: function(action) {
 		$.when(this.model.sendAction(action)).then(function() {
-			if(currentSelection !== null) {
-				currentSelection.items.fetch({reset: true});
+			if(router.currentSelection !== null) {
+				router.currentSelection.items.fetch({reset: true});
 			}
 		});
 	},

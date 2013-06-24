@@ -20,7 +20,7 @@ var Item = Backbone.Model.extend({
 			url: '/item/' + this.id,
 			data: JSON.stringify({action: action}),
 			success: function() {
-				currentSelection.fetch();
+				router.currentSelection.fetch();
 			}
 		});
 	}

@@ -19,30 +19,30 @@ $(document).keyup(function(e) {
 		var model = null;
 		if(e.keyCode == 74) { // SHIFT+J
 			model = folderList.allItemsFolder;
-			if(currentSelection !== null) {
-				model = currentSelection.getNextInList();
+			if(router.currentSelection !== null) {
+				model = router.currentSelection.getNextInList();
 			}
 			router.goToModel(model);
 		}
 		if(e.keyCode == 75) { // SHIFT+K
 			model = folderList.allItemsFolder;
-			if(currentSelection !== null) {
-				model = currentSelection.getPreviousInList();
+			if(router.currentSelection !== null) {
+				model = router.currentSelection.getPreviousInList();
 			}
 			router.goToModel(model);
 		}
 
-		if(items !== null) {
+		if(router.itemList !== null) {
 			if(e.keyCode == 32) { // SHIFT+SPACE
-				if(items.cursor === null || items.cursor === undefined) {
-					items.moveCursor('down');
+				if(router.itemList.cursor === null || router.itemList.cursor === undefined) {
+					router.itemList.moveCursor('down');
 				}
 				else {
 					container = $('#item-list').eq(0);
 					currentItem = $('.item-container.active').eq(0).closest('li');
 
 					if(currentItem.position().top >= 0) {
-						items.moveCursor('up');
+						router.itemList.moveCursor('up');
 					}
 					else {
 						container.scrollTop(container.scrollTop() - $(window).height());
@@ -57,17 +57,17 @@ $(document).keyup(function(e) {
 		}
 	}
 	else {
-		if(items !== null) {
+		if(router.itemList !== null) {
 			if(e.keyCode == 74) { // J
-				items.moveCursor('down');
+				router.itemList.moveCursor('down');
 			}
 			if(e.keyCode == 75) { // K
-				items.moveCursor('up');
+				router.itemList.moveCursor('up');
 			}
 
 			if(e.keyCode == 32) { // SPACE
-				if(items.cursor === null || items.cursor === undefined) {
-					items.moveCursor('down');
+				if(router.itemList.cursor === null || router.itemList.cursor === undefined) {
+					router.itemList.moveCursor('down');
 				}
 				else {
 					container = $('#item-list').eq(0);
@@ -75,7 +75,7 @@ $(document).keyup(function(e) {
 					var limit = container.scrollTop() + currentItem.position().top + currentItem.height();
 
 					if(container.scrollTop() + $(window).height() > limit) {
-						items.moveCursor('down');
+						router.itemList.moveCursor('down');
 					}
 					else {
 						container.scrollTop($(window).height() + container.scrollTop());

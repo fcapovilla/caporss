@@ -132,12 +132,12 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 	},
 	deleteFolder: function() {
 		if(confirm(LANG.confirm_delete_folder)) {
-			if(this.model == currentSelection) {
+			if(this.model == router.currentSelection) {
 				router.navigate("", {trigger: true});
 			}
 			this.model.destroy({success: function() {
-				if(currentSelection !== null) {
-					currentSelection.items.fetch({reset: true});
+				if(router.currentSelection !== null) {
+					router.currentSelection.items.fetch({reset: true});
 				}
 			}});
 		}
@@ -155,8 +155,8 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 					}
 				});
-				if(currentSelection !== null) {
-					currentSelection.items.fetch({reset: true});
+				if(router.currentSelection !== null) {
+					router.currentSelection.items.fetch({reset: true});
 				}
 			}
 		});
@@ -168,8 +168,8 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		});
 
 		$.when.apply($, deferreds).then(function() {
-			if(currentSelection !== null) {
-				currentSelection.items.fetch({reset: true});
+			if(router.currentSelection !== null) {
+				router.currentSelection.items.fetch({reset: true});
 			}
 		});
 
@@ -181,8 +181,8 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		});
 
 		$.when.apply($, deferreds).then(function() {
-			if(currentSelection !== null) {
-				currentSelection.items.fetch({reset: true});
+			if(router.currentSelection !== null) {
+				router.currentSelection.items.fetch({reset: true});
 			}
 		});
 

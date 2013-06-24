@@ -6,18 +6,20 @@ var Router = Backbone.Router.extend({
 		"item(/search/*query)": "viewAllItems"
 	},
 	initialize: function() {
-		this.itemList = new Backbone.Marionette.Region({
+		this.itemListRegion = new Backbone.Marionette.Region({
 			el: '#item-list'
 		});
+		this.currentSelection = null;
+		this.itemList = null;
 	},
 	clear: function() {
 		$('#item-list').scrollTop(0);
 
-		this.itemList.close();
+		this.itemListRegion.close();
 
-		if(currentSelection !== null) {
-			currentSelection.set('active', false);
-			currentSelection = null;
+		if(this.currentSelection !== null) {
+			this.currentSelection.set('active', false);
+			this.currentSelection = null;
 		}
 
 		$('.mobile-item-button').addClass('invisible');
@@ -32,7 +34,7 @@ var Router = Backbone.Router.extend({
 			reset: true,
 			reset_pagination: true,
 			success: function() {
-				that.itemList.show(items);
+				that.itemListRegion.show(that.itemList);
 			}
 		};
 
@@ -48,15 +50,15 @@ var Router = Backbone.Router.extend({
 			}
 		}
 
-		if(currentSelection !== null) {
-			currentSelection.set('active', false);
-			currentSelection.items.query = '';
-			currentSelection.items.search_title = false;
+		if(this.currentSelection !== null) {
+			this.currentSelection.set('active', false);
+			this.currentSelection.items.query = '';
+			this.currentSelection.items.search_title = false;
 		}
 		model.set('active', true);
-		currentSelection = model;
+		this.currentSelection = model;
 
-		items = new ItemListView({collection: model.items});
+		this.itemList = new ItemListView({collection: model.items});
 		model.items.fetch(options);
 
 		$('#item-list').removeClass('hidden-phone');

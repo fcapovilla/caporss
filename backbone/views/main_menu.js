@@ -29,8 +29,8 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 						icon.attr('class', 'icon-refresh');
 					}
 				});
-				if(currentSelection !== null) {
-					currentSelection.items.fetch({reset: true});
+				if(router.currentSelection !== null) {
+					router.currentSelection.items.fetch({reset: true});
 				}
 			},
 			error: function() {
@@ -39,10 +39,10 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 		});
 	},
 	prevItem: function() {
-		items.moveCursor('up');
+		router.itemList.moveCursor('up');
 	},
 	nextItem: function() {
-		items.moveCursor('down');
+		router.itemList.moveCursor('down');
 	},
 	toggleReadVisibility: function() {
 		this.setReadVisibility(!SETTINGS.show_read);
@@ -59,8 +59,8 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 			$.cookie('show_read', false, {expires: 10000});
 		}
 
-		if(items !== null) {
-			items.collection.fetch({reset: true, reset_pagination: true});
+		if(router.currentSelection !== null) {
+			router.currentSelection.items.fetch({reset: true, reset_pagination: true});
 		}
 	}
 });

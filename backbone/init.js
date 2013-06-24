@@ -1,6 +1,3 @@
-var items = null;
-var currentSelection = null;
-
 var router = new Router();
 var folders = new FolderCollection();
 var folderList = new FolderListView({collection: folders});
@@ -63,8 +60,8 @@ if(SETTINGS.refresh_timeout > 0) {
 				}
 			}
 		});
-		if(currentSelection !== null) {
-			currentSelection.items.fetch({reset: true});
+		if(router.currentSelection !== null) {
+			router.currentSelection.items.fetch({reset: true});
 		}
 	}, SETTINGS.refresh_timeout*60*1000);
 }
@@ -78,8 +75,8 @@ if(SETTINGS.sync_timeout > 0) {
 
 // Automatic page fetching
 $('#item-list').scroll(function() {
-	if(items !== null) {
-		items.onItemListScroll();
+	if(router.itemList !== null) {
+		router.itemList.onItemListScroll();
 	}
 });
 

@@ -9,8 +9,8 @@ $('#cleanupButton').click(function() {
 		},
 		success: function() {
 			folders.fetch();
-			if(currentSelection !== null) {
-				currentSelection.items.fetch({reset: true});
+			if(router.currentSelection !== null) {
+				router.currentSelection.items.fetch({reset: true});
 			}
 		}
 	});
@@ -36,8 +36,8 @@ $('#subscribeButton').click(function() {
 		},
 		success: function() {
 			folders.fetch();
-			if(currentSelection !== null) {
-				currentSelection.items.fetch({reset: true});
+			if(router.currentSelection !== null) {
+				router.currentSelection.items.fetch({reset: true});
 			}
 		}
 	});
