@@ -6,7 +6,6 @@ var mainMenu = new MainMenuView();
 mainMenu.render();
 
 // Configure pnotify
-//
 var pnotify_stack = {'dir1': 'up', 'dir2': 'left'};
 $.pnotify.defaults.addclass = 'stack-bottomright';
 $.pnotify.defaults.history = false;
@@ -81,7 +80,6 @@ $('#item-list').scroll(function() {
 });
 
 // Everything is ready, fetch folders
-//
 folders.fetch({success: function() {
 	Backbone.history.start();
 }});
