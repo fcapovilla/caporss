@@ -20,6 +20,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 			url: '/sync/all',
 			method: 'POST',
 			dataType: 'json',
+			timeout: 120000,
 			success: function(result) {
 				folders.fetch({
 					success: function() {

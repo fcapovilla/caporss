@@ -11,6 +11,9 @@ $.pnotify.defaults.addclass = 'stack-bottomright';
 $.pnotify.defaults.history = false;
 $.pnotify.defaults.stack = pnotify_stack;
 
+// Set timeout for AJAX requests
+$.ajaxSetup({timeout:30000});
+
 // Show flash messages
 if(FLASH.success) {
 	$.pnotify({ text: FLASH.success, type: 'success' });

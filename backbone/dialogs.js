@@ -4,6 +4,7 @@ $('#cleanupButton').click(function() {
 	$.ajax({
 		url: '/cleanup/all',
 		method: 'POST',
+		timeout: 120000,
 		data: {
 			cleanup_after: $('#cleanup_after').val()
 		},
