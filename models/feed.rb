@@ -25,7 +25,7 @@ class Feed
 
 	# Fetch the feed using feedzirra and update it
 	def sync!
-		feed = Feedzirra::Feed.fetch_and_parse(self.url)
+		feed = Feedzirra::Feed.fetch_and_parse(self.url, {:max_redirects => 3, :timeout => 30})
 		update_feed!(feed) unless feed.kind_of?(Fixnum) or feed.nil?
 	end
 

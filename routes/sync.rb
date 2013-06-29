@@ -9,7 +9,7 @@ post '/full_sync' do
 	urls = Feed.all.map{ |feed| feed.url }
 	urls.uniq!
 
-	feeds = Feedzirra::Feed.fetch_and_parse(urls)
+	feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
 
 	updated_count = 0
 	new_items = 0
@@ -42,7 +42,9 @@ namespace '/sync' do
 		urls = Feed.all(:user => @user).map{ |feed| feed.url }
 		urls.uniq!
 
-		feeds = Feedzirra::Feed.fetch_and_parse(urls)
+		feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
+
+		puts feeds.keys.inspect
 
 		updated_count = 0
 		new_items = 0
@@ -70,7 +72,7 @@ namespace '/sync' do
 		urls = folder.feeds.map{ |feed| feed.url }
 		urls.uniq!
 
-		feeds = Feedzirra::Feed.fetch_and_parse(urls)
+		feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
 
 		updated_count = 0
 		new_items = 0
