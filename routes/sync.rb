@@ -17,6 +17,7 @@ post '/full_sync' do
 	feeds.each do |url, xml|
 		if xml.kind_of?(Fixnum)
 			errors+=1
+			next
 		end
 
 		Feed.all(:url => url).each do |feed|
@@ -44,14 +45,13 @@ namespace '/sync' do
 
 		feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
 
-		puts feeds.keys.inspect
-
 		updated_count = 0
 		new_items = 0
 		errors = 0
 		feeds.each do |url, xml|
 			if xml.kind_of?(Fixnum)
 				errors+=1
+				next
 			end
 
 			Feed.all(:user => @user, :url => url).each do |feed|
@@ -80,6 +80,7 @@ namespace '/sync' do
 		feeds.each do |url, xml|
 			if xml.kind_of?(Fixnum)
 				errors+=1
+				next
 			end
 
 			folder.feeds.all(:user => @user, :url => url).each do |feed|
