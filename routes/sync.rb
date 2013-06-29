@@ -13,8 +13,11 @@ post '/full_sync' do
 
 	updated_count = 0
 	new_items = 0
+	errors = 0
 	feeds.each do |url, xml|
-		next if xml.kind_of?(Fixnum)
+		if xml.kind_of?(Fixnum)
+			errors+=1
+		end
 
 		Feed.all(:url => url).each do |feed|
 			old_count = feed.items.count
@@ -25,7 +28,7 @@ post '/full_sync' do
 			new_items += feed.items.count - old_count
 		end
 	end
-	{ :updated => updated_count, :new_items => new_items }.to_json
+	{ :updated => updated_count, :new_items => new_items, :errors => errors }.to_json
 end
 
 # Single user sync
@@ -43,8 +46,11 @@ namespace '/sync' do
 
 		updated_count = 0
 		new_items = 0
+		errors = 0
 		feeds.each do |url, xml|
-			next if xml.kind_of?(Fixnum)
+			if xml.kind_of?(Fixnum)
+				errors+=1
+			end
 
 			Feed.all(:user => @user, :url => url).each do |feed|
 				old_count = feed.items.count
@@ -55,7 +61,7 @@ namespace '/sync' do
 				new_items += feed.items.count - old_count
 			end
 		end
-		{ :updated => updated_count, :new_items => new_items }.to_json
+		{ :updated => updated_count, :new_items => new_items, :errors => errors }.to_json
 	end
 
 	post '/folder/:id' do |id|
@@ -68,8 +74,11 @@ namespace '/sync' do
 
 		updated_count = 0
 		new_items = 0
+		errors = 0
 		feeds.each do |url, xml|
-			next if xml.kind_of?(Fixnum)
+			if xml.kind_of?(Fixnum)
+				errors+=1
+			end
 
 			folder.feeds.all(:user => @user, :url => url).each do |feed|
 				old_count = feed.items.count
@@ -80,7 +89,7 @@ namespace '/sync' do
 				new_items += feed.items.count - old_count
 			end
 		end
-		{ :updated => updated_count, :new_items => new_items }.to_json
+		{ :updated => updated_count, :new_items => new_items, :errors => errors }.to_json
 	end
 
 	post '/feed/:id' do |id|
