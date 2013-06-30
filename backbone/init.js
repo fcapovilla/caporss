@@ -67,13 +67,10 @@ if(SETTINGS.sync_timeout > 0) {
 // EventSource refresh
 if (!!window.EventSource) {
 	var eventSource = new EventSource('/stream');
-	eventSource.onmessage = function(e) {
-		switch(e.data) {
-			case 'sync:new_items':
-				folders.refresh();
-			break;
-		}
-	};
+
+	eventSource.addEventListener("sync:new_items", function(e) {
+		folders.refresh();
+	});
 }
 
 // Automatic page fetching
