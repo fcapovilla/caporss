@@ -17,7 +17,7 @@ h1. Préférences
 * *Nettoyage* : Supprime les vieux items dans la base de données locale. Vous pouvez spécifier une limite d'âge en jours. Seul les items dont la date dépasse cette limite seront supprimés lors d'un clic sur le bouton "Nettoyage".
 * *Synchroniser toutes les...* : Va chercher les nouveaux items sur les serveurs distants à un certain intervalle.
 * *Rafraîchir toutes les...* : Va chercher les nouveaux items dans la base de données locale à un intervalle spécifié. À utiliser avec un "worker" de synchronisation automatique qui va chercher les items sur les serveur distant avec un intervalle spécifique.
-* *Rafraîchir avec des SSE* : Si votre serveur et votre navigateur supportent les SSE (Server-Sent Events) et que cette préférence est activée, les données dans le navigateur seront rafraichis automatiquement à chaque synchronisation des abonnements.
+* *Rafraîchir avec des SSE* : Si votre serveur et votre navigateur supportent les SSE (Server-Sent Events) et que cette préférence est activée, les données dans le navigateur seront rafraîchies automatiquement à chaque synchronisation des abonnements.
 * *Mettre à jour les favicons* : Les favicons des abonnements sont seulement récupérés sur les serveurs distants lors de l'ajout d'un abonnement. Vous pouvez utiliser ce bouton pour forcer une mise à jour de tous les favicons.
 * *Administration* : Cette page vous permet d'ajouter et de modifier les comptes usager. Veuillez noter que cette fonctionnalité peut seulement être accédée par l'usager admin.
 
