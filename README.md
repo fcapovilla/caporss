@@ -79,7 +79,7 @@ See these pages for more informations :
 * [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 * [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
 
-== Documentation
+## Documentation
 
 * [English version](doc/en.textile)
 * [French version](doc/fr.textile)
