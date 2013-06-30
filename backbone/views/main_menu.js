@@ -14,7 +14,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 	},
 
 	sync: function() {
-		var icon = this.$el.children('i');
+		var icon = this.$el.find('#syncButton>i');
 		icon.attr('class', 'icon-time');
 		$.ajax({
 			url: '/sync/all',
