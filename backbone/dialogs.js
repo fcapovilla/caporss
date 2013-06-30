@@ -1,20 +1,22 @@
 // Dialog buttons actions
 
 $('#cleanupButton').click(function() {
-	$.ajax({
-		url: '/cleanup/all',
-		method: 'POST',
-		timeout: 120000,
-		data: {
-			cleanup_after: $('#cleanup_after').val()
-		},
-		success: function() {
-			folders.fetch();
-			if(router.currentSelection !== null) {
-				router.currentSelection.items.fetch({reset: true});
+	if(confirm(LANG.confirm_cleanup)) {
+		$.ajax({
+			url: '/cleanup/all',
+			method: 'POST',
+			timeout: 120000,
+			data: {
+				cleanup_after: $('#cleanup_after').val()
+			},
+			success: function() {
+				folders.fetch();
+				if(router.currentSelection !== null) {
+					router.currentSelection.items.fetch({reset: true});
+				}
 			}
-		}
-	});
+		});
+	}
 });
 
 $('#updateFaviconsButton').click(function() {
