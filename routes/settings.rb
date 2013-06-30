@@ -16,6 +16,7 @@ post '/save_settings' do
 	# Other settings
 	@user.cleanup_after = params[:cleanup_after] if params[:cleanup_after]
 	@user.refresh_timeout = params[:refresh_timeout] if params[:refresh_timeout]
+	@user.sse_refresh = params[:sse_refresh] ? true : false
 	@user.sync_timeout = params[:sync_timeout] if params[:sync_timeout]
 	@user.default_locale = params[:default_locale] if params[:default_locale]
 	@user.items_per_page = params[:items_per_page] if params[:items_per_page]

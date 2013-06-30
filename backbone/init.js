@@ -65,7 +65,7 @@ if(SETTINGS.sync_timeout > 0) {
 }
 
 // EventSource refresh
-if (!!window.EventSource) {
+if (!!window.EventSource && SETTINGS.sse_refresh) {
 	var eventSource = new EventSource('/stream');
 
 	eventSource.addEventListener("sync:new_items", function(e) {

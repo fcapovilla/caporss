@@ -15,6 +15,7 @@ settings:
     refresh_every: Refresh feeds every 
     minutes: minutes
     sync_every: Sync feeds every 
+    sse_refresh: Refresh using SSE (Server-Sent Events)
     save: Save
     items_per_page: Items per page
     general: General

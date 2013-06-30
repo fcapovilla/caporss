@@ -15,6 +15,7 @@ settings:
     refresh_every: Rafraîchir toutes les 
     minutes: minutes
     sync_every: Synchroniser toutes les 
+    sse_refresh: Rafraîchir avec des SSE (Server-Sent Events)
     save: Sauvegarder
     items_per_page: Items par page
     general: Général

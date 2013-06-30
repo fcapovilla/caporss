@@ -17,6 +17,7 @@ h1. Settings
 * *Cleanup* : Deletes old items in the local database. You can specify the age limit for items in days. All items older than this limit will be deleted when clicking the "Cleanup" button.
 * *Sync after* : Fetches new items from the servers for all feeds at the specified interval.
 * *Refresh after* : Check for new items in the local database at the specified interval. Use with an automatic sync worker that fetches new items at a specific interval.
+* *Refresh using SSE* : If your server and browser both support SSE (Server-Sent Events) and this setting is activated, client-side informations will be automatically updated at every feed synchronisation.
 * *Update all favicons* : Favicons are only fetched from other servers when a subscription is added. You can use this button to fetch a new version of every favicons.
 * *Admin page* : This page lets you add or modify users accounts. Note that this feature can only be accessed by the admin account.
 
@@ -61,5 +62,3 @@ You must set two variables in this script :
 * *url* : The base url of your CapoRSS instance.
 
 If your server isn't using HTTPS, you will also need to delete the "http.use_ssl" and "http.verify_mode" lines, but please note that doing so will be insecure, because the "sync" user's password will be sent in clear.
-
-Note : If your server and your browser both support SSE (Server-Sent Events), you don't need to set the "Refresh feeds every..." setting, because your feeds will update automatically in your browser when the worker script runs.

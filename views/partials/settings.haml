@@ -78,6 +78,10 @@
                 %input(class="input-block-level" type="text" name="sync_timeout" value="#{@user.sync_timeout}" aria-hidden="true")
                 %span.add-on
                   =t.settings.minutes
+          .control-group
+            %label.checkbox
+              %input(type="checkbox" name="sse_refresh"){checked: @user.sse_refresh}
+                =t.settings.sse_refresh
         .tab-pane#generalSettings
           .control-group
             %label.control-label
