@@ -62,6 +62,8 @@ end
 @@connections = []
 
 get '/stream' do
+	content_type 'text/event-stream', 'charset' => 'utf-8'
+
 	stream :keep_open do |out|
 		@@connections << out
 		out << "Connected\n"

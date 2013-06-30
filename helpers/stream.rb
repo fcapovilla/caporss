@@ -1,5 +1,5 @@
 # encoding: utf-8
 
 def send_streams(event)
-	@@streams.each { |out| out << "#{event}\n" }
+	@@connections.each { |out| out << "data: #{event}\n\n" }
 end

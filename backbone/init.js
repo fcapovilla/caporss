@@ -53,18 +53,7 @@ $(window).on('resize orientationChanged', function() {
 // Refresh timeout
 if(SETTINGS.refresh_timeout > 0) {
 	setInterval(function() {
-		old_unread_count = folders.getUnreadCount();
-		folders.fetch({
-			success: function() {
-				new_items = folders.getUnreadCount() - old_unread_count;
-				if(new_items > 0) {
-					$.pnotify({ text: new_items + ' new items.', type: 'success' });
-				}
-			}
-		});
-		if(router.currentSelection !== null) {
-			router.currentSelection.items.fetch({reset: true});
-		}
+		folders.refresh();
 	}, SETTINGS.refresh_timeout*60*1000);
 }
 
@@ -73,6 +62,18 @@ if(SETTINGS.sync_timeout > 0) {
 	setInterval(function() {
 		$('#syncButton').click();
 	}, SETTINGS.sync_timeout*60*1000);
+}
+
+// EventSource refresh
+if (!!window.EventSource) {
+	var eventSource = new EventSource('/stream');
+	eventSource.onmessage = function(e) {
+		switch(e.data) {
+			case 'sync':
+				folders.refresh();
+			break;
+		}
+	};
 }
 
 // Automatic page fetching
