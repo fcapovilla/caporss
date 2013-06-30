@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.8.0
+Version 0.8.1
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -78,6 +78,11 @@ CapoRSS is Heroku-ready and AppFog-ready, so you can push it on these services l
 See these pages for more informations :
 * [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 * [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
+
+== Documentation
+
+* [English version](doc/en.textile)
+* [French version](doc/fr.textile)
 
 ## Dependencies
 
