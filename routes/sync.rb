@@ -29,6 +29,11 @@ post '/full_sync' do
 			new_items += feed.items.count - old_count
 		end
 	end
+
+	if new_items > 0
+		send_streams "sync:new_items"
+	end
+
 	{ :updated => updated_count, :new_items => new_items, :errors => errors }.to_json
 end
 

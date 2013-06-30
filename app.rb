@@ -2,6 +2,7 @@
 require 'sinatra'
 require 'sinatra/multi_route'
 require 'sinatra/namespace'
+require "sinatra/streaming"
 require 'sinatra/r18n'
 require 'sinatra/flash'
 

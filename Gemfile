@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+gem 'thin'
+
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-r18n'
@@ -20,7 +22,6 @@ group :development do
 end
 
 group :test do
-	gem 'thin'
 	gem 'dm-sqlite-adapter'
 	gem 'dm-postgres-adapter'
 	gem 'dm-mysql-adapter'
@@ -34,6 +35,5 @@ group :production do
 	gem 'dm-postgres-adapter'
 	#gem 'dm-mysql-adapter'
 
-	gem 'thin'
 	gem 'rack-ssl-enforcer'
 end

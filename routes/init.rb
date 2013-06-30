@@ -58,6 +58,18 @@ get '/' do
 	haml :index
 end
 
+# Manage stream connections
+@@connections = []
+
+get '/stream' do
+	stream :keep_open do |out|
+		@@connections << out
+		out << "Connected\n"
+		out.callback { @@connections.delete(out) }
+		out.errback { @@connections.delete(out) }
+	end
+end
+
 # Load all routes
 require_relative 'login'
 require_relative 'admin'
