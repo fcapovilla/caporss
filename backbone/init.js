@@ -69,7 +69,7 @@ if (!!window.EventSource) {
 	var eventSource = new EventSource('/stream');
 	eventSource.onmessage = function(e) {
 		switch(e.data) {
-			case 'sync':
+			case 'sync:new_items':
 				folders.refresh();
 			break;
 		}

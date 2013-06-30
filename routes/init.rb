@@ -62,11 +62,11 @@ end
 @@connections = []
 
 get '/stream' do
+	authorize_basic! :user
 	content_type 'text/event-stream', 'charset' => 'utf-8'
 
 	stream :keep_open do |out|
 		@@connections << out
-		out << "Connected\n"
 		out.callback { @@connections.delete(out) }
 		out.errback { @@connections.delete(out) }
 	end
