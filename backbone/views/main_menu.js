@@ -61,6 +61,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 		}
 
 		if(router.currentSelection !== null) {
+			router.itemList.cursor = null;
 			router.currentSelection.items.fetch({reset: true, reset_pagination: true});
 		}
 	}
