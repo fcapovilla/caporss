@@ -110,6 +110,8 @@ migration 5, :add_guid do
 			feed_data.entries.each do |entry|
 				next unless entry.id
 
+				entry.sanitize!
+
 				items = feed.items.all(:title => entry.title, :url => entry.url, :date => entry.published)
 				if items.count == 1
 					items[0].update(:guid => entry.id)
