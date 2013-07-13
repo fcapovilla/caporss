@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.8.1
+Version 0.9.0
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -119,3 +119,4 @@ Most dependencies are already included in the Gemfile and in the application's p
 
 ## Release notes
 * 0.5.0 : This version brings a lots of modifications to the database structure to add multi-user support. Automatic migrations are included to move all single-user configurations to the 'admin/admin' user, but starting from a clean database is recommended.
+* 0.9.0 : This version adds GUID and item update support. A migration was added to add GUIDs to all items by using their title, url and publication date. Please note that some duplicate items may be created if those three informations were modified since the item was first added to the local database.
