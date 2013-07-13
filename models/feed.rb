@@ -43,16 +43,32 @@ class Feed
 		newest = nil
 
 		feed.entries.each do |entry|
+			entry.sanitize!
+
 			create = false
 
 			if entry.id
-				create = true unless self.items.first(:guid => entry.id)
+				item = self.items.first(:guid => entry.id)
+
+				if item
+					# Update existing item
+					item.update(
+						:user => self.user,
+						:title => entry.title,
+						:url => entry.url,
+						:content => (entry.content || entry.summary),
+						:date => entry.published,
+						:attachment_url => entry.enclosure_url
+					)
+				else
+					create = true
+				end
 			else
+				# No GUID found, use the publication date for duplication check
 				create = true if entry.published > self.last_update.to_time
 			end
 
 			if create
-				entry.sanitize!
 				item = Item.new(
 					:user => self.user,
 					:title => entry.title,
@@ -64,10 +80,10 @@ class Feed
 				)
 
 				self.items << item
+			end
 
-				if newest == nil or newest < entry.published
-					newest = entry.published
-				end
+			if newest == nil or newest < entry.published
+				newest = entry.published
 			end
 		end
 
