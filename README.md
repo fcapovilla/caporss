@@ -119,4 +119,6 @@ Most dependencies are already included in the Gemfile and in the application's p
 
 ## Release notes
 * 0.5.0 : This version brings a lots of modifications to the database structure to add multi-user support. Automatic migrations are included to move all single-user configurations to the 'admin/admin' user, but starting from a clean database is recommended.
-* 0.9.0 : This version adds GUID and item update support. A migration was added to add GUIDs to all items by using their title, url and publication date. Please note that some duplicate items may be created if those three informations were modified since the item was first added to the local database.
+* 0.9.0 : This version adds GUID and item update support. A migration was added to add GUIDs to existing items by using their title, url and publication date. Please note that some duplicate items may be created on the next feed synchronisation if :
+ * The title, url or publication date of an item was modified since the item was first added to the local database.
+ * There was a problem fetching the feed during the migration.
