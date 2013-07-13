@@ -38,6 +38,7 @@ class Feed
 	def update_feed!(feed)
 		if feed.title and feed.title != self.title
 			self.title = feed.title
+			self.save
 		end
 
 		newest = nil
@@ -52,15 +53,13 @@ class Feed
 
 				if item
 					# Update existing item
-					item.attributes = {
-						:user => self.user,
+					item.update(
 						:title => entry.title,
 						:url => entry.url,
 						:content => (entry.content || entry.summary),
 						:date => entry.published,
 						:attachment_url => entry.enclosure_url
-					}
-					item.save
+					)
 				else
 					create = true
 				end

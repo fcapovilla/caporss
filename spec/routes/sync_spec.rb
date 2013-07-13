@@ -105,24 +105,26 @@ describe "Sync route" do
 
 			feed = Feed.first(:title => 'Test title')
 			feed.url = "http://localhost:4567/test.rss?items=5&title=AAAAA"
-			feed.items.first.title = 'Old title'
+			feed.items.first(:guid => '0').destroy
+			feed.items.first(:guid => '1').title = 'Old title'
 			feed.save
 
 			feed.title.should == 'Test title'
-			feed.items.count.should == 3
-			feed.items.first.title.should == 'Old title'
+			feed.items.count.should == 2
+			feed.items.first(:guid => '1').title.should == 'Old title'
 
 			post "/sync/feed/#{feed.id}"
 			data = JSON.parse(last_response.body, :symbolize_names => true)
 
 			data[:updated].should == 1
-			data[:new_items].should == 2
+			data[:new_items].should == 3
 
 			# Title should have been updated after sync
 			feed.reload
 			feed.title.should == 'AAAAA'
 			feed.items.count.should == 5
-			feed.items.first.title.should == "Item 0"
+			feed.items.first(:guid => '0').should_not be_nil
+			feed.items.first(:guid => '1').title.should == "Item 1"
 		end
 
 		it "prevents non-sync users from syncing all feeds" do
