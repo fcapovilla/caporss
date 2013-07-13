@@ -108,7 +108,22 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		this.$el.css({opacity: ""});
 	},
 
-	toggleFolderOpen: function() {
+	selectFolder: function() {
+		router.navigate("folder/" + this.model.id, {trigger: true});
+	},
+	showFolderEditDialog: function(e) {
+		e.stopPropagation();
+
+		var dialog = $('#editFolderModal');
+		dialog.find('#folderId').val(this.model.id);
+		dialog.find('#folderTitle').val(this.model.get('title'));
+		dialog.modal();
+
+		this.closeMenu();
+	},
+	toggleFolderOpen: function(e) {
+		e.stopPropagation();
+
 		this.model.toggle();
 
 		if(this.model.get('open')) {
@@ -119,10 +134,10 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		}
 
 		this.render();
-
-		return false;
 	},
-	deleteFolder: function() {
+	deleteFolder: function(e) {
+		e.stopPropagation();
+
 		if(confirm(LANG.confirm_delete_folder)) {
 			if(this.model == router.currentSelection) {
 				router.navigate("", {trigger: true});
@@ -133,9 +148,12 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 				}
 			}});
 		}
-		return this.closeMenu();
+
+		this.closeMenu();
 	},
-	syncFolder: function() {
+	syncFolder: function(e) {
+		e.stopPropagation();
+
 		var that = this;
 		$.ajax({
 			method: 'POST',
@@ -152,9 +170,12 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 				}
 			}
 		});
-		return this.closeMenu();
+
+		this.closeMenu();
 	},
-	markFolderRead: function() {
+	markFolderRead: function(e) {
+		e.stopPropagation();
+
 		var deferreds = this.model.feeds.map(function(feed) {
 			return feed.markRead();
 		});
@@ -165,9 +186,11 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 			}
 		});
 
-		return this.closeMenu();
+		this.closeMenu();
 	},
-	markFolderUnread: function() {
+	markFolderUnread: function(e) {
+		e.stopPropagation();
+
 		var deferreds = this.model.feeds.map(function(feed) {
 			return feed.markUnread();
 		});
@@ -178,9 +201,11 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 			}
 		});
 
-		return this.closeMenu();
+		this.closeMenu();
 	},
-	openMenu: function() {
+	openMenu: function(e) {
+		e.stopPropagation();
+
 		var menu = this.$el.find('.folderMenu');
 		var opened = !menu.hasClass('hide');
 
@@ -194,21 +219,9 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		menu.removeClass('hide');
 
 		$(document).one('click', this.closeMenu);
-		return false;
 	},
 	closeMenu: function() {
 		var menu = this.$el.find('.folderMenu');
 		menu.addClass('hide');
-		return false;
-	},
-	selectFolder: function() {
-		router.navigate("folder/" + this.model.id, {trigger: true});
-	},
-	showFolderEditDialog: function() {
-		var dialog = $('#editFolderModal');
-		dialog.find('#folderId').val(this.model.id);
-		dialog.find('#folderTitle').val(this.model.get('title'));
-		dialog.modal();
-		return this.closeMenu();
 	}
 });

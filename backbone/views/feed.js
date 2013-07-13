@@ -91,7 +91,9 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 	selectFeed: function() {
 		router.navigate("feed/" + this.model.id, {trigger: true});
 	},
-	deleteFeed: function() {
+	deleteFeed: function(e) {
+		e.stopPropagation();
+
 		if(confirm(LANG.confirm_delete_feed)) {
 			if(this.model == router.currentSelection) {
 				router.navigate("", {trigger: true});
@@ -102,9 +104,12 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 				}
 			}});
 		}
-		return this.closeMenu();
+
+		this.closeMenu();
 	},
-	syncFeed: function() {
+	syncFeed: function(e) {
+		e.stopPropagation();
+
 		var that = this;
 		$.ajax({
 			method: 'POST',
@@ -121,33 +126,45 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 				}
 			}
 		});
-		return this.closeMenu();
+
+		this.closeMenu();
 	},
-	markFeedRead: function() {
+	markFeedRead: function(e) {
+		e.stopPropagation();
+
 		$.when(this.model.markRead()).then(function() {
 			if(router.currentSelection !== null) {
 				router.currentSelection.items.fetch({reset: true});
 			}
 		});
-		return this.closeMenu();
+
+		this.closeMenu();
 	},
-	markFeedUnread: function() {
+	markFeedUnread: function(e) {
+		e.stopPropagation();
+
 		$.when(this.model.markUnread()).then(function() {
 			if(router.currentSelection !== null) {
 				router.currentSelection.items.fetch({reset: true});
 			}
 		});
-		return this.closeMenu();
+
+		this.closeMenu();
 	},
-	showFeedEditDialog: function() {
+	showFeedEditDialog: function(e) {
+		e.stopPropagation();
+
 		var dialog = $('#editFeedModal');
 		dialog.find('#feedId').val(this.model.id);
 		dialog.find('#feedFolder').val(folders.get(this.model.get('folder_id')).get('title'));
 		dialog.find('#feedUrl').val(this.model.get('url'));
 		dialog.modal();
-		return this.closeMenu();
+
+		this.closeMenu();
 	},
-	openMenu: function() {
+	openMenu: function(e) {
+		e.stopPropagation();
+
 		var menu = this.$el.find('.feedMenu');
 		var opened = !menu.hasClass('hide');
 
@@ -161,11 +178,9 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		menu.removeClass('hide');
 
 		$(document).one('click', this.closeMenu);
-		return false;
 	},
 	closeMenu: function() {
 		var menu = this.$el.find('.feedMenu');
 		menu.addClass('hide');
-		return false;
 	}
 });
