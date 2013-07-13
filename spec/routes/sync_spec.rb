@@ -100,12 +100,17 @@ describe "Sync route" do
 			Folder.all.feeds.items.count.should == 75
 		end
 
-		it "fetches new feeds and updates feed title" do
+		it "fetches new feeds, updates feeds and updates feed title" do
 			authorize 'admin', 'admin'
 
 			feed = Feed.first(:title => 'Test title')
 			feed.url = "http://localhost:4567/test.rss?items=5&title=AAAAA"
+			feed.items.first.title = 'Old title'
 			feed.save
+
+			feed.title.should == 'Test title'
+			feed.items.count.should == 3
+			feed.items.first.title.should == 'Old title'
 
 			post "/sync/feed/#{feed.id}"
 			data = JSON.parse(last_response.body, :symbolize_names => true)
@@ -117,6 +122,7 @@ describe "Sync route" do
 			feed.reload
 			feed.title.should == 'AAAAA'
 			feed.items.count.should == 5
+			feed.items.first.title.should == "Item 0"
 		end
 
 		it "prevents non-sync users from syncing all feeds" do

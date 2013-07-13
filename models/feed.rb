@@ -52,14 +52,15 @@ class Feed
 
 				if item
 					# Update existing item
-					item.update(
+					item.attributes = {
 						:user => self.user,
 						:title => entry.title,
 						:url => entry.url,
 						:content => (entry.content || entry.summary),
 						:date => entry.published,
 						:attachment_url => entry.enclosure_url
-					)
+					}
+					item.save
 				else
 					create = true
 				end
