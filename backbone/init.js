@@ -11,9 +11,6 @@ $.pnotify.defaults.addclass = 'stack-bottomright';
 $.pnotify.defaults.history = false;
 $.pnotify.defaults.stack = pnotify_stack;
 
-// Set timeout for AJAX requests
-$.ajaxSetup({timeout:30000});
-
 // Show flash messages
 if(FLASH.success) {
 	$.pnotify({ text: FLASH.success, type: 'success' });
@@ -22,10 +19,14 @@ if(FLASH.error) {
 	$.pnotify({ text: '<b>Error</b><br>' + FLASH.error, type: 'error' });
 }
 
+// Set timeout for AJAX requests
+$.ajaxSetup({timeout:30000});
+
 // Add a spinner icon when an Ajax call is running
 $(document).ajaxStart(function() {
 	$('#spinner').removeClass('invisible').addClass('icon-spin');
-}).ajaxStop(function() {
+});
+$(document).ajaxStop(function() {
 	$('#spinner').removeClass('icon-spin').addClass('invisible');
 });
 
