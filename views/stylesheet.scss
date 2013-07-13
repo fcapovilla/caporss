@@ -138,6 +138,10 @@ h2 {
 	margin-bottom: 0px;
 }
 
+.mobile-item-buttons {
+	float: right;
+}
+
 @media screen and (min-width:768px) {
 	.feed-list {
 		width: 300px - 5px;
@@ -244,6 +248,12 @@ h2 {
 				margin: 0px;
 			}
 		}
+
+		.item-feed-title {
+			width: 150px;
+			text-align: left;
+			padding: 5px 2px;
+		}
 	}
 
 	.feedTitle {
@@ -254,6 +264,12 @@ h2 {
 
 @media screen and (max-width:365px) {
 	.hidden-tiny-phone {
+		display: none;
+	}
+}
+
+@media screen and (max-width:500px) {
+	.hidden-small-phone {
 		display: none;
 	}
 }

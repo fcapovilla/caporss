@@ -17,13 +17,13 @@
         <i class="readUnreadIcon icon icon-circle<% if(item.read){ %>-blank<% } %>"></i>
       </div>
 
-      <div class="item-labels hidden-phone">
+      <div class="item-labels">
         <% if(item.feed_title) { %>
-          <span class="item-feed-title label<% if(!item.read){ %> label-info<% } %>">
+          <span class="item-feed-title label<% if(!item.read){ %> label-info<% } %> hidden-small-phone">
             <%= item.feed_title %>
           </span>
         <% } %>
-        <span class="item-date label">
+        <span class="item-date label hidden-phone">
           <%= formatDate(new Date(item.date)) %>
         </span>
       </div>

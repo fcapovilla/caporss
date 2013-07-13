@@ -15,7 +15,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 
 	sync: function() {
 		var icon = this.$el.find('#syncButton>i');
-		icon.attr('class', 'icon-time');
+		icon.attr('class', 'icon icon-time');
 		$.ajax({
 			url: '/sync/all',
 			method: 'POST',
@@ -27,7 +27,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 						if(result.new_items > 0) {
 							$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 						}
-						icon.attr('class', 'icon-refresh');
+						icon.attr('class', 'icon icon-refresh');
 					}
 				});
 				if(router.currentSelection !== null) {
@@ -35,7 +35,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 				}
 			},
 			error: function() {
-				icon.attr('class', 'icon-refresh');
+				icon.attr('class', 'icon icon-refresh');
 			}
 		});
 	},
