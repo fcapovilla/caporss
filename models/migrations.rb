@@ -99,4 +99,25 @@ if ['mysql', 'postgresql'].include? adapter
 	end
 end
 
+migration 5, :add_guid do
+	up do
+		Feed.all.each do |feed|
+			puts "Fetching GUIDs for feed #{feed.title}"
+
+			feed_data = Feedzirra::Feed.fetch_and_parse(feed.url, {:max_redirects => 3, :timeout => 30})
+			next if feed_data.kind_of?(Fixnum) or feed_data.nil?
+
+			feed_data.entries.each do |entry|
+				next unless entry.id
+
+				items = feed.items.all(:title => entry.title, :url => entry.url, :date => entry.published)
+				if items.count == 1
+					items[0].update(:guid => entry.id)
+					puts " Updated #{entry.id}"
+				end
+			end
+		end
+	end
+end
+
 migrate_up!

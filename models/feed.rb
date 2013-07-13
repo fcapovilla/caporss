@@ -2,6 +2,9 @@
 require 'uri'
 require 'feedzirra'
 
+# Force enclosure and guid parsing on all Feedzirra feed entries
+Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
+
 class Feed
 	include DataMapper::Resource
 
@@ -19,9 +22,11 @@ class Feed
 
 	validates_with_method :validate_url
 
+
 	before :create do |feed|
 		feed.last_update = DateTime.new(2000,1,1)
 	end
+
 
 	# Fetch the feed using feedzirra and update it
 	def sync!
@@ -38,20 +43,25 @@ class Feed
 		newest = nil
 
 		feed.entries.each do |entry|
-			if entry.published > self.last_update.to_time
+			create = false
+
+			if entry.id
+				create = true unless self.items.first(:guid => entry.id)
+			else
+				create = true if entry.published > self.last_update.to_time
+			end
+
+			if create
 				entry.sanitize!
 				item = Item.new(
 					:user => self.user,
 					:title => entry.title,
 					:url => entry.url,
 					:content => (entry.content || entry.summary),
-					:date => entry.published
+					:date => entry.published,
+					:guid => entry.id,
+					:attachment_url => entry.enclosure_url
 				)
-
-				# Check for podcast attachments
-				if entry.respond_to?(:enclosure_url)
-				  item.attachment_url = entry.enclosure_url
-				end
 
 				self.items << item
 

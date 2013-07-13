@@ -27,9 +27,6 @@ end
 configure do
 	use Rack::Session::Pool, :secret => (ENV['SESSION_SECRET'] || 'Default secret... Set the SESSION_SECRET environment variable!')
 
-	# Force enclosure parsing on all Feedzirra feed entries
-	Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
-
 	# Load settings
 	Setting.all.each do |setting|
 		set setting.name.to_sym, setting.value
