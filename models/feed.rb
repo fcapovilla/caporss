@@ -53,10 +53,11 @@ class Feed
 
 				if item
 					# Update existing item
+					# Note : content is not updated because it would be too costly. For example, youtube feeds contents constantly change.
 					item.update(
 						:title => entry.title,
 						:url => entry.url,
-						:content => (entry.content || entry.summary),
+						#:content => (entry.content || entry.summary),
 						:date => entry.published,
 						:attachment_url => entry.enclosure_url
 					)
