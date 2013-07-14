@@ -144,14 +144,13 @@ h2 {
 		padding-left: 4px;
 
 		.feed-icon {
-			padding: 2px;
+			padding: 0px 2px;
 			margin: 0px;
 			width: 16px;
 			height: 16px;
+			vertical-align: top;
 
 			&:before {
-				width: 16px;
-				height: 16px;
 				font-size: 17px;
 			}
 		}
@@ -160,6 +159,10 @@ h2 {
 		.folder-icon {
 			padding: 2px;
 			margin: 0px;
+		}
+
+		.feed-title {
+			padding-left: 35px;
 		}
 	}
 
@@ -188,10 +191,6 @@ h2 {
 	.content {
 		margin-left: 300px;
 	}
-
-	.feed-title {
-		padding-left: 35px;
-	}
 }
 
 @media screen and (max-width:767px) {
@@ -213,17 +212,34 @@ h2 {
 
 	.feed-list {
 		width: 100% !important;
+		padding-left: 6px;
 
-		.feed-icon,
-		.folder-icon,
-		.folder-toggle {
+		.feed-icon {
+			padding: 0px 4px;
+			margin: 0px;
+			width: 16px;
+			height: 16px;
+			vertical-align: top;
+
+			&:before {
+				font-size: 17px;
+			}
+		}
+
+		.folder-toggle,
+		.folder-icon {
 			padding: 7px 4px;
 			margin: 0px;
 		}
 
 		.feed-title,
 		.folder-title {
-			height: 31px;
+			height: 28px;
+			padding-top: 6px;
+		}
+
+		.feed-title {
+			padding-left: 48px;
 		}
 	}
 
@@ -269,10 +285,6 @@ h2 {
 			text-align: left;
 			padding: 5px 2px;
 		}
-	}
-
-	.feed-title {
-		padding-left: 45px;
 	}
 
 }
