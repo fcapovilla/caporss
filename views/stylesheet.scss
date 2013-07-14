@@ -148,10 +148,14 @@ h2 {
 			margin: 0px;
 			width: 16px;
 			height: 16px;
-			vertical-align: top;
+			display: inline-block;
 
-			&:before {
+			&>i:before {
 				font-size: 17px;
+			}
+
+			&>img {
+				vertical-align: top;
 			}
 		}
 
@@ -159,6 +163,7 @@ h2 {
 		.folder-icon {
 			padding: 2px;
 			margin: 0px;
+			display: inline-block;
 		}
 
 		.feed-title {
@@ -215,14 +220,18 @@ h2 {
 		padding-left: 6px;
 
 		.feed-icon {
-			padding: 0px 4px;
+			padding: 7px 4px;
 			margin: 0px;
 			width: 16px;
 			height: 16px;
-			vertical-align: top;
+			display: inline-block;
 
-			&:before {
+			&>i:before {
 				font-size: 17px;
+			}
+
+			&>img {
+				vertical-align: top;
 			}
 		}
 
@@ -230,12 +239,12 @@ h2 {
 		.folder-icon {
 			padding: 7px 4px;
 			margin: 0px;
+			display: inline-block;
 		}
 
 		.feed-title,
 		.folder-title {
 			height: 28px;
-			padding-top: 6px;
 		}
 
 		.feed-title {
