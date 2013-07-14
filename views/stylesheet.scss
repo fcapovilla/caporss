@@ -141,7 +141,6 @@ h2 {
 @media screen and (min-width:768px) {
 	.feed-list {
 		width: 300px - 5px;
-		padding-left: 4px;
 
 		.feed-icon {
 			padding: 0px 2px;
@@ -168,6 +167,10 @@ h2 {
 
 		.feed-title {
 			padding-left: 35px;
+		}
+
+		#feed-list {
+			padding-left: 4px;
 		}
 	}
 
