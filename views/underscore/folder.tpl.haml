@@ -1,8 +1,8 @@
 -# Folder underscore template
 :plain
   <script id='tmpl-folder' type='text/template'>
-    <div class="folderTitle<% if(folder.active){ %> active <% } %>">
-      <i class="folder-toggle icon <% if(folder.open){ %>icon-caret-down<% }else{ %>icon-caret-right<% } %>"></i>
+    <div class="folder-title<% if(folder.active){ %> active <% } %>">
+      <i class="folder-toggle icon <% if(folder.open){ %>icon-collapse<% }else{ %>icon-expand<% } %>"></i>
       <i class="folder-icon icon <% if(folder.open){ %>icon-folder-open<% }else{ %>icon-folder-close<% } %>"></i>
       <% if(folder.unread_count > 0) { %>
         <b><%= folder.title %></b>
@@ -18,5 +18,5 @@
       <a class="btn editFolderAction" title="#{t.buttons.edit}"><i class="icon icon-edit"></i></a>
       <a class="btn deleteFolderAction" title="#{t.buttons.delete}"><i class="icon icon-trash"></i></a>
     </div>
-    <ul class="nav nav-list"></ul>
+    <ul class="unstyled"></ul>
   </script>

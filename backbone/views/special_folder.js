@@ -2,7 +2,7 @@ var SpecialFolderView = Backbone.Marionette.ItemView.extend({
 	tagName: "li",
 	template: '#tmpl-special-folder',
 	events: {
-		'click .folderTitle' : 'selectFolder'
+		'click .folder-title' : 'selectFolder'
 	},
 	modelEvents: {
 		'change': 'render',

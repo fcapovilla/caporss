@@ -29,13 +29,9 @@ h2 {
 	}
 	.folder-icon,
 	.dropdown,
-	.feedTitle,
-	.folderTitle {
+	.feed-title,
+	.folder-title {
 		cursor: pointer;
-	}
-	.feed-icon {
-		width: 16px;
-		height: 16px;
 	}
 	.nav-list {
 		padding-right: 0px;
@@ -49,8 +45,8 @@ h2 {
 	}
 }
 
-.feedTitle,
-.folderTitle,
+.feed-title,
+.folder-title,
 .item-container {
 	&:hover {
 		background-color: rgb(230, 230, 230);
@@ -96,7 +92,7 @@ h2 {
 
 		.readUnreadIcon,
 		.dropdown-toggle {
-			padding: 4px 2px;
+			padding: 4px 5px;
 			margin: 0px;
 		}
 	}
@@ -125,7 +121,7 @@ h2 {
 	.item-title {
 		float: none;
 		overflow: hidden;
-		margin-left: 48px;
+		margin-left: 45px;
 		height: 20px;
 	}
 }
@@ -145,16 +141,25 @@ h2 {
 @media screen and (min-width:768px) {
 	.feed-list {
 		width: 300px - 5px;
+		padding-left: 4px;
 
-		.feed-icon,
-		.folder-icon,
-		.folder-toggle {
+		.feed-icon {
 			padding: 2px;
 			margin: 0px;
+			width: 16px;
+			height: 16px;
+
+			&:before {
+				width: 16px;
+				height: 16px;
+				font-size: 17px;
+			}
 		}
-		.folder-icon,
-		.folder-toggle {
-			width: 1em !important;
+
+		.folder-toggle,
+		.folder-icon {
+			padding: 2px;
+			margin: 0px;
 		}
 	}
 
@@ -184,8 +189,8 @@ h2 {
 		margin-left: 300px;
 	}
 
-	.feedTitle {
-		padding-left: 30px;
+	.feed-title {
+		padding-left: 35px;
 	}
 }
 
@@ -212,8 +217,13 @@ h2 {
 		.feed-icon,
 		.folder-icon,
 		.folder-toggle {
-			padding: 7px 1px;
+			padding: 7px 4px;
 			margin: 0px;
+		}
+
+		.feed-title,
+		.folder-title {
+			height: 31px;
 		}
 	}
 
@@ -244,8 +254,13 @@ h2 {
 		.item-list {
 			.readUnreadIcon,
 			.dropdown-toggle {
-				padding: 6px 2px;
+				padding: 6px 6px;
 				margin: 0px;
+				margin-top: 3px;
+			}
+
+			.item-icons {
+				padding-top: 6px;
 			}
 		}
 
@@ -256,7 +271,7 @@ h2 {
 		}
 	}
 
-	.feedTitle {
+	.feed-title {
 		padding-left: 45px;
 	}
 

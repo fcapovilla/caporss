@@ -12,7 +12,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		'click .editFeedAction' : 'showFeedEditDialog',
 		'click .deleteFeedAction' : 'deleteFeed',
 		'click .feed-icon' : 'openMenu',
-		'click .feedTitle' : 'selectFeed',
+		'click .feed-title' : 'selectFeed',
 		'dragstart' : 'onDragStart',
 		'dragenter' : 'onDragEnter',
 		'dragover' : 'onDragOver',

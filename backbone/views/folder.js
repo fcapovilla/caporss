@@ -3,7 +3,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 	attributes: {
 		'draggable': true
 	},
-	itemViewContainer: 'ul.nav.nav-list',
+	itemViewContainer: 'ul.unstyled',
 	itemView: FeedView,
 	template: '#tmpl-folder',
 	events: {
@@ -14,11 +14,11 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		'click .deleteFolderAction' : 'deleteFolder',
 		'click .folder-toggle' : 'toggleFolderOpen',
 		'click .folder-icon' : 'openMenu',
-		'click .folderTitle' : 'selectFolder',
+		'click .folder-title' : 'selectFolder',
 		'dragstart' : 'onDragStart',
-		'dragenter .folderTitle' : 'onDragEnter',
-		'dragover .folderTitle' : 'onDragOver',
-		'dragleave .folderTitle' : 'onDragLeave',
+		'dragenter .folder-title' : 'onDragEnter',
+		'dragover .folder-title' : 'onDragOver',
+		'dragleave .folder-title' : 'onDragLeave',
 		'drop' : 'onDrop',
 		'dragend' : 'onDragEnd'
 	},
@@ -43,7 +43,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 	},
 	onDragEnter: function(e) {
 		e.preventDefault();
-		this.$el.find('>.folderTitle').addClass('drag-hovered');
+		this.$el.find('>.folder-title').addClass('drag-hovered');
 	},
 	onDragOver: function(e) {
 		e.preventDefault();
@@ -53,7 +53,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		var oe = e.originalEvent;
 
 		if(oe.clientX >= rect.right || oe.clientX <= rect.left || oe.clientY >= rect.bottom || oe.clientY <= rect.top) {
-			this.$el.find('>.folderTitle').removeClass('drag-hovered');
+			this.$el.find('>.folder-title').removeClass('drag-hovered');
 		}
 	},
 	onDrop: function(e) {
@@ -69,7 +69,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		if(folder) {
 			var new_position = this.model.get('position');
 			if(new_position == folder.get('position')) {
-				this.$el.find('>.folderTitle').removeClass('drag-hovered');
+				this.$el.find('>.folder-title').removeClass('drag-hovered');
 				return;
 			}
 			else if(new_position < folder.get('position')) {
@@ -102,7 +102,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 			}});
 		}
 
-		this.$el.find('>.folderTitle').removeClass('drag-hovered');
+		this.$el.find('>.folder-title').removeClass('drag-hovered');
 	},
 	onDragEnd: function(e) {
 		this.$el.css({opacity: ""});
