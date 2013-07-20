@@ -15,6 +15,17 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 		this.fetchingItems = false;
 	},
 
+	// Temporary for the "ItemViewContainer was not found" error.
+	_initialEvents: function(){
+		this.once('render', function () {
+			if (this.collection){
+				this.listenTo(this.collection, "add", this.addChildView, this);
+				this.listenTo(this.collection, "remove", this.removeItemView, this);
+				this.listenTo(this.collection, "reset", this._renderChildren, this);
+			}
+		}, this);
+	},
+
 	onReset: function() {
 		if(this.cursor !== null) {
 			this.collection.get(this.cursor).set('open', 'true');
