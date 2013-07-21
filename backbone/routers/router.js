@@ -59,6 +59,7 @@ var Router = Backbone.Router.extend({
 		if(this.currentSelection !== null) {
 			this.currentSelection.set('active', false);
 			this.currentSelection.items.query = '';
+			this.currentSelection.items.sort = '';
 			this.currentSelection.items.search_title = false;
 		}
 		model.set('active', true);
