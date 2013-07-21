@@ -42,7 +42,7 @@ var Router = Backbone.Router.extend({
 		// Prepare search query
 		if(query !== null) {
 			options.data = {};
-			if(query.match(/^title/)) {
+			if(query.match(/^title\//)) {
 				options.data.search_title = true;
 				options.data.query = query.split('/')[1];
 			}
