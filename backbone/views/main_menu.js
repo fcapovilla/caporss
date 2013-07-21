@@ -3,6 +3,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 	template: '#tmpl-mainmenu',
 	events: {
 		'click #syncButton': 'sync',
+		'click #subscriptionModalButton': 'showSubscriptionModal',
 		'click #mobilePrevItem' : 'prevItem',
 		'click #mobileNextItem' : 'nextItem',
 		'click #toggleReadVisibility' : 'toggleReadVisibility'
@@ -64,5 +65,12 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 			router.itemList.cursor = null;
 			router.currentSelection.items.fetch({reset: true, reset_pagination: true});
 		}
+	},
+	showSubscriptionModal: function() {
+		$('#subscriptionModal').modal().on('shown', function() {
+			$('#subscriptionUrl').focus();
+		}).on('hidden', function() {
+			$('#subscriptionUrl').blur();
+		});
 	}
 });

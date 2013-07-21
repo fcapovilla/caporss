@@ -100,11 +100,7 @@ $(document).keyup(function(e) {
 			mainMenu.toggleReadVisibility();
 		}
 		if(e.keyCode == 65) { // A
-			$('#subscriptionModal').modal().on('shown', function() {
-				$('#subscriptionUrl').focus();
-			}).on('hidden', function() {
-				$('#subscriptionUrl').blur();
-			});
+			mainMenu.showSubscriptionModal();
 		}
 	}
 });

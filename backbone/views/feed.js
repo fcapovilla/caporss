@@ -158,7 +158,12 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		dialog.find('#feedId').val(this.model.id);
 		dialog.find('#feedFolder').val(folders.get(this.model.get('folder_id')).get('title'));
 		dialog.find('#feedUrl').val(this.model.get('url'));
-		dialog.modal();
+
+		dialog.modal().on('shown', function() {
+			$('#feedUrl').focus();
+		}).on('hidden', function() {
+			$('#feedUrl').blur();
+		});
 
 		this.closeMenu();
 	},

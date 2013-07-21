@@ -117,7 +117,12 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		var dialog = $('#editFolderModal');
 		dialog.find('#folderId').val(this.model.id);
 		dialog.find('#folderTitle').val(this.model.get('title'));
-		dialog.modal();
+
+		dialog.modal().on('shown', function() {
+			$('#folderTitle').focus();
+		}).on('hidden', function() {
+			$('#folderTitle').blur();
+		});
 
 		this.closeMenu();
 	},
