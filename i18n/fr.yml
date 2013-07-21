@@ -100,5 +100,14 @@ flash:
 
 search:
     current_search: Filtre de recherche courant
+    current_sort_order: Tri courant
     title: Recherche
     in_title: Recherche dans les titres seulement
+    sort_by: "Trier par : "
+    sort:
+        date:
+            asc: Date (Asc)
+            desc: Date (Desc)
+        title:
+            asc: Titre (Asc)
+            desc: Titre (Desc)

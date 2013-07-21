@@ -99,6 +99,15 @@ flash:
     invalid_credentials: Invalid credentials
 
 search:
-    current_search: current search filter
+    current_search: Current search filter
+    current_sort_order: Current sort order
     title: Search
     in_title: Search in titles only
+    sort_by: "Sort by: "
+    sort:
+        date:
+            asc: Date (Asc)
+            desc: Date (Desc)
+        title:
+            asc: Title (Asc)
+            desc: Title (Desc)

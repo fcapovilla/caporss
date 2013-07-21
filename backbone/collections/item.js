@@ -6,6 +6,7 @@ var ItemCollection = Backbone.Collection.extend({
 		this.all_loaded = false;
 
 		this.query = '';
+		this.sort = '';
 		this.search_title = true;
 
 		if(options !== undefined && options.show_feed_titles) {
@@ -50,7 +51,7 @@ var ItemCollection = Backbone.Collection.extend({
 				options.data.limit = SETTINGS.items_per_page * this.current_page;
 			}
 		}
-		
+
 		if(options.data.query) {
 			this.query = options.data.query;
 			this.search_title = (options.data.search_title === true);
@@ -59,6 +60,15 @@ var ItemCollection = Backbone.Collection.extend({
 			if(this.query) {
 				options.data.query = this.query;
 				options.data.search_title = this.search_title;
+			}
+		}
+
+		if(options.data.sort) {
+			this.sort = options.data.sort;
+		}
+		else {
+			if(this.sort) {
+				options.data.sort = this.sort;
 			}
 		}
 

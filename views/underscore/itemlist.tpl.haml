@@ -1,8 +1,15 @@
 -# ItemList underscore template
 :plain
   <script id='tmpl-itemlist' type='text/template'>
-    <% if(item_list.query){ %>
-      <div class="current_query"><strong>#{t.search.current_search} :</strong> <%= item_list.query %></div>
+    <% if(item_list.query || item_list.sort){ %>
+      <div class="current_query">
+        <% if(item_list.query){ %>
+          <strong>#{t.search.current_search} :</strong> "<%= item_list.query %>"
+        <% } %>
+        <% if(item_list.sort){ %>
+          <strong>#{t.search.current_sort_order} :</strong> "<%= item_list.sort %>"
+        <% } %>
+      </div>
     <% } %>
 
     <ul class="item-list"></ul>

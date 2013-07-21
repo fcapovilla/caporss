@@ -46,6 +46,7 @@ var ItemListView = Backbone.Marionette.CompositeView.extend({
 	serializeData: function() {
 		var data = {
 			query: this.collection.query,
+			sort: this.collection.sort,
 			all_loaded: this.collection.all_loaded
 		};
 		return {item_list: data};

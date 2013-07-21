@@ -14,3 +14,13 @@
       %label.checkbox
         %input(type="checkbox" id="searchInTitle" checked="checked")
         =t.search.in_title
+      =t.search.sort_by
+      %select(id="sortType")
+        %option(value="dateAsc")
+          =t.search.sort.date.asc
+        %option(value="dateDesc" selected="selected")
+          =t.search.sort.date.desc
+        %option(value="titleAsc")
+          =t.search.sort.title.asc
+        %option(value="titleDesc")
+          =t.search.sort.title.desc

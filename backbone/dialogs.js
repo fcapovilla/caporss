@@ -115,6 +115,7 @@ $('#editFeedButton').click(function() {
 $('#searchButton').click(function() {
 	var query = $('#searchQuery').val();
 	var search_title = $('#searchInTitle').is(':checked');
+	var sort_type = $('#sortType').val();
 
 	var current_route = 'item';
 	var result = Backbone.history.fragment.match(/^[^\/]+/);
@@ -127,6 +128,9 @@ $('#searchButton').click(function() {
 	}
 
 	var search_part = '/search/';
+	if(sort_type) {
+		search_part += sort_type + '/';
+	}
 	if(search_title) {
 		search_part += 'title/';
 	}

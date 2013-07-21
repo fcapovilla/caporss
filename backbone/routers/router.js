@@ -41,14 +41,19 @@ var Router = Backbone.Router.extend({
 
 		// Prepare search query
 		if(query !== null) {
+			var parts = query.split('/');
 			options.data = {};
-			if(query.match(/^title\//)) {
+			options.data.query = parts.pop();
+
+			if(parts.indexOf('title') != -1) {
 				options.data.search_title = true;
-				options.data.query = query.split('/')[1];
 			}
-			else {
-				options.data.query = query;
-			}
+
+			_.each(['dateDesc', 'dateAsc', 'titleAsc', 'titleDesc'], function(val) {
+				if(parts.indexOf(val) != -1) {
+					options.data.sort = val;
+				}
+			});
 		}
 
 		if(this.currentSelection !== null) {
