@@ -49,7 +49,7 @@ var Router = Backbone.Router.extend({
 				options.data.search_title = true;
 			}
 
-			_.each(['dateDesc', 'dateAsc', 'titleAsc', 'titleDesc'], function(val) {
+			_.each(['dateAsc', 'titleAsc', 'titleDesc'], function(val) {
 				if(parts.indexOf(val) != -1) {
 					options.data.sort = val;
 				}
