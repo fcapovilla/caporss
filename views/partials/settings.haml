@@ -1,11 +1,11 @@
 -# Settings form
 
-%form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
-  %div(class="modal hide fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true")
-    .modal-header
-      =t.settings.title
-      %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-        x
+%div(class="modal hide fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true")
+  .modal-header
+    =t.settings.title
+    %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+      x
+  %form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
     .modal-body
       %ul.nav.nav-tabs
         %li.active

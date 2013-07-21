@@ -44,8 +44,12 @@ $('#subscribeButton').click(function() {
 			}
 		}
 	});
+
+	$('#subscriptionModal').modal('hide');
 	$('#subscriptionUrl').val('');
 	$('#subscriptionFolder').val('');
+
+	return false;
 });
 
 $('#editFolderButton').click(function() {
@@ -63,6 +67,10 @@ $('#editFolderButton').click(function() {
 			}
 		});
 	}
+
+	$('#editFolderModal').modal('hide');
+
+	return false;
 });
 
 $('#editFeedButton').click(function() {
@@ -98,6 +106,10 @@ $('#editFeedButton').click(function() {
 			}
 		});
 	}
+
+	$('#editFeedModal').modal('hide');
+
+	return false;
 });
 
 $('#searchButton').click(function() {

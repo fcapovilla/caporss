@@ -94,10 +94,10 @@ $(document).keyup(function(e) {
 			});
 		}
 		if(e.keyCode == 82) { // R
-			$('#syncButton').click();
+			mainMenu.sync();
 		}
 		if(e.keyCode == 72) { // H
-			$('#toggleReadVisibilityButton').click();
+			mainMenu.toggleReadVisibility();
 		}
 		if(e.keyCode == 65) { // A
 			$('#subscriptionModal').modal().on('shown', function() {
@@ -109,9 +109,12 @@ $(document).keyup(function(e) {
 	}
 });
 
-// Prevent default pgDown behavious of the spacebar
+// Prevent default browser behaviors
 $(document).keydown(function(e) {
 	if(e.keyCode == 32) { // SPACE
-		return false;
+		e.preventDefault();
+	}
+	if(e.keyCode == 111 || e.keyCode == 191) { // /
+		e.preventDefault();
 	}
 });

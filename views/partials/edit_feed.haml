@@ -5,17 +5,18 @@
     =t.edit_feed.title
     %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
       x
-  .modal-body
-    %label
-      =t.edit_feed.url
-    %input(class="input-block-level" type="text" id="feedUrl" aria-hidden="true")
-    %label
-      =t.edit_feed.folder
-    %input(class="input-block-level" type="text" id="feedFolder" aria-hidden="true")
-    %label.checkbox
-      %input(type="checkbox" id="resetFeed" checked="checked")
-      =t.edit_feed.reset
-    %input(type="hidden" id="feedId" value="")
-  .modal-footer
-    %button(type="button" id="editFeedButton" data-dismiss="modal" class="btn btn-primary" aria-hidden="true")
-      =t.edit_feed.save
+  %form(id="editFeedForm" method="get" action="#")
+    .modal-body
+      %label
+        =t.edit_feed.url
+      %input(class="input-block-level" type="text" id="feedUrl" aria-hidden="true")
+      %label
+        =t.edit_feed.folder
+      %input(class="input-block-level" type="text" id="feedFolder" aria-hidden="true")
+      %label.checkbox
+        %input(type="checkbox" id="resetFeed" checked="checked")
+        =t.edit_feed.reset
+      %input(type="hidden" id="feedId" value="")
+    .modal-footer
+      %button(type="submit" id="editFeedButton" class="btn btn-primary" aria-hidden="true")
+        =t.edit_feed.save
