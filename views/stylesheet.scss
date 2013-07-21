@@ -33,13 +33,6 @@ h2 {
 	.folder-title {
 		cursor: pointer;
 	}
-	.nav-list {
-		padding-right: 0px;
-		padding-left: 5px;
-		&>.feed {
-			padding-left: 0px;
-		}
-	}
 	.drag-hovered {
 		border-bottom: 2px solid black;
 	}
@@ -219,9 +212,12 @@ h2 {
 		display: inline !important;
 	}
 
+	#feed-list {
+		padding-left: 6px;
+	}
+
 	.feed-list {
 		width: 100% !important;
-		padding-left: 6px;
 
 		.feed-icon {
 			padding: 7px 4px;
