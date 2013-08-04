@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'thin'
+gem 'puma'
 
 gem 'sinatra'
 gem 'sinatra-contrib'

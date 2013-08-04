@@ -2,9 +2,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
-    addressable (2.3.4)
-    backports (3.3.2)
-    bcrypt-ruby (3.0.1)
+    addressable (2.3.5)
+    backports (3.3.3)
+    bcrypt-ruby (3.1.1)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     colorize (0.5.8)
@@ -15,7 +15,6 @@ GEM
       simplecov (>= 0.7)
       thor
     curb (0.8.4)
-    daemons (1.1.9)
     data_objects (0.10.13)
       addressable (~> 2.1)
     datamapper (1.2.0)
@@ -103,8 +102,10 @@ GEM
     loofah (1.2.1)
       nokogiri (>= 1.4.4)
     mime-types (1.23)
-    multi_json (1.7.7)
+    multi_json (1.7.8)
     nokogiri (1.5.10)
+    puma (2.4.0)
+      rack (>= 1.1, < 2.0)
     r18n-core (1.1.5)
     rack (1.5.2)
     rack-protection (1.5.0)
@@ -112,19 +113,19 @@ GEM
     rack-ssl-enforcer (0.2.5)
     rack-test (0.6.2)
       rack (>= 1.0)
-    rake (10.0.4)
+    rake (10.1.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rspec (2.13.0)
-      rspec-core (~> 2.13.0)
-      rspec-expectations (~> 2.13.0)
-      rspec-mocks (~> 2.13.0)
-    rspec-core (2.13.1)
-    rspec-expectations (2.13.0)
+    rspec (2.14.1)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
+    rspec-core (2.14.4)
+    rspec-expectations (2.14.0)
       diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.13.1)
+    rspec-mocks (2.14.2)
     rubyzip (0.9.9)
-    sass (3.2.9)
+    sass (3.2.10)
     sax-machine (0.2.0.rc1)
       nokogiri (~> 1.5.2)
     selenium-webdriver (2.33.0)
@@ -153,10 +154,6 @@ GEM
       r18n-core (= 1.1.5)
       sinatra (>= 1.3)
     stringex (1.5.1)
-    thin (1.5.1)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.18.1)
     tilt (1.4.1)
     uuidtools (2.1.4)
@@ -177,6 +174,7 @@ DEPENDENCIES
   haml
   jasmine
   json
+  puma
   rack-ssl-enforcer
   rake
   rspec
@@ -185,4 +183,3 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-flash
   sinatra-r18n
-  thin
