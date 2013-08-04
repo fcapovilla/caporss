@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+# Convert parameters sent by the client into an item search query
 def prepare_item_search(params)
 	options = {
 		:user => @user,
