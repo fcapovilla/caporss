@@ -13,9 +13,9 @@ require 'RedCloth'
 require 'json'
 require 'open-uri'
 
-require_relative 'models/init'
-require_relative 'helpers/init'
-require_relative 'routes/init'
+require_relative 'app/models/init'
+require_relative 'app/helpers/init'
+require_relative 'app/routes/init'
 
 
 # Force SSL in production
