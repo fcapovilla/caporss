@@ -1,0 +1,100 @@
+@import "feedlist";
+@import "itemlist";
+
+// Default text sizes
+body {
+	font-size: 0.8em;
+}
+
+h1 {
+	font-size: 2.5em;
+}
+
+h2 {
+	font-size: 2.25em;
+}
+
+// Hover on list elements
+.feed-title,
+.folder-title,
+.item-container {
+	&:hover {
+		background-color: rgb(230, 230, 230);
+	}
+	&.active {
+		color: #ffffff;
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+		background-color: rgb(91, 165, 202);
+	}
+}
+
+// Fix navbar
+.navbar {
+	margin-bottom: 0px;
+}
+
+.mobile-item-buttons {
+	float: right;
+}
+
+// Desktop view
+@media screen and (min-width:768px) {
+	.content {
+		margin-left: 300px;
+	}
+
+	.side-bar {
+		width:300px;
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		.dragbar {
+			background-color: rgb(230, 230, 230);
+			height:100%;
+			float: right;
+			width: 5px;
+			cursor: col-resize;
+		}
+	}
+}
+
+// Mobile view
+@media screen and (max-width:767px) {
+	body {
+		padding: 0px;
+		font-size: 0.75em;
+		.icon {
+			font-size: 16px;
+		}
+	}
+
+	.btn .icon{
+		font-size: 20px !important;
+	}
+
+	.mobile-item-button {
+		display: inline !important;
+	}
+
+	.content {
+		margin-left: 0px !important;
+	}
+
+	.side-bar {
+		width: 100% !important;
+	}
+}
+
+// Additional mobile hidden classes
+@media screen and (max-width:365px) {
+	.hidden-tiny-phone {
+		display: none;
+	}
+}
+
+@media screen and (max-width:500px) {
+	.hidden-small-phone {
+		display: none;
+	}
+}

@@ -25,7 +25,7 @@ end
 # SCSS stylesheet
 get '/stylesheet.css' do
 	content_type :css, 'charset' => 'utf-8'
-	scss :stylesheet
+	scss :'scss/stylesheet'
 end
 
 # Serve a concatenated version of the Backbone application
