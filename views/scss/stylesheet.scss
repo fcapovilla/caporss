@@ -1,7 +1,7 @@
 @import "feedlist";
 @import "itemlist";
 
-// Default text sizes
+// Default font sizes
 body {
 	font-size: 0.8em;
 }
@@ -37,6 +37,11 @@ h2 {
 	float: right;
 }
 
+// Fix for forms in modal dialogs
+form {
+	margin: 0;
+}
+
 // Desktop view
 @media screen and (min-width:768px) {
 	.content {
@@ -70,7 +75,7 @@ h2 {
 	}
 
 	.btn .icon{
-		font-size: 20px !important;
+		font-size: 20px;
 	}
 
 	.mobile-item-button {
@@ -78,7 +83,7 @@ h2 {
 	}
 
 	.content {
-		margin-left: 0px !important;
+		margin-left: 0px;
 	}
 
 	.side-bar {
