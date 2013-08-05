@@ -104,7 +104,7 @@ CapoRSS is built on top of these great projects :
 * [JQuery-cookie](https://github.com/carhartl/jquery-cookie)
 * [Haml](http://haml.info/)
 * [Sass](http://sass-lang.com/)
-* [Thin](http://code.macournoyer.com/thin/)
+* [Puma](http://puma.io/)
 * [rack-ssl-enforcer](https://github.com/tobmatth/rack-ssl-enforcer)
 * [sinatra-flash](https://github.com/SFEley/sinatra-flash)
 
