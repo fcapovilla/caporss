@@ -32,6 +32,11 @@
 		}
 	}
 
+	.folder-toggle,
+	.folder-icon {
+		display: inline-block;
+	}
+
 	.drag-hovered {
 		border-bottom: 2px solid black;
 	}
@@ -49,7 +54,6 @@
 		.folder-toggle,
 		.folder-icon {
 			padding: 0px 2px;
-			display: inline-block;
 		}
 
 		.feed-title {
@@ -74,7 +78,6 @@
 		.folder-toggle,
 		.folder-icon {
 			padding: 7px 4px;
-			display: inline-block;
 		}
 
 		.feed-title,
