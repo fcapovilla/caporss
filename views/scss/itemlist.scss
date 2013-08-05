@@ -72,6 +72,9 @@
 // Mobile view
 @media screen and (max-width:767px) {
 	#item-list {
+		position: absolute;
+		width: 100%;
+
 		.item-container {
 			.item-title {
 				margin-left: 55px;
