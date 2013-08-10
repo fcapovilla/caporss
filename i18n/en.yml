@@ -53,6 +53,7 @@ edit_feed:
     url: "URL:"
     folder: "Folder:"
     reset: Reset feed
+    use_pshb: Use Pubsubhubbub
     save: Save
 
 edit_folder:

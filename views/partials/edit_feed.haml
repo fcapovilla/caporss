@@ -16,6 +16,9 @@
       %label.checkbox
         %input(type="checkbox" id="resetFeed" checked="checked")
         =t.edit_feed.reset
+      %label.checkbox
+        %input(type="checkbox" id="feedUsePSHB")
+        =t.edit_feed.use_pshb
       %input(type="hidden" id="feedId" value="")
     .modal-footer
       %button(type="submit" id="editFeedButton" class="btn btn-primary" aria-hidden="true")

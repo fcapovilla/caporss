@@ -53,6 +53,7 @@ edit_feed:
     url: "URL&nbsp;:"
     folder: "Dossier&nbsp:"
     reset: "Réinitialiser l'abonnement"
+    use_pshb: Utiliser Pubsubhubbub
     save: Sauvegarder
 
 edit_folder:

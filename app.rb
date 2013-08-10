@@ -22,7 +22,7 @@ require_relative 'app/routes/init'
 configure :production do
 	require 'rack/ssl-enforcer'
 	use Rack::SslEnforcer
-	disable :logging
+	#disable :logging
 end
 
 configure do

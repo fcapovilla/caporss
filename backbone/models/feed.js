@@ -12,7 +12,8 @@ var Feed = Backbone.Model.extend({
 			position: this.get('position'),
 			folder: this.get('folder'),
 			folder_id: this.get('folder_id'),
-			url: this.get('url')
+			url: this.get('url'),
+			pshb: this.get('pshb')
 		};
 	},
 	markRead: function() {

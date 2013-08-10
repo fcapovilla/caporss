@@ -26,7 +26,7 @@ post '/feed' do
 	feed = Feed.new(
 		:user => @user,
 		:title => params[:url],
-		:url => params[:url],
+		:url => params[:url]
 	)
 	folder.feeds << feed
 
@@ -37,6 +37,11 @@ post '/feed' do
 
 	folder.save
 	feed.sync!
+
+	# If a Pubhubsubbub hub is found, automatically try subscribe to it
+	if feed.pshb_hub
+		feed.pshb_subscribe!(uri('/pshb/callback'))
+	end
 
 	feed.to_json
 end
@@ -70,6 +75,12 @@ put '/feed/:id', '/folder/*/feed/:id' do
 		end
 	else
 		feed.move(attributes[:position]) if attributes.has_key?(:position)
+	end
+
+	if feed.pshb and !attributes[:pshb]
+		feed.pshb_unsubscribe!
+	elsif !feed.pshb and attributes[:pshb]
+		feed.pshb_subscribe!(uri('/pshb/callback'))
 	end
 
 	feed.attributes = attributes.slice(:url)

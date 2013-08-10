@@ -158,6 +158,8 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		dialog.find('#feedId').val(this.model.id);
 		dialog.find('#feedFolder').val(folders.get(this.model.get('folder_id')).get('title'));
 		dialog.find('#feedUrl').val(this.model.get('url'));
+		dialog.find('#feedUsePSHB').prop('checked', this.model.get('pshb'));
+		dialog.find('#feedUsePSHB').prop('disabled', !this.model.get('pshb_hub'));
 
 		dialog.modal().on('shown', function() {
 			$('#feedUrl').focus();

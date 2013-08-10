@@ -6,7 +6,7 @@ post '/full_sync' do
 	authorize_basic! :sync
 	content_type :json, 'charset' => 'utf-8'
 
-	urls = Feed.all.map{ |feed| feed.url }
+	urls = Feed.all(:pshb => false).map{ |feed| feed.url }
 	urls.uniq!
 
 	feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
@@ -20,7 +20,7 @@ post '/full_sync' do
 			next
 		end
 
-		Feed.all(:url => url).each do |feed|
+		Feed.all(:url => url, :pshb => false).each do |feed|
 			old_count = feed.items.count
 
 			feed.update_feed!(xml)
@@ -45,7 +45,7 @@ namespace '/sync' do
 	end
 
 	post '/all' do
-		urls = Feed.all(:user => @user).map{ |feed| feed.url }
+		urls = Feed.all(:user => @user, :pshb => false).map{ |feed| feed.url }
 		urls.uniq!
 
 		feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
@@ -59,7 +59,7 @@ namespace '/sync' do
 				next
 			end
 
-			Feed.all(:user => @user, :url => url).each do |feed|
+			Feed.all(:user => @user, :url => url, :pshb => false).each do |feed|
 				old_count = feed.items.count
 
 				feed.update_feed!(xml)
@@ -74,7 +74,7 @@ namespace '/sync' do
 	post '/folder/:id' do |id|
 		folder = Folder.first(:user => @user, :id => id)
 
-		urls = folder.feeds.map{ |feed| feed.url }
+		urls = folder.feeds(:pshb => false).map{ |feed| feed.url }
 		urls.uniq!
 
 		feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
@@ -88,7 +88,7 @@ namespace '/sync' do
 				next
 			end
 
-			folder.feeds.all(:user => @user, :url => url).each do |feed|
+			folder.feeds.all(:user => @user, :url => url, :pshb => false).each do |feed|
 				old_count = feed.items.count
 
 				feed.update_feed!(xml)

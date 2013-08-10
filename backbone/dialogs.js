@@ -79,13 +79,15 @@ $('#editFeedButton').click(function() {
 	var feedFolder = dialog.find('#feedFolder').val();
 	var feedUrl = dialog.find('#feedUrl').val();
 	var reset = dialog.find('#resetFeed').is(':checked');
+	var pshb = dialog.find('#feedUsePSHB').is(':checked');
 
 	var feed = folders.getFeed(feedId);
 	if(feed) {
 		feed.unset('position');
 		feed.save({
 			url: feedUrl,
-			folder: feedFolder
+			folder: feedFolder,
+			pshb: pshb
 		},{
 			success: function() {
 				router.navigate("", {trigger: true});

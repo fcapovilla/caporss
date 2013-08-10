@@ -1,9 +1,15 @@
 # encoding: utf-8
 require 'uri'
 require 'feedzirra'
+require 'net/http'
 
 # Force enclosure and guid parsing on all Feedzirra feed entries
 Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
+
+# Add Pubsubhubbub hub parsing to all Feedzirra feed entries
+Feedzirra::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
+Feedzirra::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
+Feedzirra::Feed.add_common_feed_element(:'link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
 
 class Feed
 	include DataMapper::Resource
@@ -11,6 +17,8 @@ class Feed
 	property :id, Serial
 	property :title, String, :length => 100
 	property :url, String, :length => 1..2000
+	property :pshb_hub, String, :length => 0..2000, :default => ''
+	property :pshb, Boolean, :default => false
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
 
@@ -36,6 +44,12 @@ class Feed
 
 	# Update the feed using a feedzirra feed object
 	def update_feed!(feed)
+		if feed.hub
+			self.pshb_hub = feed.hub
+		else
+			self.pshb_hub = ''
+		end
+
 		if feed.title and feed.title != self.title
 			self.title = feed.title
 			self.save
@@ -160,5 +174,30 @@ class Feed
 		else
 			[false, "Url is not a valid URL."]
 		end
+	end
+
+	# TODO : Add hub.secret support
+	def pshb_subscribe!(callback)
+		uri = URI.parse(self.pshb_hub)
+
+		response = Net::HTTP.post_form(uri, {
+			'hub.callback' => callback,
+			'hub.topic' => self.url,
+			'hub.mode' => 'subscribe'
+		})
+
+		if response.code == '202'
+			self.pshb = true
+		else
+			self.pshb = false
+		end
+
+		self.save
+	end
+
+	def pshb_unsubscribe!
+		# TODO: Pubsubhubbub unsubscribe code
+		self.pshb = false
+		self.save
 	end
 end
