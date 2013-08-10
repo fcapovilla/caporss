@@ -10,6 +10,9 @@ Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as =>
 Feedzirra::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
 Feedzirra::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
 Feedzirra::Feed.add_common_feed_element(:'link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
+Feedzirra::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :topic, :with => {:rel => 'self'})
+Feedzirra::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :topic, :with => {:rel => 'self'})
+Feedzirra::Feed.add_common_feed_element(:'link', :value => :href, :as => :topic, :with => {:rel => 'self'})
 
 class Feed
 	include DataMapper::Resource
