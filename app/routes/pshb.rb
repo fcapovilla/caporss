@@ -8,9 +8,9 @@ end
 
 post '/pshb/callback' do
 	puts params.inspect
-	puts request.body
+	puts request.body.string
 
-	entries = Feedzirra::Feed.parse(request.body)
+	entries = Feedzirra::Feed.parse(request.body.string)
 	feed = Feed.first(:url => entries.feed_url)
 
 	if feed
