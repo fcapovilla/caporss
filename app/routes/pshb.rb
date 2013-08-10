@@ -7,15 +7,19 @@ get '/pshb/callback' do
 end
 
 post '/pshb/callback' do
-	puts request.body.string
+	logger.info request.body.string
 
-	entries = Feedzirra::Feed.parse(request.body.string)
-	feed = Feed.first(:url => entries.topic)
+	# Parse and update the feed in the backbround
+	task = Thread.new do
+		entries = Feedzirra::Feed.parse(request.body.string)
+		feed = Feed.first(:url => entries.topic)
 
-	if feed
-		feed.update_feed!(entries)
-		return 200
-	else
-		return 404
+		if feed
+			feed.update_feed!(entries)
+		else
+			logger.error "Pubsubhubbub feed update failed for feed #{entries.topic}"
+		end
 	end
+
+	200
 end
