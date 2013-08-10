@@ -74,7 +74,7 @@ namespace '/sync' do
 	post '/folder/:id' do |id|
 		folder = Folder.first(:user => @user, :id => id)
 
-		urls = folder.feeds(:pshb => false).map{ |feed| feed.url }
+		urls = folder.feeds.map{ |feed| feed.url }
 		urls.uniq!
 
 		feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
@@ -88,7 +88,7 @@ namespace '/sync' do
 				next
 			end
 
-			folder.feeds.all(:user => @user, :url => url, :pshb => false).each do |feed|
+			folder.feeds.all(:user => @user, :url => url).each do |feed|
 				old_count = feed.items.count
 
 				feed.update_feed!(xml)
