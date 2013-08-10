@@ -39,7 +39,7 @@ post '/feed' do
 	feed.sync!
 
 	# If a Pubhubsubbub hub is found, automatically try subscribe to it
-	if feed.pshb_hub
+	unless feed.pshb_hub.empty?
 		feed.pshb_subscribe!(uri('/pshb/callback'))
 	end
 
