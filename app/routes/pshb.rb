@@ -9,7 +9,7 @@ get '/pshb/callback/:id' do
 		return 404
 	else
 		if params['hub.mode'] == 'subscribe'
-			feed.pshb_expiration = Time.now + params['hub.lease_seconds']
+			feed.pshb_expiration = Time.now + params['hub.lease_seconds'].to_i
 			feed.save
 		end
 
