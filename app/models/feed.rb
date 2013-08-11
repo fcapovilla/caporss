@@ -202,8 +202,15 @@ class Feed
 		self.save
 	end
 
-	def pshb_unsubscribe!
-		# TODO: Pubsubhubbub unsubscribe code
+	def pshb_unsubscribe!(callback)
+		uri = URI.parse(self.pshb_hub)
+
+		Net::HTTP.post_form(uri, {
+			'hub.callback' => "#{callback}/#{self.id}",
+			'hub.topic' => self.pshb_topic,
+			'hub.mode' => 'unsubscribe'
+		})
+
 		self.pshb = false
 		self.save
 	end

@@ -78,7 +78,7 @@ put '/feed/:id', '/folder/*/feed/:id' do
 	end
 
 	if feed.pshb and !attributes[:pshb]
-		feed.pshb_unsubscribe!
+		feed.pshb_unsubscribe!(uri('pshb/callback'))
 	elsif !feed.pshb and attributes[:pshb]
 		feed.pshb_subscribe!(uri('/pshb/callback'))
 	end
