@@ -132,6 +132,7 @@ migration 6, :add_pubsubhubbub do
 				puts "Found a Pubsubhubbub hub for feed #{feed.title}"
 
 				feed.pshb_hub = feed_data.hub
+				feed.pshb_topic = feed_data.topic
 				feed.save
 			end
 		end
