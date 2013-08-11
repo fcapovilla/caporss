@@ -3,7 +3,13 @@
 
 # Subscription verification
 get '/pshb/callback/:id' do
-	params['hub.challenge']
+	feed = Feed.get(params[:id])
+
+	if feed.pshb_topic != params['hub.topic']
+		return 404
+	else
+		return params['hub.challenge']
+	end
 end
 
 post '/pshb/callback/:id' do

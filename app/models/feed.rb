@@ -21,6 +21,7 @@ class Feed
 	property :title, String, :length => 100
 	property :url, String, :length => 1..2000
 	property :pshb_hub, String, :length => 0..2000, :default => ''
+	property :pshb_topic, String, :length => 0..2000, :default => ''
 	property :pshb, Boolean, :default => false
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
@@ -49,6 +50,7 @@ class Feed
 	def update_feed!(feed)
 		if feed.hub
 			self.pshb_hub = feed.hub
+			self.pshb_topic = feed.topic
 		else
 			self.pshb_hub = ''
 		end
@@ -185,7 +187,7 @@ class Feed
 
 		response = Net::HTTP.post_form(uri, {
 			'hub.callback' => "#{callback}/#{self.id}",
-			'hub.topic' => self.url,
+			'hub.topic' => self.pshb_topic,
 			'hub.mode' => 'subscribe'
 		})
 
