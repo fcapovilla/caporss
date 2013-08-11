@@ -19,6 +19,17 @@
       %label.checkbox
         %input(type="checkbox" id="feedUsePSHB")
         =t.edit_feed.use_pshb
+      #feedPSHBInfos.hide
+        %table.table.table-bordered
+          %tr
+            %td=t.edit_feed.pshb_hub
+            %td#feedPSHBHub
+          %tr
+            %td=t.edit_feed.pshb_topic
+            %td#feedPSHBTopic
+          %tr
+            %td=t.edit_feed.pshb_expiration
+            %td#feedPSHBExpiration
       %input(type="hidden" id="feedId" value="")
     .modal-footer
       %button(type="submit" id="editFeedButton" class="btn btn-primary" aria-hidden="true")

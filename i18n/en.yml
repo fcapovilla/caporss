@@ -54,6 +54,9 @@ edit_feed:
     folder: "Folder:"
     reset: Reset feed
     use_pshb: Use Pubsubhubbub
+    pshb_topic: PSHB Topic
+    pshb_hub: PSHB Hub
+    pshb_expiration: Expiration
     save: Save
 
 edit_folder:
