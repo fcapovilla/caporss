@@ -8,6 +8,11 @@ get '/pshb/callback/:id' do
 	if feed.pshb_topic != params['hub.topic']
 		return 404
 	else
+		if params['hub.mode'] == 'subscribe'
+			feed.pshb_expiration = Time.now + params['hub.lease_seconds']
+			feed.save
+		end
+
 		return params['hub.challenge']
 	end
 end

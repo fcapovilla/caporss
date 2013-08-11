@@ -20,11 +20,13 @@ class Feed
 	property :id, Serial
 	property :title, String, :length => 100
 	property :url, String, :length => 1..2000
-	property :pshb_hub, String, :length => 0..2000, :default => ''
-	property :pshb_topic, String, :length => 0..2000, :default => ''
-	property :pshb, Boolean, :default => false
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
+
+	property :pshb_hub, String, :length => 0..2000, :default => ''
+	property :pshb_topic, String, :length => 0..2000, :default => ''
+	property :pshb_expiration, Time
+	property :pshb, Boolean, :default => false
 
 	belongs_to :user, :required => false
 	belongs_to :folder

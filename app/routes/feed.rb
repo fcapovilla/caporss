@@ -38,7 +38,7 @@ post '/feed' do
 	folder.save
 	feed.sync!
 
-	# If a Pubhubsubbub hub is found, automatically try subscribe to it
+	# If a Pubhubsubbub hub is found, automatically try to subscribe to it
 	unless feed.pshb_hub.empty?
 		feed.pshb_subscribe!(uri('/pshb/callback'))
 	end

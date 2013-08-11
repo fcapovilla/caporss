@@ -6,6 +6,13 @@ post '/full_sync' do
 	authorize_basic! :sync
 	content_type :json, 'charset' => 'utf-8'
 
+	Feed.all(:pshb => true).each do |feed|
+		# Resubscribe if the Pubsubhubbub subscription is almost expired
+		if feed.pshb_expiration < Time.now + (60*60*2)
+			feed.pshb_subscribe!(uri('/pshb/callback'))
+		end
+	end
+
 	urls = Feed.all(:pshb => false).map{ |feed| feed.url }
 	urls.uniq!
 
@@ -42,6 +49,13 @@ namespace '/sync' do
 	before do
 		authorize_basic! :user
 		content_type :json, 'charset' => 'utf-8'
+
+		Feed.all(:pshb => true).each do |feed|
+			# Resubscribe if the Pubsubhubbub subscription is almost expired
+			if feed.pshb_expiration < Time.now + (60*60*2)
+				feed.pshb_subscribe!(uri('/pshb/callback'))
+			end
+		end
 	end
 
 	post '/all' do
