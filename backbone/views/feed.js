@@ -159,17 +159,17 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		dialog.find('#feedFolder').val(folders.get(this.model.get('folder_id')).get('title'));
 		dialog.find('#feedUrl').val(this.model.get('url'));
 
-		dialog.find('#feedUsePSHB').prop('disabled', !this.model.get('pshb_hub'));
-		dialog.find('#feedUsePSHB').prop('checked', this.model.get('pshb'));
-
-		if(this.model.get('pshb_hub')) {
+		if(this.model.get('pshb_hub') !== '') {
 			dialog.find('#feedPSHBInfos').removeClass('hide');
 			dialog.find('#feedPSHBHub').text(this.model.get('pshb_hub'));
 			dialog.find('#feedPSHBTopic').text(this.model.get('pshb_topic'));
 			dialog.find('#feedPSHBExpiration').text(this.model.get('pshb_expiration'));
+			dialog.find('#feedUsePSHB').prop('disabled', !this.model.get('pshb_hub'));
+			dialog.find('#feedUsePSHB').prop('checked', this.model.get('pshb'));
+
 		}
 		else {
-			dialog.find('feedPSHBInfos').addClass('hide');
+			dialog.find('#feedPSHBInfos').addClass('hide');
 		}
 
 		dialog.modal().on('shown', function() {
