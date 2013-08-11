@@ -52,15 +52,21 @@ class Feed
 	def update_feed!(feed)
 		if feed.hub
 			self.pshb_hub = feed.hub
-			self.pshb_topic = feed.topic
+
+			if feed.topic and feed.topic =~ /^#{URI::regexp}$/
+				self.pshb_topic = feed.topic
+			else
+				self.pshb_topic = self.url
+			end
 		else
 			self.pshb_hub = ''
 		end
 
 		if feed.title and feed.title != self.title
 			self.title = feed.title
-			self.save
 		end
+
+		self.save
 
 		newest = nil
 
