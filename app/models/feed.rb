@@ -184,7 +184,7 @@ class Feed
 		uri = URI.parse(self.pshb_hub)
 
 		response = Net::HTTP.post_form(uri, {
-			'hub.callback' => callback,
+			'hub.callback' => "#{callback}/#{self.id}",
 			'hub.topic' => self.url,
 			'hub.mode' => 'subscribe'
 		})
