@@ -26,7 +26,13 @@ post '/pshb/callback/:id' do
 		feed = Feed.get(params[:id])
 
 		if feed
+			old_count = feed.items.count
+
 			feed.update_feed!(entries)
+
+			if feed.items.count > old_count
+				send_streams "sync:new_items"
+			end
 		else
 			logger.error "Pubsubhubbub feed update failed for feed #{entries.topic}"
 		end
