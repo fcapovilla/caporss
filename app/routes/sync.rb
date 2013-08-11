@@ -8,7 +8,7 @@ post '/full_sync' do
 
 	Feed.all(:pshb => true).each do |feed|
 		# Resubscribe if the Pubsubhubbub subscription is almost expired
-		if feed.pshb_expiration < Time.now + (60*60*2)
+		if feed.pshb_expiration and feed.pshb_expiration < Time.now + (60*60*2)
 			feed.pshb_subscribe!(uri('/pshb/callback'))
 		end
 	end
@@ -52,7 +52,7 @@ namespace '/sync' do
 
 		Feed.all(:pshb => true).each do |feed|
 			# Resubscribe if the Pubsubhubbub subscription is almost expired
-			if feed.pshb_expiration < Time.now + (60*60*2)
+			if feed.pshb_expiration and feed.pshb_expiration < Time.now + (60*60*2)
 				feed.pshb_subscribe!(uri('/pshb/callback'))
 			end
 		end
