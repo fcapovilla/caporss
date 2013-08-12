@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+	<channel>
+		<title>Test title</title>
+		<description>Description - Test title</description>
+		<link>http://localhost:4567/1.rss?items=1</link>
+		<item>
+			<title>Item X</title>
+			<link>http://localhost:4567/1.rss?items=1</link>
+			<description>Description - Item X</description>
+			<pubDate>Sun, 1 Jan 2012 01:00:00 +0000</pubDate>
+			<guid>X</guid>
+		</item>
+	</channel>
+</rss>

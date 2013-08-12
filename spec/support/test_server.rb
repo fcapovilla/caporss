@@ -20,6 +20,10 @@ class TestServer < Sinatra::Base
 					xml.title title
 					xml.description "Description - #{title}"
 					xml.link request.url
+					if params[:pshb]
+						xml.link :rel => 'self', :href => "#{request.url}"
+						xml.link :rel => 'hub', :href => uri('/pshb/hub')
+					end
 					items.times do |i|
 						xml.item do
 							xml.title "Item #{i}"
@@ -34,6 +38,10 @@ class TestServer < Sinatra::Base
 		end
 
 		builder.to_xml
+	end
+
+	post '/pshb/hub' do
+		202
 	end
 
 end
