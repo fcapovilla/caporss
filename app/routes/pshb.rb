@@ -19,11 +19,12 @@ end
 
 post '/pshb/callback/:id' do
 	logger.info request.body.string
+	id = params[:id]
 
-	# Parse and update the feed in the backbround
+	# Parse and update the feed in the background
 	task = Thread.new do
 		entries = Feedzirra::Feed.parse(request.body.string)
-		feed = Feed.get(params[:id])
+		feed = Feed.get(id)
 
 		if feed
 			old_count = feed.items.count

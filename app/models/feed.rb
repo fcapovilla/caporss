@@ -50,16 +50,18 @@ class Feed
 
 	# Update the feed using a feedzirra feed object
 	def update_feed!(feed)
-		if feed.hub
-			self.pshb_hub = feed.hub
+		unless self.pshb
+			if feed.hub
+				self.pshb_hub = feed.hub
 
-			if feed.topic and feed.topic =~ /^#{URI::regexp}$/
-				self.pshb_topic = feed.topic
+				if feed.topic and feed.topic =~ /^#{URI::regexp}$/
+					self.pshb_topic = feed.topic
+				else
+					self.pshb_topic = self.url
+				end
 			else
-				self.pshb_topic = self.url
+				self.pshb_hub = ''
 			end
-		else
-			self.pshb_hub = ''
 		end
 
 		if feed.title and feed.title != self.title
@@ -218,6 +220,7 @@ class Feed
 		})
 
 		self.pshb = false
+		self.pshb_expiration = nil
 		self.save
 	end
 end
