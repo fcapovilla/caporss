@@ -5,7 +5,7 @@
 get '/pshb/callback/:id' do
 	feed = Feed.get(params[:id])
 
-	if feed.pshb_topic != params['hub.topic']
+	if !feed.pshb or feed.pshb_topic != params['hub.topic']
 		return 404
 	else
 		if params['hub.mode'] == 'subscribe'
@@ -26,7 +26,7 @@ post '/pshb/callback/:id' do
 		entries = Feedzirra::Feed.parse(request.body.string)
 		feed = Feed.get(id)
 
-		if feed
+		if feed and feed.pshb
 			old_count = feed.items.count
 
 			feed.update_feed!(entries)
@@ -35,7 +35,7 @@ post '/pshb/callback/:id' do
 				send_streams "sync:new_items"
 			end
 		else
-			logger.error "Pubsubhubbub feed update failed for feed #{entries.topic}"
+			logger.error "Pubsubhubbub feed update failed for feed #{id}"
 		end
 	end
 
