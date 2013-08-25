@@ -8,7 +8,7 @@ Version 0.11.0
 
 ## Description
 
-CapoRSS is a simple self-hosted RSS aggregator written in Ruby.
+CapoRSS is a simple self-hosted RSS aggregator written in Ruby and Javascript.
 
 ## Screenshots
 
