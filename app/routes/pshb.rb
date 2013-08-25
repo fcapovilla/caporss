@@ -5,7 +5,7 @@
 get '/pshb/callback/:id' do
 	feed = Feed.get(params[:id])
 
-	if !feed.pshb or feed.pshb_topic != params['hub.topic']
+	if !feed or !feed.pshb or feed.pshb_topic != params['hub.topic']
 		return 404
 	else
 		if params['hub.mode'] == 'subscribe'

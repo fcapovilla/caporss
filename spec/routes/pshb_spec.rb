@@ -4,13 +4,16 @@ describe "Pubsubhubbub route" do
 
 	before :all do
 		admin = User.first(:username => 'admin')
+
 		folder = Folder.create(:title => "Folder", :user => admin)
 		feed = Feed.create(:title => "Feed", :url => "http://localhost:4567/1.rss?items=3&pshb=1", :user => admin)
 		folder.feeds << feed
 		folder.save
+
+		generate_sample_feeds
 	end
 
-	it 'should subscribe to a hub' do
+	it 'subscribes to a hub' do
 		authorize 'admin', 'admin'
 
 		feed = Feed.first
@@ -29,7 +32,23 @@ describe "Pubsubhubbub route" do
 		feed.pshb_expiration.should be_nil
 	end
 
-	it 'should respond correctly to hub intent validations' do
+	it 'denies unknown or invalid intent validations' do
+		feed = Feed.first
+		feed.pshb.should == true
+		feed.pshb_expiration.should be_nil
+
+		get "/pshb/callback/#{feed.id}", :'hub.topic' => 'invalid topic', :'hub.mode' => 'subscribe', :'hub.lease_seconds' => '3600', :'hub.challenge' => 'abcd'
+		last_response.status.should == 404
+
+		feed.reload
+		feed.pshb.should == true
+		feed.pshb_expiration.should be_nil
+
+		get "/pshb/callback/999", :'hub.topic' => feed.pshb_topic, :'hub.mode' => 'subscribe', :'hub.lease_seconds' => '3600', :'hub.challenge' => 'abcd'
+		last_response.status.should == 404
+	end
+
+	it 'responds correctly to hub intent validations' do
 		feed = Feed.first
 		feed.pshb.should == true
 		feed.pshb_expiration.should be_nil
@@ -40,7 +59,33 @@ describe "Pubsubhubbub route" do
 		feed.reload.pshb_expiration.should_not be_nil
 	end
 
-	it 'should add new items' do
+	it 'does nothing on invalid callback calls' do
+		feed = Feed.last
+		feed.items.count.should == 0
+
+		content = File.read(File.expand_path("../../support/sample.xml", __FILE__))
+		post "pshb/callback/#{feed.id}", content
+
+		last_response.status.should == 200
+
+		sleep 1
+
+		feed.reload.items.count.should == 0
+
+
+		feed = Feed.first
+		feed.items.count.should == 3
+
+		post "pshb/callback/#{feed.id}", "Invalid feed text"
+
+		last_response.status.should == 200
+
+		sleep 1
+
+		feed.reload.items.count.should == 3
+	end
+
+	it 'adds new items when callback is called' do
 		feed = Feed.first
 
 		content = File.read(File.expand_path("../../support/sample.xml", __FILE__))
@@ -55,7 +100,7 @@ describe "Pubsubhubbub route" do
 		feed.items(:title => 'Item X').should_not be_nil
 	end
 
-	it 'should unsubscribe to a hub' do
+	it 'unsubscribes to a hub' do
 		authorize 'admin', 'admin'
 
 		feed = Feed.first
