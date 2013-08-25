@@ -25,7 +25,7 @@ post '/feed' do
 
 	feed = Feed.new(
 		:user => @user,
-		:title => params[:url],
+		:title => params[:url][0..99],
 		:url => params[:url]
 	)
 	folder.feeds << feed
