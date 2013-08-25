@@ -42,6 +42,7 @@ h1. Feed menu
 * *Edit* : Lets you change a feed's url or folder.
 ** *Reset feed* : If this option is checked while editing a feed, all of the feed items will be deleted and the feed will be resynced. All read/unread informations will be lost.
 * *Delete* : Lets you delete a feed. Note that this actions cannot be reverted.
+* *Use Pubsubhubbub* : This option will appear if a feed supports the PSHB protocol. If it is activated, the feed will not be synced by call to the /fetch_all route, but will receive new updates from the defined PSHB hub as soon as they are published. Please note that some feeds might define a hub without actually pushing updates to it, so you might have to deactivate this option if you notice the feed isn't actually updated when PSHB is activated.
 
 h1. Item list
 

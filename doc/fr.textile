@@ -42,6 +42,7 @@ h1. Menu abonnement
 * *Modifier* : Vous permet de changer l'url ou le dossier d'un abonnement
 ** *Réinitialiser l'abonnement* : Si cette option est cochée lors de l'édition d'un abonnement, tous les items de cet abonnement seront supprimés et l'abonnement sera resynchronisé. Les informations sur les items lus/non lus seront perdues.
 * *Supprimer* : Vous permet de supprimer un abonnement. Veuillez noter que cette action est irréversibe.
+* *Utiliser Pubsubhubbub* : Cette option apparaît si l'abonnement supporte le protocole PSHB. Lorsque cette option est activée, l'abonnement ne sera pas mis à jour lors des appels à /fetch_all, mais recevra des mises à jour du hub PSHB dès qu'elles sont publiées. Veuillez noter qu'un abonnements peut définir un hub sans publier ses mises à jour vers celui-ci. Il peut donc être nécessaire de désactiver cette option si vou remarquez que l'abonnement n'est pas mis à jour lorsque PSHB est activé.
 
 h1. Liste des items
 

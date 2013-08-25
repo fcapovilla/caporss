@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.10.0
+Version 0.11.0
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -122,3 +122,4 @@ Most dependencies are already included in the Gemfile and in the application's p
 * 0.9.0 : This version adds GUID and item update support. A migration was added to add GUIDs to existing items by using their title, url and publication date. Please note that some duplicate items may be created on the next feed synchronisation if :
  * The title, url or publication date of an item was modified since the item was first added to the local database.
  * There was a problem fetching the feed during the migration.
+* 0.11.0 : This version adds support for Pubsubhubbub feeds. A migration will check existing feeds for PSHB hub definitions, but you will have to manually activate PSHB for each of them using the feed edition dialog. Please note that some feeds might define a hub without actually pushing updates to it. That is the case for Youtube upload feeds.
