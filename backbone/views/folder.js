@@ -181,30 +181,34 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 	markFolderRead: function(e) {
 		e.stopPropagation();
 
-		var deferreds = this.model.feeds.map(function(feed) {
-			return feed.markRead();
-		});
+		if(confirm(LANG.confirm_read_folder)) {
+			var deferreds = this.model.feeds.map(function(feed) {
+				return feed.markRead();
+			});
 
-		$.when.apply($, deferreds).then(function() {
-			if(router.currentSelection !== null) {
-				router.currentSelection.items.fetch({reset: true});
-			}
-		});
+			$.when.apply($, deferreds).then(function() {
+				if(router.currentSelection !== null) {
+					router.currentSelection.items.fetch({reset: true});
+				}
+			});
+		}
 
 		this.closeMenu();
 	},
 	markFolderUnread: function(e) {
 		e.stopPropagation();
 
-		var deferreds = this.model.feeds.map(function(feed) {
-			return feed.markUnread();
-		});
+		if(confirm(LANG.confirm_unread_folder)) {
+			var deferreds = this.model.feeds.map(function(feed) {
+				return feed.markUnread();
+			});
 
-		$.when.apply($, deferreds).then(function() {
-			if(router.currentSelection !== null) {
-				router.currentSelection.items.fetch({reset: true});
-			}
-		});
+			$.when.apply($, deferreds).then(function() {
+				if(router.currentSelection !== null) {
+					router.currentSelection.items.fetch({reset: true});
+				}
+			});
+		}
 
 		this.closeMenu();
 	},

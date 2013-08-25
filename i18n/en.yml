@@ -71,6 +71,8 @@ opml_import:
 js:
     confirm_delete_feed: Are you sure you want to delete this feed?
     confirm_delete_folder: Are you sure you want to delete this folder?
+    confirm_read_folder: This action will affect all feeds in this folder. Are you sure you want to mark this folder as read?
+    confirm_unread_folder: This action will affect all feeds in this folder. Are you sure you want to mark this folder as unread?
     confirm_cleanup: This action will delete old items and cannot be reverted. Are you sure you want to clean up feeds?
     all_items_folder: All items
 
