@@ -4,6 +4,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 	events: {
 		'click #syncButton': 'sync',
 		'click #subscriptionModalButton': 'showSubscriptionModal',
+		'click #settingsModalButton': 'showSettingsModal',
 		'click #mobilePrevItem' : 'prevItem',
 		'click #mobileNextItem' : 'nextItem',
 		'click #toggleReadVisibility' : 'toggleReadVisibility'
@@ -71,6 +72,15 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 			$('#subscriptionUrl').focus();
 		}).on('hidden', function() {
 			$('#subscriptionUrl').blur();
+		});
+	},
+	showSettingsModal: function() {
+		$('#settingsModal .nav a:first').tab('show');
+		$('#settingsModal').modal().css({
+			'width': ($(document).width() * 0.9) + 'px',
+			'margin-left': function () {
+				return -($(this).width() / 2);
+			},
 		});
 	}
 });

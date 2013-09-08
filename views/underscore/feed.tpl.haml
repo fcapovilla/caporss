@@ -9,9 +9,6 @@
           <i class="icon icon-rss-sign"></i>
         <% } %>
       </div>
-      <% if(feed.pshb) { %>
-        <i class="icon icon-exchange"></i>
-      <% } %>
       <% if(feed.unread_count > 0) { %>
         <b><%= feed.title %></b>
         <span class="badge badge-info"><%= feed.unread_count %></span>

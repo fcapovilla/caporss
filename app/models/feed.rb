@@ -22,6 +22,7 @@ class Feed
 	property :url, String, :length => 1..2000
 	property :last_update, DateTime
 	property :unread_count, Integer, :default => 0
+	property :sync_error, Integer, :default => 0
 
 	property :pshb_hub, String, :length => 0..2000, :default => ''
 	property :pshb_topic, String, :length => 0..2000, :default => ''
@@ -45,7 +46,12 @@ class Feed
 	# Fetch the feed using feedzirra and update it
 	def sync!
 		feed = Feedzirra::Feed.fetch_and_parse(self.url, {:max_redirects => 3, :timeout => 30})
-		update_feed!(feed) unless feed.kind_of?(Fixnum) or feed.nil?
+		if feed.kind_of?(Fixnum)
+			self.sync_error = feed
+			self.save
+		elsif not feed.nil?
+			update_feed!(feed)
+		end
 	end
 
 	# Update the feed using a feedzirra feed object

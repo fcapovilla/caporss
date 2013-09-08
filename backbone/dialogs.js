@@ -146,6 +146,10 @@ $('#searchButton').click(function() {
 	return false;
 });
 
+$('#subscriptionTab').click(function() {
+	subscriptions.fetch();
+});
+
 
 // Prevent double-submit in the OPML upload form
 $('form.upload-form').submit(function(e) {

@@ -5,6 +5,10 @@ var folderList = new FolderListView({collection: folders});
 var mainMenu = new MainMenuView();
 mainMenu.render();
 
+// Prepare feed list for subscription settings tab
+var subscriptions = new FeedCollection();
+var subscriptionList = new SubscriptionListView({collection: subscriptions});
+
 // Configure pnotify
 var pnotify_stack = {'dir1': 'up', 'dir2': 'left'};
 $.pnotify.defaults.addclass = 'stack-bottomright';

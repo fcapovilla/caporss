@@ -6,26 +6,26 @@
     %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
       x
   %form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
+    %ul.nav.nav-tabs
+      %li.active
+        %a(href="#accountSettings" data-toggle="tab")
+          =t.settings.account
+      %li
+        %a(id="subscriptionTab" href="#subscriptionSettings" data-toggle="tab")
+          =t.settings.subscription
+      %li
+        %a(href="#cleanupSettings" data-toggle="tab")
+          =t.settings.cleanup
+      %li
+        %a(href="#syncSettings" data-toggle="tab")
+          =t.settings.sync
+      %li
+        %a(href="#generalSettings" data-toggle="tab")
+          =t.settings.general
+      %li
+        %a(href="#help" data-toggle="tab")
+          =t.settings.help
     .modal-body
-      %ul.nav.nav-tabs
-        %li.active
-          %a(href="#accountSettings" data-toggle="tab")
-            =t.settings.account
-        %li
-          %a(href="#opmlSettings" data-toggle="tab")
-            =t.settings.opml
-        %li
-          %a(href="#cleanupSettings" data-toggle="tab")
-            =t.settings.cleanup
-        %li
-          %a(href="#syncSettings" data-toggle="tab")
-            =t.settings.sync
-        %li
-          %a(href="#generalSettings" data-toggle="tab")
-            =t.settings.general
-        %li
-          %a(href="#help" data-toggle="tab")
-            =t.settings.help
       .tab-content
         .tab-pane.active#accountSettings
           .well
@@ -47,11 +47,22 @@
                 - r18n.available_locales.each do |locale|
                   %option(value="#{locale.code}"){selected: r18n.locale.code == locale.code}
                     =locale.title
-        .tab-pane#opmlSettings
+        .tab-pane#subscriptionSettings
           %button(class="btn" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal")
             =t.settings.import_opml_file
           %a(class="btn" href="/export.opml")
             =t.settings.export_as_opml
+          %br
+          %table.table.table-bordered
+            %thead
+              %tr
+                %th=t.subscription.name
+                %th=t.subscription.unread_count
+                %th=t.subscription.last_update
+                %th=t.subscription.sync_error
+                %th=t.subscription.pshb
+                %th=t.subscription.delete
+            %tbody#subscription-list
         .tab-pane#cleanupSettings
           %label
             =t.settings.cleanup_older_than

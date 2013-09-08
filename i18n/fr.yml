@@ -1,7 +1,7 @@
 settings:
     title: Préférences
     account: Compte
-    opml: OPML
+    subscription: Abonnements
     cleanup: Nettoyage
     sync: Sync
     username: "Identifiant&nbsp;:"
@@ -117,3 +117,11 @@ search:
         title:
             asc: Titre (Asc)
             desc: Titre (Desc)
+
+subscription:
+    name: Nom
+    unread_count: Non-lus
+    last_update: Dernière mise à jour
+    sync_error: Erreur
+    pshb: PSHB
+    delete: Supprimer

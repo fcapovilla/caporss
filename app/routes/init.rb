@@ -43,6 +43,7 @@ get '/app.js' do
 		"#{root}/views/item.js",
 		"#{root}/views/feed.js",
 		"#{root}/views/folder.js",
+		"#{root}/views/subscription.js",
 		"#{root}/views/*.js",
 		"#{root}/*.js"
 	].uniq.each do |file|

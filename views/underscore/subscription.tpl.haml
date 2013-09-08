@@ -1,0 +1,30 @@
+-# Feed underscore template
+:plain
+  <script id='tmpl-subscription' type='text/template'>
+    <td>
+      <%= feed.title %>
+    </td>
+    <td>
+      <%= feed.unread_count %>
+    </td>
+    <td>
+      <%= feed.last_update %>
+    </td>
+    <td class="text-error">
+      <% if(feed.sync_error) { %>
+        <%= feed.sync_error %>
+      <% } %>
+    </td>
+    <td>
+      <% if(feed.pshb_hub) { %>
+        <% if(feed.pshb) { %>
+          <i class="icon icon-check-sign togglePSHBAction"></i>
+        <% } else { %>
+          <i class="icon icon-check-empty togglePSHBAction"></i>
+        <% } %>
+      <% } %>
+    </td>
+    <td>
+      <a class="btn deleteFeedAction" title="#{t.buttons.delete}"><i class="icon icon-trash"></i></a>
+    </td>
+  </script>

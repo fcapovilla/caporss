@@ -1,7 +1,7 @@
 settings:
     title: Settings
     account: Account
-    opml: OPML
+    subscription: Subscriptions
     cleanup: Cleanup
     sync: Sync
     username: "Username:"
@@ -117,3 +117,11 @@ search:
         title:
             asc: Title (Asc)
             desc: Title (Desc)
+
+subscription:
+    name: Name
+    unread_count: Unread count
+    last_update: Last update
+    sync_error: Error
+    pshb: PSHB
+    delete: Delete
