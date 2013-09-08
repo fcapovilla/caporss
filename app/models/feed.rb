@@ -74,6 +74,7 @@ class Feed
 			self.title = feed.title
 		end
 
+		self.sync_error = 0
 		self.save
 
 		newest = nil
