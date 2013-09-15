@@ -1,0 +1,55 @@
+-# Subscription List underscore template
+:plain
+  <script id='tmpl-subscription-list' type='text/template'>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            #{t.subscription.name}
+            <% if(sortAttribute == 'title') { %>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="title"></i>
+            <% } else { %>
+              <i class="icon icon-sort" data-column="title"></i>
+            <% } %>
+          </th>
+          <th>
+            #{t.subscription.unread_count}
+            <% if(sortAttribute == 'unread_count') { %>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="unread_count"></i>
+            <% } else { %>
+              <i class="icon icon-sort" data-column="unread_count"></i>
+            <% } %>
+          </th>
+          <th>
+            #{t.subscription.last_update}
+            <i class="icon" data-column="last_update"></i>
+            <% if(sortAttribute == 'last_update') { %>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="last_update"></i>
+            <% } else { %>
+              <i class="icon icon-sort" data-column="last_update"></i>
+            <% } %>
+          </th>
+          <th>
+            #{t.subscription.sync_error}
+            <i class="icon" data-column="sync_error"></i>
+            <% if(sortAttribute == 'sync_error') { %>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="sync_error"></i>
+            <% } else { %>
+              <i class="icon icon-sort" data-column="sync_error"></i>
+            <% } %>
+          </th>
+          <th>
+            #{t.subscription.pshb}
+            <i class="icon" data-column="pshb"></i>
+            <% if(sortAttribute == 'pshb') { %>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="pshb"></i>
+            <% } else { %>
+              <i class="icon icon-sort" data-column="pshb"></i>
+            <% } %>
+          </th>
+          <th>#{t.subscription.delete}</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </script>

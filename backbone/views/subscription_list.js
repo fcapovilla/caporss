@@ -1,4 +1,28 @@
-var SubscriptionListView = Backbone.Marionette.CollectionView.extend({
+var SubscriptionListView = Backbone.Marionette.CompositeView.extend({
 	el: $('#subscription-list'),
-	itemView: SubscriptionView
+	template: '#tmpl-subscription-list',
+	itemView: SubscriptionView,
+	itemViewContainer: 'tbody',
+	events: {
+		'click .icon': 'sortColumn'
+	},
+	serializeData: function() {
+		return {
+			'sortDirection': this.collection.sortDirection,
+			'sortAttribute': this.collection.sortAttribute
+		};
+    },
+
+	sortColumn: function(e) {
+		var column = $(e.currentTarget).data('column');
+		if(column == this.collection.sortAttribute) {
+			this.collection.sortDirection = !this.collection.sortDirection;
+		}
+		else {
+			this.collection.sortDirection = true;
+			this.collection.sortAttribute = column;
+		}
+		this.collection.sort();
+		this.render();
+	}
 });

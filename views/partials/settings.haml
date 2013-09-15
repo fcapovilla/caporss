@@ -53,16 +53,7 @@
           %a(class="btn" href="/export.opml")
             =t.settings.export_as_opml
           %br
-          %table.table.table-bordered
-            %thead
-              %tr
-                %th=t.subscription.name
-                %th=t.subscription.unread_count
-                %th=t.subscription.last_update
-                %th=t.subscription.sync_error
-                %th=t.subscription.pshb
-                %th=t.subscription.delete
-            %tbody#subscription-list
+          #subscription-list
         .tab-pane#cleanupSettings
           %label
             =t.settings.cleanup_older_than
