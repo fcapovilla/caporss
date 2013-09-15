@@ -9,7 +9,9 @@ var FeedCollection = Backbone.Collection.extend({
 		a = a.get(this.sortAttribute);
         b = b.get(this.sortAttribute);
 
-		if (a == b) return 0;
+		if (a === b) {
+			return 0;
+		}
 
 		if (this.sortDirection) {
 			return a > b ? 1 : -1;

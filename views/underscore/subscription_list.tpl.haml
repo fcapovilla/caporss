@@ -4,45 +4,45 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>
+          <th class="sortable" data-column="title">
             #{t.subscription.name}
             <% if(sortAttribute == 'title') { %>
-              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="title"></i>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>"></i>
             <% } else { %>
               <i class="icon icon-sort" data-column="title"></i>
             <% } %>
           </th>
-          <th>
+          <th class="sortable" data-column="unread_count">
             #{t.subscription.unread_count}
             <% if(sortAttribute == 'unread_count') { %>
-              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="unread_count"></i>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>"></i>
             <% } else { %>
               <i class="icon icon-sort" data-column="unread_count"></i>
             <% } %>
           </th>
-          <th>
+          <th class="sortable" data-column="last_update">
             #{t.subscription.last_update}
             <i class="icon" data-column="last_update"></i>
             <% if(sortAttribute == 'last_update') { %>
-              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="last_update"></i>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>"></i>
             <% } else { %>
               <i class="icon icon-sort" data-column="last_update"></i>
             <% } %>
           </th>
-          <th>
+          <th class="sortable" data-column="sync_error">
             #{t.subscription.sync_error}
             <i class="icon" data-column="sync_error"></i>
             <% if(sortAttribute == 'sync_error') { %>
-              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="sync_error"></i>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>"></i>
             <% } else { %>
               <i class="icon icon-sort" data-column="sync_error"></i>
             <% } %>
           </th>
-          <th>
+          <th class="sortable" data-column="pshb">
             #{t.subscription.pshb}
             <i class="icon" data-column="pshb"></i>
             <% if(sortAttribute == 'pshb') { %>
-              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>" data-column="pshb"></i>
+              <i class="icon icon-sort-<%= sortDirection?'down':'up' %>"></i>
             <% } else { %>
               <i class="icon icon-sort" data-column="pshb"></i>
             <% } %>
