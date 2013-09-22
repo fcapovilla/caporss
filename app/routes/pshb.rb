@@ -18,7 +18,6 @@ get '/pshb/callback/:id' do
 end
 
 post '/pshb/callback/:id' do
-	logger.info request.body.string
 	id = params[:id]
 
 	# Parse and update the feed in the background
