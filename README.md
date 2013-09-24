@@ -42,7 +42,7 @@ This procedure will run CapoRSS in development mode using an SQLite database
 
 ### localhost (production)
 
-CapoRSS can be run in production mode with Thin and PostgreSQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
+CapoRSS can be run in production mode with Puma and PostgreSQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
 
 1. Install Ruby 1.9.3
 2. Install the "bundler" Ruby gem using this command:
@@ -61,9 +61,9 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 	export SESSION\_SECRET="My session secret..."
 
-6. Run CapoRSS using Thin:
+6. Run CapoRSS using Puma:
 
-    bundle exec thin start -R config.ru
+	bundle exec puma config.ru -e production
 
 7. Open a web browser and go to "http://localhost:3000"
 8. The default username/password is "admin"/"admin"
