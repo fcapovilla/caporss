@@ -22,14 +22,8 @@ require_relative 'app/routes/init'
 configure :production do
 	require 'rack/ssl-enforcer'
 	use Rack::SslEnforcer
-	#disable :logging
 end
 
 configure do
 	use Rack::Session::Pool, :secret => (ENV['SESSION_SECRET'] || 'Default secret... Set the SESSION_SECRET environment variable!')
-
-	# Load settings
-	Setting.all.each do |setting|
-		set setting.name.to_sym, setting.value
-	end
 end

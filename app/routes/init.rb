@@ -10,6 +10,7 @@ class Hash
   end
 end
 
+
 before do
 	# Force UTF-8
 	content_type :html, 'charset' => 'utf-8'
@@ -22,11 +23,13 @@ before do
 	end
 end
 
+
 # SCSS stylesheet
 get '/stylesheet.css' do
 	content_type :css, 'charset' => 'utf-8'
 	scss :'scss/stylesheet'
 end
+
 
 # Serve a concatenated version of the Backbone application
 get '/app.js' do
@@ -53,11 +56,13 @@ get '/app.js' do
 	output + "});"
 end
 
+
 # Render home page
 get '/' do
 	authorize! :user
 	haml :index
 end
+
 
 # Manage stream connections
 @@connections = []
@@ -72,6 +77,7 @@ get '/stream' do
 		out.errback { @@connections.delete(out) }
 	end
 end
+
 
 # Load all routes
 require_relative 'login'
