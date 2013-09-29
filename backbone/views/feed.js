@@ -29,8 +29,15 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 	},
 	serializeData: function() {
 		return {'feed': this.model.attributes};
-    },
+	},
+	onRender: function() {
+		this.$('.favicon').on('error', this.onFaviconError);
+	},
 
+	onFaviconError: function() {
+		this.model.set('favicon_id', null);
+		this.render();
+	},
 	onDragStart: function(e) {
 		e.stopPropagation();
 		this.$el.css({opacity: 0.5});
