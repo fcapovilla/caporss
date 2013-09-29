@@ -53,12 +53,12 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 	setReadVisibility: function(show_read) {
 		if(show_read) {
 			SETTINGS.show_read = true;
-			this.$el.find('#toggleReadVisibility>i').attr('class', 'icon-eye-open');
+			this.$el.find('#toggleReadVisibility>i').attr('class', 'icon icon-eye-open');
 			$.cookie('show_read', true, {expires: 10000});
 		}
 		else {
 			SETTINGS.show_read = false;
-			this.$el.find('#toggleReadVisibility>i').attr('class', 'icon-eye-close');
+			this.$el.find('#toggleReadVisibility>i').attr('class', 'icon icon-eye-close');
 			$.cookie('show_read', false, {expires: 10000});
 		}
 
