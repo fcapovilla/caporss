@@ -1,25 +1,25 @@
 # encoding: utf-8
 # Feeds
 
-before '/feed*' do
+before '/api/feed*' do
 	authorize_basic! :user
 	content_type :json, 'charset' => 'utf-8'
 end
 
-get '/feed' do
+get '/api/feed' do
 	Feed.all(:user => @user).to_json
 end
 
-get '/feed/:id', '/folder/*/feed/:id' do
+get '/api/feed/:id', '/api/folder/*/feed/:id' do
 	Feed.first(:user => @user, :id => params[:id]).to_json
 end
 
-get '/feed/:id/item' do |id|
+get '/api/feed/:id/item' do |id|
 	options = prepare_item_search(params)
 	Feed.first(:user => @user, :id => id).items(options).to_json
 end
 
-post '/feed' do
+post '/api/feed' do
 	params[:folder] = 'Feeds' if params[:folder].nil? or params[:folder].empty?
 	folder = Folder.first_or_create(:user => @user, :title => params[:folder])
 
@@ -41,7 +41,7 @@ post '/feed' do
 	feed.to_json
 end
 
-put '/feed/:id', '/folder/*/feed/:id' do
+put '/api/feed/:id', '/api/folder/*/feed/:id' do
 	feed = Feed.first(:user => @user, :id => params[:id])
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	action = attributes.delete(:action)
@@ -106,7 +106,7 @@ put '/feed/:id', '/folder/*/feed/:id' do
 	feed.to_json
 end
 
-delete '/feed/:id', '/folder/*/feed/:id' do
+delete '/api/feed/:id', '/api/folder/*/feed/:id' do
 	feed = Feed.first(:user => @user, :id => params[:id])
 	old_folder = feed.folder
 	feed.destroy

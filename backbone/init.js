@@ -88,5 +88,5 @@ $('#item-list').scroll(function() {
 
 // Everything is ready, fetch folders
 folders.fetch({success: function() {
-	Backbone.history.start();
+	Backbone.history.start({pushState: true});
 }});

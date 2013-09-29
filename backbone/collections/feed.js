@@ -1,6 +1,6 @@
 var FeedCollection = Backbone.Collection.extend({
 	model: Feed,
-	url: '/feed',
+	url: '/api/feed',
 	initialize: function() {
 		this.sortAttribute = 'position';
 		this.sortDirection = true;

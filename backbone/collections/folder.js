@@ -1,6 +1,6 @@
 var FolderCollection = Backbone.Collection.extend({
 	model: Folder,
-	url: '/folder',
+	url: '/api/folder',
 	initialize: function() {
 		this.listenTo(this, 'add remove change:unread_count', this.refreshUnreadCount);
 	},

@@ -31,7 +31,7 @@ $('#updateFaviconsButton').click(function() {
 
 $('#subscribeButton').click(function() {
 	$.ajax({
-		url: '/feed',
+		url: '/api/feed',
 		method: 'POST',
 		data: {
 			url: $('#subscriptionUrl').val(),
@@ -94,7 +94,7 @@ $('#editFeedButton').click(function() {
 
 				if(reset) {
 					$.ajax({
-						url: '/feed/' + feedId,
+						url: '/api/feed/' + feedId,
 						method: 'PUT',
 						data: JSON.stringify({action: 'reset'}),
 						success: function() {

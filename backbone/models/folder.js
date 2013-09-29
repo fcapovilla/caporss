@@ -1,13 +1,13 @@
 var Folder = Backbone.Model.extend({
 	initialize: function() {
 		this.feeds = new FeedCollection();
-		this.feeds.url = '/folder/' + this.id + '/feed';
+		this.feeds.url = '/api/folder/' + this.id + '/feed';
 		this.feeds.fetch();
 
 		this.listenTo(this.feeds, 'add remove change:unread_count', this.recalculateReadCount);
 
 		this.items = new ItemCollection({show_feed_titles: true});
-		this.items.url = '/folder/' + this.id + '/item';
+		this.items.url = '/api/folder/' + this.id + '/item';
 		this.listenTo(this.items, 'itemRead', this.itemRead);
 		this.listenTo(this.items, 'itemUnread', this.itemUnread);
 	},

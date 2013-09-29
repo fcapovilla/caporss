@@ -58,7 +58,7 @@ end
 
 
 # Render home page
-get '/' do
+get '/', '/folder*', '/feed*', '/item*' do
 	authorize! :user
 	haml :index
 end

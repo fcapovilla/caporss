@@ -1,7 +1,7 @@
 var Feed = Backbone.Model.extend({
 	initialize: function() {
 		this.items = new ItemCollection();
-		this.items.url = '/feed/' + this.id + '/item';
+		this.items.url = '/api/feed/' + this.id + '/item';
 
 		this.listenTo(this.items, 'itemRead', this.decrementReadCount);
 		this.listenTo(this.items, 'itemUnread', this.incrementReadCount);
@@ -20,7 +20,7 @@ var Feed = Backbone.Model.extend({
 		var that = this;
 		return $.ajax({
 			method: 'PUT',
-			url: '/feed/' + this.id,
+			url: '/api/feed/' + this.id,
 			data: JSON.stringify({action: 'read'}),
 			success: function() {
 				that.set('unread_count', 0);
@@ -31,7 +31,7 @@ var Feed = Backbone.Model.extend({
 		var that = this;
 		return $.ajax({
 			method: 'PUT',
-			url: '/feed/' + this.id,
+			url: '/api/feed/' + this.id,
 			data: JSON.stringify({action: 'unread'}),
 			success: function() {
 				that.fetch();

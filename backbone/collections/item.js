@@ -1,6 +1,6 @@
 var ItemCollection = Backbone.Collection.extend({
 	model: Item,
-	url: '/item',
+	url: '/api/item',
 	initialize: function(options) {
 		this.current_page = 1;
 		this.all_loaded = false;

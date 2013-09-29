@@ -1,31 +1,31 @@
 # encoding: utf-8
 # Folders
 
-before '/folder*' do
+before '/api/folder*' do
 	authorize_basic! :user
 	content_type :json, 'charset' => 'utf-8'
 end
 
-get '/folder' do
+get '/api/folder' do
 	Folder.all(:user => @user, :order => :position.asc).to_json
 end
 
-get '/folder/:id' do |id|
+get '/api/folder/:id' do |id|
 	Folder.first(:user => @user, :id => id).to_json
 end
 
-get '/folder/:id/feed' do |id|
+get '/api/folder/:id/feed' do |id|
 	Folder.first(:user => @user, :id => id).feeds(:order => :position.asc).to_json
 end
 
-get '/folder/:id/item' do |id|
+get '/api/folder/:id/item' do |id|
 	options = prepare_item_search(params)
 	Folder.first(:user => @user, :id => id).feeds.items(options).to_json
 end
 
 # post '/folder' do
 
-put '/folder/:id' do |id|
+put '/api/folder/:id' do |id|
 	folder = Folder.first(:user => @user, :id => id)
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
 
@@ -41,7 +41,7 @@ put '/folder/:id' do |id|
 	folder.to_json
 end
 
-delete '/folder/:id' do |id|
+delete '/api/folder/:id' do |id|
 	Folder.first(:user => @user, :id => id).destroy
 
 	return '{}'

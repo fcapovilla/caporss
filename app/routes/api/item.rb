@@ -1,23 +1,23 @@
 # encoding: utf-8
 # Items
 
-before '/item*' do
+before '/api/item*' do
 	authorize_basic! :user
 	content_type :json, 'charset' => 'utf-8'
 end
 
-get '/item' do
+get '/api/item' do
 	options = prepare_item_search(params)
 	Item.all(options).to_json
 end
 
-get '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
+get '/api/item/:id', '/api/feed/*/item/:id', '/api/folder/*/item/:id' do
 	Item.first(:user => @user, :id => params[:id]).to_json
 end
 
 #post '/item' do
 
-put '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
+put '/api/item/:id', '/api/feed/*/item/:id', '/api/folder/*/item/:id' do
 	item = Item.first(:user => @user, :id => params[:id])
 	attributes = JSON.parse(request.body.string, :symbolize_names => true)
 	action = attributes.delete(:action)
@@ -44,4 +44,4 @@ put '/item/:id', '/feed/*/item/:id', '/folder/*/item/:id' do
 	item.to_json
 end
 
-#delete '/item/:id' do |id|
+#delete '/api/item/:id' do |id|
