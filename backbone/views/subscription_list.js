@@ -6,6 +6,9 @@ var SubscriptionListView = Backbone.Marionette.CompositeView.extend({
 	events: {
 		'click .sortable': 'sortColumn'
 	},
+	collectionEvents: {
+		'sort': 'render'
+	},
 	serializeData: function() {
 		return {
 			'sortDirection': this.collection.sortDirection,
@@ -24,7 +27,6 @@ var SubscriptionListView = Backbone.Marionette.CompositeView.extend({
 				this.collection.sortAttribute = column;
 			}
 			this.collection.sort();
-			this.render();
 		}
 	}
 });

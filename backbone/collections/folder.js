@@ -72,5 +72,8 @@ var FolderCollection = Backbone.Collection.extend({
 			});
 		});
 		return feed_titles;
+	},
+	comparator: function(folder) {
+		return folder.get('position');
 	}
 });

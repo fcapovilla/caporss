@@ -1,6 +1,9 @@
 var FolderListView = Backbone.Marionette.CollectionView.extend({
 	el: $('#feed-list'),
 	itemView: FolderView,
+	collectionEvents: {
+		'sort': 'render'
+	},
 	initialize: function() {
 		this.allItemsFolder = new AllItemsFolder();
 

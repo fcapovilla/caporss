@@ -26,6 +26,9 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		'change': 'render',
 		'destroy': 'remove'
 	},
+	collectionEvents: {
+		'sort': 'render'
+	},
 	initialize: function() {
 		if(this.model.get('open')) {
 			this.collection = this.model.feeds;
@@ -79,10 +82,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 				position: new_position
 			}, { success: function() {
 				router.navigate("", {trigger: true});
-				var scroll = $('.feed-list').scrollTop();
-				folders.fetch({reset: true, success: function() {
-					$('.feed-list').scrollTop(scroll);
-				}});
+				folders.fetch();
 			}});
 		}
 
@@ -95,10 +95,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 				position: 1
 			}, { success: function() {
 				router.navigate("", {trigger: true});
-				var scroll = $('.feed-list').scrollTop();
-				folders.fetch({reset: true, success: function() {
-					$('.feed-list').scrollTop(scroll);
-				}});
+				folders.fetch();
 			}});
 		}
 
