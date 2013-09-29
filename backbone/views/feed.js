@@ -36,7 +36,6 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 
 	onFaviconError: function() {
 		this.model.set('favicon_id', null);
-		this.render();
 	},
 	onDragStart: function(e) {
 		e.stopPropagation();
