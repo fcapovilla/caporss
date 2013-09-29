@@ -25,7 +25,7 @@ describe "Pubsubhubbub route" do
 		feed.pshb_topic.should == 'http://localhost:4567/1.rss?items=3&#38;pshb=1'
 		feed.pshb_expiration.should be_nil
 
-		put "/feed/#{feed.id}", {:pshb => true}.to_json
+		put "/api/feed/#{feed.id}", {:pshb => true}.to_json
 
 		feed.reload
 		feed.pshb.should == true
@@ -106,7 +106,7 @@ describe "Pubsubhubbub route" do
 		feed = Feed.first
 		feed.pshb.should == true
 
-		put "/feed/#{feed.id}", {:pshb => false}.to_json
+		put "/api/feed/#{feed.id}", {:pshb => false}.to_json
 
 		feed.reload
 		feed.pshb.should == false

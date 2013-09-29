@@ -1,10 +1,10 @@
 describe("Feed Model", function() {
 	beforeEach(function() {
 		this.server = sinon.fakeServer.create();
-		this.server.respondWith("PUT", "/feed/1", [200, '', '']);
+		this.server.respondWith("PUT", "/api/feed/1", [200, '', '']);
 
 		this.feed = new Feed({id: 1, folder_id: 1, unread_count: 1});
-		this.feed.collection = {url: '/feed'};
+		this.feed.collection = {url: '/api/feed'};
 	});
 
 	it("can mark its items as read/unread", function() {
@@ -14,7 +14,7 @@ describe("Feed Model", function() {
 
 		expect(this.server.requests.length).toEqual(1);
 		expect(this.server.requests[0].method).toEqual("PUT");
-		expect(this.server.requests[0].url).toEqual("/feed/1");
+		expect(this.server.requests[0].url).toEqual("/api/feed/1");
 		expect(this.server.requests[0].requestBody).toEqual(JSON.stringify({action: 'read'}));
 
 		this.server.respond();
@@ -25,14 +25,14 @@ describe("Feed Model", function() {
 
 		expect(this.server.requests.length).toEqual(2);
 		expect(this.server.requests[1].method).toEqual("PUT");
-		expect(this.server.requests[1].url).toEqual("/feed/1");
+		expect(this.server.requests[1].url).toEqual("/api/feed/1");
 		expect(this.server.requests[1].requestBody).toEqual(JSON.stringify({action: 'unread'}));
 
 		this.server.respond();
 
 		expect(this.server.requests.length).toEqual(3);
 		expect(this.server.requests[2].method).toEqual("GET");
-		expect(this.server.requests[2].url).toEqual("/feed/1");
+		expect(this.server.requests[2].url).toEqual("/api/feed/1");
 	});
 
 	it("updates its read count when receiving read/unread events from its items collection", function() {

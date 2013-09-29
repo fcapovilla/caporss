@@ -8,13 +8,13 @@ describe "Feed route" do
 
 	it "blocks access by sync user" do
 		authorize 'sync', 'sync'
-		get '/feed'
+		get '/api/feed'
 		last_response.status.should == 403
 	end
 
 	it "lists feeds" do
 		authorize 'admin', 'admin'
-		get '/feed'
+		get '/api/feed'
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Feed 0/
@@ -26,7 +26,7 @@ describe "Feed route" do
 		feed = Feed.first(:title => 'Feed 0')
 		user = User.first(:username => 'admin')
 
-		get "/feed/#{feed.id}"
+		get "/api/feed/#{feed.id}"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data[:id].should == feed.id
@@ -43,7 +43,7 @@ describe "Feed route" do
 		feed = Feed.last(:title => 'Feed 4')
 		feed.sync!
 
-		get "/feed/#{feed.id}/item"
+		get "/api/feed/#{feed.id}/item"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data.length.should == 3
@@ -55,7 +55,7 @@ describe "Feed route" do
 		authorize 'admin', 'admin'
 		feed = Feed.first(:title => 'Feed 0')
 
-		put "/feed/#{feed.id}", {:title => "FeedTest 0"}.to_json
+		put "/api/feed/#{feed.id}", {:title => "FeedTest 0"}.to_json
 
 		last_response.body.should_not =~ /FeedTest 0/
 		feed.reload.title.should_not == "FeedTest 0"
@@ -69,7 +69,7 @@ describe "Feed route" do
 		feed.position.should == 2
 		feed2.position.should == 1
 
-		put "/feed/#{feed.id}", {:position => 1}.to_json
+		put "/api/feed/#{feed.id}", {:position => 1}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Feed 1/
@@ -86,7 +86,7 @@ describe "Feed route" do
 		folder_to_2 = Folder.first(:title => "Folder 3")
 		feed = Feed.first(:title => 'Feed 1', :folder => folder_from)
 
-		put "/feed/#{feed.id}", {:position => 4, :folder_id => folder_to.id}.to_json
+		put "/api/feed/#{feed.id}", {:position => 4, :folder_id => folder_to.id}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Feed 1/
@@ -112,7 +112,7 @@ describe "Feed route" do
 		folder_feeds[3].title.should == "Feed 4"
 
 
-		put "/feed/#{feed.id}", {:folder_id => folder_to_2.id}.to_json
+		put "/api/feed/#{feed.id}", {:folder_id => folder_to_2.id}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Feed 1/
@@ -129,7 +129,7 @@ describe "Feed route" do
 		folder_to = Folder.first(:title => "Folder 4")
 		feed = Feed.first(:title => 'Feed 3')
 
-		put "/feed/#{feed.id}", {:folder => folder_to.title}.to_json
+		put "/api/feed/#{feed.id}", {:folder => folder_to.title}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data[:folder_id].should == folder_to.id
@@ -141,7 +141,7 @@ describe "Feed route" do
 		authorize 'admin', 'admin'
 		feed = Feed.first(:title => 'Feed 0')
 
-		put "/feed/#{feed.id}", {:url => "http://www.example.com/4.rss"}.to_json
+		put "/api/feed/#{feed.id}", {:url => "http://www.example.com/4.rss"}.to_json
 
 		last_response.body.should =~ /http:\/\/www\.example\.com\/4\.rss/
 		feed.reload.url.should == "http://www.example.com/4.rss"
@@ -151,7 +151,7 @@ describe "Feed route" do
 		authorize 'admin', 'admin'
 		feed = Feed.first(:title => 'Feed 0')
 
-		put "/feed/#{feed.id}", {:url => "file://test.txt"}.to_json
+		put "/api/feed/#{feed.id}", {:url => "file://test.txt"}.to_json
 		last_response.status.should == 400
 		feed.reload.url.should_not == "file://test.txt"
 	end
@@ -162,7 +162,7 @@ describe "Feed route" do
 		feed.sync!
 		feed.items.count.should == 3
 
-		put "/feed/#{feed.id}", {:action => 'reset', :url => "http://localhost:4567/test.rss?items=1"}.to_json
+		put "/api/feed/#{feed.id}", {:action => 'reset', :url => "http://localhost:4567/test.rss?items=1"}.to_json
 		feed.reload.items.count.should == 1
 	end
 
@@ -174,7 +174,7 @@ describe "Feed route" do
 		feed.unread_count.should == 3
 		feed.items.first.read.should == false
 
-		put "/feed/#{feed.id}", {:action => 'read'}.to_json
+		put "/api/feed/#{feed.id}", {:action => 'read'}.to_json
 
 		feed.reload
 		feed.unread_count.should == 0
@@ -189,7 +189,7 @@ describe "Feed route" do
 		feed.unread_count.should == 0
 		feed.items.first.read.should == true
 
-		put "/feed/#{feed.id}", {:action => 'unread'}.to_json
+		put "/api/feed/#{feed.id}", {:action => 'unread'}.to_json
 
 		feed.reload
 		feed.unread_count.should == 3
@@ -200,7 +200,7 @@ describe "Feed route" do
 		authorize 'admin', 'admin'
 		feed = Feed.first(:title => 'Feed 4')
 
-		delete "/feed/#{feed.id}"
+		delete "/api/feed/#{feed.id}"
 		last_response.status.should == 200
 
 		Feed.all.count.should == 24
@@ -209,7 +209,7 @@ describe "Feed route" do
 
 	it "creates feeds (No folder title)" do
 		authorize 'admin', 'admin'
-		post '/feed', :url => 'http://www.example.com/test.rss'
+		post '/api/feed', :url => 'http://www.example.com/test.rss'
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.status.should == 200
@@ -223,7 +223,7 @@ describe "Feed route" do
 
 	it "creates feeds (New folder title)" do
 		authorize 'admin', 'admin'
-		post '/feed', :url => 'http://www.example.com/test.rss', :folder => 'Folder X'
+		post '/api/feed', :url => 'http://www.example.com/test.rss', :folder => 'Folder X'
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.status.should == 200
@@ -240,7 +240,7 @@ describe "Feed route" do
 		folder = Folder.first(:title => 'Folder 4')
 		folder.feeds.count.should == 6
 
-		post '/feed', :url => 'http://www.example.com/test.rss', :folder => 'Folder 4'
+		post '/api/feed', :url => 'http://www.example.com/test.rss', :folder => 'Folder 4'
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.status.should == 200
@@ -254,7 +254,7 @@ describe "Feed route" do
 	it "won't create invalid feeds" do
 		authorize 'admin', 'admin'
 
-		post '/feed', :url => ''
+		post '/api/feed', :url => ''
 
 		last_response.status.should == 400
 		Feed.first(:url => '').should be_nil

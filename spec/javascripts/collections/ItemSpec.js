@@ -1,13 +1,13 @@
 describe("Item Collection", function() {
 	beforeEach(function() {
 		this.server = sinon.fakeServer.create();
-		this.server.respondWith("GET", "/item?limit=2", [200, '',
+		this.server.respondWith("GET", "/api/item?limit=2", [200, '',
 			JSON.stringify([
 				{id: 1, read: false, feed_id: 1},
 				{id: 2, read: false, feed_id: 1},
 			])
 		]);
-		this.server.respondWith("GET", "/item?offset=2&limit=2", [200, '','[]']);
+		this.server.respondWith("GET", "/api/item?offset=2&limit=2", [200, '','[]']);
 
 		this.items = new ItemCollection();
 
@@ -23,7 +23,7 @@ describe("Item Collection", function() {
 
 			expect(this.server.requests.length).toEqual(1);
 			expect(this.server.requests[0].method).toEqual("GET");
-			expect(this.server.requests[0].url).toEqual("/item?limit=2");
+			expect(this.server.requests[0].url).toEqual("/api/item?limit=2");
 
 			this.server.respond();
 
@@ -41,7 +41,7 @@ describe("Item Collection", function() {
 
 			expect(this.server.requests.length).toEqual(1);
 			expect(this.server.requests[0].method).toEqual("GET");
-			expect(this.server.requests[0].url).toEqual("/item?limit=5&offset=10&query=test&search_title=true&show_read=false");
+			expect(this.server.requests[0].url).toEqual("/api/item?limit=5&offset=10&query=test&search_title=true&show_read=false");
 
 			this.items.fetch({data: {
 				offset: 20,
@@ -50,7 +50,7 @@ describe("Item Collection", function() {
 
 			expect(this.server.requests.length).toEqual(2);
 			expect(this.server.requests[1].method).toEqual("GET");
-			expect(this.server.requests[1].url).toEqual("/item?offset=20&show_read=true&limit=2&query=test&search_title=true");
+			expect(this.server.requests[1].url).toEqual("/api/item?offset=20&show_read=true&limit=2&query=test&search_title=true");
 		});
 
 		it("gets its default values from SETTINGS", function() {
@@ -60,7 +60,7 @@ describe("Item Collection", function() {
 
 			expect(this.server.requests.length).toEqual(1);
 			expect(this.server.requests[0].method).toEqual("GET");
-			expect(this.server.requests[0].url).toEqual("/item?limit=5&show_read=false");
+			expect(this.server.requests[0].url).toEqual("/api/item?limit=5&show_read=false");
 
 			SETTINGS.items_per_page = 10;
 			SETTINGS.show_read = true;
@@ -68,7 +68,7 @@ describe("Item Collection", function() {
 
 			expect(this.server.requests.length).toEqual(2);
 			expect(this.server.requests[1].method).toEqual("GET");
-			expect(this.server.requests[1].url).toEqual("/item?limit=10");
+			expect(this.server.requests[1].url).toEqual("/api/item?limit=10");
 		});
 
 		it("can fetch each item's feed title", function() {
@@ -87,7 +87,7 @@ describe("Item Collection", function() {
 
 		expect(this.server.requests.length).toEqual(1);
 		expect(this.server.requests[0].method).toEqual("GET");
-		expect(this.server.requests[0].url).toEqual("/item?limit=2");
+		expect(this.server.requests[0].url).toEqual("/api/item?limit=2");
 		expect(this.items.current_page).toEqual(1);
 
 		this.server.respond();
@@ -100,7 +100,7 @@ describe("Item Collection", function() {
 
 		expect(this.server.requests.length).toEqual(2);
 		expect(this.server.requests[1].method).toEqual("GET");
-		expect(this.server.requests[1].url).toEqual("/item?offset=2&limit=2");
+		expect(this.server.requests[1].url).toEqual("/api/item?offset=2&limit=2");
 		expect(this.items.current_page).toEqual(2);
 
 		this.server.respond();
@@ -117,7 +117,7 @@ describe("Item Collection", function() {
 
 		expect(this.server.requests.length).toEqual(3);
 		expect(this.server.requests[2].method).toEqual("GET");
-		expect(this.server.requests[2].url).toEqual("/item?limit=2");
+		expect(this.server.requests[2].url).toEqual("/api/item?limit=2");
 		expect(this.items.current_page).toEqual(1);
 		expect(this.items.all_loaded).toEqual(false);
 	});

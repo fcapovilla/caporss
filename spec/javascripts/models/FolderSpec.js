@@ -1,15 +1,15 @@
 describe("Folder Model", function() {
 	beforeEach(function() {
 		this.server = sinon.fakeServer.create();
-		this.server.respondWith("PUT", "/folder/1", [200, '', '']);
-		this.server.respondWith("GET", "/folder/1", [200, '',
+		this.server.respondWith("PUT", "/api/folder/1", [200, '', '']);
+		this.server.respondWith("GET", "/api/folder/1", [200, '',
 			JSON.stringify([{
 				id: 1,
 				unread_count: 1,
 				open: false
 			}])
 		]);
-		this.server.respondWith("GET", "/folder/1/feed", [200, '',
+		this.server.respondWith("GET", "/api/folder/1/feed", [200, '',
 			JSON.stringify([{
 				id: 1,
 				folder_id: 1,
@@ -18,13 +18,13 @@ describe("Folder Model", function() {
 		]);
 
 		this.folder = new Folder({id: 1, unread_count: 1, open: false});
-		this.folder.collection = {url: '/folder'};
+		this.folder.collection = {url: '/api/folder'};
 	});
 
 	it("fetches its feeds when initialized", function() {
 		expect(this.server.requests.length).toEqual(1);
 		expect(this.server.requests[0].method).toEqual("GET");
-		expect(this.server.requests[0].url).toEqual("/folder/1/feed");
+		expect(this.server.requests[0].url).toEqual("/api/folder/1/feed");
 	});
 
 	it("can be toggled open/closed", function() {
@@ -34,14 +34,14 @@ describe("Folder Model", function() {
 
 		expect(this.server.requests.length).toEqual(2);
 		expect(this.server.requests[1].method).toEqual("PUT");
-		expect(this.server.requests[1].url).toEqual("/folder/1");
+		expect(this.server.requests[1].url).toEqual("/api/folder/1");
 		expect(this.folder.get('open')).toEqual(true);
 
 		this.folder.toggle();
 
 		expect(this.server.requests.length).toEqual(3);
 		expect(this.server.requests[2].method).toEqual("PUT");
-		expect(this.server.requests[2].url).toEqual("/folder/1");
+		expect(this.server.requests[2].url).toEqual("/api/folder/1");
 		expect(this.folder.get('open')).toEqual(false);
 	});
 
@@ -63,13 +63,13 @@ describe("Folder Model", function() {
 
 		expect(this.server.requests.length).toEqual(2);
 		expect(this.server.requests[1].method).toEqual("GET");
-		expect(this.server.requests[1].url).toEqual("/folder/1");
+		expect(this.server.requests[1].url).toEqual("/api/folder/1");
 
 		this.server.respond();
 
 		expect(this.server.requests.length).toEqual(3);
 		expect(this.server.requests[2].method).toEqual("GET");
-		expect(this.server.requests[2].url).toEqual("/folder/1/feed");
+		expect(this.server.requests[2].url).toEqual("/api/folder/1/feed");
 	});
 
 	afterEach(function() {

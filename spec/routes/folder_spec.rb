@@ -8,13 +8,13 @@ describe "Folder route" do
 
 	it "blocks access by sync user" do
 		authorize 'sync', 'sync'
-		get '/folder'
+		get '/api/folder'
 		last_response.status.should == 403
 	end
 
 	it "lists folders" do
 		authorize 'admin', 'admin'
-		get '/folder'
+		get '/api/folder'
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Folder 0/
@@ -28,7 +28,7 @@ describe "Folder route" do
 		folder = Folder.first(:title => 'Folder 0')
 		user = User.first(:username => 'admin')
 
-		get "/folder/#{folder.id}"
+		get "/api/folder/#{folder.id}"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data[:id].should == folder.id
@@ -43,7 +43,7 @@ describe "Folder route" do
 		authorize 'admin', 'admin'
 		folder = Folder.first(:title => 'Folder 0')
 
-		get "/folder/#{folder.id}/feed"
+		get "/api/folder/#{folder.id}/feed"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Feed 0/
@@ -59,7 +59,7 @@ describe "Folder route" do
 		# Need to sync folder before listing
 		post "/sync/folder/#{folder.id}"
 
-		get "/folder/#{folder.id}/item"
+		get "/api/folder/#{folder.id}/item"
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data.length.should == 15
@@ -72,13 +72,13 @@ describe "Folder route" do
 		authorize 'admin', 'admin'
 		folder = Folder.first(:title => 'Folder 0')
 
-		put "/folder/#{folder.id}", {:open => false}.to_json
+		put "/api/folder/#{folder.id}", {:open => false}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data[:open].should == false
 		folder.reload.open.should == false
 
-		put "/folder/#{folder.id}", {:open => true}.to_json
+		put "/api/folder/#{folder.id}", {:open => true}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		data[:open].should == true
@@ -89,7 +89,7 @@ describe "Folder route" do
 		authorize 'admin', 'admin'
 		folder = Folder.first(:title => 'Folder 0')
 
-		put "/folder/#{folder.id}", {:title => "FolderTest 0"}.to_json
+		put "/api/folder/#{folder.id}", {:title => "FolderTest 0"}.to_json
 
 		last_response.body.should =~ /FolderTest 0/
 		folder.reload.title.should == "FolderTest 0"
@@ -103,7 +103,7 @@ describe "Folder route" do
 		folder.position.should == 2
 		folder2.position.should == 1
 
-		put "/folder/#{folder.id}", {:position => 1}.to_json
+		put "/api/folder/#{folder.id}", {:position => 1}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Folder 1/
@@ -117,11 +117,11 @@ describe "Folder route" do
 		authorize 'admin', 'admin'
 		folder = Folder.first(:title => 'Folder 2')
 
-		put "/folder/#{folder.id}", {:title => ""}.to_json
+		put "/api/folder/#{folder.id}", {:title => ""}.to_json
 		last_response.status.should == 400
 		folder.reload.title.should_not == ""
 
-		#put "/folder/#{folder_id}", {:position => "abcd"}.to_json
+		#put "/api/folder/#{folder_id}", {:position => "abcd"}.to_json
 		#last_response.status.should == 400
 		#Folder.get(folder_id).position.should == 3
 	end
@@ -130,7 +130,7 @@ describe "Folder route" do
 		authorize 'admin', 'admin'
 		folder = Folder.first(:title => 'Folder 4')
 
-		delete "/folder/#{folder.id}"
+		delete "/api/folder/#{folder.id}"
 		last_response.status.should == 200
 
 		Folder.all.count.should == 4
@@ -140,7 +140,7 @@ describe "Folder route" do
 	it "doesn't respond to POST" do
 		authorize 'admin', 'admin'
 
-		post '/folder', :title => 'test'
+		post '/api/folder', :title => 'test'
 
 		last_response.status.should == 404
 	end
