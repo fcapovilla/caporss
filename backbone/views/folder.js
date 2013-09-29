@@ -64,13 +64,14 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 
 		var folder_id = e.originalEvent.dataTransfer.getData('folder_id');
 		var folder = null;
+		var dest = this.model;
 
 		if(folder_id) {
 			folder = folders.get(folder_id);
 		}
 
 		if(folder) {
-			var new_position = this.model.get('position');
+			var new_position = dest.get('position');
 			if(new_position == folder.get('position')) {
 				this.$el.find('>.folder-title').removeClass('drag-hovered');
 				return;
@@ -90,12 +91,17 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		var feed = folders.getFeed(feed_id);
 
 		if(feed) {
+			var old_folder_id = feed.get('folder_id');
+
 			feed.save({
-				folder_id: this.model.id,
+				folder_id: dest.id,
 				position: 1
 			}, { success: function() {
 				router.navigate("", {trigger: true});
-				folders.fetch();
+				if(old_folder_id !== dest.id) {
+					folders.get(old_folder_id).fetch();
+				}
+				dest.fetch();
 			}});
 		}
 
