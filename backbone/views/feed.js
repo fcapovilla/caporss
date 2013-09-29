@@ -61,10 +61,13 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		e.stopPropagation();
 		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
 		var feed = folders.getFeed(feed_id);
+		var dest = this.model;
 
 		if(feed) {
-			var new_position = this.model.get('position');
-			if(this.model.get('folder_id') == feed.get('folder_id')) {
+			var new_position = dest.get('position');
+			var old_folder = null;
+
+			if(dest.get('folder_id') == feed.get('folder_id')) {
 				if(new_position == feed.get('position')) {
 					this.$el.removeClass('drag-hovered');
 					return;
@@ -75,13 +78,18 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 			}
 			else {
 				new_position += 1;
+				old_folder = folders.get(feed.get('folder_id'));
 			}
+
 			feed.save({
-				folder_id: this.model.get('folder_id'),
+				folder_id: dest.get('folder_id'),
 				position: new_position
 			}, { success: function() {
 				router.navigate("", {trigger: true});
-				folders.fetch();
+				if(old_folder !== null) {
+					old_folder.fetch();
+				}
+				folders.get(dest.get('folder_id')).fetch();
 			}});
 		}
 
