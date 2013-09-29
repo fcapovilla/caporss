@@ -4,7 +4,7 @@
     <div class="item-container<% if(item.open){ %> active<% } %>">
       <div class="item-icons">
         <span class="dropdown">
-          <i class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
+          <i onclick="" class="icon icon-caret-down dropdown-toggle" data-toggle="dropdown"></i>
           <% if(!item.feed_title){ %>
             <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= item.id %>-menu">
               <li><a class="readNewerAction">#{t.buttons.mark_newer_read}</a></li>
@@ -14,7 +14,7 @@
             </ul>
           <% } %>
         </span>
-        <i class="readUnreadIcon icon icon-circle<% if(item.read){ %>-blank<% } %>"></i>
+        <i onclick="" class="readUnreadIcon icon icon-circle<% if(item.read){ %>-blank<% } %>"></i>
       </div>
 
       <div class="item-labels">
