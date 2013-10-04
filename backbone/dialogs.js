@@ -10,9 +10,9 @@ $('#cleanupButton').click(function() {
 				cleanup_after: $('#cleanup_after').val()
 			},
 			success: function() {
-				folders.fetch();
-				if(router.currentSelection !== null) {
-					router.currentSelection.items.fetch({reset: true});
+				CapoRSS.folders.fetch();
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.items.fetch({reset: true});
 				}
 			}
 		});
@@ -38,9 +38,9 @@ $('#subscribeButton').click(function() {
 			folder: $('#subscriptionFolder').val()
 		},
 		success: function() {
-			folders.fetch();
-			if(router.currentSelection !== null) {
-				router.currentSelection.items.fetch({reset: true});
+			CapoRSS.folders.fetch();
+			if(CapoRSS.router.currentSelection !== null) {
+				CapoRSS.router.currentSelection.items.fetch({reset: true});
 			}
 		}
 	});
@@ -56,7 +56,7 @@ $('#editFolderButton').click(function() {
 	var dialog = $('#editFolderModal');
 	var folderId = dialog.find('#folderId').val();
 	var folderTitle = dialog.find('#folderTitle').val();
-	var folder = folders.get(folderId);
+	var folder = CapoRSS.folders.get(folderId);
 
 	if(folder) {
 		folder.save({
@@ -81,7 +81,7 @@ $('#editFeedButton').click(function() {
 	var reset = dialog.find('#resetFeed').is(':checked');
 	var pshb = dialog.find('#feedUsePSHB').is(':checked');
 
-	var feed = folders.getFeed(feedId);
+	var feed = CapoRSS.folders.getFeed(feedId);
 	if(feed) {
 		feed.unset('position');
 		feed.save({
@@ -90,7 +90,7 @@ $('#editFeedButton').click(function() {
 			pshb: pshb
 		},{
 			success: function() {
-				router.navigate("", {trigger: true});
+				CapoRSS.router.navigate("", {trigger: true});
 
 				if(reset) {
 					$.ajax({
@@ -98,12 +98,12 @@ $('#editFeedButton').click(function() {
 						method: 'PUT',
 						data: JSON.stringify({action: 'reset'}),
 						success: function() {
-							folders.fetch();
+							CapoRSS.folders.fetch();
 						}
 					});
 				}
 				else {
-					folders.fetch();
+					CapoRSS.folders.fetch();
 				}
 			}
 		});
@@ -138,7 +138,7 @@ $('#searchButton').click(function() {
 	}
 	search_part += query;
 
-	router.navigate(current_route + search_part, {trigger: true});
+	CapoRSS.router.navigate(current_route + search_part, {trigger: true});
 
 	$('#searchModal').modal('hide');
 	$('#searchQuery').val('');
@@ -147,7 +147,7 @@ $('#searchButton').click(function() {
 });
 
 $('#subscriptionTab').click(function() {
-	subscriptions.fetch();
+	CapoRSS.subscriptions.fetch();
 });
 
 

@@ -1,4 +1,4 @@
-var FeedView = Backbone.Marionette.ItemView.extend({
+CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 	tagName: 'li',
 	attributes: {
 		'draggable': true
@@ -60,7 +60,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 	onDrop: function(e) {
 		e.stopPropagation();
 		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
-		var feed = folders.getFeed(feed_id);
+		var feed = CapoRSS.folders.getFeed(feed_id);
 		var dest = this.model;
 
 		if(feed) {
@@ -78,18 +78,18 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 			}
 			else {
 				new_position += 1;
-				old_folder = folders.get(feed.get('folder_id'));
+				old_folder = CapoRSS.folders.get(feed.get('folder_id'));
 			}
 
 			feed.save({
 				folder_id: dest.get('folder_id'),
 				position: new_position
 			}, { success: function() {
-				router.navigate("", {trigger: true});
+				CapoRSS.router.navigate("", {trigger: true});
 				if(old_folder !== null) {
 					old_folder.fetch();
 				}
-				folders.get(dest.get('folder_id')).fetch();
+				CapoRSS.folders.get(dest.get('folder_id')).fetch();
 			}});
 		}
 
@@ -100,18 +100,18 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 	},
 
 	selectFeed: function() {
-		router.navigate("feed/" + this.model.id, {trigger: true});
+		CapoRSS.router.navigate("feed/" + this.model.id, {trigger: true});
 	},
 	deleteFeed: function(e) {
 		e.stopPropagation();
 
 		if(confirm(LANG.confirm_delete_feed)) {
-			if(this.model == router.currentSelection) {
-				router.navigate("", {trigger: true});
+			if(this.model == CapoRSS.router.currentSelection) {
+				CapoRSS.router.navigate("", {trigger: true});
 			}
 			this.model.destroy({success: function() {
-				if(router.currentSelection !== null) {
-					router.currentSelection.items.fetch({reset: true});
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.items.fetch({reset: true});
 				}
 			}});
 		}
@@ -132,8 +132,8 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 					}
 				});
-				if(router.currentSelection !== null) {
-					router.currentSelection.items.fetch({reset: true});
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.items.fetch({reset: true});
 				}
 			}
 		});
@@ -144,8 +144,8 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		e.stopPropagation();
 
 		$.when(this.model.markRead()).then(function() {
-			if(router.currentSelection !== null) {
-				router.currentSelection.items.fetch({reset: true});
+			if(CapoRSS.router.currentSelection !== null) {
+				CapoRSS.router.currentSelection.items.fetch({reset: true});
 			}
 		});
 
@@ -155,8 +155,8 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 		e.stopPropagation();
 
 		$.when(this.model.markUnread()).then(function() {
-			if(router.currentSelection !== null) {
-				router.currentSelection.items.fetch({reset: true});
+			if(CapoRSS.router.currentSelection !== null) {
+				CapoRSS.router.currentSelection.items.fetch({reset: true});
 			}
 		});
 
@@ -167,7 +167,7 @@ var FeedView = Backbone.Marionette.ItemView.extend({
 
 		var dialog = $('#editFeedModal');
 		dialog.find('#feedId').val(this.model.id);
-		dialog.find('#feedFolder').val(folders.get(this.model.get('folder_id')).get('title'));
+		dialog.find('#feedFolder').val(CapoRSS.folders.get(this.model.get('folder_id')).get('title'));
 		dialog.find('#feedUrl').val(this.model.get('url'));
 
 		if(this.model.get('pshb_hub') !== '') {

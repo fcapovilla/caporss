@@ -1,4 +1,4 @@
-var Router = Backbone.Router.extend({
+CapoRSS.Router.Main = Backbone.Router.extend({
 	routes: {
 		"": "clear",
 		"feed/:id(/search/*query)": "viewFeed",
@@ -65,7 +65,7 @@ var Router = Backbone.Router.extend({
 		model.set('active', true);
 		this.currentSelection = model;
 
-		this.itemList = new ItemListView({collection: model.items});
+		this.itemList = new CapoRSS.View.ItemList({collection: model.items});
 		model.items.fetch(options);
 
 		$('#item-list').removeClass('hidden-phone');
@@ -74,17 +74,17 @@ var Router = Backbone.Router.extend({
 		$('#item-list').focus();
 	},
 	viewFeed: function(id, query) {
-		var model = folders.getFeed(id);
+		var model = CapoRSS.folders.getFeed(id);
 
 		this.updateItemList(model, query);
 	},
 	viewFolder: function(id, query) {
-		var model = folders.get(id);
+		var model = CapoRSS.folders.get(id);
 
 		this.updateItemList(model, query);
 	},
 	viewAllItems: function(query) {
-		var model = folderList.allItemsFolder;
+		var model = CapoRSS.folderList.allItemsFolder;
 		this.updateItemList(model, query);
 	},
 	goToModel: function(model) {

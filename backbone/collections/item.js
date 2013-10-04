@@ -1,5 +1,5 @@
-var ItemCollection = Backbone.Collection.extend({
-	model: Item,
+CapoRSS.Collection.Item = Backbone.Collection.extend({
+	model: CapoRSS.Model.Item,
 	url: '/api/item',
 	initialize: function(options) {
 		this.current_page = 1;
@@ -86,7 +86,7 @@ var ItemCollection = Backbone.Collection.extend({
 				that.trigger('all_loaded');
 			}
 			if(that.show_feed_titles) {
-				var feed_titles = folders.getFeedTitles();
+				var feed_titles = CapoRSS.folders.getFeedTitles();
 				that.each(function(item) {
 					if(!item.has('feed_title')) {
 						item.set('feed_title', feed_titles[item.get('feed_id')]);

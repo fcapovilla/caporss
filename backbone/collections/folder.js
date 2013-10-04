@@ -1,5 +1,5 @@
-var FolderCollection = Backbone.Collection.extend({
-	model: Folder,
+CapoRSS.Collection.Folder = Backbone.Collection.extend({
+	model: CapoRSS.Model.Folder,
 	url: '/api/folder',
 	initialize: function() {
 		this.listenTo(this, 'add remove change:unread_count', this.refreshUnreadCount);
@@ -15,8 +15,8 @@ var FolderCollection = Backbone.Collection.extend({
 				}
 			}
 		});
-		if(router.currentSelection !== null) {
-			router.currentSelection.items.fetch({reset: true});
+		if(CapoRSS.router.currentSelection !== null) {
+			CapoRSS.router.currentSelection.items.fetch({reset: true});
 		}
 	},
 	fetch: function(options) {
@@ -41,7 +41,7 @@ var FolderCollection = Backbone.Collection.extend({
 	refreshUnreadCount: function() {
 		var count = this.getUnreadCount();
 		document.title = 'CapoRSS (' + count + ')';
-		folderList.allItemsFolder.set('unread_count', count);
+		CapoRSS.folderList.allItemsFolder.set('unread_count', count);
 	},
 	getUnreadCount: function() {
 		var count = 0;

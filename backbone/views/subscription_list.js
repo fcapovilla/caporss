@@ -1,7 +1,7 @@
-var SubscriptionListView = Backbone.Marionette.CompositeView.extend({
+CapoRSS.View.SubscriptionList = Backbone.Marionette.CompositeView.extend({
 	el: $('#subscription-list'),
 	template: '#tmpl-subscription-list',
-	itemView: SubscriptionView,
+	itemView: CapoRSS.View.Subscription,
 	itemViewContainer: 'tbody',
 	events: {
 		'click .sortable': 'sortColumn'

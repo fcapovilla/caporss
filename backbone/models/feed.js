@@ -1,6 +1,6 @@
-var Feed = Backbone.Model.extend({
+CapoRSS.Model.Feed = Backbone.Model.extend({
 	initialize: function() {
-		this.items = new ItemCollection();
+		this.items = new CapoRSS.Collection.Item();
 		this.items.url = '/api/feed/' + this.id + '/item';
 
 		this.listenTo(this.items, 'itemRead', this.decrementReadCount);
@@ -48,7 +48,7 @@ var Feed = Backbone.Model.extend({
 	getNextInList: function() {
 		var next = this.collection.at(this.collection.indexOf(this) + 1);
 		if(next === null || next === undefined) {
-			var folder = folders.get(this.get('folder_id'));
+			var folder = CapoRSS.folders.get(this.get('folder_id'));
 			next = folder.collection.at(folder.collection.indexOf(folder) + 1);
 		}
 
@@ -62,7 +62,7 @@ var Feed = Backbone.Model.extend({
 	getPreviousInList: function() {
 		var prev = this.collection.at(this.collection.indexOf(this) - 1);
 		if(prev === null || prev === undefined) {
-			prev = folders.get(this.get('folder_id'));
+			prev = CapoRSS.folders.get(this.get('folder_id'));
 		}
 
 		if(prev === null || prev === undefined) {

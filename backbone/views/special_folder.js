@@ -1,4 +1,4 @@
-var SpecialFolderView = Backbone.Marionette.ItemView.extend({
+CapoRSS.View.SpecialFolder = Backbone.Marionette.ItemView.extend({
 	tagName: "li",
 	template: '#tmpl-special-folder',
 	events: {
@@ -13,6 +13,6 @@ var SpecialFolderView = Backbone.Marionette.ItemView.extend({
     },
 
 	selectFolder: function() {
-		router.navigate(this.model.get('route'), {trigger: true});
+		CapoRSS.router.navigate(this.model.get('route'), {trigger: true});
 	}
 });

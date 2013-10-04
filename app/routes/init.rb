@@ -44,9 +44,9 @@ get '/app.js' do
 		return @@backbone_cache
 	end
 
-	output = "$(function() {\n"
-
+	output = ""
 	Dir[
+		"#{root}/init.js",
 		"#{root}/routers/*.js",
 		"#{root}/models/*.js",
 		"#{root}/collections/*.js",
@@ -59,8 +59,6 @@ get '/app.js' do
 	].uniq.each do |file|
 		output += File.read(file)
 	end
-
-	output += "});"
 
 	# If we are in production, generate a minified version of the app and cache it
 	if settings.production?

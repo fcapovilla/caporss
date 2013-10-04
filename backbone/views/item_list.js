@@ -1,5 +1,5 @@
-var ItemListView = Backbone.Marionette.CompositeView.extend({
-	itemView: ItemView,
+CapoRSS.View.ItemList = Backbone.Marionette.CompositeView.extend({
+	itemView: CapoRSS.View.Item,
 	itemViewContainer: 'ul',
 	template: '#tmpl-itemlist',
 	collectionEvents: {

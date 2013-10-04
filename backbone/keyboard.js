@@ -18,31 +18,31 @@ $(document).keyup(function(e) {
 	if(e.shiftKey) {
 		var model = null;
 		if(e.keyCode == 74) { // SHIFT+J
-			model = folderList.allItemsFolder;
-			if(router.currentSelection !== null) {
-				model = router.currentSelection.getNextInList();
+			model = CapoRSS.folderList.allItemsFolder;
+			if(CapoRSS.router.currentSelection !== null) {
+				model = CapoRSS.router.currentSelection.getNextInList();
 			}
-			router.goToModel(model);
+			CapoRSS.router.goToModel(model);
 		}
 		if(e.keyCode == 75) { // SHIFT+K
-			model = folderList.allItemsFolder;
-			if(router.currentSelection !== null) {
-				model = router.currentSelection.getPreviousInList();
+			model = CapoRSS.folderList.allItemsFolder;
+			if(CapoRSS.router.currentSelection !== null) {
+				model = CapoRSS.router.currentSelection.getPreviousInList();
 			}
-			router.goToModel(model);
+			CapoRSS.router.goToModel(model);
 		}
 
-		if(router.itemList !== null) {
+		if(CapoRSS.router.itemList !== null) {
 			if(e.keyCode == 32) { // SHIFT+SPACE
-				if(router.itemList.cursor === null || router.itemList.cursor === undefined) {
-					router.itemList.moveCursor('down');
+				if(CapoRSS.router.itemList.cursor === null || CapoRSS.router.itemList.cursor === undefined) {
+					CapoRSS.router.itemList.moveCursor('down');
 				}
 				else {
 					container = $('#item-list').eq(0);
 					currentItem = $('.item-container.active').eq(0).closest('li');
 
 					if(currentItem.position().top >= 0) {
-						router.itemList.moveCursor('up');
+						CapoRSS.router.itemList.moveCursor('up');
 					}
 					else {
 						container.scrollTop(container.scrollTop() - $(window).height());
@@ -57,17 +57,17 @@ $(document).keyup(function(e) {
 		}
 	}
 	else {
-		if(router.itemList !== null) {
+		if(CapoRSS.router.itemList !== null) {
 			if(e.keyCode == 74) { // J
-				router.itemList.moveCursor('down');
+				CapoRSS.router.itemList.moveCursor('down');
 			}
 			if(e.keyCode == 75) { // K
-				router.itemList.moveCursor('up');
+				CapoRSS.router.itemList.moveCursor('up');
 			}
 
 			if(e.keyCode == 32) { // SPACE
-				if(router.itemList.cursor === null || router.itemList.cursor === undefined) {
-					router.itemList.moveCursor('down');
+				if(CapoRSS.router.itemList.cursor === null || CapoRSS.router.itemList.cursor === undefined) {
+					CapoRSS.router.itemList.moveCursor('down');
 				}
 				else {
 					container = $('#item-list').eq(0);
@@ -75,7 +75,7 @@ $(document).keyup(function(e) {
 					var limit = container.scrollTop() + currentItem.position().top + currentItem.height();
 
 					if(container.scrollTop() + $(window).height() > limit) {
-						router.itemList.moveCursor('down');
+						CapoRSS.router.itemList.moveCursor('down');
 					}
 					else {
 						container.scrollTop($(window).height() + container.scrollTop());
@@ -94,13 +94,13 @@ $(document).keyup(function(e) {
 			});
 		}
 		if(e.keyCode == 82) { // R
-			mainMenu.sync();
+			CapoRSS.mainMenu.sync();
 		}
 		if(e.keyCode == 72) { // H
-			mainMenu.toggleReadVisibility();
+			CapoRSS.mainMenu.toggleReadVisibility();
 		}
 		if(e.keyCode == 65) { // A
-			mainMenu.showSubscriptionModal();
+			CapoRSS.mainMenu.showSubscriptionModal();
 		}
 	}
 });

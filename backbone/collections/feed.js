@@ -1,5 +1,5 @@
-var FeedCollection = Backbone.Collection.extend({
-	model: Feed,
+CapoRSS.Collection.Feed = Backbone.Collection.extend({
+	model: CapoRSS.Model.Feed,
 	url: '/api/feed',
 	initialize: function() {
 		this.sortAttribute = 'position';

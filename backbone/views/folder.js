@@ -1,10 +1,10 @@
-var FolderView = Backbone.Marionette.CompositeView.extend({
+CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 	tagName: "li",
 	attributes: {
 		'draggable': true
 	},
 	itemViewContainer: 'ul.unstyled',
-	itemView: FeedView,
+	itemView: CapoRSS.View.Feed,
 	template: '#tmpl-folder',
 	events: {
 		'click .markFolderReadAction' : 'markFolderRead',
@@ -67,7 +67,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		var dest = this.model;
 
 		if(folder_id) {
-			folder = folders.get(folder_id);
+			folder = CapoRSS.folders.get(folder_id);
 		}
 
 		if(folder) {
@@ -82,13 +82,13 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 			folder.save({
 				position: new_position
 			}, { success: function() {
-				router.navigate("", {trigger: true});
-				folders.fetch();
+				CapoRSS.router.navigate("", {trigger: true});
+				CapoRSS.folders.fetch();
 			}});
 		}
 
 		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
-		var feed = folders.getFeed(feed_id);
+		var feed = CapoRSS.folders.getFeed(feed_id);
 
 		if(feed) {
 			var old_folder_id = feed.get('folder_id');
@@ -97,9 +97,9 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 				folder_id: dest.id,
 				position: 1
 			}, { success: function() {
-				router.navigate("", {trigger: true});
+				CapoRSS.router.navigate("", {trigger: true});
 				if(old_folder_id !== dest.id) {
-					folders.get(old_folder_id).fetch();
+					CapoRSS.folders.get(old_folder_id).fetch();
 				}
 				dest.fetch();
 			}});
@@ -112,7 +112,7 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 	},
 
 	selectFolder: function() {
-		router.navigate("folder/" + this.model.id, {trigger: true});
+		CapoRSS.router.navigate("folder/" + this.model.id, {trigger: true});
 	},
 	showFolderEditDialog: function(e) {
 		e.stopPropagation();
@@ -147,12 +147,12 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 		e.stopPropagation();
 
 		if(confirm(LANG.confirm_delete_folder)) {
-			if(this.model == router.currentSelection) {
-				router.navigate("", {trigger: true});
+			if(this.model == CapoRSS.router.currentSelection) {
+				CapoRSS.router.navigate("", {trigger: true});
 			}
 			this.model.destroy({success: function() {
-				if(router.currentSelection !== null) {
-					router.currentSelection.items.fetch({reset: true});
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.items.fetch({reset: true});
 				}
 			}});
 		}
@@ -173,8 +173,8 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 					}
 				});
-				if(router.currentSelection !== null) {
-					router.currentSelection.items.fetch({reset: true});
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.items.fetch({reset: true});
 				}
 			}
 		});
@@ -190,8 +190,8 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 			});
 
 			$.when.apply($, deferreds).then(function() {
-				if(router.currentSelection !== null) {
-					router.currentSelection.items.fetch({reset: true});
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.items.fetch({reset: true});
 				}
 			});
 		}
@@ -207,8 +207,8 @@ var FolderView = Backbone.Marionette.CompositeView.extend({
 			});
 
 			$.when.apply($, deferreds).then(function() {
-				if(router.currentSelection !== null) {
-					router.currentSelection.items.fetch({reset: true});
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.items.fetch({reset: true});
 				}
 			});
 		}

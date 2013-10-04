@@ -1,4 +1,4 @@
-var Item = Backbone.Model.extend({
+CapoRSS.Model.Item = Backbone.Model.extend({
 	toJSON: function() {
 		// Syncable attributes
 		return {read: this.get('read')};
@@ -20,7 +20,7 @@ var Item = Backbone.Model.extend({
 			url: '/api/item/' + this.id,
 			data: JSON.stringify({action: action}),
 			success: function() {
-				router.currentSelection.fetch();
+				CapoRSS.router.currentSelection.fetch();
 			}
 		});
 	}

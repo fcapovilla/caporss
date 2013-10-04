@@ -1,4 +1,4 @@
-var ItemView = Backbone.Marionette.ItemView.extend({
+CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 	tagName: 'li',
 	template: '#tmpl-item',
 	events: {
@@ -38,15 +38,15 @@ var ItemView = Backbone.Marionette.ItemView.extend({
 	toggleContent: function() {
 		if(this.model.get('open')) {
 			this.model.set('open', false);
-			router.itemList.cursor = null;
+			CapoRSS.router.itemList.cursor = null;
 		}
 		else {
-			router.itemList.closeCursor();
+			CapoRSS.router.itemList.closeCursor();
 			this.model.set('open', true);
 			if(!this.model.get('read')) {
 				this.model.toggleRead();
 			}
-			router.itemList.cursor = this.model;
+			CapoRSS.router.itemList.cursor = this.model;
 		}
 	},
 	toggleRead: function() {
@@ -55,8 +55,8 @@ var ItemView = Backbone.Marionette.ItemView.extend({
 	},
 	_sendAction: function(action) {
 		$.when(this.model.sendAction(action)).then(function() {
-			if(router.currentSelection !== null) {
-				router.currentSelection.items.fetch({reset: true});
+			if(CapoRSS.router.currentSelection !== null) {
+				CapoRSS.router.currentSelection.items.fetch({reset: true});
 			}
 		});
 	},

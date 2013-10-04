@@ -1,4 +1,4 @@
-var SubscriptionView = Backbone.Marionette.ItemView.extend({
+CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
 	tagName: 'tr',
 	template: '#tmpl-subscription',
 	events: {
@@ -15,12 +15,12 @@ var SubscriptionView = Backbone.Marionette.ItemView.extend({
 
 	deleteFeed: function(e) {
 		if(confirm(LANG.confirm_delete_feed)) {
-			if(this.model == router.currentSelection) {
-				router.navigate("", {trigger: true});
+			if(this.model == CapoRSS.router.currentSelection) {
+				CapoRSS.router.navigate("", {trigger: true});
 			}
 			this.model.destroy({success: function() {
-				subscriptions.fetch();
-				folders.fetch();
+				CapoRSS.subscriptions.fetch();
+				CapoRSS.folders.fetch();
 			}});
 		}
 	},

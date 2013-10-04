@@ -1,14 +1,14 @@
-var FolderListView = Backbone.Marionette.CollectionView.extend({
+CapoRSS.View.FolderList = Backbone.Marionette.CollectionView.extend({
 	el: $('#feed-list'),
-	itemView: FolderView,
+	itemView: CapoRSS.View.Folder,
 	collectionEvents: {
 		'sort': 'render'
 	},
 	initialize: function() {
-		this.allItemsFolder = new AllItemsFolder();
+		this.allItemsFolder = new CapoRSS.Model.AllItemsFolder();
 
 		this.views = [];
-		this.views.push(new SpecialFolderView({model: this.allItemsFolder}));
+		this.views.push(new CapoRSS.View.SpecialFolder({model: this.allItemsFolder}));
 
 		this.render();
 	},

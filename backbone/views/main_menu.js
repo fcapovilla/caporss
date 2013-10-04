@@ -1,4 +1,4 @@
-var MainMenuView = Backbone.Marionette.CompositeView.extend({
+CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	el: $('#mainmenu'),
 	template: '#tmpl-mainmenu',
 	events: {
@@ -24,7 +24,7 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 			dataType: 'json',
 			timeout: 120000,
 			success: function(result) {
-				folders.fetch({
+				CapoRSS.folders.fetch({
 					success: function() {
 						if(result.new_items > 0) {
 							$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
@@ -32,8 +32,8 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 						icon.attr('class', 'icon icon-refresh');
 					}
 				});
-				if(router.currentSelection !== null) {
-					router.currentSelection.items.fetch({reset: true});
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.items.fetch({reset: true});
 				}
 			},
 			error: function() {
@@ -42,10 +42,10 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 		});
 	},
 	prevItem: function() {
-		router.itemList.moveCursor('up');
+		CapoRSS.router.itemList.moveCursor('up');
 	},
 	nextItem: function() {
-		router.itemList.moveCursor('down');
+		CapoRSS.router.itemList.moveCursor('down');
 	},
 	toggleReadVisibility: function() {
 		this.setReadVisibility(!SETTINGS.show_read);
@@ -62,9 +62,9 @@ var MainMenuView = Backbone.Marionette.CompositeView.extend({
 			$.cookie('show_read', false, {expires: 10000});
 		}
 
-		if(router.currentSelection !== null) {
-			router.itemList.cursor = null;
-			router.currentSelection.items.fetch({reset: true, reset_pagination: true});
+		if(CapoRSS.router.currentSelection !== null) {
+			CapoRSS.router.itemList.cursor = null;
+			CapoRSS.router.currentSelection.items.fetch({reset: true, reset_pagination: true});
 		}
 	},
 	showSubscriptionModal: function() {
