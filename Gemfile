@@ -36,4 +36,7 @@ group :production do
 	#gem 'dm-mysql-adapter'
 
 	gem 'rack-ssl-enforcer'
+
+	gem 'therubyracer'
+	gem 'uglifier'
 end

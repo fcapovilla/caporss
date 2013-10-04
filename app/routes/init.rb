@@ -32,10 +32,17 @@ end
 
 
 # Serve a concatenated version of the Backbone application
+@@backbone_cache = nil
+
 get '/app.js' do
 	root = settings.root + '/backbone'
 	content_type :js, 'charset' => 'utf-8'
 	last_modified File.mtime("#{root}/init.js")
+
+	# If we are in production, try to use a cached version of the backbone app
+	if settings.production? and @@backbone_cache
+		return @@backbone_cache
+	end
 
 	output = "$(function() {\n"
 
@@ -50,10 +57,19 @@ get '/app.js' do
 		"#{root}/views/*.js",
 		"#{root}/*.js"
 	].uniq.each do |file|
-		output += File.open(file, 'r').read()
+		output += File.read(file)
 	end
 
-	output + "});"
+	output += "});"
+
+	# If we are in production, generate a minified version of the app and cache it
+	if settings.production?
+		require 'uglifier'
+		output = Uglifier.compile(output)
+		@@backbone_cache = output
+	end
+
+	output
 end
 
 
