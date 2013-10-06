@@ -1,4 +1,5 @@
 CapoRSS.Model.Folder = Backbone.Model.extend({
+
 	initialize: function() {
 		this.feeds = new CapoRSS.Collection.Feed();
 		this.feeds.url = '/api/folder/' + this.id + '/feed';
@@ -8,12 +9,22 @@ CapoRSS.Model.Folder = Backbone.Model.extend({
 
 		this.items = new CapoRSS.Collection.Item({show_feed_titles: true});
 		this.items.url = '/api/folder/' + this.id + '/item';
-		this.listenTo(this.items, 'itemRead', this.itemRead);
-		this.listenTo(this.items, 'itemUnread', this.itemUnread);
+		this.listenTo(this.items, 'itemRead', this.onItemRead);
+		this.listenTo(this.items, 'itemUnread', this.onItemUnread);
 	},
+
+	/**
+	 * Close/Open folder
+	 */
 	toggle: function() {
 		this.save({open : !this.get('open')});
 	},
+
+	/**
+	 * Returns some attributes as JSON.
+	 * Only these attributes will be sent to the server when saving the Folder.
+	 * @return {Object}
+	 */
 	toJSON: function() {
 		return {
 			open: this.get('open'),
@@ -21,12 +32,28 @@ CapoRSS.Model.Folder = Backbone.Model.extend({
 			position: this.get('position')
 		};
 	},
-	itemRead: function(feed_id) {
+
+	/**
+	 * Action when one of the folder's items is read.
+	 * Updates unread count for the specified feed.
+	 * @param {number} The id of the feed.
+	 */
+	onItemRead: function(feed_id) {
 		this.feeds.get(feed_id).decrementReadCount();
 	},
-	itemUnread: function(feed_id) {
+
+	/**
+	 * Action when one of the folder's items is unread.
+	 * Updates unread count for the specified feed.
+	 * @param {number} The id of the feed.
+	 */
+	onItemUnread: function(feed_id) {
 		this.feeds.get(feed_id).incrementReadCount();
 	},
+
+	/**
+	 * Update the folder's unread count using its feeds' unread count.
+	 */
 	recalculateReadCount: function() {
 		var count = 0;
 		this.feeds.each(function(feed) {
@@ -34,9 +61,21 @@ CapoRSS.Model.Folder = Backbone.Model.extend({
 		});
 		this.set('unread_count', count);
 	},
+
+	/**
+	 * Fetch all of the folder's feeds.
+	 * @param {?Object} options
+	 * @return {Deferred}
+	 */
 	fetchChildren: function(options) {
 		return this.feeds.fetch(options);
 	},
+
+	/**
+	 * Fetch the folder and its feeds.
+	 * @param {?Object} options
+	 * @return {Deferred}
+	 */
 	fetch: function(options) {
 		var that = this;
 
@@ -52,7 +91,11 @@ CapoRSS.Model.Folder = Backbone.Model.extend({
 
 		return deferred;
 	},
-	// Get next feed/folder in the folder list
+
+	/**
+	 * Get next feed/folder in the feed list
+	 * @return {CapoRSS.Model.Folder|CapoRSS.Model.Feed} The next feed/folder
+	 */
 	getNextInList: function() {
 		var next = null;
 		if(this.get('open') && this.feeds.length !== 0) {
@@ -68,7 +111,11 @@ CapoRSS.Model.Folder = Backbone.Model.extend({
 
 		return next;
     },
-	// Get previous feed/folder in the folder list
+
+	/**
+	 * Get previous feed/folder in the feed list
+	 * @return {CapoRSS.Model.Folder|CapoRSS.Model.Feed} The previous feed/folder
+	 */
 	getPreviousInList: function() {
 		var prev = this.collection.at(this.collection.indexOf(this) - 1);
 		if(prev !== null && prev !== undefined && prev.get('open') && prev.feeds.length !== 0) {

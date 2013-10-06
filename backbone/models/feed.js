@@ -1,4 +1,5 @@
 CapoRSS.Model.Feed = Backbone.Model.extend({
+
 	initialize: function() {
 		this.items = new CapoRSS.Collection.Item();
 		this.items.url = '/api/feed/' + this.id + '/item';
@@ -6,6 +7,12 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 		this.listenTo(this.items, 'itemRead', this.decrementReadCount);
 		this.listenTo(this.items, 'itemUnread', this.incrementReadCount);
 	},
+
+	/**
+	 * Returns some attributes as JSON.
+	 * Only these attributes will be sent to the server when saving the Feed.
+	 * @return {Object}
+	 */
 	toJSON: function() {
 		// Syncable attributes
 		return {
@@ -16,6 +23,11 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 			pshb: this.get('pshb')
 		};
 	},
+
+	/**
+	 * Mark all of the feed's items as read.
+	 * @return {Deferred}
+	 */
 	markRead: function() {
 		var that = this;
 		return $.ajax({
@@ -27,6 +39,11 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 			}
 		});
 	},
+
+	/**
+	 * Mark all of the feed's items as not read.
+	 * @return {Deferred}
+	 */
 	markUnread: function() {
 		var that = this;
 		return $.ajax({
@@ -38,13 +55,25 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 			}
 		});
 	},
+
+	/**
+	 * Add one to unread count
+	 */
 	incrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') + 1);
 	},
+
+	/**
+	 * Remove one to unread count
+	 */
 	decrementReadCount: function() {
 		this.set('unread_count', this.get('unread_count') - 1);
 	},
-	// Get next feed/folder in the folder list
+
+	/**
+	 * Get next feed/folder in the feed list
+	 * @return {CapoRSS.Model.Folder|CapoRSS.Model.Feed} The next feed/folder
+	 */
 	getNextInList: function() {
 		var next = this.collection.at(this.collection.indexOf(this) + 1);
 		if(next === null || next === undefined) {
@@ -58,7 +87,11 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 
 		return next;
     },
-	// Get previous feed/folder in the folder list
+
+	/**
+	 * Get previous feed/folder in the feed list
+	 * @return {CapoRSS.Model.Folder|CapoRSS.Model.Feed} The previous feed/folder
+	 */
 	getPreviousInList: function() {
 		var prev = this.collection.at(this.collection.indexOf(this) - 1);
 		if(prev === null || prev === undefined) {

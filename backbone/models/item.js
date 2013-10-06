@@ -1,8 +1,19 @@
 CapoRSS.Model.Item = Backbone.Model.extend({
+
+	/**
+	 * Returns some attributes as JSON.
+	 * Only these attributes will be sent to the server when saving the Folder.
+	 * @return {Object}
+	 */
 	toJSON: function() {
 		// Syncable attributes
 		return {read: this.get('read')};
 	},
+
+	/**
+	 * Mark item as read/not read.
+	 * Triggers itemRead or itemUnread events.
+	 */
 	toggleRead: function() {
 		this.set('read', !this.get('read'));
 		this.save();
@@ -14,6 +25,12 @@ CapoRSS.Model.Item = Backbone.Model.extend({
 			this.trigger('itemUnread', this.get('feed_id'));
 		}
 	},
+
+	/**
+	 * Sends an item action to the server.
+	 * @param {string} action
+	 * @return {Deferred}
+	 */
 	sendAction: function(action) {
 		return $.ajax({
 			method: 'PUT',
