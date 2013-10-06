@@ -1,9 +1,24 @@
 CapoRSS.Collection.Folder = Backbone.Collection.extend({
 	model: CapoRSS.Model.Folder,
 	url: '/api/folder',
+
 	initialize: function() {
 		this.listenTo(this, 'add remove change:unread_count', this.refreshUnreadCount);
 	},
+
+	/**
+	 * Comparator to sort folders by position bu default
+	 * @param {CapoRSS.Model.Folder}
+	 * @return {number} position
+	 */
+	comparator: function(folder) {
+		return folder.get('position');
+	},
+
+	/**
+	 * Fetch updates from the server.
+	 * Show a notification if new items were found.
+	 */
 	refresh: function() {
 		var that = this;
 		old_unread_count = this.getUnreadCount();
@@ -19,6 +34,13 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 			CapoRSS.router.currentSelection.items.fetch({reset: true});
 		}
 	},
+
+	/**
+	 * Fetch folders from the server.
+	 * Also fetches feeds for each folder.
+	 * @param {?Object} options
+	 * @return {Deferred}
+	 */
 	fetch: function(options) {
 		var that = this;
 
@@ -38,11 +60,20 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 
 		return deferred;
 	},
+
+	/**
+	 * Update unread count in the window title and in the "All items" folder.
+	 */
 	refreshUnreadCount: function() {
 		var count = this.getUnreadCount();
 		document.title = 'CapoRSS (' + count + ')';
 		CapoRSS.folderList.allItemsFolder.set('unread_count', count);
 	},
+
+	/**
+	 * Get the total number of unread items for all folders.
+	 * @return {number} item count
+	 */
 	getUnreadCount: function() {
 		var count = 0;
 		this.each(function(folder) {
@@ -50,6 +81,12 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 		});
 		return count;
 	},
+
+	/**
+	 * Returns the specified feed by searching it in all the folders.
+	 * @param {number} feed id
+	 * @return {?CapoRSS.Model.Feed} The feed or null if the feed was not found
+	 */
 	getFeed: function(id) {
 		var feed = null;
 
@@ -64,6 +101,11 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 
 		return feed;
 	},
+
+	/**
+	 * Get the titles of all feeds
+	 * @return {Object.<number, string>} An associative array of feed titles (id -> title)
+	 */
 	getFeedTitles: function() {
 		var feed_titles = {};
 		this.each(function(folder) {
@@ -72,8 +114,5 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 			});
 		});
 		return feed_titles;
-	},
-	comparator: function(folder) {
-		return folder.get('position');
 	}
 });

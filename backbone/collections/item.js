@@ -1,6 +1,7 @@
 CapoRSS.Collection.Item = Backbone.Collection.extend({
 	model: CapoRSS.Model.Item,
 	url: '/api/item',
+
 	initialize: function(options) {
 		this.current_page = 1;
 		this.all_loaded = false;
@@ -13,6 +14,12 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 			this.show_feed_titles = true;
 		}
 	},
+
+	/**
+	 * Fetch a new page from the server.
+	 * @param {?Object} options
+	 * @return {boolean} true if the next page was fetched
+	 */
 	fetchNextPage: function(options) {
 		if(this.all_loaded) {
 			return false;
@@ -28,6 +35,12 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 
 		return true;
 	},
+
+	/**
+	 * Fetch items with additional options for search, sorting and pagination.
+	 * @param {?Object} options
+	 * @return {Deferred}
+	 */
 	fetch: function(options) {
 		var that=this;
 		var previous_count = this.length;
@@ -52,6 +65,7 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 			}
 		}
 
+		// Search query
 		if(options.data.query) {
 			this.query = options.data.query;
 			this.search_title = (options.data.search_title === true);
@@ -63,6 +77,7 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 			}
 		}
 
+		// Sorting
 		if(options.data.sort) {
 			this.sort = options.data.sort;
 		}
