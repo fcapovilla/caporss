@@ -9,6 +9,11 @@ CapoRSS.View.SubscriptionList = Backbone.Marionette.CompositeView.extend({
 	collectionEvents: {
 		'sort': 'render'
 	},
+
+	/**
+	 * Data sent to the template.
+	 * @return {Object}
+	 */
 	serializeData: function() {
 		return {
 			'sortDirection': this.collection.sortDirection,
@@ -16,6 +21,10 @@ CapoRSS.View.SubscriptionList = Backbone.Marionette.CompositeView.extend({
 		};
     },
 
+	/**
+	 * Resort the list by the selected column
+	 * @param {eventObject} e
+	 */
 	sortColumn: function(e) {
 		var column = $(e.currentTarget).data('column');
 		if(column) {

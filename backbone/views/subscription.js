@@ -9,10 +9,19 @@ CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
 		'destroy': 'remove',
 		'change': 'render'
 	},
+
+	/**
+	 * Data sent to the template.
+	 * @return {Object}
+	 */
 	serializeData: function() {
 		return {'feed': this.model.attributes};
     },
 
+	/**
+	 * Delete the feed.
+	 * @param {eventObject} e
+	 */
 	deleteFeed: function(e) {
 		if(confirm(LANG.confirm_delete_feed)) {
 			if(this.model == CapoRSS.router.currentSelection) {
@@ -24,6 +33,10 @@ CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
 			}});
 		}
 	},
+
+	/**
+	 * Action: Toggle Pubsubhubbub for this feed.
+	 */
 	togglePSHB: function() {
 		this.model.save({'pshb': !this.model.get('pshb')});
 	}

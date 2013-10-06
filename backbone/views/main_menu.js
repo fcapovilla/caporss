@@ -9,12 +9,19 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 		'click #mobileNextItem' : 'nextItem',
 		'click #toggleReadVisibility' : 'toggleReadVisibility'
 	},
+
+	/**
+	 * Action on menu render.
+	 */
 	onRender: function() {
 		if($.cookie('show_read') !== undefined) {
 			this.setReadVisibility($.cookie('show_read')=='true' ? true : false);
 		}
 	},
 
+	/**
+	 * Sync all items.
+	 */
 	sync: function() {
 		var icon = this.$el.find('#syncButton>i');
 		icon.attr('class', 'icon icon-time');
@@ -41,15 +48,32 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 			}
 		});
 	},
+
+	/**
+	 * Go to previous item in item list.
+	 */
 	prevItem: function() {
 		CapoRSS.router.itemList.moveCursor('up');
 	},
+
+	/**
+	 * Go to next item in item list.
+	 */
 	nextItem: function() {
 		CapoRSS.router.itemList.moveCursor('down');
 	},
+
+	/**
+	 * Toggle show/hide read items.
+	 */
 	toggleReadVisibility: function() {
 		this.setReadVisibility(!SETTINGS.show_read);
 	},
+
+	/**
+	 * Show/hide read items.
+	 * @param {boolean} show_read
+	 */
 	setReadVisibility: function(show_read) {
 		if(show_read) {
 			SETTINGS.show_read = true;
@@ -67,6 +91,10 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 			CapoRSS.router.currentSelection.items.fetch({reset: true, reset_pagination: true});
 		}
 	},
+
+	/**
+	 * Show subscription dialog.
+	 */
 	showSubscriptionModal: function() {
 		$('#subscriptionModal').modal().on('shown', function() {
 			$('#subscriptionUrl').focus();
@@ -74,6 +102,10 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 			$('#subscriptionUrl').blur();
 		});
 	},
+
+	/**
+	 * Show settings dialog.
+	 */
 	showSettingsModal: function() {
 		$('#settingsModal .nav a:first').tab('show');
 		$('#settingsModal').modal().css({

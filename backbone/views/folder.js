@@ -1,11 +1,11 @@
 CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 	tagName: "li",
-	attributes: {
-		'draggable': true
-	},
 	itemViewContainer: 'ul.unstyled',
 	itemView: CapoRSS.View.Feed,
 	template: '#tmpl-folder',
+	attributes: {
+		'draggable': true
+	},
 	events: {
 		'click .markFolderReadAction' : 'markFolderRead',
 		'click .markFolderUnreadAction' : 'markFolderUnread',
@@ -29,6 +29,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 	collectionEvents: {
 		'sort': 'render'
 	},
+
 	initialize: function() {
 		if(this.model.get('open')) {
 			this.collection = this.model.feeds;
@@ -36,21 +37,36 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		_.bindAll(this);
 	},
+
+	/**
+	 * Data sent to the template.
+	 * @return {Object}
+	 */
 	serializeData: function() {
 		return {'folder': this.model.attributes};
     },
 
-	onDragStart: function(e) {
-		this.$el.css({opacity: 0.5});
-		e.originalEvent.dataTransfer.setData('folder_id', this.model.id);
-	},
+	/**
+	 * Action on drag-and-drop enter.
+	 * @param {eventObject} e
+	 */
 	onDragEnter: function(e) {
 		e.preventDefault();
 		this.$el.find('>.folder-title').addClass('drag-hovered');
 	},
+
+	/**
+	 * Action on drag-and-drop hover.
+	 * @param {eventObject} e
+	 */
 	onDragOver: function(e) {
 		e.preventDefault();
 	},
+
+	/**
+	 * Action on drag-and-drop leave.
+	 * @param {eventObject} e
+	 */
 	onDragLeave: function(e) {
 		var rect = e.currentTarget.getBoundingClientRect();
 		var oe = e.originalEvent;
@@ -59,6 +75,13 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 			this.$el.find('>.folder-title').removeClass('drag-hovered');
 		}
 	},
+
+	/**
+	 * Action on drag-and-drop drop.
+	 * If the dropped element is a feed, move it in the first position in this folder.
+	 * If the dropped element is a folder, move it after this folder.
+	 * @param {eventObject} e
+	 */
 	onDrop: function(e) {
 		e.stopPropagation();
 
@@ -73,6 +96,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 		if(folder) {
 			var new_position = dest.get('position');
 			if(new_position == folder.get('position')) {
+				// The folder was not moved, do nothing.
 				this.$el.find('>.folder-title').removeClass('drag-hovered');
 				return;
 			}
@@ -107,13 +131,35 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		this.$el.find('>.folder-title').removeClass('drag-hovered');
 	},
+
+	/**
+	 * Action on drag-and-drop start.
+	 * @param {eventObject} e
+	 */
+	onDragStart: function(e) {
+		this.$el.css({opacity: 0.5});
+		e.originalEvent.dataTransfer.setData('folder_id', this.model.id);
+	},
+
+	/**
+	 * Action on drag-and-drop end.
+	 * @param {eventObject} e
+	 */
 	onDragEnd: function(e) {
 		this.$el.css({opacity: ""});
 	},
 
+	/**
+	 * Action when the folder is selected.
+	 */
 	selectFolder: function() {
 		CapoRSS.router.navigate("folder/" + this.model.id, {trigger: true});
 	},
+
+	/**
+	 * Show folder edition dialog.
+	 * @param {eventObject} e
+	 */
 	showFolderEditDialog: function(e) {
 		e.stopPropagation();
 
@@ -129,6 +175,11 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Open/close the folder.
+	 * @param {eventObject} e
+	 */
 	toggleFolderOpen: function(e) {
 		e.stopPropagation();
 
@@ -143,6 +194,11 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		this.render();
 	},
+
+	/**
+	 * Delete the folder.
+	 * @param {eventObject} e
+	 */
 	deleteFolder: function(e) {
 		e.stopPropagation();
 
@@ -159,6 +215,11 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Synchronize a folder's feeds.
+	 * @param {eventObject} e
+	 */
 	syncFolder: function(e) {
 		e.stopPropagation();
 
@@ -181,6 +242,11 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Mark folder as read.
+	 * @param {eventObject} e
+	 */
 	markFolderRead: function(e) {
 		e.stopPropagation();
 
@@ -198,6 +264,11 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Mark folder as unread.
+	 * @param {eventObject} e
+	 */
 	markFolderUnread: function(e) {
 		e.stopPropagation();
 
@@ -215,6 +286,12 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Open the folder's menu.
+	 * @param {eventObject} e
+	 * @return {boolean} False if the menu is already open
+	 */
 	openMenu: function(e) {
 		e.stopPropagation();
 
@@ -232,6 +309,10 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 		$(document).one('click', this.closeMenu);
 	},
+
+	/**
+	 * Close the folder's menu.
+	 */
 	closeMenu: function() {
 		var menu = this.$el.find('.folderMenu');
 		menu.addClass('hide');

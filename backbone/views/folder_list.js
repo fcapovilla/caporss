@@ -4,6 +4,7 @@ CapoRSS.View.FolderList = Backbone.Marionette.CollectionView.extend({
 	collectionEvents: {
 		'sort': 'render'
 	},
+
 	initialize: function() {
 		this.allItemsFolder = new CapoRSS.Model.AllItemsFolder();
 
@@ -12,6 +13,10 @@ CapoRSS.View.FolderList = Backbone.Marionette.CollectionView.extend({
 
 		this.render();
 	},
+
+	/**
+	 * Action before the folderList render.
+	 */
 	onBeforeRender: function() {
 		var that = this;
 		_.each(this.views, function(view) {

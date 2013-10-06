@@ -13,14 +13,18 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 	modelEvents: {
 		'destroy': 'remove',
 		'change': 'render',
-		'change:open': 'openChanged'
+		'change:open': 'onOpenChanged'
 	},
-	onRender: function() {
-		if(this.model.get('open')) {
-			this.$el.find('.item-content a').attr('target', '_blank');
-		}
-	},
+
+	/**
+	 * View helpers for use in template.
+	 */
 	templateHelpers: {
+		/**
+		 * Date format view helper.
+		 * @param {Date} date
+		 * @return {string} The formatted date
+		 */
 		formatDate: function(date) {
 			var pad = function(n){return n<10 ? '0'+n : n;};
 			return  pad(date.getDate())+'/'+
@@ -31,10 +35,27 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 				pad(date.getSeconds());
 		}
 	},
+
+	/**
+	 * Data sent to the template.
+	 * @return {Object}
+	 */
 	serializeData: function() {
 		return {'item': this.model.attributes};
     },
 
+	/**
+	 * Action after item render.
+	 */
+	onRender: function() {
+		if(this.model.get('open')) {
+			this.$el.find('.item-content a').attr('target', '_blank');
+		}
+	},
+
+	/**
+	 * Open/Close the item view.
+	 */
 	toggleContent: function() {
 		if(this.model.get('open')) {
 			this.model.set('open', false);
@@ -49,10 +70,19 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 			CapoRSS.router.itemList.cursor = this.model;
 		}
 	},
+
+	/**
+	 * Toggle the item as read/not read.
+	 * @return {boolean} False
+	 */
 	toggleRead: function() {
 		this.model.toggleRead();
 		return false;
 	},
+
+	/**
+	 * Send an action to the model.
+	 */
 	_sendAction: function(action) {
 		$.when(this.model.sendAction(action)).then(function() {
 			if(CapoRSS.router.currentSelection !== null) {
@@ -60,23 +90,50 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 			}
 		});
 	},
+
+	/**
+	 * Mark all items older than this item as read.
+	 */
 	readAllOlder: function() {
 		this._sendAction('read_older');
 	},
+
+	/**
+	 * Mark all items newer than this item as read.
+	 */
 	readAllNewer: function() {
 		this._sendAction('read_newer');
 	},
+
+	/**
+	 * Mark all items older than this item as unread.
+	 */
 	unreadAllOlder: function() {
 		this._sendAction('unread_older');
 	},
+
+	/**
+	 * Mark all items newer than this item as unread.
+	 */
 	unreadAllNewer: function() {
 		this._sendAction('unread_newer');
 	},
+
+	/**
+	 * Show the dropdown menu for this item.
+	 * @return {boolean} False
+	 */
 	showDropdownMenu: function() {
 		this.$el.find('.dropdown-toggle').dropdown('toggle');
 		return false;
 	},
-	openChanged: function(item, opened) {
+
+	/**
+	 * Action when the item's "open" attribute is changed.
+	 * @param {CapoRSS.Model.Item} item
+	 * @param {boolean} opened
+	 */
+	onOpenChanged: function(item, opened) {
 		if(opened) {
 			var that = this;
 			this.once('render', function() {

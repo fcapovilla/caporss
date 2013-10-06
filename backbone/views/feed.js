@@ -1,10 +1,10 @@
 CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 	tagName: 'li',
+	className: 'feed',
+	template: '#tmpl-feed',
 	attributes: {
 		'draggable': true
 	},
-	className: 'feed',
-	template: '#tmpl-feed',
 	events: {
 		'click .markFeedReadAction' : 'markFeedRead',
 		'click .markFeedUnreadAction' : 'markFeedUnread',
@@ -24,31 +24,56 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 		'destroy': 'remove',
 		'change': 'render'
 	},
+
 	initialize: function() {
 		_.bindAll(this);
 	},
+
+	/**
+	 * Data sent to the template.
+	 * @return {Object}
+	 */
 	serializeData: function() {
 		return {'feed': this.model.attributes};
 	},
+
+	/**
+	 * Action after feed render.
+	 */
 	onRender: function() {
 		this.$('.favicon').on('error', this.onFaviconError);
 	},
 
+	/**
+	 * Action on favicon error.
+	 * Remove the favicon in the model so a placeholder is used instead
+	 * of the invalid favicon.
+	 */
 	onFaviconError: function() {
 		this.model.set('favicon_id', null);
 	},
-	onDragStart: function(e) {
-		e.stopPropagation();
-		this.$el.css({opacity: 0.5});
-		e.originalEvent.dataTransfer.setData('feed_id', this.model.id);
-	},
+
+	/**
+	 * Action on drag-and-drop enter.
+	 * @param {eventObject} e
+	 */
 	onDragEnter: function(e) {
 		e.preventDefault();
 		this.$el.addClass('drag-hovered');
 	},
+
+	/**
+	 * Action on drag-and-drop hover.
+	 * @param {eventObject} e
+	 */
 	onDragOver: function(e) {
 		e.preventDefault();
 	},
+
+	/**
+	 * Action on drag-and-drop leave.
+	 * @param {eventObject} e
+	 */
 	onDragLeave: function(e) {
 		var rect = e.currentTarget.getBoundingClientRect();
 		var oe = e.originalEvent;
@@ -57,6 +82,12 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 			this.$el.removeClass('drag-hovered');
 		}
 	},
+
+	/**
+	 * Action on drag-and-drop drop.
+	 * If the dropped element is a feed, move it after this feed.
+	 * @param {eventObject} e
+	 */
 	onDrop: function(e) {
 		e.stopPropagation();
 		var feed_id = e.originalEvent.dataTransfer.getData('feed_id');
@@ -69,6 +100,7 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 
 			if(dest.get('folder_id') == feed.get('folder_id')) {
 				if(new_position == feed.get('position')) {
+					// The feed was not moved, do nothing.
 					this.$el.removeClass('drag-hovered');
 					return;
 				}
@@ -95,13 +127,36 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 
 		this.$el.removeClass('drag-hovered');
 	},
+
+	/**
+	 * Action on drag-and-drop start.
+	 * @param {eventObject} e
+	 */
+	onDragStart: function(e) {
+		e.stopPropagation();
+		this.$el.css({opacity: 0.5});
+		e.originalEvent.dataTransfer.setData('feed_id', this.model.id);
+	},
+
+	/**
+	 * Action on drag-and-drop end.
+	 * @param {eventObject} e
+	 */
 	onDragEnd: function(e) {
 		this.$el.css({opacity: ""});
 	},
 
+	/**
+	 * Action when the feed is selected.
+	 */
 	selectFeed: function() {
 		CapoRSS.router.navigate("feed/" + this.model.id, {trigger: true});
 	},
+
+	/**
+	 * Delete the feed.
+	 * @param {eventObject} e
+	 */
 	deleteFeed: function(e) {
 		e.stopPropagation();
 
@@ -118,6 +173,11 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Synchronize the feed.
+	 * @param {eventObject} e
+	 */
 	syncFeed: function(e) {
 		e.stopPropagation();
 
@@ -140,6 +200,11 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Mark the feed as read.
+	 * @param {eventObject} e
+	 */
 	markFeedRead: function(e) {
 		e.stopPropagation();
 
@@ -151,6 +216,11 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Mark the feed as unread.
+	 * @param {eventObject} e
+	 */
 	markFeedUnread: function(e) {
 		e.stopPropagation();
 
@@ -162,6 +232,11 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Show feed edition dialog.
+	 * @param {eventObject} e
+	 */
 	showFeedEditDialog: function(e) {
 		e.stopPropagation();
 
@@ -191,6 +266,12 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 
 		this.closeMenu();
 	},
+
+	/**
+	 * Open the feed's menu.
+	 * @param {eventObject} e
+	 * @return {boolean} False if the menu is already open
+	 */
 	openMenu: function(e) {
 		e.stopPropagation();
 
@@ -208,6 +289,10 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 
 		$(document).one('click', this.closeMenu);
 	},
+
+	/**
+	 * Close the feed's menu.
+	 */
 	closeMenu: function() {
 		var menu = this.$el.find('.feedMenu');
 		menu.addClass('hide');
