@@ -5,6 +5,7 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		"folder/:id(/search/*query)": "viewFolder",
 		"item(/search/*query)": "viewAllItems"
 	},
+
 	initialize: function() {
 		this.itemListRegion = new Backbone.Marionette.Region({
 			el: '#item-list'
@@ -12,6 +13,10 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		this.currentSelection = null;
 		this.itemList = null;
 	},
+
+	/**
+	 * Clear the itemList.
+	 */
 	clear: function() {
 		$('#item-list').scrollTop(0);
 
@@ -26,6 +31,12 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		$('#item-list').addClass('hidden-phone');
 		$('.feed-list').removeClass('hidden-phone');
 	},
+
+	/**
+	 * Update the itemList with the items of the model in parameter.
+	 * @param {(CapoRSS.Model.Folder|CapoRSS.Model.Feed|CapoRSS.Model.AllItemsFolder)} model
+	 * @param {?string} query The query part of the router URL
+	 */
 	updateItemList : function(model, query) {
 		var that = this;
 		$('#item-list').scrollTop(0);
@@ -73,20 +84,42 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		$('.mobile-item-button').removeClass('invisible');
 		$('#item-list').focus();
 	},
+
+	/**
+	 * Update the item list using a feed id.
+	 * @param {number} id The feed id
+	 * @param {?string} query The query part of the router URL
+	 */
 	viewFeed: function(id, query) {
 		var model = CapoRSS.folders.getFeed(id);
 
 		this.updateItemList(model, query);
 	},
+
+	/**
+	 * Update the item list using a folder id.
+	 * @param {number} id The folder id
+	 * @param {?string} query The query part of the router URL
+	 */
 	viewFolder: function(id, query) {
 		var model = CapoRSS.folders.get(id);
 
 		this.updateItemList(model, query);
 	},
+
+	/**
+	 * Update the item list using the AllItemFolder.
+	 * @param {?string} query The query part of the router URL
+	 */
 	viewAllItems: function(query) {
 		var model = CapoRSS.folderList.allItemsFolder;
 		this.updateItemList(model, query);
 	},
+
+	/**
+	 * Go to the router url for the model in parameter.
+	 * @param {(CapoRSS.Model.Folder|CapoRSS.Model.Feed|CapoRSS.Model.AllItemFolder)} model
+	 */
 	goToModel: function(model) {
 		if(model instanceof Folder) {
 			this.navigate('folder/' + model.id, {trigger: true});

@@ -72,7 +72,7 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 
 	/**
 	 * Get next feed/folder in the feed list
-	 * @return {CapoRSS.Model.Folder|CapoRSS.Model.Feed} The next feed/folder
+	 * @return {(CapoRSS.Model.Folder|CapoRSS.Model.Feed)} The next feed/folder
 	 */
 	getNextInList: function() {
 		var next = this.collection.at(this.collection.indexOf(this) + 1);
@@ -90,7 +90,7 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 
 	/**
 	 * Get previous feed/folder in the feed list
-	 * @return {CapoRSS.Model.Folder|CapoRSS.Model.Feed} The previous feed/folder
+	 * @return {(CapoRSS.Model.Folder|CapoRSS.Model.Feed)} The previous feed/folder
 	 */
 	getPreviousInList: function() {
 		var prev = this.collection.at(this.collection.indexOf(this) - 1);
