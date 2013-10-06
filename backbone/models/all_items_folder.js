@@ -37,7 +37,7 @@ CapoRSS.Model.AllItemsFolder = Backbone.Model.extend({
 	onItemRead: function(feed_id) {
 		var feed = CapoRSS.folders.getFeed(feed_id);
 		if(feed) {
-			feed.decrementReadCount();
+			feed.decrementUnreadCount();
 		}
 	},
 
@@ -49,7 +49,7 @@ CapoRSS.Model.AllItemsFolder = Backbone.Model.extend({
 	onItemUnread: function(feed_id) {
 		var feed = CapoRSS.folders.getFeed(feed_id);
 		if(feed) {
-			feed.incrementReadCount();
+			feed.incrementUnreadCount();
 		}
 	}
 });

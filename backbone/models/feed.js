@@ -4,8 +4,8 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 		this.items = new CapoRSS.Collection.Item();
 		this.items.url = '/api/feed/' + this.id + '/item';
 
-		this.listenTo(this.items, 'itemRead', this.decrementReadCount);
-		this.listenTo(this.items, 'itemUnread', this.incrementReadCount);
+		this.listenTo(this.items, 'itemRead', this.decrementUnreadCount);
+		this.listenTo(this.items, 'itemUnread', this.incrementUnreadCount);
 	},
 
 	/**
@@ -57,16 +57,16 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 	},
 
 	/**
-	 * Add one to unread count
+	 * Increment unread count
 	 */
-	incrementReadCount: function() {
+	incrementUnreadCount: function() {
 		this.set('unread_count', this.get('unread_count') + 1);
 	},
 
 	/**
-	 * Remove one to unread count
+	 * Decrement unread count
 	 */
-	decrementReadCount: function() {
+	decrementUnreadCount: function() {
 		this.set('unread_count', this.get('unread_count') - 1);
 	},
 
