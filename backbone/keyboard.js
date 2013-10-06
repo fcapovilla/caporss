@@ -18,6 +18,7 @@ $(document).keyup(function(e) {
 	if(e.shiftKey) {
 		var model = null;
 		if(e.keyCode == 74) { // SHIFT+J
+			// Move to next feed/folder
 			model = CapoRSS.folderList.allItemsFolder;
 			if(CapoRSS.router.currentSelection !== null) {
 				model = CapoRSS.router.currentSelection.getNextInList();
@@ -25,6 +26,7 @@ $(document).keyup(function(e) {
 			CapoRSS.router.goToModel(model);
 		}
 		if(e.keyCode == 75) { // SHIFT+K
+			// Go to previous feed/folder
 			model = CapoRSS.folderList.allItemsFolder;
 			if(CapoRSS.router.currentSelection !== null) {
 				model = CapoRSS.router.currentSelection.getPreviousInList();
@@ -34,6 +36,7 @@ $(document).keyup(function(e) {
 
 		if(CapoRSS.router.itemList !== null) {
 			if(e.keyCode == 32) { // SHIFT+SPACE
+				// Page up in the item list. Change selected item if necessary.
 				if(CapoRSS.router.itemList.cursor === null || CapoRSS.router.itemList.cursor === undefined) {
 					CapoRSS.router.itemList.moveCursor('down');
 				}
@@ -59,13 +62,16 @@ $(document).keyup(function(e) {
 	else {
 		if(CapoRSS.router.itemList !== null) {
 			if(e.keyCode == 74) { // J
+				// Next item
 				CapoRSS.router.itemList.moveCursor('down');
 			}
 			if(e.keyCode == 75) { // K
+				// Previous item
 				CapoRSS.router.itemList.moveCursor('up');
 			}
 
 			if(e.keyCode == 32) { // SPACE
+				// Page down in the item list. Change selected item if necessary.
 				if(CapoRSS.router.itemList.cursor === null || CapoRSS.router.itemList.cursor === undefined) {
 					CapoRSS.router.itemList.moveCursor('down');
 				}
@@ -87,6 +93,7 @@ $(document).keyup(function(e) {
 		}
 
 		if(e.keyCode == 111 || e.keyCode == 191) { // /
+			// Show search dialog
 			$('#searchModal').modal().on('shown', function() {
 				$('#searchQuery').focus();
 			}).on('hidden', function() {

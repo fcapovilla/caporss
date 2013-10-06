@@ -1,5 +1,7 @@
 // Dialog buttons actions
 
+// Settings dialog cleanup button
+// Initiate a feed cleanup
 $('#cleanupButton').click(function() {
 	if(confirm(LANG.confirm_cleanup)) {
 		$.ajax({
@@ -19,6 +21,9 @@ $('#cleanupButton').click(function() {
 	}
 });
 
+
+// Settings dialogs update favicon button
+// Initiate a favicon update
 $('#updateFaviconsButton').click(function() {
 	$.ajax({
 		url: '/favicon/fetch_all',
@@ -29,6 +34,9 @@ $('#updateFaviconsButton').click(function() {
 	});
 });
 
+
+// Subscription dialog button
+// Add a new subscription
 $('#subscribeButton').click(function() {
 	$.ajax({
 		url: '/api/feed',
@@ -52,6 +60,9 @@ $('#subscribeButton').click(function() {
 	return false;
 });
 
+
+// Edit folder dialog button
+// Modify a folder
 $('#editFolderButton').click(function() {
 	var dialog = $('#editFolderModal');
 	var folderId = dialog.find('#folderId').val();
@@ -73,6 +84,9 @@ $('#editFolderButton').click(function() {
 	return false;
 });
 
+
+// Edit feed dialog button
+// Modify a feed
 $('#editFeedButton').click(function() {
 	var dialog = $('#editFeedModal');
 	var feedId = dialog.find('#feedId').val();
@@ -114,6 +128,9 @@ $('#editFeedButton').click(function() {
 	return false;
 });
 
+
+// Search dialog button
+// Initiate an item search
 $('#searchButton').click(function() {
 	var query = $('#searchQuery').val();
 	var search_title = $('#searchInTitle').is(':checked');
@@ -146,6 +163,9 @@ $('#searchButton').click(function() {
 	return false;
 });
 
+
+// Settings dialog subscription tab action
+// Fetch all subscriptions
 $('#subscriptionTab').click(function() {
 	CapoRSS.subscriptions.fetch();
 });
