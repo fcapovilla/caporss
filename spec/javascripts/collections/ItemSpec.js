@@ -9,7 +9,7 @@ describe("Item Collection", function() {
 		]);
 		this.server.respondWith("GET", "/api/item?offset=2&limit=2", [200, '','[]']);
 
-		this.items = new ItemCollection();
+		this.items = new CapoRSS.Collection.Item();
 
 		SETTINGS.items_per_page = 2;
 		SETTINGS.show_read = true;

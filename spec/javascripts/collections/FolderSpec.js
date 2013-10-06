@@ -20,7 +20,7 @@ describe("Folder Collection", function() {
 			])
 		]);
 
-		this.folders = new FolderCollection();
+		this.folders = new CapoRSS.Collection.Folder();
 	});
 
 	it("fetches each folder's feeds on collection fetch", function() {

@@ -3,7 +3,7 @@ describe("Feed Model", function() {
 		this.server = sinon.fakeServer.create();
 		this.server.respondWith("PUT", "/api/feed/1", [200, '', '']);
 
-		this.feed = new Feed({id: 1, folder_id: 1, unread_count: 1});
+		this.feed = new CapoRSS.Model.Feed({id: 1, folder_id: 1, unread_count: 1});
 		this.feed.collection = {url: '/api/feed'};
 	});
 

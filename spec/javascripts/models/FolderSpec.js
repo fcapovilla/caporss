@@ -17,7 +17,7 @@ describe("Folder Model", function() {
 			}])
 		]);
 
-		this.folder = new Folder({id: 1, unread_count: 1, open: false});
+		this.folder = new CapoRSS.Model.Folder({id: 1, unread_count: 1, open: false});
 		this.folder.collection = {url: '/api/folder'};
 	});
 

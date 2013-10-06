@@ -7,6 +7,9 @@
   <% css_files.each do |css_file| %>
     <link rel="stylesheet" href="<%= css_file %>" type="text/css" media="screen"/>
   <% end %>
+  <script type="text/javascript">
+	var CapoRSS = {Model: {}, Collection: {}, View: {}, Router: {}};
+  </script>
   <% js_files.each do |js_file| %>
 	  <script src="<%= js_file %>" type="text/javascript"></script>
   <% end %>

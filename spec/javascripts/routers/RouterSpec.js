@@ -1,6 +1,6 @@
 describe("AppRouter routes", function() {
 	beforeEach(function() {
-		this.router = new Router();
+		this.router = new CapoRSS.Router.Main();
 		this.routeSpy = sinon.spy();
 
 		try {

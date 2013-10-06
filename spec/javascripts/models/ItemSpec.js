@@ -3,7 +3,7 @@ describe("Item Model", function() {
 		this.server = sinon.fakeServer.create();
 		this.server.respondWith("PUT", "/api/item/1", [200, '', '']);
 
-		this.item = new Item({id: 1, read: false, feed_id: 1});
+		this.item = new CapoRSS.Model.Item({id: 1, read: false, feed_id: 1});
 		this.item.collection = {url: '/api/item'};
 	});
 
