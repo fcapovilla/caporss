@@ -2,19 +2,25 @@
 :plain
   <script id='tmpl-feed' type='text/template'>
     <div onclick="" class="feed-title<% if(feed.active){ %> active<% } %>">
-      <div onclick="" class="feed-icon">
-        <% if(feed.favicon_id) { %>
-          <img class="favicon" src="/favicon/<%= feed.favicon_id %>.ico" />
-        <% } else { %>
-          <i class="icon icon-rss-sign"></i>
+      <% if(feed.unread_count > 0) { %>
+        <div class="feed-badge">
+          <span class="badge badge-info"><%= feed.unread_count %></span>
+        </div>
+      <% } %>
+      <div class="feed-text">
+        <div onclick="" class="feed-icon">
+          <% if(feed.favicon_id) { %>
+            <img class="favicon" src="/favicon/<%= feed.favicon_id %>.ico" />
+          <% } else { %>
+            <i class="icon icon-rss-sign"></i>
+          <% } %>
+        </div>
+        <% if(feed.unread_count > 0) { %>
+          <b><%= feed.title %></b>
+        <% }else{ %>
+          <%= feed.title %>
         <% } %>
       </div>
-      <% if(feed.unread_count > 0) { %>
-        <b><%= feed.title %></b>
-        <span class="badge badge-info"><%= feed.unread_count %></span>
-      <% }else{ %>
-        <%= feed.title %>
-      <% } %>
     </div>
     <div class="btn-group feedMenu hide">
       <a class="btn markFeedReadAction" title="#{t.buttons.mark_all_read}"><i class="icon icon-eye-open"></i></a>

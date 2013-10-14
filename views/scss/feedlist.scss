@@ -1,5 +1,6 @@
 .feed-list {
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 	background-color: #f8f8f8;
 
 	-webkit-overflow-scrolling: touch;
@@ -39,6 +40,17 @@
 
 	.drag-hovered {
 		border-bottom: 2px solid black;
+	}
+
+	.feed-badge,
+	.folder-badge {
+		float: right;
+		margin: 0 3px;
+	}
+
+	.feed-text,
+	.folder-text {
+		overflow: hidden;
 	}
 }
 
@@ -91,6 +103,11 @@
 
 		#feed-list {
 			padding-left: 6px;
+		}
+
+		.feed-badge,
+		.folder-badge {
+			margin-top: 4px;
 		}
 	}
 }
