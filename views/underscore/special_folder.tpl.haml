@@ -2,10 +2,14 @@
 :plain
   <script id='tmpl-special-folder' type='text/template'>
     <div onclick="" class="folder-title<% if(folder.active){ %> active <% } %>">
-      <i class="folder-icon icon <%= folder.iconclass %>"></i>
-      <%= folder.name %>
       <% if(folder.unread_count > 0) { %>
-        <span class="badge badge-info"><%= folder.unread_count %></span>
+        <div class="folder-badge">
+          <span class="badge badge-info"><%= folder.unread_count %></span>
+        </div>
       <% } %>
+      <div class="folder-text">
+        <i class="folder-icon icon <%= folder.iconclass %>"></i>
+        <%= folder.name %>
+      </div>
     </div>
   </script>
