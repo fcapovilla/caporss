@@ -2,12 +2,12 @@
 @import "itemlist";
 
 // Default font sizes
-h1 {
-	font-size: 2.5em;
+body {
+	font-size: 13px;
 }
-
-h2 {
-	font-size: 2.25em;
+.badge,
+.label{
+	font-size: 11px;
 }
 
 // Hover on list elements
