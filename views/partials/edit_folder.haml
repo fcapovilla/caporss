@@ -1,16 +1,18 @@
 -# Edit folder form
 
-%div(class="modal hide fade" id="editFolderModal" tabindex="-1" role="dialog" aria-labelledby="editFolderModal" aria-hidden="true")
-  .modal-header
-    =t.edit_folder.title
-    %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-      x
-  %form(id="editFolderForm" method="get" action="#")
-    .modal-body
-      %label
-        =t.edit_folder.title_label
-      %input(class="input-block-level" type="text" id="folderTitle" aria-hidden="true")
-      %input(type="hidden" id="folderId" value="")
-    .modal-footer
-      %button(type="submit" id="editFolderButton" class="btn btn-primary" aria-hidden="true")
-        =t.edit_folder.save
+%div(class="modal fade" id="editFolderModal" tabindex="-1" role="dialog" aria-labelledby="editFolderModal" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        =t.edit_folder.title
+        %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+          x
+      %form(id="editFolderForm" method="get" action="#")
+        .modal-body
+          %label(for="folderTitle")
+            =t.edit_folder.title_label
+          %input(class="form-control" type="text" id="folderTitle" aria-hidden="true")
+          %input(type="hidden" id="folderId" value="")
+        .modal-footer
+          %button(type="submit" id="editFolderButton" class="btn btn-primary" aria-hidden="true")
+            =t.edit_folder.save
