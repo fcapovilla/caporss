@@ -1,102 +1,104 @@
 -# Settings form
 
-%div(class="modal hide fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true")
-  .modal-header
-    =t.settings.title
-    %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-      x
-  %form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
-    %ul.nav.nav-tabs
-      %li.active
-        %a(href="#accountSettings" data-toggle="tab")
-          =t.settings.account
-      %li
-        %a(id="subscriptionTab" href="#subscriptionSettings" data-toggle="tab")
-          =t.settings.subscription
-      %li
-        %a(href="#cleanupSettings" data-toggle="tab")
-          =t.settings.cleanup
-      %li
-        %a(href="#syncSettings" data-toggle="tab")
-          =t.settings.sync
-      %li
-        %a(href="#generalSettings" data-toggle="tab")
-          =t.settings.general
-      %li
-        %a(href="#help" data-toggle="tab")
-          =t.settings.help
-    .modal-body
-      .tab-content
-        .tab-pane.active#accountSettings
-          .well
-            .control-group
-              %label.control-label
-                =t.settings.current_password
-              .controls
-                %input(class="input-block-level" type="password" name="old_password" aria-hidden="true")
-            .control-group
-              %label.control-label
-                =t.settings.new_password
-              .controls
-                %input(class="input-block-level" type="password" name="new_password" aria-hidden="true")
-          .control-group
-            %label.control-label
-              =t.settings.language
-            .controls
-              %select(name="default_locale")
-                - r18n.available_locales.each do |locale|
-                  %option(value="#{locale.code}"){selected: r18n.locale.code == locale.code}
-                    =locale.title
-        .tab-pane#subscriptionSettings
-          %button(class="btn" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal")
-            =t.settings.import_opml_file
-          %a(class="btn" href="/export.opml")
-            =t.settings.export_as_opml
-          %br
-          #subscription-list
-        .tab-pane#cleanupSettings
-          %label
-            =t.settings.cleanup_older_than
-          .input-append
-            %input(class="input-block-level" type="text" id="cleanup_after" name="cleanup_after" value="#{@user.cleanup_after}" aria-hidden="true")
-            %span.add-on
-              =t.settings.days
-          %button(class="btn pull-right" id="cleanupButton" data-dismiss="modal")
-            =t.settings.cleanup
-        .tab-pane#syncSettings
-          .control-group
-            %label.control-label
-              =t.settings.refresh_every
-            .controls
-              .input-append
-                %input(class="input-block-level" type="text" name="refresh_timeout" value="#{@user.refresh_timeout}" aria-hidden="true")
-                %span.add-on
-                  =t.settings.minutes
-          .control-group
-            %label.control-label
-              =t.settings.sync_every
-            .controls
-              .input-append
-                %input(class="input-block-level" type="text" name="sync_timeout" value="#{@user.sync_timeout}" aria-hidden="true")
-                %span.add-on
-                  =t.settings.minutes
-          .control-group
-            %label.checkbox
-              %input(type="checkbox" name="sse_refresh"){checked: @user.sse_refresh}
-                =t.settings.sse_refresh
-        .tab-pane#generalSettings
-          .control-group
-            %label.control-label
-              =t.settings.items_per_page
-            .controls
-              %input(class="input-block-level" type="text" name="items_per_page" value="#{@user.items_per_page}" aria-hidden="true")
-          %button(class="btn" id="updateFaviconsButton" data-dismiss="modal")
-            =t.settings.update_favicons
-          - if @user.roles.include?(:admin)
-            %a(class="btn" href="/admin")
-              =t.settings.admin_page
-        .tab-pane#help
-          =documentation
-    .modal-footer
-      %button(type="submit" class="btn btn-primary" aria-hidden="true")
-        =t.settings.save
+%div(class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal" aria-hidden="true")
+  .modal-dialog.modal-wide
+    .modal-content
+      .modal-header
+        =t.settings.title
+        %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
+          x
+      %form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
+        %ul.nav.nav-tabs
+          %li.active
+            %a(href="#accountSettings" data-toggle="tab")
+              =t.settings.account
+          %li
+            %a(id="subscriptionTab" href="#subscriptionSettings" data-toggle="tab")
+              =t.settings.subscription
+          %li
+            %a(href="#cleanupSettings" data-toggle="tab")
+              =t.settings.cleanup
+          %li
+            %a(href="#syncSettings" data-toggle="tab")
+              =t.settings.sync
+          %li
+            %a(href="#generalSettings" data-toggle="tab")
+              =t.settings.general
+          %li
+            %a(href="#help" data-toggle="tab")
+              =t.settings.help
+        .modal-body
+          .tab-content
+            .tab-pane.active#accountSettings
+              .well
+                .form-group
+                  %label.control-label.col-md-2
+                    =t.settings.current_password
+                  .col-md-3
+                    %input(class="form-control" type="password" name="old_password" aria-hidden="true")
+                .form-group
+                  %label.control-label.col-md-2
+                    =t.settings.new_password
+                  .col-md-3
+                    %input(class="form-control" type="password" name="new_password" aria-hidden="true")
+              .form-group
+                %label.control-label.col-md-2
+                  =t.settings.language
+                .col-md-3
+                  %select(name="default_locale" class="form-control")
+                    - r18n.available_locales.each do |locale|
+                      %option(value="#{locale.code}"){selected: r18n.locale.code == locale.code}
+                        =locale.title
+            .tab-pane#subscriptionSettings
+              %button(class="btn btn-default" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal")
+                =t.settings.import_opml_file
+              %a(class="btn btn-default" href="/export.opml")
+                =t.settings.export_as_opml
+              %br
+              #subscription-list
+            .tab-pane#cleanupSettings
+              .form-group
+                %label.control-label.col-md-3
+                  =t.settings.cleanup_older_than
+                .input-group.col-md-3
+                  %input(class="form-control" type="text" id="cleanup_after" name="cleanup_after" value="#{@user.cleanup_after}" aria-hidden="true")
+                  %span.input-group-addon
+                    =t.settings.days
+                %button(class="btn btn-default col-md-1" id="cleanupButton" data-dismiss="modal")
+                  =t.settings.cleanup
+            .tab-pane#syncSettings
+              .form-group
+                %label.control-label.col-md-2
+                  =t.settings.refresh_every
+                .input-group.col-md-2
+                  %input(class="form-control" type="text" name="refresh_timeout" value="#{@user.refresh_timeout}" aria-hidden="true")
+                  %span.input-group-addon
+                    =t.settings.minutes
+              .form-group
+                %label.control-label.col-md-2
+                  =t.settings.sync_every
+                .input-group.col-md-2
+                  %input(class="form-control" type="text" name="sync_timeout" value="#{@user.sync_timeout}" aria-hidden="true")
+                  %span.input-group-addon
+                    =t.settings.minutes
+              .form-group
+                .checkbox.col-md-offset-2
+                  %label
+                    %input(type="checkbox" name="sse_refresh"){checked: @user.sse_refresh}
+                      =t.settings.sse_refresh
+            .tab-pane#generalSettings
+              .form-group
+                %label.control-label.col-md-2
+                  =t.settings.items_per_page
+                .col-md-2
+                  %input(class="form-control" type="text" name="items_per_page" value="#{@user.items_per_page}" aria-hidden="true")
+              %button(class="btn btn-default" id="updateFaviconsButton" data-dismiss="modal")
+                =t.settings.update_favicons
+              - if @user.roles.include?(:admin)
+                %a(class="btn btn-default" href="/admin")
+                  =t.settings.admin_page
+            .tab-pane#help
+              =documentation
+        .modal-footer
+          %button(type="submit" class="btn btn-primary" aria-hidden="true")
+            =t.settings.save

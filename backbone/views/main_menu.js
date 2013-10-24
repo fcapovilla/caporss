@@ -108,11 +108,6 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	 */
 	showSettingsModal: function() {
 		$('#settingsModal .nav a:first').tab('show');
-		$('#settingsModal').modal().css({
-			'width': ($(document).width() * 0.9) + 'px',
-			'margin-left': function () {
-				return -($(this).width() / 2);
-			},
-		});
+		$('#settingsModal').modal();
 	}
 });
