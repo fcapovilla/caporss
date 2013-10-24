@@ -24,7 +24,7 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	 */
 	sync: function() {
 		var icon = this.$el.find('#syncButton>i');
-		icon.attr('class', 'icon icon-time');
+		icon.attr('class', 'fa fa-clock-o');
 		$.ajax({
 			url: '/sync/all',
 			method: 'POST',
@@ -36,7 +36,7 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 						if(result.new_items > 0) {
 							$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
 						}
-						icon.attr('class', 'icon icon-refresh');
+						icon.attr('class', 'fa fa-refresh');
 					}
 				});
 				if(CapoRSS.router.currentSelection !== null) {
@@ -44,7 +44,7 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 				}
 			},
 			error: function() {
-				icon.attr('class', 'icon icon-refresh');
+				icon.attr('class', 'fa fa-refresh');
 			}
 		});
 	},
@@ -77,12 +77,12 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	setReadVisibility: function(show_read) {
 		if(show_read) {
 			SETTINGS.show_read = true;
-			this.$el.find('#toggleReadVisibility>i').attr('class', 'icon icon-eye-open');
+			this.$el.find('#toggleReadVisibility>i').attr('class', 'fa fa-eye');
 			$.cookie('show_read', true, {expires: 10000});
 		}
 		else {
 			SETTINGS.show_read = false;
-			this.$el.find('#toggleReadVisibility>i').attr('class', 'icon icon-eye-close');
+			this.$el.find('#toggleReadVisibility>i').attr('class', 'fa fa-eye-slash');
 			$.cookie('show_read', false, {expires: 10000});
 		}
 
