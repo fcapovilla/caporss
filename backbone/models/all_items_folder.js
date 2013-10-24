@@ -9,7 +9,7 @@ CapoRSS.Model.AllItemsFolder = Backbone.Model.extend({
 		this.set({
 			name: LANG.all_items_folder,
 			route: 'item',
-			iconclass: 'icon-asterisk'
+			iconclass: 'fa-asterisk'
 		});
 	},
 

@@ -2,31 +2,31 @@
 :plain
   <script id='tmpl-mainmenu' type='text/template'>
     <div class="btn-group">
-      <button class="btn btn-inverse hidden-tiny-phone">
-        <i id="spinner" class="icon icon-spinner invisible"></i>
+      <button class="btn btn-info hidden-tiny-phone">
+        <i id="spinner" class="fa fa-spinner fa-spin invisible"></i>
       </button>
-      <button class="btn" id="syncButton" title="#{t.buttons.sync}">
-        <i class="icon icon-refresh"></i>
+      <button class="btn btn-default" id="syncButton" title="#{t.buttons.sync}">
+        <i class="fa fa-refresh"></i>
       </button>
-      <button class="btn hidden-tiny-phone" id="toggleReadVisibility" title="#{t.buttons.toggle_read}">
-        <i class="icon icon-eye-open"></i>
+      <button class="btn btn-default hidden-tiny-phone" id="toggleReadVisibility" title="#{t.buttons.toggle_read}">
+        <i class="fa fa-eye"></i>
       </button>
-      <button class="btn" id="subscriptionModalButton" title="#{t.buttons.subscribe}">
-        <i class="icon icon-plus"></i>
+      <button class="btn btn-default" id="subscriptionModalButton" title="#{t.buttons.subscribe}">
+        <i class="fa fa-plus"></i>
       </button>
-      <button class="btn hidden-phone" id="settingsModalButton" title="#{t.buttons.settings}">
-        <i class="icon icon-cog"></i>
+      <button class="btn btn-default hidden-xs" id="settingsModalButton" title="#{t.buttons.settings}">
+        <i class="fa fa-cog"></i>
       </button>
-      <a class="btn" href="/logout" title="#{t.buttons.logout}">
-        <i class="icon icon-signout"></i>
+      <a class="btn btn-default" href="/logout" title="#{t.buttons.logout}">
+        <i class="fa fa-sign-out"></i>
       </a>
     </div>
     <div class="btn-group mobile-item-buttons">
-      <button class="btn mobile-item-button visible-phone invisible" id="mobilePrevItem" title="#{t.buttons.next}">
-        <i class="icon icon-circle-arrow-up"></i>
+      <button class="btn btn-default mobile-item-button visible-xs invisible" id="mobilePrevItem" title="#{t.buttons.next}">
+        <i class="fa fa-arrow-circle-o-up"></i>
       </button>
-      <button class="btn mobile-item-button visible-phone invisible" id="mobileNextItem" title="#{t.buttons.previous}">
-        <i class="icon icon-circle-arrow-down"></i>
+      <button class="btn btn-default mobile-item-button visible-xs invisible" id="mobileNextItem" title="#{t.buttons.previous}">
+        <i class="fa fa-arrow-circle-o-down"></i>
       </button>
     </div>
   </script>

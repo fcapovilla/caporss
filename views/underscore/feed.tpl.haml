@@ -4,7 +4,7 @@
     <div onclick="" class="feed-title<% if(feed.active){ %> active<% } %>">
       <% if(feed.unread_count > 0) { %>
         <div class="feed-badge">
-          <span class="badge badge-info"><%= feed.unread_count %></span>
+          <span class="badge badge-primary"><%= feed.unread_count %></span>
         </div>
       <% } %>
       <div class="feed-text">
@@ -12,7 +12,7 @@
           <% if(feed.favicon_id) { %>
             <img class="favicon" src="/favicon/<%= feed.favicon_id %>.ico" />
           <% } else { %>
-            <i class="icon icon-rss-sign"></i>
+            <i class="fa fa-rss-square"></i>
           <% } %>
         </div>
         <% if(feed.unread_count > 0) { %>
@@ -23,10 +23,10 @@
       </div>
     </div>
     <div class="btn-group feedMenu hide">
-      <a class="btn markFeedReadAction" title="#{t.buttons.mark_all_read}"><i class="icon icon-eye-open"></i></a>
-      <a class="btn markFeedUnreadAction" title="#{t.buttons.mark_all_unread}"><i class="icon icon-eye-close"></i></a>
-      <a class="btn syncFeedAction" title="#{t.buttons.sync}"><i class="icon icon-refresh"></i></a>
-      <a class="btn editFeedAction" title="#{t.buttons.edit}"><i class="icon icon-edit"></i></a>
-      <a class="btn deleteFeedAction" title="#{t.buttons.delete}"><i class="icon icon-trash"></i></a>
+      <a class="btn btn-default markFeedReadAction" title="#{t.buttons.mark_all_read}"><i class="fa fa-eye"></i></a>
+      <a class="btn btn-default markFeedUnreadAction" title="#{t.buttons.mark_all_unread}"><i class="fa fa-eye-slash"></i></a>
+      <a class="btn btn-default syncFeedAction" title="#{t.buttons.sync}"><i class="fa fa-refresh"></i></a>
+      <a class="btn btn-default editFeedAction" title="#{t.buttons.edit}"><i class="fa fa-edit"></i></a>
+      <a class="btn btn-default deleteFeedAction" title="#{t.buttons.delete}"><i class="fa fa-trash-o"></i></a>
     </div>
   </script>

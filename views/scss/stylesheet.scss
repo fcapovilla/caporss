@@ -1,11 +1,6 @@
 @import "feedlist";
 @import "itemlist";
 
-// Default font sizes
-body {
-	font-size: 0.8em;
-}
-
 h1 {
 	font-size: 2.5em;
 }
@@ -37,6 +32,11 @@ h2 {
 // Fix navbar
 .navbar {
 	margin-bottom: 0px;
+}
+
+//Badge coloring
+.badge-primary {
+	background-color: #428BCA;
 }
 
 .mobile-item-buttons {
