@@ -53,7 +53,7 @@ h1. Support du "glisser-déplacer"
 
 Vous pouvez facilement changer l'ordre des abonnements et des dossier en les glissant à l'aide de votre souris. Vous pouvez aussi changer les abonnements de dossier de cette façon.
 
-h1. Syncroniser les abonnements périodiquement
+h1. Synchroniser les abonnements périodiquement
 
 La route "fetch_all" peut être appellée par l'usager "sync" et effectue une mise à jour des items pour tous les abonnements sur le serveur.
 Un script "worker" qui appelle la route "/fetch_all" est inclus dans le dossier "scripts". Vous pouvez ajouter ce script à un Worker ou l'appeller via CRON.
