@@ -121,10 +121,10 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 	 * @param {(CapoRSS.Model.Folder|CapoRSS.Model.Feed|CapoRSS.Model.AllItemFolder)} model
 	 */
 	goToModel: function(model) {
-		if(model instanceof Folder) {
+		if(model instanceof CapoRSS.Model.Folder) {
 			this.navigate('folder/' + model.id, {trigger: true});
 		}
-		else if(model instanceof Feed) {
+		else if(model instanceof CapoRSS.Model.Feed) {
 			this.navigate('feed/' + model.id, {trigger: true});
 		}
 		else {
