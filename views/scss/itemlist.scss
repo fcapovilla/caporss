@@ -26,6 +26,7 @@
 
 	.item-content-title {
 		font-size: 2em;
+		line-height: 1.2;
 	}
 
 	.show_more_items,
@@ -58,13 +59,17 @@
 			height: 20px;
 		}
 	}
+
+	.item-feed-title {
+		display: inline-block;
+	}
 }
 
 // Desktop view
 @media screen and (min-width:768px) {
 	#item-list {
 		.item-feed-title {
-			width: 200px;
+			max-width: 200px;
 			text-align: left;
 			margin-right: 3px;
 		}
@@ -94,7 +99,7 @@
 		}
 
 		.item-feed-title {
-			width: 150px;
+			max-width: 150px;
 			text-align: left;
 			padding: 5px 2px;
 		}
