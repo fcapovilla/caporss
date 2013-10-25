@@ -28,8 +28,8 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		}
 
 		$('.mobile-item-button').addClass('invisible');
-		$('#item-list').addClass('hidden-phone');
-		$('.feed-list').removeClass('hidden-phone');
+		$('#item-list').addClass('hidden-xs');
+		$('.feed-list').removeClass('hidden-xs');
 	},
 
 	/**
@@ -79,8 +79,8 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		this.itemList = new CapoRSS.View.ItemList({collection: model.items});
 		model.items.fetch(options);
 
-		$('#item-list').removeClass('hidden-phone');
-		$('.feed-list').addClass('hidden-phone');
+		$('#item-list').removeClass('hidden-xs');
+		$('.feed-list').addClass('hidden-xs');
 		$('.mobile-item-button').removeClass('invisible');
 		$('#item-list').focus();
 	},

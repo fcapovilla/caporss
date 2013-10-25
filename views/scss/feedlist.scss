@@ -19,7 +19,6 @@
 	}
 
 	.feed-icon {
-		width: 16px;
 		height: 16px;
 		display: inline-block;
 
@@ -61,12 +60,9 @@
 	.feed-list {
 		width: 300px - 5px;
 
-		.feed-icon {
-			padding: 0px 2px;
-		}
-
 		.folder-toggle,
-		.folder-icon {
+		.folder-icon,
+		.feed-icon {
 			padding: 0px 2px;
 		}
 
@@ -85,12 +81,9 @@
 	.feed-list {
 		width: 100% !important;
 
-		.feed-icon {
-			padding: 7px 4px;
-		}
-
 		.folder-toggle,
-		.folder-icon {
+		.folder-icon,
+		.feed-icon {
 			padding: 7px 4px;
 		}
 

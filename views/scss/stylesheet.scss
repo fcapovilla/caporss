@@ -32,7 +32,12 @@ body {
 
 // Fix navbar
 .navbar {
-	margin-bottom: 0px;
+	margin-bottom: 0;
+	min-height: 0;
+}
+.navbar-form {
+	margin: 0;
+	padding: 0;
 }
 
 //Badge coloring
@@ -86,13 +91,13 @@ form {
 @media screen and (max-width:767px) {
 	body {
 		padding: 0px;
-		font-size: 0.75em;
-		.icon {
-			font-size: 16px;
+		font-size: 13px;
+		.fa {
+			font-size: 15px;
 		}
 	}
 
-	.btn .icon{
+	.btn .fa{
 		font-size: 20px;
 	}
 
@@ -112,12 +117,12 @@ form {
 // Additional mobile hidden classes
 @media screen and (max-width:365px) {
 	.hidden-tiny-phone {
-		display: none;
+		display: none !important;
 	}
 }
 
 @media screen and (max-width:500px) {
 	.hidden-small-phone {
-		display: none;
+		display: none !important;
 	}
 }

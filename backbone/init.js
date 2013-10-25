@@ -50,11 +50,12 @@ $(function() {
 
 	// Resize the lists on viewport size changes
 	$(window).on('resize orientationChanged', function() {
-		$('.feed-list').css('height', $(window).height() - 42);
 		if($(window).width() <= 767) {
-			$('#item-list').css('height', $(window).height() - 42);
+			$('.feed-list').css('height', $(window).height() - 40);
+			$('#item-list').css('height', $(window).height() - 40);
 		}
 		else {
+			$('.feed-list').css('height', $(window).height() - 36);
 			$('#item-list').css('height', $(window).height());
 		}
 	}).resize();
