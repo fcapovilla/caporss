@@ -1,0 +1,2 @@
+describe("Subscription View", function() {
+});

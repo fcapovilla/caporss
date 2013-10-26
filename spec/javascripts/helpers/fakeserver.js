@@ -24,8 +24,13 @@ function create_fake_server() {
 	]);
 	server.respondWith("GET", "/api/folder/2/feed", [200, '',
 		JSON.stringify([
-			{id: 3, unread_count: 1, title: "Test 3"},
-			{id: 4, unread_count: 0, title: "Test 4"}
+			{id: 3, unread_count: 1, title: "Test 3", folder_id: 2},
+			{id: 4, unread_count: 0, title: "Test 4", folder_id: 2}
+		])
+	]);
+	server.respondWith("GET", "/api/feed/1", [200, '',
+		JSON.stringify([
+			{id: 1, unread_count: 1, title: "Test 1", folder_id: 1},
 		])
 	]);
 	server.respondWith("PUT", "/api/feed/1", [200, '', '']);
