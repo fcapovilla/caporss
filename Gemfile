@@ -14,7 +14,8 @@ gem 'RedCloth'
 gem 'datamapper'
 gem 'dm-is-list'
 
-gem 'feedzirra', '~> 0.2.0.rc2'
+gem 'nokogiri', '= 1.5.3'
+gem 'feedzirra', '= 0.2.0.rc2'
 gem 'json'
 
 group :development do
