@@ -1,24 +1,6 @@
 describe("Folder Collection", function() {
 	beforeEach(function() {
-		this.server = sinon.fakeServer.create();
-		this.server.respondWith("GET", "/api/folder", [200, '',
-			JSON.stringify([
-				{id: 1, unread_count: 2},
-				{id: 2, unread_count: 1}
-			])
-		]);
-		this.server.respondWith("GET", "/api/folder/1/feed", [200, '',
-			JSON.stringify([
-				{id: 1, unread_count: 1, title: "Test 1"},
-				{id: 2, unread_count: 1, title: "Test 2"}
-			])
-		]);
-		this.server.respondWith("GET", "/api/folder/2/feed", [200, '',
-			JSON.stringify([
-				{id: 3, unread_count: 1, title: "Test 3"},
-				{id: 4, unread_count: 0, title: "Test 4"}
-			])
-		]);
+		this.server = create_fake_server();
 
 		this.folders = new CapoRSS.Collection.Folder();
 	});

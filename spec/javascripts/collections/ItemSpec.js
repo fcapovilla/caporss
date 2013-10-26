@@ -1,13 +1,6 @@
 describe("Item Collection", function() {
 	beforeEach(function() {
-		this.server = sinon.fakeServer.create();
-		this.server.respondWith("GET", "/api/item?limit=2", [200, '',
-			JSON.stringify([
-				{id: 1, read: false, feed_id: 1},
-				{id: 2, read: false, feed_id: 1},
-			])
-		]);
-		this.server.respondWith("GET", "/api/item?offset=2&limit=2", [200, '','[]']);
+		this.server = create_fake_server();
 
 		this.items = new CapoRSS.Collection.Item();
 

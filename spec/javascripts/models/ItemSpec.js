@@ -1,7 +1,6 @@
 describe("Item Model", function() {
 	beforeEach(function() {
-		this.server = sinon.fakeServer.create();
-		this.server.respondWith("PUT", "/api/item/1", [200, '', '']);
+		this.server = create_fake_server();
 
 		this.item = new CapoRSS.Model.Item({id: 1, read: false, feed_id: 1});
 		this.item.collection = {url: '/api/item'};

@@ -1,21 +1,6 @@
 describe("Folder Model", function() {
 	beforeEach(function() {
-		this.server = sinon.fakeServer.create();
-		this.server.respondWith("PUT", "/api/folder/1", [200, '', '']);
-		this.server.respondWith("GET", "/api/folder/1", [200, '',
-			JSON.stringify([{
-				id: 1,
-				unread_count: 1,
-				open: false
-			}])
-		]);
-		this.server.respondWith("GET", "/api/folder/1/feed", [200, '',
-			JSON.stringify([{
-				id: 1,
-				folder_id: 1,
-				unread_count: 1
-			}])
-		]);
+		this.server = create_fake_server();
 
 		this.folder = new CapoRSS.Model.Folder({id: 1, unread_count: 1, open: false});
 		this.folder.collection = {url: '/api/folder'};
@@ -49,12 +34,12 @@ describe("Folder Model", function() {
 		this.server.respond();
 		this.folder.items.trigger('itemUnread', 1);
 
-		expect(this.folder.get('unread_count')).toEqual(2);
+		expect(this.folder.get('unread_count')).toEqual(3);
 		expect(this.folder.feeds.get(1).get('unread_count')).toEqual(2);
 
 		this.folder.items.trigger('itemRead', 1);
 
-		expect(this.folder.get('unread_count')).toEqual(1);
+		expect(this.folder.get('unread_count')).toEqual(2);
 		expect(this.folder.feeds.get(1).get('unread_count')).toEqual(1);
 	});
 
