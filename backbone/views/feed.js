@@ -252,7 +252,6 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 			dialog.find('#feedPSHBExpiration').text(this.model.get('pshb_expiration'));
 			dialog.find('#feedUsePSHB').prop('disabled', !this.model.get('pshb_hub'));
 			dialog.find('#feedUsePSHB').prop('checked', this.model.get('pshb'));
-
 		}
 		else {
 			dialog.find('#feedPSHBInfos').addClass('hide');
