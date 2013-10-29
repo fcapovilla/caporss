@@ -121,24 +121,25 @@ describe("Feed View", function() {
 
 			it("doesn't delete the feed without confirmation", function() {
 				spyOn(window, 'confirm').andReturn(false);
+				sinon.spy(this.feed, 'destroy');
 
 				this.view.$el.find('.deleteFeedAction').trigger('click');
 
-				expect(this.server.requests.length).toEqual(0);
+				expect(this.feed.destroy).not.toHaveBeenCalledOnce();
+
+				this.feed.destroy.restore();
 			});
 		});
 	});
 
-	describe("Actions", function() {
-		it("gets selected when clicked", function() {
-			sinon.spy(CapoRSS.router, 'navigate');
+	it("gets selected when clicked", function() {
+		sinon.spy(CapoRSS.router, 'navigate');
 
-			this.view.$el.find('.feed-title').trigger('click');
+		this.view.$el.find('.feed-title').trigger('click');
 
-			expect(CapoRSS.router.navigate).toHaveBeenCalledOnce();
-			expect(CapoRSS.router.navigate).toHaveBeenCalledWith('feed/1');
+		expect(CapoRSS.router.navigate).toHaveBeenCalledOnce();
+		expect(CapoRSS.router.navigate).toHaveBeenCalledWith('feed/1');
 
-			CapoRSS.router.navigate.restore();
-		});
+		CapoRSS.router.navigate.restore();
 	});
 });
