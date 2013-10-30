@@ -64,6 +64,7 @@ describe("Feed View", function() {
 
 		it("closes when a click is done anywhere on the page", function() {
 			$('body').trigger('click');
+
 			expect(this.view.$el.find('.feedMenu').hasClass('hide')).toBeTruthy();
 		});
 
@@ -72,6 +73,7 @@ describe("Feed View", function() {
 				sinon.spy(this.feed, 'markRead');
 
 				this.view.$el.find('.markFeedReadAction').trigger('click');
+
 				expect(this.feed.markRead).toHaveBeenCalledOnce();
 
 				this.feed.markRead.restore();
@@ -83,6 +85,7 @@ describe("Feed View", function() {
 				sinon.spy(this.feed, 'markUnread');
 
 				this.view.$el.find('.markFeedUnreadAction').trigger('click');
+
 				expect(this.feed.markUnread).toHaveBeenCalledOnce();
 
 				this.feed.markUnread.restore();
@@ -108,25 +111,25 @@ describe("Feed View", function() {
 		*/
 
 		describe("Delete button", function() {
+			beforeEach(function() {
+				sinon.spy(this.feed, 'destroy');
+			});
+
 			it("deletes the feed on confirmation", function() {
 				spyOn(window, 'confirm').andReturn(true);
-				sinon.spy(this.feed, 'destroy');
-
 				this.view.$el.find('.deleteFeedAction').trigger('click');
 
 				expect(this.feed.destroy).toHaveBeenCalledOnce();
-
-				this.feed.destroy.restore();
 			});
 
 			it("doesn't delete the feed without confirmation", function() {
 				spyOn(window, 'confirm').andReturn(false);
-				sinon.spy(this.feed, 'destroy');
-
 				this.view.$el.find('.deleteFeedAction').trigger('click');
 
 				expect(this.feed.destroy).not.toHaveBeenCalledOnce();
+			});
 
+			afterEach(function() {
 				this.feed.destroy.restore();
 			});
 		});
@@ -134,7 +137,6 @@ describe("Feed View", function() {
 
 	it("gets selected when clicked", function() {
 		sinon.spy(CapoRSS.router, 'navigate');
-
 		this.view.$el.find('.feed-title').trigger('click');
 
 		expect(CapoRSS.router.navigate).toHaveBeenCalledOnce();

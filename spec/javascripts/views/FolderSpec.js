@@ -63,12 +63,12 @@ describe("Folder View", function() {
 
 		it("closes when a click is done anywhere on the page", function() {
 			$('body').trigger('click');
+
 			expect(this.view.$el.find('.folderMenu').hasClass('hide')).toBeTruthy();
 		});
 
 		describe("Mark read button", function() {
 			beforeEach(function() {
-				this.server.respond();
 				sinon.spy(this.folder.feeds.get(1), 'markRead');
 				sinon.spy(this.folder.feeds.get(2), 'markRead');
 			});
@@ -76,6 +76,7 @@ describe("Folder View", function() {
 			it("marks all folder items as read on confirmation", function() {
 				spyOn(window, 'confirm').andReturn(true);
 				this.view.$el.find('.markFolderReadAction').trigger('click');
+
 				expect(this.folder.feeds.get(1).markRead).toHaveBeenCalledOnce();
 				expect(this.folder.feeds.get(2).markRead).toHaveBeenCalledOnce();
 			});
@@ -83,6 +84,7 @@ describe("Folder View", function() {
 			it("doesn't mark the folder as read without confirmation", function() {
 				spyOn(window, 'confirm').andReturn(false);
 				this.view.$el.find('.markFolderReadAction').trigger('click');
+
 				expect(this.folder.feeds.get(1).markRead).not.toHaveBeenCalledOnce();
 				expect(this.folder.feeds.get(2).markRead).not.toHaveBeenCalledOnce();
 			});
@@ -102,6 +104,7 @@ describe("Folder View", function() {
 			it("marks all folder items as unread on confirmation", function() {
 				spyOn(window, 'confirm').andReturn(true);
 				this.view.$el.find('.markFolderUnreadAction').trigger('click');
+
 				expect(this.folder.feeds.get(1).markUnread).toHaveBeenCalledOnce();
 				expect(this.folder.feeds.get(2).markUnread).toHaveBeenCalledOnce();
 			});
@@ -109,6 +112,7 @@ describe("Folder View", function() {
 			it("doesn't mark the folder as unread without confirmation", function() {
 				spyOn(window, 'confirm').andReturn(false);
 				this.view.$el.find('.markFolderUnreadAction').trigger('click');
+
 				expect(this.folder.feeds.get(1).markUnread).not.toHaveBeenCalledOnce();
 				expect(this.folder.feeds.get(2).markUnread).not.toHaveBeenCalledOnce();
 			});
@@ -138,25 +142,25 @@ describe("Folder View", function() {
 		*/
 
 		describe("Delete button", function() {
+			beforeEach(function() {
+				sinon.spy(this.folder, 'destroy');
+			});
+
 			it("deletes the folder on confirmation", function() {
 				spyOn(window, 'confirm').andReturn(true);
-				sinon.spy(this.folder, 'destroy');
-
 				this.view.$el.find('.deleteFolderAction').trigger('click');
 
 				expect(this.folder.destroy).toHaveBeenCalledOnce();
-
-				this.folder.destroy.restore();
 			});
 
 			it("doesn't delete the folder without confirmation", function() {
 				spyOn(window, 'confirm').andReturn(false);
-				sinon.spy(this.folder, 'destroy');
-
 				this.view.$el.find('.deleteFolderAction').trigger('click');
 
 				expect(this.folder.destroy).not.toHaveBeenCalledOnce();
+			});
 
+			afterEach(function() {
 				this.folder.destroy.restore();
 			});
 		});
@@ -175,10 +179,12 @@ describe("Folder View", function() {
 
 	it("closes and opens when the toggle icon is clicked", function() {
 		this.view.$el.find('.folder-toggle').trigger('click');
+
 		expect(this.folder.get('open')).toBe(false);
 		expect(this.view.$el.find('ul').html()).toBe('');
 
 		this.view.$el.find('.folder-toggle').trigger('click');
+
 		expect(this.folder.get('open')).toBe(true);
 		expect(this.view.$el.find('ul').html()).not.toBe('');
 	});
