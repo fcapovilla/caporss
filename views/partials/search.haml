@@ -9,12 +9,12 @@
           x
       %form(id="searchForm" method="get" action="#")
         .modal-body
-          .input-group.col-md-3
+          .input-group.col-md-6
             %input(class="form-control" type="text" id="searchQuery" aria-hidden="true")
             %span.input-group-btn
               %button(type="submit" id="searchButton" class="btn btn-default" aria-hidden="true")
                 %i.fa.fa-search
-          .checkbox
+          .checkbox.col-md-6
             %label(for="searchInTitle")
               %input(type="checkbox" id="searchInTitle" checked="checked")
               =t.search.in_title
