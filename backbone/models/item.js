@@ -37,7 +37,9 @@ CapoRSS.Model.Item = Backbone.Model.extend({
 			url: '/api/item/' + this.id,
 			data: JSON.stringify({action: action}),
 			success: function() {
-				CapoRSS.router.currentSelection.fetch();
+				if(CapoRSS.router.currentSelection !== null) {
+					CapoRSS.router.currentSelection.fetch();
+				}
 			}
 		});
 	}
