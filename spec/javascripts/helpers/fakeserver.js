@@ -3,13 +3,14 @@ function create_fake_server() {
 
 	server.respondWith("GET", "/api/folder", [200, '',
 		JSON.stringify([
-			{id: 1, unread_count: 2},
-			{id: 2, unread_count: 1}
+			{id: 1, unread_count: 2, title: "Folder 1"},
+			{id: 2, unread_count: 1, title: "Folder 2"}
 		])
 	]);
 	server.respondWith("GET", "/api/folder/1", [200, '',
 		JSON.stringify([{
 			id: 1,
+			title: "Folder 1",
 			unread_count: 2,
 			open: false
 		}])
