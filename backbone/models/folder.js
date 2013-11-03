@@ -3,7 +3,6 @@ CapoRSS.Model.Folder = Backbone.Model.extend({
 	initialize: function() {
 		this.feeds = new CapoRSS.Collection.Feed();
 		this.feeds.url = '/api/folder/' + this.id + '/feed';
-		this.feeds.fetch();
 
 		this.listenTo(this.feeds, 'add remove change:unread_count', this.recalculateReadCount);
 

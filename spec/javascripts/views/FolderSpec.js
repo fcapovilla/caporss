@@ -12,6 +12,7 @@ describe("Folder View", function() {
 		this.view = new CapoRSS.View.Folder({model: this.folder});
 
 		// To fetch fake feeds
+		this.folder.fetch();
 		this.server.respond();
 		this.view.render();
 	});
@@ -127,9 +128,9 @@ describe("Folder View", function() {
 			it("triggers a sync for this folder", function() {
 				this.view.$el.find('.syncFolderAction').trigger('click');
 
-				expect(this.server.requests.length).toEqual(2);
-				expect(this.server.requests[1].method).toEqual("POST");
-				expect(this.server.requests[1].url).toEqual("/sync/folder/1");
+				expect(this.server.requests.length).toEqual(3);
+				expect(this.server.requests[2].method).toEqual("POST");
+				expect(this.server.requests[2].url).toEqual("/sync/folder/1");
 			});
 		});
 

@@ -14,6 +14,7 @@ describe("Folder Collection", function() {
 
 		this.server.respond();
 
+		console.log(this.server);
 		expect(this.server.requests.length).toEqual(3);
 		expect(this.server.requests[1].method).toEqual("GET");
 		expect(this.server.requests[1].url).toEqual("/api/folder/1/feed");
