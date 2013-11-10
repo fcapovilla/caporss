@@ -43,4 +43,27 @@ describe("AppRouter routes", function() {
 		expect(this.routeSpy).toHaveBeenCalledWith();
 	});
 	*/
+
+	/*
+	it("changes the route when a model is send to it", function() {
+		sinon.stub(CapoRSS.router, 'navigate').returns(true);
+
+		this.router.goToModel(new CapoRSS.Model.Folder({id: 1}));
+
+		expect(CapoRSS.router.navigate).toHaveBeenCalledOnce();
+		expect(CapoRSS.router.navigate).toHaveBeenCalledWith('folder/1', {trigger: true});
+
+		this.router.goToModel(new CapoRSS.Model.Feed({id: 1}));
+
+		expect(CapoRSS.router.navigate).toHaveBeenCalledTwice();
+		expect(CapoRSS.router.navigate).toHaveBeenCalledWith('feed/1', {trigger: true});
+
+		this.router.goToModel(new CapoRSS.Model.Item({id: 1}));
+
+		expect(CapoRSS.router.navigate).toHaveBeenCalledThrice();
+		expect(CapoRSS.router.navigate).toHaveBeenCalledWith('item', {trigger: true});
+
+		CapoRSS.router.navigate.restore();
+	});
+	*/
 });
