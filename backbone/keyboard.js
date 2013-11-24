@@ -94,9 +94,9 @@ $(document).keyup(function(e) {
 
 		if(e.keyCode == 111 || e.keyCode == 191) { // /
 			// Show search dialog
-			$('#searchModal').modal().on('shown', function() {
+			$('#searchModal').modal().on('shown.bs.modal', function() {
 				$('#searchQuery').focus();
-			}).on('hidden', function() {
+			}).on('hidden.bs.modal', function() {
 				$('#searchQuery').blur();
 			});
 		}

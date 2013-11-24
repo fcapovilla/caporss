@@ -96,9 +96,9 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	 * Show subscription dialog.
 	 */
 	showSubscriptionModal: function() {
-		$('#subscriptionModal').modal().on('shown', function() {
+		$('#subscriptionModal').modal().on('shown.bs.modal', function() {
 			$('#subscriptionUrl').focus();
-		}).on('hidden', function() {
+		}).on('hidden.bs.modal', function() {
 			$('#subscriptionUrl').blur();
 		});
 	},
