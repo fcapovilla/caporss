@@ -61,30 +61,6 @@ $('#subscribeButton').click(function() {
 });
 
 
-// Edit folder dialog button
-// Modify a folder
-$('#editFolderButton').click(function() {
-	var dialog = $('#editFolderModal');
-	var folderId = dialog.find('#folderId').val();
-	var folderTitle = dialog.find('#folderTitle').val();
-	var folder = CapoRSS.folders.get(folderId);
-
-	if(folder) {
-		folder.save({
-			title: folderTitle
-		},{
-			error: function(){
-				folder.set('title', folder.previous('title'));
-			}
-		});
-	}
-
-	$('#editFolderModal').modal('hide');
-
-	return false;
-});
-
-
 // Edit feed dialog button
 // Modify a feed
 $('#editFeedButton').click(function() {

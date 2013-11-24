@@ -6,13 +6,13 @@
     %ul(id="feed-list" class="list-unstyled")
 .content
   #item-list.hidden-xs(tabindex="100")
+#modal
 
 -# Modal dialogs
 
 =partial 'partials/settings'
 =partial 'partials/subscribe'
 =partial 'partials/edit_feed'
-=partial 'partials/edit_folder'
 =partial 'partials/opml_upload'
 =partial 'partials/search'
 
@@ -21,6 +21,7 @@
 =partial 'underscore/mainmenu.tpl'
 =partial 'underscore/special_folder.tpl'
 =partial 'underscore/folder/folder.tpl'
+=partial 'underscore/folder/folder_edit.tpl'
 =partial 'underscore/feed/feed.tpl'
 =partial 'underscore/feed/subscription_list.tpl'
 =partial 'underscore/feed/subscription.tpl'

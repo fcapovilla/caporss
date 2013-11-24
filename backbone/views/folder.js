@@ -163,15 +163,8 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 	showFolderEditDialog: function(e) {
 		e.stopPropagation();
 
-		var dialog = $('#editFolderModal');
-		dialog.find('#folderId').val(this.model.id);
-		dialog.find('#folderTitle').val(this.model.get('title'));
-
-		dialog.modal().on('shown', function() {
-			$('#folderTitle').focus();
-		}).on('hidden', function() {
-			$('#folderTitle').blur();
-		});
+		var folderEdit = new CapoRSS.View.FolderEdit({model: this.model});
+		folderEdit.showModal();
 
 		this.closeMenu();
 	},
