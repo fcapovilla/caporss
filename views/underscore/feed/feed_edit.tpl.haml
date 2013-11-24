@@ -1,0 +1,58 @@
+-# Feed edition underscore template
+:plain
+  <script id='tmpl-feed-edit' type='text/template'>
+    <div class="modal fade" id="editFeedModal" tabindex="-1" role="dialog" aria-labelledby="editFeedModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            #{t.edit_feed.title}
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          </div>
+          <form id="editFeedForm" method="get" action="#">
+            <div class="modal-body">
+              <label for="feedUrl">#{t.edit_feed.url}</label>
+              <input class="form-control" type="text" id="feedUrl" aria-hidden="true" value="<%= feed.url %>" />
+              <label for="feedFolder">#{t.edit_feed.folder}</label>
+              <input class="form-control" type="text" id="feedFolder" aria-hidden="true" value="<%= feed_folder_title %>" />
+              <div class="checkbox">
+                <label for="resetFeed">
+                  <input type="checkbox" id="resetFeed" />
+                  #{t.edit_feed.reset}
+                </label>
+              </div>
+              <% if(feed.pshb_hub) { %>
+                <div class="feedPSHBInfos">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td>#{t.edit_feed.pshb_hub}</td>
+                      <td><%= feed.pshb_hub %></td>
+                    </tr>
+                    <tr>
+                      <td>#{t.edit_feed.pshb_topic}</td>
+                      <td><%= feed.pshb_topic %></td>
+                    </tr>
+                    <tr>
+                      <td>#{t.edit_feed.pshb_expiration}</td>
+                      <td><%= feed.pshb_expiration %></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="checkbox">
+                  <label for="feedUsePSHB">
+                    <input type="checkbox" id="feedUsePSHB" <% if(feed.pshb) { %>checked="checked"<% } %> />
+                    #{t.edit_feed.use_pshb}
+                  </label>
+                </div>
+              <% } %>
+              <input type="hidden" id="feedId" value="" />
+            </div>
+            <div class="modal-footer">
+              <button type="submit" id="saveFeedButton" class="btn btn-primary" aria-hidden="true">
+                #{t.edit_feed.save}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </script>

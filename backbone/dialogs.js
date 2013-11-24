@@ -61,50 +61,6 @@ $('#subscribeButton').click(function() {
 });
 
 
-// Edit feed dialog button
-// Modify a feed
-$('#editFeedButton').click(function() {
-	var dialog = $('#editFeedModal');
-	var feedId = dialog.find('#feedId').val();
-	var feedFolder = dialog.find('#feedFolder').val();
-	var feedUrl = dialog.find('#feedUrl').val();
-	var reset = dialog.find('#resetFeed').is(':checked');
-	var pshb = dialog.find('#feedUsePSHB').is(':checked');
-
-	var feed = CapoRSS.folders.getFeed(feedId);
-	if(feed) {
-		feed.unset('position');
-		feed.save({
-			url: feedUrl,
-			folder: feedFolder,
-			pshb: pshb
-		},{
-			success: function() {
-				CapoRSS.router.navigate("", {trigger: true});
-
-				if(reset) {
-					$.ajax({
-						url: '/api/feed/' + feedId,
-						method: 'PUT',
-						data: JSON.stringify({action: 'reset'}),
-						success: function() {
-							CapoRSS.folders.fetch();
-						}
-					});
-				}
-				else {
-					CapoRSS.folders.fetch();
-				}
-			}
-		});
-	}
-
-	$('#editFeedModal').modal('hide');
-
-	return false;
-});
-
-
 // Search dialog button
 // Initiate an item search
 $('#searchButton').click(function() {
