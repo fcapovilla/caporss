@@ -69,6 +69,12 @@ CapoRSS.View.FeedEdit = Backbone.Marionette.ItemView.extend({
 	showModal: function() {
 		this.render();
 
+		this.$('#feedFolder').typeahead({
+			source: CapoRSS.folders.map(function(folder) {
+				return folder.get('title');
+			})
+		});
+
 		var that = this;
 		this.$('.modal').modal().on('shown.bs.modal', function() {
 			that.$('#feedUrl').focus();
