@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.14.1
+Version 0.15.0
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -95,6 +95,7 @@ CapoRSS is built on top of these great projects :
 * [Nokogiri](http://nokogiri.org/)
 * [R18n](https://github.com/ai/r18n)
 * [Bootstrap](http://twitter.github.com/bootstrap/)
+* [bootstrap3-typeahead](https://github.com/bassjobsen/Bootstrap-3-Typeahead)
 * [Font awesome](http://fortawesome.github.com/Font-Awesome/)
 * [Pines notify](http://pinesframework.org/pnotify/)
 * [Backbone.js](http://backbonejs.org/)
