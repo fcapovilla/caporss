@@ -44,10 +44,10 @@ CapoRSS.View.FolderEdit = Backbone.Marionette.ItemView.extend({
 		this.render();
 
 		var that = this;
-		this.$('.modal').modal().on('shown.bs.modal', function() {
+		this.$('.modal').on('shown.bs.modal', function() {
 			that.$('#folderTitle').focus();
 		}).on('hidden.bs.modal', function() {
 			that.remove();
-		});
+		}).modal();
 	}
 });

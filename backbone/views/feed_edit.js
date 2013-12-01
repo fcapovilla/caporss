@@ -76,10 +76,10 @@ CapoRSS.View.FeedEdit = Backbone.Marionette.ItemView.extend({
 		});
 
 		var that = this;
-		this.$('.modal').modal().on('shown.bs.modal', function() {
+		this.$('.modal').on('shown.bs.modal', function() {
 			that.$('#feedUrl').focus();
 		}).on('hidden.bs.modal', function() {
 			that.remove();
-		});
+		}).modal();
 	}
 });
