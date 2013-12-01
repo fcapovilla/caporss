@@ -1,0 +1,25 @@
+-# Subscription underscore template
+:plain
+  <script id='tmpl-subscribe' type='text/template'>
+    <div class="modal fade" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            #{t.subscribe.subscribe}
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          </div>
+          <form id="subscriptionForm" method="get" action="#">
+            <div class="modal-body">
+              <label for="subscriptionUrl">#{t.subscribe.url}</label>
+              <input class="form-control" type="text" id="subscriptionUrl" aria-hidden="true" />
+              <label for="subscriptionFolder">#{t.subscribe.folder}</label>
+              <input class="form-control" autocomplete="off" type="text" id="subscriptionFolder" aria-hidden="true" value="" />
+            </div>
+            <div class="modal-footer">
+              <button type="submit" id="subscribeButton" class="btn btn-primary" aria-hidden="true">#{t.subscribe.subscribe}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </script>

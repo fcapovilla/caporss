@@ -35,32 +35,6 @@ $('#updateFaviconsButton').click(function() {
 });
 
 
-// Subscription dialog button
-// Add a new subscription
-$('#subscribeButton').click(function() {
-	$.ajax({
-		url: '/api/feed',
-		method: 'POST',
-		data: {
-			url: $('#subscriptionUrl').val(),
-			folder: $('#subscriptionFolder').val()
-		},
-		success: function() {
-			CapoRSS.folders.fetch();
-			if(CapoRSS.router.currentSelection !== null) {
-				CapoRSS.router.currentSelection.items.fetch({reset: true});
-			}
-		}
-	});
-
-	$('#subscriptionModal').modal('hide');
-	$('#subscriptionUrl').val('');
-	$('#subscriptionFolder').val('');
-
-	return false;
-});
-
-
 // Search dialog button
 // Initiate an item search
 $('#searchButton').click(function() {
