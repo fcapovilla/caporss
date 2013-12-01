@@ -49,7 +49,7 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 	 */
 	onRender: function() {
 		if(this.model.get('open')) {
-			this.$el.find('.item-content a').attr('target', '_blank');
+			this.$('.item-content a').attr('target', '_blank');
 		}
 	},
 
@@ -124,7 +124,7 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 	 * @return {boolean} False
 	 */
 	showDropdownMenu: function() {
-		this.$el.find('.dropdown-toggle').dropdown('toggle');
+		this.$('.dropdown-toggle').dropdown('toggle');
 		return false;
 	},
 

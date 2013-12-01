@@ -254,7 +254,7 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 	openMenu: function(e) {
 		e.stopPropagation();
 
-		var menu = this.$el.find('.feedMenu');
+		var menu = this.$('.feedMenu');
 		var opened = !menu.hasClass('hide');
 
 		// Close any opened menu
@@ -273,7 +273,7 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 	 * Close the feed's menu.
 	 */
 	closeMenu: function() {
-		var menu = this.$el.find('.feedMenu');
+		var menu = this.$('.feedMenu');
 		menu.addClass('hide');
 	}
 });

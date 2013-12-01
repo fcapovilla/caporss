@@ -52,7 +52,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 	 */
 	onDragEnter: function(e) {
 		e.preventDefault();
-		this.$el.find('>.folder-title').addClass('drag-hovered');
+		this.$('>.folder-title').addClass('drag-hovered');
 	},
 
 	/**
@@ -72,7 +72,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 		var oe = e.originalEvent;
 
 		if(oe.clientX >= rect.right || oe.clientX <= rect.left || oe.clientY >= rect.bottom || oe.clientY <= rect.top) {
-			this.$el.find('>.folder-title').removeClass('drag-hovered');
+			this.$('>.folder-title').removeClass('drag-hovered');
 		}
 	},
 
@@ -97,7 +97,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 			var new_position = dest.get('position');
 			if(new_position == folder.get('position')) {
 				// The folder was not moved, do nothing.
-				this.$el.find('>.folder-title').removeClass('drag-hovered');
+				this.$('>.folder-title').removeClass('drag-hovered');
 				return;
 			}
 			else if(new_position < folder.get('position')) {
@@ -129,7 +129,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 			}});
 		}
 
-		this.$el.find('>.folder-title').removeClass('drag-hovered');
+		this.$('>.folder-title').removeClass('drag-hovered');
 	},
 
 	/**
@@ -288,7 +288,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 	openMenu: function(e) {
 		e.stopPropagation();
 
-		var menu = this.$el.find('.folderMenu');
+		var menu = this.$('.folderMenu');
 		var opened = !menu.hasClass('hide');
 
 		// Close any opened menu
@@ -307,7 +307,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 	 * Close the folder's menu.
 	 */
 	closeMenu: function() {
-		var menu = this.$el.find('.folderMenu');
+		var menu = this.$('.folderMenu');
 		menu.addClass('hide');
 	}
 });

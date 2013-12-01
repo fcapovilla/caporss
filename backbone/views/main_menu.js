@@ -23,7 +23,7 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	 * Sync all items.
 	 */
 	sync: function() {
-		var icon = this.$el.find('#syncButton>i');
+		var icon = this.$('#syncButton>i');
 		icon.attr('class', 'fa fa-clock-o');
 		$.ajax({
 			url: '/sync/all',
@@ -77,12 +77,12 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	setReadVisibility: function(show_read) {
 		if(show_read) {
 			SETTINGS.show_read = true;
-			this.$el.find('#toggleReadVisibility>i').attr('class', 'fa fa-eye');
+			this.$('#toggleReadVisibility>i').attr('class', 'fa fa-eye');
 			$.cookie('show_read', true, {expires: 10000});
 		}
 		else {
 			SETTINGS.show_read = false;
-			this.$el.find('#toggleReadVisibility>i').attr('class', 'fa fa-eye-slash');
+			this.$('#toggleReadVisibility>i').attr('class', 'fa fa-eye-slash');
 			$.cookie('show_read', false, {expires: 10000});
 		}
 
