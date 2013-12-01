@@ -1,10 +1,5 @@
 // Disable keyboard events but ESC when in inputs
-$(':input').keyup(function(e) {
-	if(e.keyCode != 27) { // ESC
-		e.stopImmediatePropagation();
-	}
-});
-$(':input').keydown(function(e) {
+$(document).on('keyup keydown', ':input', function(e) {
 	if(e.keyCode != 27) { // ESC
 		e.stopImmediatePropagation();
 	}
