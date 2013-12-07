@@ -47,8 +47,9 @@ CapoRSS.View.ItemList = Backbone.Marionette.CompositeView.extend({
 	 * Action when item list is reset.
 	 */
 	onReset: function() {
-		if(this.cursor !== null) {
-			this.collection.get(this.cursor).set('open', 'true');
+		var currentItem = this.collection.get(this.cursor);
+		if(currentItem !== undefined) {
+			currentItem.set('open', 'true');
 		}
 	},
 
@@ -90,8 +91,9 @@ CapoRSS.View.ItemList = Backbone.Marionette.CompositeView.extend({
 	 * Close the item that's currently open.
 	 */
 	closeCursor: function() {
-		if(this.cursor !== null) {
-			this.collection.get(this.cursor).set('open', false);
+		var currentItem = this.collection.get(this.cursor);
+		if(currentItem !== undefined) {
+			currentItem.set('open', false);
 		}
 	},
 
@@ -101,14 +103,15 @@ CapoRSS.View.ItemList = Backbone.Marionette.CompositeView.extend({
 	 */
 	moveCursor: function(direction) {
 		var item = null;
+		var currentItem = this.collection.get(this.cursor);
 
-		if(this.cursor === null) {
+		if(currentItem === undefined) {
 			if(direction == 'down') {
 				item = this.collection.first();
 			}
 		}
 		else {
-			var index = this.collection.indexOf(this.collection.get(this.cursor.id));
+			var index = this.collection.indexOf(currentItem);
 			var dir = 0;
 
 			if(direction == 'down') {
