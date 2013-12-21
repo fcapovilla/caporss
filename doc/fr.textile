@@ -14,7 +14,7 @@ h1. Raccourcis clavier
 h1. Préférences
 
 * *Importer/Exporter un ficher OPML* : Un fichier OPML contient des informations sur les abonnements. Vous pouvez importer un fichier OPML d'une source externe ou exporter une liste de vos abonnements sous la forme d'un fichier OPML pouvant être importé dans un autre lecteur RSS.
-* *Nettoyage* : Supprime les vieux items dans la base de données locale. Vous pouvez spécifier une limite d'âge en jours. Seul les items dont la date dépasse cette limite seront supprimés lors d'un clic sur le bouton "Nettoyage".
+* *Nettoyage* : Supprime les vieux items dans la base de données locale. Les items non-lus ne seront pas supprimés. Vous pouvez spécifier une limite d'âge en jours. Seul les items dont la date dépasse cette limite seront supprimés lors d'un clic sur le bouton "Nettoyage".
 * *Synchroniser toutes les...* : Va chercher les nouveaux items sur les serveurs distants à un certain intervalle.
 * *Rafraîchir toutes les...* : Va chercher les nouveaux items dans la base de données locale à un intervalle spécifié. À utiliser avec un "worker" de synchronisation automatique qui va chercher les items sur les serveur distant avec un intervalle spécifique.
 * *Rafraîchir avec des SSE* : Si votre serveur et votre navigateur supportent les SSE (Server-Sent Events) et que cette préférence est activée, les données dans le navigateur seront rafraîchies automatiquement à chaque synchronisation des abonnements.

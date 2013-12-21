@@ -14,7 +14,7 @@ h1. Keyboard shortcuts
 h1. Settings
 
 * *Import/Export OPML files* : OPML files contain informations on feed subscription. You can import opml files from outside sources and export a list of your feeds as an OPML file for use in another RSS reader.
-* *Cleanup* : Deletes old items in the local database. You can specify the age limit for items in days. All items older than this limit will be deleted when clicking the "Cleanup" button.
+* *Cleanup* : Deletes old items in the local database. Only read items are deleted. You can specify the age limit for items in days. All items older than this limit will be deleted when clicking the "Cleanup" button.
 * *Sync after* : Fetches new items from the servers for all feeds at the specified interval.
 * *Refresh after* : Check for new items in the local database at the specified interval. Use with an automatic sync worker that fetches new items at a specific interval.
 * *Refresh using SSE* : If your server and browser both support SSE (Server-Sent Events) and this setting is activated, client-side informations will be automatically updated at every feed synchronisation.

@@ -153,10 +153,10 @@ class Feed
 		return doc
 	end
 
-	# Delete all items older than x days
+	# Delete all read items older than x days
 	def cleanup!(days)
 		self.items.each do |item|
-			if item.date.to_date + days.to_i < Date.today
+			if item.read and item.date.to_date + days.to_i < Date.today
 				item.destroy
 			end
 		end

@@ -6,10 +6,28 @@ describe "Cleanup route" do
 		generate_sample_feeds
 	end
 
-	it "cleans up feeds" do
+	it "does not clean up unread items" do
 		authorize 'admin', 'admin'
 		feed = Feed.first(:title => 'Feed 1')
 		feed.sync!
+		feed.items.count.should == 3
+
+		post "/cleanup/feed/#{feed.id}", :cleanup_after => 400
+		last_response.body.should == '"done"'
+		user = User.first(:username => 'admin')
+		user.cleanup_after.should == 400
+
+		feed.reload
+		feed.items.count.should == 3
+	end
+
+	it "cleans up feeds" do
+		authorize 'admin', 'admin'
+		feed = Feed.first(:title => 'Feed 2')
+		feed.sync!
+		feed.items.each do |item|
+			item.update(:read => true)
+		end
 
 		post "/cleanup/feed/#{feed.id}", :cleanup_after => 400
 		last_response.body.should == '"done"'
@@ -26,6 +44,9 @@ describe "Cleanup route" do
 		folder = Folder.first(:title => 'Folder 1')
 		folder.feeds.each do |feed|
 			feed.sync!
+			feed.items.each do |item|
+				item.update(:read => true)
+			end
 		end
 
 		post "/cleanup/folder/#{folder.id}", :cleanup_after => 400
@@ -43,6 +64,9 @@ describe "Cleanup route" do
 		folder = Folder.first(:title => 'Folder 2')
 		folder.feeds.each do |feed|
 			feed.sync!
+			feed.items.each do |item|
+				item.update(:read => true)
+			end
 		end
 
 		post "/cleanup/all"
