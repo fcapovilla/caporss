@@ -3,10 +3,10 @@ require 'uri'
 require 'feedzirra'
 require 'net/http'
 
-# Force enclosure and guid parsing on all Feedzirra feed entries
+# Force enclosure parsing on all Feedzirra feed entries
 Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
 
-# Add Pubsubhubbub hub parsing to all Feedzirra feed entries
+# Add Pubsubhubbub hub parsing to all Feedzirra feed entries (hub + topic)
 Feedzirra::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
 Feedzirra::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
 Feedzirra::Feed.add_common_feed_element(:'link', :value => :href, :as => :hub, :with => {:rel => 'hub'})

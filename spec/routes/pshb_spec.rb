@@ -22,7 +22,7 @@ describe "Pubsubhubbub route" do
 		feed.items.count.should == 3
 		feed.pshb.should == false
 		feed.pshb_hub.should == 'http://localhost:4567/pshb/hub'
-		feed.pshb_topic.should == 'http://localhost:4567/1.rss?items=3&#38;pshb=1'
+		feed.pshb_topic.should == 'http://localhost:4567/1.rss?items=3&pshb=1'
 		feed.pshb_expiration.should be_nil
 
 		put "/api/feed/#{feed.id}", {:pshb => true}.to_json
