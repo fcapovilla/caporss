@@ -29,6 +29,10 @@ end
 
 def generate_sample_feeds
 	admin = User.first(:username => 'admin')
+
+	# Force admin cleanup_after value
+	admin.update(:cleanup_after => 1000000)
+
 	5.times do |i|
 		folder = Folder.create(:title => "Folder #{i}", :user => admin)
 

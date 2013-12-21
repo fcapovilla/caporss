@@ -104,6 +104,14 @@ class Feed
 				create = true if entry.published > self.last_update.to_time
 			end
 
+			# If the feed got updated at least once
+			if self.last_update != DateTime.new(2000,1,1)
+				# Don't add items with a publishing date before the cleanup date
+				if self.user and entry.published < (Date.today - self.user.cleanup_after).to_time
+					create = false
+				end
+			end
+
 			if create
 				item = Item.new(
 					:user => self.user,

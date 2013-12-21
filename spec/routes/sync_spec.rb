@@ -29,6 +29,35 @@ describe "Sync route" do
 			feed.items.count.should == 3
 		end
 
+		it "won't add back cleaned up items" do
+			authorize 'admin', 'admin'
+			feed = Feed.first(:title => 'Feed 1')
+			feed.user.update(:cleanup_after => 1)
+
+			post "/sync/feed/#{feed.id}"
+			data = JSON.parse(last_response.body, :symbolize_names => true)
+
+			data[:updated].should == 1
+			data[:new_items].should == 3
+
+			# Read one item and clean it up
+			feed.reload
+			feed.items.first.update(:read => true)
+			feed.cleanup!(0)
+
+			feed.items.count.should == 2
+
+			post "/sync/feed/#{feed.id}"
+			data = JSON.parse(last_response.body, :symbolize_names => true)
+
+			data[:updated].should == 1
+			data[:new_items].should == 0
+			feed.reload.items.count.should == 2
+
+			# Reset cleanup_after value
+			feed.user.update(:cleanup_after => 1000000)
+		end
+
 		it "syncs all of a folder's feeds" do
 			authorize 'admin', 'admin'
 			folder = Folder.first(:title => 'Folder 1')
@@ -75,14 +104,14 @@ describe "Sync route" do
 			feed.items.count.should == 0
 			feed.unread_count.should == 0
 
-			Folder.all.feeds.items.count.should == 18
+			Folder.all.feeds.items.count.should == 21
 
 
 			post "/sync/all"
 			data = JSON.parse(last_response.body, :symbolize_names => true)
 
 			data[:updated].should == 25
-			data[:new_items].should == 57  # 75 - 15 - 3
+			data[:new_items].should == 54  # 75 - 15 - 6
 
 
 			folder.reload
