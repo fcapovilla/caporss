@@ -104,14 +104,14 @@ describe "Sync route" do
 			feed.items.count.should == 0
 			feed.unread_count.should == 0
 
-			Folder.all.feeds.items.count.should == 21
+			Folder.all.feeds.items.count.should == 20
 
 
 			post "/sync/all"
 			data = JSON.parse(last_response.body, :symbolize_names => true)
 
 			data[:updated].should == 25
-			data[:new_items].should == 54  # 75 - 15 - 6
+			data[:new_items].should == 55  # 75 - 15 - 6
 
 
 			folder.reload
