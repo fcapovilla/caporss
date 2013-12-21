@@ -6,6 +6,16 @@ before '/api/item*' do
 	content_type :json, 'charset' => 'utf-8'
 end
 
+get '/api/item/stats' do
+	{
+		:total_favicons => Favicon.count,
+		:total_folders => Folder.count,
+		:total_feeds => Feed.count,
+		:total_items => Item.count,
+		:unread_items => Item.count(:read => false),
+	}.to_json
+end
+
 get '/api/item' do
 	options = prepare_item_search(params)
 	Item.all(options).to_json
