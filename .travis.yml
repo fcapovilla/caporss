@@ -15,6 +15,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 script: rake travis
 
+before_install: gem update --remote bundler
 matrix:
   exclude:
     - rvm: "1.9.3"
