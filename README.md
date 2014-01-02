@@ -100,7 +100,7 @@ CapoRSS is built on top of these great projects :
 * [Pines notify](http://pinesframework.org/pnotify/)
 * [Backbone.js](http://backbonejs.org/)
 * [Marionette.js](http://marionettejs.com/)
-* [Underscore.js](http://underscorejs.org/)
+* [Lo-Dash](http://lodash.com/)
 * [JQuery](http://jquery.com/)
 * [JQuery-cookie](https://github.com/carhartl/jquery-cookie)
 * [Haml](http://haml.info/)
