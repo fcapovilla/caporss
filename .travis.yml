@@ -19,4 +19,8 @@ before_install: gem update --remote bundler
 matrix:
   exclude:
     - rvm: "1.9.3"
+      env: DB=mysql DATABASE_URL="mysql://@localhost/test"
+    - rvm: "1.9.3"
+      env: DB=pgsql DATABASE_URL="postgres://postgres@localhost/test"
+    - rvm: "1.9.3"
       env: JS=true
