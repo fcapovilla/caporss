@@ -35,8 +35,8 @@ describe "Cleanup route" do
 		user.cleanup_after.should == 400
 
 		feed.reload
-		feed.items.count.should >= 1
-		feed.items.count.should <= 2
+		feed.items.count.should >= 2
+		feed.items.count.should <= 3
 	end
 
 	it "cleans up folders" do
@@ -55,8 +55,8 @@ describe "Cleanup route" do
 		user.cleanup_after.should == 400
 
 		folder.reload
-		folder.feeds.items.count.should >= 5
-		folder.feeds.items.count.should <= 10
+		folder.feeds.items.count.should >= 10
+		folder.feeds.items.count.should <= 15
 	end
 
 	it "cleans up all feeds" do
@@ -75,8 +75,8 @@ describe "Cleanup route" do
 		user.cleanup_after.should == 400
 
 		folder.reload
-		folder.feeds.items.count.should >= 5
-		folder.feeds.items.count.should <= 10
+		folder.feeds.items.count.should >= 10
+		folder.feeds.items.count.should <= 15
 	end
 
 	after :all do
