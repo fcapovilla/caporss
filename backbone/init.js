@@ -1,4 +1,4 @@
-var CapoRSS = {Router: {}, View: {}, Model: {}, Collection: {}};
+var CapoRSS = CapoRSS || {Router: {}, View: {}, Model: {}, Collection: {}};
 
 $(function() {
 	CapoRSS.router = new CapoRSS.Router.Main();
