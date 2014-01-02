@@ -9,22 +9,24 @@
           x
       %form(id="searchForm" method="get" action="#")
         .modal-body
-          .input-group.col-md-6
+          .input-group
             %input(class="form-control" type="text" id="searchQuery" aria-hidden="true")
             %span.input-group-btn
               %button(type="submit" id="searchButton" class="btn btn-default" aria-hidden="true")
                 %i.fa.fa-search
-          .checkbox.col-md-6
+          .checkbox
             %label(for="searchInTitle")
               %input(type="checkbox" id="searchInTitle" checked="checked")
               =t.search.in_title
-          =t.search.sort_by
-          %select(class="form-control" id="sortType")
-            %option(value="dateAsc")
-              =t.search.sort.date.asc
-            %option(value="dateDesc" selected="selected")
-              =t.search.sort.date.desc
-            %option(value="titleAsc")
-              =t.search.sort.title.asc
-            %option(value="titleDesc")
-              =t.search.sort.title.desc
+          .form-group
+            %label(for="sortType")
+              =t.search.sort_by
+            %select(class="form-control" id="sortType")
+              %option(value="dateAsc")
+                =t.search.sort.date.asc
+              %option(value="dateDesc" selected="selected")
+                =t.search.sort.date.desc
+              %option(value="titleAsc")
+                =t.search.sort.title.asc
+              %option(value="titleDesc")
+                =t.search.sort.title.desc
