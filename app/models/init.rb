@@ -44,4 +44,4 @@ DataMapper.finalize.auto_upgrade!
 require_relative 'migrations'
 
 # Prepare session store
-use Rack::Session::Moneta, :store => Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'))
+use Rack::Session::Moneta, :store => Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
