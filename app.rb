@@ -23,7 +23,3 @@ configure :production do
 	require 'rack/ssl-enforcer'
 	use Rack::SslEnforcer
 end
-
-configure do
-	use Rack::Session::Pool, :secret => (ENV['SESSION_SECRET'] || 'Default secret... Set the SESSION_SECRET environment variable!')
-end

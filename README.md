@@ -57,16 +57,12 @@ CapoRSS can be run in production mode with Puma and PostgreSQL. Other database b
 
     export DATABASE\_URL="postgres://username:password@hostname/database"
 
-5. Set the SESSION\_SECRET environment variable to secure your sessions:
-
-	export SESSION\_SECRET="My session secret..."
-
-6. Run CapoRSS using Puma:
+5 Run CapoRSS using Puma:
 
 	bundle exec puma config.ru -e production
 
-7. Open a web browser and go to "http://localhost:3000"
-8. The default username/password is "admin"/"admin"
+6. Open a web browser and go to "http://localhost:3000"
+7. The default username/password is "admin"/"admin"
 
 Notes:
 * For security reasons, a SSL certificate is required for running CapoRSS in production mode.

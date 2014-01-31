@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'data_mapper'
 require 'dm-is-list'
+require 'rack/session/moneta'
 
 DataMapper::Logger.new(STDOUT, :warn)
 
@@ -23,7 +24,7 @@ end
 
 # OpenShift Database configuration
 ENV['DATABASE_URL'] ||= ENV['OPENSHIFT_MYSQL_DB_URL']
-ENV['DATABASE_URL'] ||= ENV['OPENSHIFT_POSTGRESQL_DB_URL'].sub('postgresql:', 'postgres:')
+ENV['DATABASE_URL'] = ENV['OPENSHIFT_POSTGRESQL_DB_URL'].sub('postgresql:', 'postgres:') if ENV['OPENSHIFT_POSTGRESQL_DB_URL']
 
 # Connect to the database
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')
@@ -41,3 +42,6 @@ DataMapper.finalize.auto_upgrade!
 
 # Apply migrations
 require_relative 'migrations'
+
+# Prepare session store
+use Rack::Session::Moneta, :store => Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'))

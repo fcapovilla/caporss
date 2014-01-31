@@ -13,6 +13,7 @@ gem 'RedCloth'
 
 gem 'datamapper'
 gem 'dm-is-list'
+gem 'moneta'
 
 gem 'nokogiri'
 gem 'feedzirra'
