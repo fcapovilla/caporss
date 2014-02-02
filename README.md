@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.16.0
+Version 0.16.1
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -68,12 +68,14 @@ Notes:
 * For security reasons, a SSL certificate is required for running CapoRSS in production mode.
 * The Postgres adapter is used in the production configuration by default. If you want to use MySQL, comment the "dm-postgres-adapter" gem and uncomment the "dm-mysql-adapter" gem in the Gemfile.
 
-### Heroku and AppFog
+### Heroku, AppFog and OpenShift
 
-CapoRSS is Heroku-ready and AppFog-ready, so you can push it on these services like any other Sinatra-based application.
+CapoRSS is Heroku-ready and AppFog-ready, so you can push it on these services like any other Sinatra-based applications.
+CapoRSS was also tested to work on OpenShift using the ruby-1.9 and mysql-5.5 cartridges.
 See these pages for more informations :
 * [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 * [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
+
 
 ## Documentation
 
@@ -112,7 +114,8 @@ Most dependencies are already included in the Gemfile and in the application's p
 ## TODO
 
 * Optimisations, performance improvements and bugfixes
-* Add javascript tests
+* Improve SSE support
+* Add other automatic sync methods (cron, worker)
 
 ## Release notes
 * 0.5.0 : This version brings a lots of modifications to the database structure to add multi-user support. Automatic migrations are included to move all single-user configurations to the 'admin/admin' user, but starting from a clean database is recommended.
