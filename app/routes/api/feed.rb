@@ -43,7 +43,7 @@ end
 
 put '/api/feed/:id', '/api/folder/*/feed/:id' do
 	feed = Feed.first(:user => @user, :id => params[:id])
-	attributes = JSON.parse(request.body.string, :symbolize_names => true)
+	attributes = JSON.parse(request.body.read, :symbolize_names => true)
 	action = attributes.delete(:action)
 
 	# Convert the folder name into a folder_id

@@ -29,7 +29,7 @@ end
 
 put '/api/item/:id', '/api/feed/*/item/:id', '/api/folder/*/item/:id' do
 	item = Item.first(:user => @user, :id => params[:id])
-	attributes = JSON.parse(request.body.string, :symbolize_names => true)
+	attributes = JSON.parse(request.body.read, :symbolize_names => true)
 	action = attributes.delete(:action)
 
 	item.attributes = attributes.slice(:read)

@@ -27,7 +27,7 @@ end
 
 put '/api/folder/:id' do |id|
 	folder = Folder.first(:user => @user, :id => id)
-	attributes = JSON.parse(request.body.string, :symbolize_names => true)
+	attributes = JSON.parse(request.body.read, :symbolize_names => true)
 
 	folder.move(attributes[:position]) if attributes.has_key?(:position)
 
