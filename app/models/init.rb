@@ -23,8 +23,12 @@ if ENV['VCAP_SERVICES']
 end
 
 # OpenShift Database configuration
-ENV['DATABASE_URL'] ||= ENV['OPENSHIFT_MYSQL_DB_URL']
-ENV['DATABASE_URL'] = ENV['OPENSHIFT_POSTGRESQL_DB_URL'].sub('postgresql:', 'postgres:') if ENV['OPENSHIFT_POSTGRESQL_DB_URL']
+if ENV['OPENSHIFT_MYSQL_DB_URL']
+	ENV['DATABASE_URL'] = ENV['OPENSHIFT_MYSQL_DB_URL'] + ENV['OPENSHIFT_APP_NAME']
+end
+if ENV['OPENSHIFT_POSTGRESQL_DB_URL']
+	ENV['DATABASE_URL'] = ENV['OPENSHIFT_POSTGRESQL_DB_URL'].sub('postgresql:', 'postgres:') + ENV['OPENSHIFT_APP_NAME']
+end
 
 # Connect to the database
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')
