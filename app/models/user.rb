@@ -8,8 +8,8 @@ class User
 	property :roles, Flag[:admin, :user, :sync], :default => :user
 
 	property :cleanup_after, Integer, :default => 300
-	property :refresh_timeout, Integer, :default => 0
-	property :sse_refresh, Boolean, :default => true
+	property :refresh_timeout, Integer, :default => 10
+	property :sse_refresh, Boolean, :default => false
 	property :sync_timeout, Integer, :default => 0
 	property :default_locale, String, :length => 1..5, :default => 'en'
 	property :items_per_page, Integer, :default => 50
