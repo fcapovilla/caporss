@@ -27,39 +27,39 @@ This procedure will run CapoRSS in development mode using an SQLite database
 1. Install Ruby 2.1.0
 2. Install the "bundler" Ruby gem using this command:
 
-    gem install bundler
+	gem install bundler
 
 3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-    bundle install --without=production test
+	bundle install --without=production test
 
 4. Start CapoRSS using this command:
 
-    bundle exec ruby app.rb
+	bundle exec ruby app.rb
 
 5. Open a web browser and go to "http://localhost:4567"
 6. The default username/password is "admin"/"admin"
 
 ### localhost (production)
 
-CapoRSS can be run in production mode with Puma and PostgreSQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
+CapoRSS can be run in production mode with Thin and PostgreSQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
 
 1. Install Ruby 2.1.0
 2. Install the "bundler" Ruby gem using this command:
 
-    gem install bundler
+	gem install bundler
 
 3. Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-    bundle install --without=development test
+	bundle install --without=development test
 
 4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
 
-    export DATABASE\_URL="postgres://username:password@hostname/database"
+	export DATABASE\_URL="postgres://username:password@hostname/database"
 
-5 Run CapoRSS using Puma:
+5 Run CapoRSS using Thin:
 
-	bundle exec puma config.ru -e production
+	bundle exec thin -R config.ru -e production
 
 6. Open a web browser and go to "http://localhost:3000"
 7. The default username/password is "admin"/"admin"
@@ -78,6 +78,7 @@ See these pages for more informations :
 ### Openshift
 
 CapoRSS can also be deloyed on Openshift using the diy-0.1 and mysql-5.5 cartridges. The cron cartridge is also required if you want automatic feed updates.
+
 	rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4 --from-code=https://github.com/fcapovilla/caporss.git --timeout=9999
 
 Please note that the deployment can take a long time because Ruby and some gems need to be compiled on the server during the first deployment.
