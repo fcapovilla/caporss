@@ -21,14 +21,14 @@ describe "Settings route" do
 
 		user = User.first(:username => 'user')
 		user.cleanup_after.should_not == 100
-		user.refresh_timeout.should_not == 10
+		user.refresh_timeout.should_not == 30
 		user.sync_timeout.should_not == 20
 		user.default_locale.should_not == 'fr'
 		user.items_per_page.should_not == 10
 
 		post '/save_settings',
 			:cleanup_after => 100,
-			:refresh_timeout => 10,
+			:refresh_timeout => 30,
 			:sync_timeout => 20,
 			:default_locale => 'fr',
 			:items_per_page => 10
@@ -36,7 +36,7 @@ describe "Settings route" do
 
 		user.reload
 		user.cleanup_after.should == 100
-		user.refresh_timeout.should == 10
+		user.refresh_timeout.should == 30
 		user.sync_timeout.should == 20
 		user.default_locale.should == 'fr'
 		user.items_per_page.should == 10
@@ -106,7 +106,7 @@ describe "Settings route" do
 		authorize 'user', 'user'
 		user = User.first(:username => 'user')
 
-		user.refresh_timeout.should == 10
+		user.refresh_timeout.should == 30
 
 		post '/save_settings', :refresh_timeout => -1
 		session[:flash][:error].should_not be_nil
