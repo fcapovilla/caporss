@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.16.1
+Version 0.16.2
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -24,7 +24,7 @@ CapoRSS is a simple self-hosted RSS aggregator written in Ruby and Javascript.
 
 This procedure will run CapoRSS in development mode using an SQLite database
 
-1. Install Ruby 1.9.3
+1. Install Ruby 2.1.0
 2. Install the "bundler" Ruby gem using this command:
 
     gem install bundler
@@ -44,7 +44,7 @@ This procedure will run CapoRSS in development mode using an SQLite database
 
 CapoRSS can be run in production mode with Puma and PostgreSQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
 
-1. Install Ruby 1.9.3
+1. Install Ruby 2.1.0
 2. Install the "bundler" Ruby gem using this command:
 
     gem install bundler
@@ -68,14 +68,19 @@ Notes:
 * For security reasons, a SSL certificate is required for running CapoRSS in production mode.
 * The Postgres adapter is used in the production configuration by default. If you want to use MySQL, comment the "dm-postgres-adapter" gem and uncomment the "dm-mysql-adapter" gem in the Gemfile.
 
-### Heroku, AppFog and OpenShift
+### Heroku and AppFog
 
 CapoRSS is Heroku-ready and AppFog-ready, so you can push it on these services like any other Sinatra-based applications.
-CapoRSS was also tested to work on OpenShift using the ruby-1.9 and mysql-5.5 cartridges.
 See these pages for more informations :
 * [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 * [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
 
+### Openshift
+
+CapoRSS can also be deloyed on Openshift using the diy-0.1 and mysql-5.5 cartridges. The cron cartridge is also required if you want automatic feed updates.
+	rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4 --from-code=https://github.com/fcapovilla/caporss.git --timeout=9999
+
+Please note that the deployment can take a long time because Ruby and some gems need to be compiled on the server during the first deployment.
 
 ## Documentation
 
@@ -103,7 +108,7 @@ CapoRSS is built on top of these great projects :
 * [JQuery-cookie](https://github.com/carhartl/jquery-cookie)
 * [Haml](http://haml.info/)
 * [Sass](http://sass-lang.com/)
-* [Puma](http://puma.io/)
+* [Thin](http://code.macournoyer.com/thin/)
 * [rack-ssl-enforcer](https://github.com/tobmatth/rack-ssl-enforcer)
 * [sinatra-flash](https://github.com/SFEley/sinatra-flash)
 
