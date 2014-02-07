@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -f $OPENSHIFT_DATA_DIR/rbenv-init.sh ]; then
+	source $OPENSHIFT_DATA_DIR/rbenv-init.sh
+
+	cd $OPENSHIFT_REPO_DIR
+
+	nohup bundle exec thin -R config.ru -e production -a $OPENSHIFT_DIY_IP -p $OPENSHIFT_DIY_PORT start >${OPENSHIFT_DIY_LOG_DIR}/caporss.log 2>&1 &
+fi

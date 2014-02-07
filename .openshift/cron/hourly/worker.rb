@@ -7,7 +7,7 @@ require "uri"
 # Enter the "sync" user's password
 password = 'sync'
 # Enter the website's URL
-url = 'https://www.example.com'
+url = 'https://' + ENV['OPENSHIFT_APP_DNS']
 
 
 uri = URI.parse(url + '/full_sync')

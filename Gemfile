@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'puma'
+gem 'thin'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
@@ -35,7 +35,7 @@ end
 
 group :production do
 	gem 'dm-postgres-adapter'
-	#gem 'dm-mysql-adapter'
+	gem 'dm-mysql-adapter'
 
 	gem 'rack-ssl-enforcer'
 
