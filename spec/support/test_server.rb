@@ -4,7 +4,7 @@ require 'nokogiri'
 
 class TestServer < Sinatra::Base
 	disable :logging
-	set :server, 'puma'
+	set :server, 'thin'
 	set :public_folder, Proc.new { File.join(root, "static") }
 
 	get '/*.rss' do
