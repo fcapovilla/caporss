@@ -78,8 +78,15 @@ See these pages for more informations :
 ### Openshift
 
 CapoRSS can also be deloyed on Openshift using the diy-0.1 and mysql-5.5 cartridges. The cron cartridge is also required if you want automatic feed updates.
-
 	rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4 --from-code=https://github.com/fcapovilla/caporss.git --timeout=9999
+
+If the first installation method fails, you can try to deploy it in multiple steps :
+	rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4
+	cd caporss
+	git rm -rf diy misc .openshift
+	git remote add upstream -m master https://github.com/fcapovilla/caporss.git
+	git pull -s recursive -X theirs upstream master
+	git push
 
 Please note that the deployment can take a long time because Ruby and some gems need to be compiled on the server during the first deployment.
 
