@@ -63,9 +63,6 @@ $('#searchButton').click(function() {
 
 	CapoRSS.router.navigate(current_route + search_part, {trigger: true});
 
-	$('#searchModal').modal('hide');
-	$('#searchQuery').val('');
-
 	return false;
 });
 

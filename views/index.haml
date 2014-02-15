@@ -5,6 +5,9 @@
   .feed-list
     %ul(id="feed-list" class="list-unstyled")
 .content
+  .navbar.navbar-default.visible-md.visible-lg
+    .navbar-form
+      =partial 'partials/search'
   #item-list.hidden-xs(tabindex="100")
 #modal
 
@@ -12,7 +15,6 @@
 
 =partial 'partials/settings'
 =partial 'partials/opml_upload'
-=partial 'partials/search'
 
 -# Underscore templates
 

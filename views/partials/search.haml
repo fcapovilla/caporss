@@ -1,32 +1,25 @@
 -# Search form
 
-%div(class="modal" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true")
-  .modal-dialog
-    .modal-content
-      .modal-header
-        =t.search.title
-        %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
-          x
-      %form(id="searchForm" method="get" action="#")
-        .modal-body
-          .input-group
-            %input(class="form-control" type="text" id="searchQuery" aria-hidden="true")
-            %span.input-group-btn
-              %button(type="submit" id="searchButton" class="btn btn-default" aria-hidden="true")
-                %i.fa.fa-search
-          .checkbox
-            %label(for="searchInTitle")
-              %input(type="checkbox" id="searchInTitle" checked="checked")
-              =t.search.in_title
-          .form-group
-            %label(for="sortType")
-              =t.search.sort_by
-            %select(class="form-control" id="sortType")
-              %option(value="dateAsc")
-                =t.search.sort.date.asc
-              %option(value="dateDesc" selected="selected")
-                =t.search.sort.date.desc
-              %option(value="titleAsc")
-                =t.search.sort.title.asc
-              %option(value="titleDesc")
-                =t.search.sort.title.desc
+%form(id="searchForm" method="get" action="#" class="form-inline")
+  .form-group
+    .input-group.input-group-sm
+      %input(class="form-control" type="text" id="searchQuery" aria-hidden="true")
+      %span.input-group-btn
+        %button(type="submit" id="searchButton" class="btn btn-default" aria-hidden="true")
+          %i.fa.fa-search
+  .form-group
+    %label(for="sortType")
+      =t.search.sort_by
+    %select(class="form-control input-sm" id="sortType")
+      %option(value="dateAsc")
+        =t.search.sort.date.asc
+      %option(value="dateDesc" selected="selected")
+        =t.search.sort.date.desc
+      %option(value="titleAsc")
+        =t.search.sort.title.asc
+      %option(value="titleDesc")
+        =t.search.sort.title.desc
+  .checkbox
+    %label(for="searchInTitle")
+      %input(type="checkbox" id="searchInTitle" checked="checked")
+      =t.search.in_title

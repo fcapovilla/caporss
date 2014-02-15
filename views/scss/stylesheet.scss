@@ -65,6 +65,13 @@ form {
 	overflow: auto;
 }
 
+#searchForm {
+	.form-group,
+	.checkbox {
+		width: 200px;
+	}
+}
+
 // Desktop view
 @media screen and (min-width:768px) {
 	.content {

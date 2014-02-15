@@ -109,7 +109,7 @@ search:
     current_sort_order: Tri courant
     title: Recherche
     in_title: Recherche dans les titres seulement
-    sort_by: "Trier par : "
+    sort_by: "Tri : "
     sort:
         date:
             asc: Date (Asc)

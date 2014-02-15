@@ -56,7 +56,7 @@ $(function() {
 		}
 		else {
 			$('.feed-list').css('height', $(window).height() - 36);
-			$('#item-list').css('height', $(window).height());
+			$('#item-list').css('height', $(window).height() - 32);
 		}
 	}).resize();
 
