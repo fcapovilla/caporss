@@ -52,13 +52,16 @@ $(function() {
 
 	// Resize the lists on viewport size changes
 	$(window).on('resize orientationChanged', function() {
+		var itemlist = $('#item-list');
+		var feedlist = $('.feed-list');
+
 		if($(window).width() <= 767) {
-			$('.feed-list').css('height', $(window).height() - 40);
-			$('#item-list').css('height', $(window).height() - 40);
+			feedlist.css('height', $(window).height() - feedlist.position().top);
+			itemlist.css('height', $(window).height() - itemlist.position().top);
 		}
 		else {
-			$('.feed-list').css('height', $(window).height() - 36);
-			$('#item-list').css('height', $(window).height() - 32);
+			feedlist.css('height', $(window).height() - feedlist.position().top);
+			itemlist.css('height', $(window).height() - itemlist.position().top);
 		}
 	}).resize();
 
@@ -91,7 +94,7 @@ $(function() {
 			if(CapoRSS.router.itemList !== null) {
 				CapoRSS.router.itemList.onItemListScroll();
 			}
-		}, 300)
+		}, 400)
 	);
 
 	// Everything is ready, fetch folders
