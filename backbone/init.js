@@ -86,11 +86,13 @@ $(function() {
 	}
 
 	// Automatic page fetching
-	$('#item-list').scroll(function() {
-		if(CapoRSS.router.itemList !== null) {
-			CapoRSS.router.itemList.onItemListScroll();
-		}
-	});
+	$('#item-list').scroll(
+		_.throttle(function() {
+			if(CapoRSS.router.itemList !== null) {
+				CapoRSS.router.itemList.onItemListScroll();
+			}
+		}, 300)
+	);
 
 	// Everything is ready, fetch folders
 	CapoRSS.folders.fetch({success: function() {
