@@ -6,8 +6,7 @@
     %ul(id="feed-list" class="list-unstyled")
 .content
   .navbar.navbar-default.visible-md.visible-lg
-    .navbar-form
-      =partial 'partials/search'
+    #filters.navbar-form
   #item-list.hidden-xs(tabindex="100")
 #modal
 
@@ -29,6 +28,7 @@
 =partial 'underscore/feed/subscription.tpl'
 =partial 'underscore/item/item.tpl'
 =partial 'underscore/item/itemlist.tpl'
+=partial 'underscore/filters.tpl'
 
 -# Javascript settings, translations and flash messages
 

@@ -7,6 +7,8 @@ $(function() {
 
 	CapoRSS.mainMenu = new CapoRSS.View.MainMenu();
 	CapoRSS.mainMenu.render();
+	CapoRSS.filters = new CapoRSS.View.Filters();
+	CapoRSS.filters.render();
 
 	// Prepare feed list for subscription settings tab
 	CapoRSS.subscriptions = new CapoRSS.Collection.Feed();

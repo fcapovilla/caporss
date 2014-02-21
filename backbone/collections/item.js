@@ -66,25 +66,25 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 		}
 
 		// Search query
-		if(options.data.query) {
-			this.query = options.data.query;
-			this.search_title = (options.data.search_title === true);
-		}
-		else {
+		if(options.data.query === null || options.data.query === undefined) {
 			if(this.query) {
 				options.data.query = this.query;
 				options.data.search_title = this.search_title;
 			}
 		}
+		else {
+			this.query = options.data.query;
+			this.search_title = (options.data.search_title === true);
+		}
 
 		// Sorting
-		if(options.data.sort) {
-			this.sort = options.data.sort;
-		}
-		else {
+		if(options.data.sort === null || options.data.sort === undefined) {
 			if(this.sort) {
 				options.data.sort = this.sort;
 			}
+		}
+		else {
+			this.sort = options.data.sort;
 		}
 
 		if(!options.data.show_read && !SETTINGS.show_read) {

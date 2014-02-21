@@ -86,10 +86,7 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 			$.cookie('show_read', false, {expires: 10000});
 		}
 
-		if(CapoRSS.router.currentSelection !== null) {
-			CapoRSS.router.itemList.cursor = null;
-			CapoRSS.router.currentSelection.items.fetch({reset: true, reset_pagination: true});
-		}
+		CapoRSS.router.refreshItemList();
 	},
 
 	/**
