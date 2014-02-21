@@ -138,7 +138,7 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 			var that = this;
 			this.once('render', function() {
 				var elem = $('#item-list').eq(0);
-				elem.scrollTop(that.$el.position().top + elem.scrollTop());
+				elem.scrollTop(that.$el.position().top + elem.scrollTop() - elem.position().top);
 			});
 		}
 	}
