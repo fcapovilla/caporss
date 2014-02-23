@@ -6,9 +6,12 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 		this.current_page = 1;
 		this.all_loaded = false;
 
-		this.query = '';
-		this.sort = '';
-		this.search_title = true;
+		this.filters = {
+			query: '',
+			sort: '',
+			search_title: true,
+			show_read: true
+		};
 
 		if(options !== undefined && options.show_feed_titles) {
 			this.show_feed_titles = true;
@@ -65,31 +68,8 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 			}
 		}
 
-		// Search query
-		if(options.data.query === null || options.data.query === undefined) {
-			if(this.query) {
-				options.data.query = this.query;
-				options.data.search_title = this.search_title;
-			}
-		}
-		else {
-			this.query = options.data.query;
-			this.search_title = (options.data.search_title === true);
-		}
-
-		// Sorting
-		if(options.data.sort === null || options.data.sort === undefined) {
-			if(this.sort) {
-				options.data.sort = this.sort;
-			}
-		}
-		else {
-			this.sort = options.data.sort;
-		}
-
-		if(!options.data.show_read && !SETTINGS.show_read) {
-			options.data.show_read = false;
-		}
+		options.data = _.defaults(options.data, this.filters);
+		this.filters = _.pick(options.data, _.keys(this.filters));
 
 		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
 

@@ -76,17 +76,16 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	 */
 	setReadVisibility: function(show_read) {
 		if(show_read) {
-			SETTINGS.show_read = true;
 			this.$('#toggleReadVisibility>i').attr('class', 'fa fa-eye');
-			$.cookie('show_read', true, {expires: 10000});
 		}
 		else {
-			SETTINGS.show_read = false;
 			this.$('#toggleReadVisibility>i').attr('class', 'fa fa-eye-slash');
-			$.cookie('show_read', false, {expires: 10000});
 		}
 
-		CapoRSS.router.refreshItemList();
+		$.cookie('show_read', show_read, {expires: 10000});
+		SETTINGS.show_read = show_read;
+
+		CapoRSS.router.refreshItemList({show_read: show_read});
 	},
 
 	/**

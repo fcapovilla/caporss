@@ -12,10 +12,12 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		});
 		this.currentSelection = null;
 		this.itemList = null;
+
 		this.filters = {
 			query: '',
 			search_title: true,
-			sort: ''
+			sort: '',
+			show_read: SETTINGS.show_read
 		};
 	},
 
@@ -74,8 +76,8 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 	},
 
 	refreshItemList: function(filters) {
-		if(filters) {
-			this.filters = filters;
+		if(filters !== null) {
+			this.filters = _.defaults(filters, this.filters);
 		}
 
 		if(this.currentSelection !== null) {
