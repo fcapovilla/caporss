@@ -6,12 +6,13 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 		this.current_page = 1;
 		this.all_loaded = false;
 
-		this.filters = {
+		this.default_filters = {
 			query: '',
 			sort: '',
 			search_title: true,
 			show_read: true
 		};
+		this.filters = this.default_filters;
 
 		if(options !== undefined && options.show_feed_titles) {
 			this.show_feed_titles = true;
@@ -70,6 +71,13 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 
 		options.data = _.defaults(options.data, this.filters);
 		this.filters = _.pick(options.data, _.keys(this.filters));
+
+		// Clean data
+		_.each(this.default_filters, function(val, key) {
+			if(options.data[key] === val) {
+				delete options.data[key];
+			}
+		});
 
 		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
 

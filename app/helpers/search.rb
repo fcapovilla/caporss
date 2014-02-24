@@ -11,10 +11,10 @@ def prepare_item_search(params)
 	options[:read] = false if params[:show_read] == 'false'
 
 	unless params[:query].nil?
-		if params[:search_title] == 'true'
-			options[:title.like] = "%#{params[:query]}%"
-		else
+		if params[:search_title] == 'false'
 			options[:content.like] = "%#{params[:query]}%"
+		else
+			options[:title.like] = "%#{params[:query]}%"
 		end
 	end
 
