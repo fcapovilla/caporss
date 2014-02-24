@@ -51,7 +51,7 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		var options = {
 			reset: true,
 			reset_pagination: true,
-			data: this.filters,
+			data: _.clone(this.filters),
 			success: function() {
 				that.itemListRegion.show(that.itemList);
 			}
@@ -85,7 +85,7 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 			return this.itemList.collection.fetch({
 				reset: true,
 				reset_pagination: true,
-				data: this.filters
+				data: _.clone(this.filters)
 			});
 		}
 	},
