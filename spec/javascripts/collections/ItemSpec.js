@@ -34,7 +34,7 @@ describe("Item Collection", function() {
 
 			expect(this.server.requests.length).toEqual(1);
 			expect(this.server.requests[0].method).toEqual("GET");
-			expect(this.server.requests[0].url).toEqual("/api/item?limit=5&offset=10&query=test&search_title=true&show_read=false");
+			expect(this.server.requests[0].url).toEqual("/api/item?limit=5&offset=10&query=test&show_read=false");
 
 			this.items.fetch({data: {
 				offset: 20,
@@ -43,20 +43,18 @@ describe("Item Collection", function() {
 
 			expect(this.server.requests.length).toEqual(2);
 			expect(this.server.requests[1].method).toEqual("GET");
-			expect(this.server.requests[1].url).toEqual("/api/item?offset=20&show_read=true&limit=2&query=test&search_title=true");
+			expect(this.server.requests[1].url).toEqual("/api/item?offset=20&limit=2&query=test");
 		});
 
-		it("gets its default values from SETTINGS", function() {
+		it("gets its default items_per_page values from SETTINGS", function() {
 			SETTINGS.items_per_page = 5;
-			SETTINGS.show_read = false;
 			this.items.fetch();
 
 			expect(this.server.requests.length).toEqual(1);
 			expect(this.server.requests[0].method).toEqual("GET");
-			expect(this.server.requests[0].url).toEqual("/api/item?limit=5&show_read=false");
+			expect(this.server.requests[0].url).toEqual("/api/item?limit=5");
 
 			SETTINGS.items_per_page = 10;
-			SETTINGS.show_read = true;
 			this.items.fetch();
 
 			expect(this.server.requests.length).toEqual(2);

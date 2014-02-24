@@ -75,7 +75,7 @@ describe("Folder View", function() {
 			});
 
 			it("marks all folder items as read on confirmation", function() {
-				spyOn(window, 'confirm').andReturn(true);
+				spyOn(window, 'confirm').and.returnValue(true);
 				this.view.$el.find('.markFolderReadAction').trigger('click');
 
 				expect(this.folder.feeds.get(1).markRead).toHaveBeenCalledOnce();
@@ -83,7 +83,7 @@ describe("Folder View", function() {
 			});
 
 			it("doesn't mark the folder as read without confirmation", function() {
-				spyOn(window, 'confirm').andReturn(false);
+				spyOn(window, 'confirm').and.returnValue(false);
 				this.view.$el.find('.markFolderReadAction').trigger('click');
 
 				expect(this.folder.feeds.get(1).markRead).not.toHaveBeenCalledOnce();
@@ -103,7 +103,7 @@ describe("Folder View", function() {
 			});
 
 			it("marks all folder items as unread on confirmation", function() {
-				spyOn(window, 'confirm').andReturn(true);
+				spyOn(window, 'confirm').and.returnValue(true);
 				this.view.$el.find('.markFolderUnreadAction').trigger('click');
 
 				expect(this.folder.feeds.get(1).markUnread).toHaveBeenCalledOnce();
@@ -111,7 +111,7 @@ describe("Folder View", function() {
 			});
 
 			it("doesn't mark the folder as unread without confirmation", function() {
-				spyOn(window, 'confirm').andReturn(false);
+				spyOn(window, 'confirm').and.returnValue(false);
 				this.view.$el.find('.markFolderUnreadAction').trigger('click');
 
 				expect(this.folder.feeds.get(1).markUnread).not.toHaveBeenCalledOnce();
@@ -148,14 +148,14 @@ describe("Folder View", function() {
 			});
 
 			it("deletes the folder on confirmation", function() {
-				spyOn(window, 'confirm').andReturn(true);
+				spyOn(window, 'confirm').and.returnValue(true);
 				this.view.$el.find('.deleteFolderAction').trigger('click');
 
 				expect(this.folder.destroy).toHaveBeenCalledOnce();
 			});
 
 			it("doesn't delete the folder without confirmation", function() {
-				spyOn(window, 'confirm').andReturn(false);
+				spyOn(window, 'confirm').and.returnValue(false);
 				this.view.$el.find('.deleteFolderAction').trigger('click');
 
 				expect(this.folder.destroy).not.toHaveBeenCalledOnce();

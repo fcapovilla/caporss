@@ -6,7 +6,8 @@ describe("Main Menu View", function() {
 			currentSelection: null,
 			itemList: {
 				moveCursor: function(direction) {}
-			}
+			},
+			refreshItemList: function(filters) {}
 		};
 
 		this.view = new CapoRSS.View.MainMenu({el: null});

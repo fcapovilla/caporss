@@ -116,14 +116,14 @@ describe("Feed View", function() {
 			});
 
 			it("deletes the feed on confirmation", function() {
-				spyOn(window, 'confirm').andReturn(true);
+				spyOn(window, 'confirm').and.returnValue(true);
 				this.view.$el.find('.deleteFeedAction').trigger('click');
 
 				expect(this.feed.destroy).toHaveBeenCalledOnce();
 			});
 
 			it("doesn't delete the feed without confirmation", function() {
-				spyOn(window, 'confirm').andReturn(false);
+				spyOn(window, 'confirm').and.returnValue(false);
 				this.view.$el.find('.deleteFeedAction').trigger('click');
 
 				expect(this.feed.destroy).not.toHaveBeenCalledOnce();
