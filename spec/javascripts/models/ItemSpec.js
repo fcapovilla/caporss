@@ -4,6 +4,10 @@ describe("Item Model", function() {
 
 		this.item = new CapoRSS.Model.Item({id: 1, read: false, feed_id: 1});
 		this.item.collection = {url: '/api/item'};
+
+		CapoRSS.router = {
+			currentSelection: null,
+		};
 	});
 
 	it("can toggle its read attribute", function() {

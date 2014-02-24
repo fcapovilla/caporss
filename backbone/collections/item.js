@@ -80,6 +80,9 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 				delete options.data[key];
 			}
 		});
+		if(options.data.query === undefined) {
+			delete options.data.search_title;
+		}
 
 		var deferred = Backbone.Collection.prototype.fetch.call(this, options);
 
