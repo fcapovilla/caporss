@@ -9,10 +9,12 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 		this.default_filters = {
 			query: '',
 			sort: '',
-			search_title: true,
+			search_title: false,
 			show_read: true
 		};
-		this.filters = this.default_filters;
+
+		this.filters = _.clone(this.default_filters);
+		this.filters.search_title = true;
 
 		if(options !== undefined && options.show_feed_titles) {
 			this.show_feed_titles = true;
@@ -72,7 +74,7 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 		options.data = _.defaults(options.data, this.filters);
 		this.filters = _.pick(options.data, _.keys(this.filters));
 
-		// Clean data
+		// Clean up data
 		_.each(this.default_filters, function(val, key) {
 			if(options.data[key] === val) {
 				delete options.data[key];
