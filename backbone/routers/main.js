@@ -37,6 +37,9 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		$('.mobile-item-button').addClass('invisible');
 		$('#item-list').addClass('hidden-xs');
 		$('.feed-list').removeClass('hidden-xs');
+
+		// FIXME: This line is needed to fix scrolling on mobile. A CSS fix would be better.
+		$(window).resize();
 	},
 
 	/**
@@ -73,6 +76,9 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		$('.feed-list').addClass('hidden-xs');
 		$('.mobile-item-button').removeClass('invisible');
 		$('#item-list').focus();
+
+		// FIXME: This line is needed to fix scrolling on mobile. A CSS fix would be better.
+		$(window).resize();
 	},
 
 	refreshItemList: function(filters) {
