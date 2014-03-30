@@ -1,18 +1,20 @@
 # encoding: utf-8
 require 'uri'
-require 'feedzirra'
+require 'feedjira'
 require 'net/http'
 
-# Force enclosure parsing on all Feedzirra feed entries
-Feedzirra::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
 
-# Add Pubsubhubbub hub parsing to all Feedzirra feed entries (hub + topic)
-Feedzirra::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
-Feedzirra::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
-Feedzirra::Feed.add_common_feed_element(:'link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
-Feedzirra::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :topic, :with => {:rel => 'self'})
-Feedzirra::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :topic, :with => {:rel => 'self'})
-Feedzirra::Feed.add_common_feed_element(:'link', :value => :href, :as => :topic, :with => {:rel => 'self'})
+# Force enclosure parsing on all Feedjira feed entries
+Feedjira::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
+
+# Add Pubsubhubbub hub parsing to all Feedjira feed entries (hub + topic)
+Feedjira::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
+Feedjira::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
+Feedjira::Feed.add_common_feed_element(:'link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
+Feedjira::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :topic, :with => {:rel => 'self'})
+Feedjira::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :topic, :with => {:rel => 'self'})
+Feedjira::Feed.add_common_feed_element(:'link', :value => :href, :as => :topic, :with => {:rel => 'self'})
+
 
 class Feed
 	include DataMapper::Resource
@@ -43,9 +45,9 @@ class Feed
 	end
 
 
-	# Fetch the feed using feedzirra and update it
+	# Fetch the feed using Feedjira and update it
 	def sync!
-		feed = Feedzirra::Feed.fetch_and_parse(self.url, {:max_redirects => 3, :timeout => 30})
+		feed = Feedjira::Feed.fetch_and_parse(self.url, {:max_redirects => 3, :timeout => 30})
 		if feed.kind_of?(Fixnum)
 			self.sync_error = feed
 			self.save
@@ -54,7 +56,7 @@ class Feed
 		end
 	end
 
-	# Update the feed using a feedzirra feed object
+	# Update the feed using a Feedjira feed object
 	def update_feed!(feed)
 		unless self.pshb
 			if feed.hub

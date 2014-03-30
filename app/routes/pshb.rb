@@ -22,7 +22,7 @@ post '/pshb/callback/:id' do
 
 	# Parse and update the feed in the background
 	task = Thread.new do
-		entries = Feedzirra::Feed.parse(request.body.read)
+		entries = Feedjira::Feed.parse(request.body.read)
 		feed = Feed.get(id)
 
 		if feed and feed.pshb

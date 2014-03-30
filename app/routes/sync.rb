@@ -16,7 +16,7 @@ post '/full_sync' do
 	urls = Feed.all(:pshb => false).map{ |feed| feed.url }
 	urls.uniq!
 
-	feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
+	feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
 
 	updated_count = 0
 	new_items = 0
@@ -64,7 +64,7 @@ namespace '/sync' do
 		urls = Feed.all(:user => @user, :pshb => false).map{ |feed| feed.url }
 		urls.uniq!
 
-		feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
+		feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
 
 		updated_count = 0
 		new_items = 0
@@ -95,7 +95,7 @@ namespace '/sync' do
 		urls = folder.feeds.map{ |feed| feed.url }
 		urls.uniq!
 
-		feeds = Feedzirra::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
+		feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
 
 		updated_count = 0
 		new_items = 0

@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.17.0
+Version 0.18.0
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -31,7 +31,7 @@ This procedure will run CapoRSS in development mode using an SQLite database
 
 3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-	bundle install --without=production test
+	bundle install --without production test travis
 
 4. Start CapoRSS using this command:
 
@@ -51,7 +51,7 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 3. Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-	bundle install --without=development test
+	bundle install --without development test travis
 
 4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
 
@@ -92,6 +92,22 @@ If the first installation method fails, you can try to deploy it in multiple ste
 
 Please note that the deployment can take a long time because Ruby and some gems need to be compiled on the server during the first deployment.
 
+## Tests
+
+To run tests locally :
+
+1. Install required packages with bundle:
+
+	bundle install --without production development travis
+
+2. Run Ruby tests :
+
+	DATABASE_URL="sqlite::memory:" bundle exec rspec spec
+
+3. Run Javascript tests :
+
+	rake jasmine:ci
+
 ## Documentation
 
 * [English version](doc/en.textile)
@@ -101,10 +117,10 @@ Please note that the deployment can take a long time because Ruby and some gems 
 
 CapoRSS is built on top of these great projects :
 
-* [Ruby 1.9.3](http://www.ruby-lang.org/)
+* [Ruby](http://www.ruby-lang.org/)
 * [Sinatra](http://www.sinatrarb.com/)
 * [Datamapper](http://datamapper.org/)
-* [Feedzirra](https://github.com/pauldix/feedzirra)
+* [Feedjira](http://feedjira.com/)
 * [Nokogiri](http://nokogiri.org/)
 * [R18n](https://github.com/ai/r18n)
 * [Bootstrap](http://twitter.github.com/bootstrap/)

@@ -16,27 +16,26 @@ gem 'dm-is-list'
 gem 'moneta'
 
 gem 'nokogiri'
-gem 'feedzirra'
+gem 'feedjira'
 gem 'json'
 
-group :development do
+group :development, :travis, :test do
 	gem 'dm-sqlite-adapter'
 end
 
-group :test do
-	gem 'dm-sqlite-adapter'
-	gem 'dm-postgres-adapter'
-	gem 'dm-mysql-adapter'
+group :travis, :test do
 	gem 'rspec'
 	gem 'coveralls', require: false
 	gem 'jasmine'
 	gem 'rake'
 end
 
-group :production do
+group :travis, :production do
 	gem 'dm-postgres-adapter'
 	gem 'dm-mysql-adapter'
+end
 
+group :production do
 	gem 'rack-ssl-enforcer'
 
 	gem 'therubyracer'
