@@ -1,7 +1,7 @@
 {
   "name": "caporss",
   "dependencies": {
-    "jquery": "*",
+    "jquery": ">=2.0.0",
     "lodash": "*",
     "backbone": "*",
     "marionette": "*",
@@ -13,4 +13,3 @@
     "jquery-cookie": "*"
   }
 }
-
