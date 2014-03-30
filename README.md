@@ -108,6 +108,25 @@ To run tests locally :
 
 	rake jasmine:ci
 
+## Javascript libraries management
+
+This procedure is not required to use CapoRSS. It is only necessary if you want to manage or update the Javascript dependencies of CapoRSS.
+To update Javascript libraries :
+
+1. Install Node and npm
+
+2. Install Grunt and Bower :
+
+	npm install
+
+3. Install Javascript dependencies with Bower :
+
+	bower install
+
+4. Concatenate and minify dependencies using grunt :
+
+	grunt
+
 ## Documentation
 
 * [English version](doc/en.textile)
@@ -137,6 +156,8 @@ CapoRSS is built on top of these great projects :
 * [Thin](http://code.macournoyer.com/thin/)
 * [rack-ssl-enforcer](https://github.com/tobmatth/rack-ssl-enforcer)
 * [sinatra-flash](https://github.com/SFEley/sinatra-flash)
+* [Bower](http://bower.io/)
+* [Grunt](http://gruntjs.com/)
 
 Also, CapoRSS's favicon is from the [RRZE Icon Set](http://rrze-icon-set.berlios.de/)
 

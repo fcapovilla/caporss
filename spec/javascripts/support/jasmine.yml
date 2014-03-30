@@ -12,14 +12,7 @@
 #
 src_files:
     - spec/javascripts/helpers/globals.js
-    - public/js/json2.js
-    - public/js/jquery-2.0.3.min.js
-    - public/js/jquery.cookie.js
-    - public/js/jquery.pnotify.min.js
-    - public/js/bootstrap.min.js
-    - public/js/lodash.min.js
-    - public/js/backbone-min.js
-    - public/js/backbone.marionette.min.js
+    - public/js/libs.js
     - backbone/routers/*.js
     - backbone/models/*.js
     - backbone/collections/*.js

@@ -1,0 +1,16 @@
+{
+  "name": "caporss",
+  "dependencies": {
+    "jquery": "*",
+    "lodash": "*",
+    "backbone": "*",
+    "marionette": "*",
+    "bootstrap": "*",
+    "bootstrap3-typeahead": "*",
+    "font-awesome": "*",
+    "pnotify": "*",
+    "json2": "*",
+    "jquery-cookie": "*"
+  }
+}
+

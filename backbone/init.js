@@ -19,6 +19,7 @@ $(function() {
 	var pnotify_stack = {'dir1': 'up', 'dir2': 'left'};
 	$.pnotify.defaults.addclass = 'stack-bottomright';
 	$.pnotify.defaults.history = false;
+	$.pnotify.defaults.styling = 'fontawesome';
 	$.pnotify.defaults.stack = pnotify_stack;
 
 	// Show flash messages

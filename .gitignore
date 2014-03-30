@@ -1,6 +1,8 @@
 .bundle/*
+.bower_components/*
 .sass-cache/*
 rss.db
 manifest.yml
 coverage/*
+node_modules/*
 tags
