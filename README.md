@@ -55,7 +55,7 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
 
-		export DATABASE\_URL="postgres://username:password@hostname/database"
+		export DATABASE_URL="postgres://username:password@hostname/database"
 
 5. Run CapoRSS using Thin:
 
