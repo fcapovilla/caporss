@@ -27,15 +27,15 @@ This procedure will run CapoRSS in development mode using an SQLite database
 1. Install Ruby 2.1.0
 2. Install the "bundler" Ruby gem using this command:
 
-	gem install bundler
+ 	gem install bundler
 
 3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-	bundle install --without production test travis
+ 	bundle install --without production test travis
 
 4. Start CapoRSS using this command:
 
-	bundle exec ruby app.rb
+ 	bundle exec ruby app.rb
 
 5. Open a web browser and go to "http://localhost:4567"
 6. The default username/password is "admin"/"admin"
@@ -47,19 +47,19 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 1. Install Ruby 2.1.0
 2. Install the "bundler" Ruby gem using this command:
 
-	gem install bundler
+ 	gem install bundler
 
 3. Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 
-	bundle install --without development test travis
+ 	bundle install --without development test travis
 
 4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
 
-	export DATABASE\_URL="postgres://username:password@hostname/database"
+ 	export DATABASE\_URL="postgres://username:password@hostname/database"
 
-5 Run CapoRSS using Thin:
+5. Run CapoRSS using Thin:
 
-	bundle exec thin -R config.ru -e production
+ 	bundle exec thin -R config.ru -e production
 
 6. Open a web browser and go to "http://localhost:3000"
 7. The default username/password is "admin"/"admin"
@@ -98,15 +98,15 @@ To run tests locally :
 
 1. Install required packages with bundle:
 
-	bundle install --without production development travis
+ 	bundle install --without production development travis
 
 2. Run Ruby tests :
 
-	DATABASE_URL="sqlite::memory:" bundle exec rspec spec
+ 	DATABASE_URL="sqlite::memory:" bundle exec rspec spec
 
 3. Run Javascript tests :
 
-	rake jasmine:ci
+ 	rake jasmine:ci
 
 ## Javascript libraries management
 
@@ -117,15 +117,15 @@ To update Javascript libraries :
 
 2. Install Grunt and Bower :
 
-	npm install
+ 	npm install
 
 3. Install Javascript dependencies with Bower :
 
-	bower install
+ 	bower install
 
 4. Concatenate and minify dependencies using grunt :
 
-	grunt
+ 	grunt
 
 ## Documentation
 
