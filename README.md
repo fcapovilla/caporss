@@ -75,6 +75,11 @@ See these pages for more informations :
 * [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
 * [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
 
+Notes :
+* On Heroku, you must set the BUNDLE\_WITHOUT environment variable so only the production gems are installed:
+
+		heroku config:set BUNDLE_WITHOUT="development:test:travis"
+
 ### Openshift
 
 CapoRSS can also be deloyed on Openshift using the diy-0.1 and mysql-5.5 cartridges. The cron cartridge is also required if you want automatic feed updates.
