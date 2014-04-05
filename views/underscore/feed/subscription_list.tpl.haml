@@ -28,6 +28,14 @@
               <i class="fa fa-sort" data-column="last_update"></i>
             <% } %>
           </th>
+          <th class="sortable" data-column="last_sync">
+            #{t.subscription.last_sync}
+            <% if(sortAttribute == 'last_sync') { %>
+              <i class="fa fa-sort-<%= sortDirection?'down':'up' %>"></i>
+            <% } else { %>
+              <i class="fa fa-sort" data-column="last_sync"></i>
+            <% } %>
+          </th>
           <th class="sortable" data-column="sync_error">
             #{t.subscription.sync_error}
             <% if(sortAttribute == 'sync_error') { %>

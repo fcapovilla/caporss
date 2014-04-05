@@ -13,10 +13,16 @@ post '/full_sync' do
 		end
 	end
 
-	urls = Feed.all(:pshb => false).map{ |feed| feed.url }
+	last_sync = DateTime.now
+	urls = Feed.all(:pshb => false).map{ |feed|
+		if feed.last_sync < last_sync
+			last_sync = feed.last_sync
+		end
+		feed.url
+	}
 	urls.uniq!
 
-	feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
+	feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30, :if_modified_since => last_sync})
 
 	updated_count = 0
 	new_items = 0
@@ -27,6 +33,7 @@ post '/full_sync' do
 				errors+=1
 
 				feed.sync_error = xml
+				feed.last_sync = DateTime.now
 				feed.save
 			else
 				old_count = feed.items.count
@@ -61,10 +68,16 @@ namespace '/sync' do
 	end
 
 	post '/all' do
-		urls = Feed.all(:user => @user, :pshb => false).map{ |feed| feed.url }
+		last_sync = DateTime.now
+		urls = Feed.all(:user => @user, :pshb => false).map{ |feed|
+			if feed.last_sync < last_sync
+				last_sync = feed.last_sync
+			end
+			feed.url
+		}
 		urls.uniq!
 
-		feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
+		feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30, :if_modified_since => last_sync})
 
 		updated_count = 0
 		new_items = 0
@@ -75,6 +88,7 @@ namespace '/sync' do
 					errors+=1
 
 					feed.sync_error = xml
+					feed.last_sync = DateTime.now
 					feed.save
 				else
 					old_count = feed.items.count
@@ -92,10 +106,16 @@ namespace '/sync' do
 	post '/folder/:id' do |id|
 		folder = Folder.first(:user => @user, :id => id)
 
-		urls = folder.feeds.map{ |feed| feed.url }
+		last_sync = DateTime.now
+		urls = folder.feeds.map{ |feed|
+			if feed.last_sync < last_sync
+				last_sync = feed.last_sync
+			end
+			feed.url
+		}
 		urls.uniq!
 
-		feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30})
+		feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30, :if_modified_since => last_sync})
 
 		updated_count = 0
 		new_items = 0
@@ -106,6 +126,7 @@ namespace '/sync' do
 					errors+=1
 
 					feed.sync_error = xml
+					feed.last_sync = DateTime.now
 					feed.save
 				else
 					old_count = feed.items.count

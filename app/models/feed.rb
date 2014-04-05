@@ -22,7 +22,8 @@ class Feed
 	property :id, Serial
 	property :title, String, :length => 100
 	property :url, String, :length => 1..2000
-	property :last_update, DateTime
+	property :last_update, DateTime, :default => DateTime.new(2000,1,1)
+	property :last_sync, DateTime, :default => DateTime.new(2000,1,1)
 	property :unread_count, Integer, :default => 0
 	property :sync_error, Integer, :default => 0
 
@@ -40,16 +41,12 @@ class Feed
 	validates_with_method :validate_url
 
 
-	before :create do |feed|
-		feed.last_update = DateTime.new(2000,1,1)
-	end
-
-
 	# Fetch the feed using Feedjira and update it
 	def sync!
-		feed = Feedjira::Feed.fetch_and_parse(self.url, {:max_redirects => 3, :timeout => 30})
+		feed = Feedjira::Feed.fetch_and_parse(self.url, {:max_redirects => 3, :timeout => 30, :if_modified_since => self.last_sync})
 		if feed.kind_of?(Fixnum)
 			self.sync_error = feed
+			self.last_sync = DateTime.now
 			self.save
 		elsif not feed.nil?
 			update_feed!(feed)
@@ -66,6 +63,13 @@ class Feed
 					self.pshb_topic = feed.topic
 				else
 					self.pshb_topic = self.url
+				end
+
+				# Exception for Youtube feeds
+				if self.pshb_topic =~ /^http:\/\/gdata\.youtube\.com/
+					uri = URI.parse(self.pshb_topic)
+					uri.query = 'v=2'
+					self.pshb_topic = uri.to_s
 				end
 			else
 				self.pshb_hub = ''
@@ -136,6 +140,7 @@ class Feed
 		self.save
 
 		self.last_update = newest unless newest.nil?
+		self.last_sync = DateTime.now
 
 		self.update_favicon!
 		self.update_unread_count!

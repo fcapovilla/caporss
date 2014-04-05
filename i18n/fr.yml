@@ -122,6 +122,7 @@ subscription:
     name: Nom
     unread_count: Non-lus
     last_update: Dernière mise à jour
-    sync_error: Erreur
+    last_sync: Dernière synchronisation
+    sync_error: Dernier code HTTP
     pshb: PSHB
     delete: Supprimer
