@@ -110,7 +110,7 @@ describe "Pubsubhubbub route" do
 
 		feed.reload
 		feed.pshb.should == false
-		feed.pshb_expiration.should be_nil
+		feed.pshb_expiration.should_not be_nil
 	end
 
 	after :all do

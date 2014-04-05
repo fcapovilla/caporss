@@ -241,7 +241,6 @@ class Feed
 		})
 
 		self.pshb = false
-		self.pshb_expiration = nil
 		self.save
 	end
 end

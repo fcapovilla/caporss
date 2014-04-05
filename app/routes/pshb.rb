@@ -5,16 +5,21 @@
 get '/pshb/callback/:id' do
 	feed = Feed.get(params[:id])
 
-	if !feed or !feed.pshb or feed.pshb_topic != params['hub.topic']
-		return 404
-	else
-		if params['hub.mode'] == 'subscribe'
+	if params['hub.mode'] == 'subscribe'
+		if feed and feed.pshb and feed.pshb_topic == params['hub.topic']
 			feed.pshb_expiration = Time.now + params['hub.lease_seconds'].to_i
 			feed.save
+			return params['hub.challenge']
 		end
-
-		return params['hub.challenge']
+	elsif params['hub.mode'] == 'unsubscribe'
+		if feed and !feed.pshb and feed.pshb_topic == params['hub.topic']
+			feed.pshb_expiration = nil
+			feed.save
+			return params['hub.challenge']
+		end
 	end
+
+	404
 end
 
 post '/pshb/callback/:id' do
