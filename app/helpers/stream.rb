@@ -6,5 +6,8 @@ def send_streams(event, data="")
 	content += "event: #{event}\n" unless event.nil?
 	content += "data: #{data}\n"
 	content += "\n"
+
+	puts "Sending event '#{event}' to #{Cache::connections.length} connection(s)"
+
 	Cache::connections.each { |out| out << content }
 end
