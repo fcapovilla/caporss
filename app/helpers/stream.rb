@@ -6,5 +6,5 @@ def send_streams(event, data="")
 	content += "event: #{event}\n" unless event.nil?
 	content += "data: #{data}\n"
 	content += "\n"
-	@@connections.each { |out| out << content }
+	Cache::connections.each { |out| out << content }
 end

@@ -32,16 +32,14 @@ end
 
 
 # Serve a concatenated version of the Backbone application
-@@backbone_cache = nil
-
 get '/app.js' do
 	root = settings.root + '/backbone'
 	content_type :js, 'charset' => 'utf-8'
 	last_modified File.mtime("#{root}/init.js")
 
 	# If we are in production, try to use a cached version of the backbone app
-	if settings.production? and @@backbone_cache
-		return @@backbone_cache
+	if settings.production? and Cache::backbone
+		return Cache::backbone
 	end
 
 	output = ""
@@ -64,7 +62,7 @@ get '/app.js' do
 	if settings.production?
 		require 'uglifier'
 		output = Uglifier.compile(output)
-		@@backbone_cache = output
+		Cache::backbone = output
 	end
 
 	output
@@ -79,16 +77,13 @@ end
 
 
 # Manage stream connections
-@@connections = []
-
 get '/stream' do
 	authorize_basic! :user
 	content_type 'text/event-stream', 'charset' => 'utf-8'
 
 	stream :keep_open do |out|
-		@@connections << out
-		out.callback { @@connections.delete(out) }
-		out.errback { @@connections.delete(out) }
+		Cache::addConnection(out)
+		out.callback { Cache::removeConnection(out) }
 	end
 end
 
