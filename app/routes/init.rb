@@ -83,7 +83,7 @@ get '/stream' do
 
 	stream :keep_open do |out|
 		# Keep connection alive
-		EventMachine::PeriodicTimer.new(20) { out << ":\n\n" }
+		EventMachine::PeriodicTimer.new(10) { out << "\0" }
 
 		Cache::addConnection(out)
 		out.callback { Cache::removeConnection(out) }
