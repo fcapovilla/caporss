@@ -82,6 +82,9 @@ get '/stream' do
 	content_type 'text/event-stream', 'charset' => 'utf-8'
 
 	stream :keep_open do |out|
+		# Keep connection alive
+		EventMachine::PeriodicTimer.new(20) { out << ":\n\n" }
+
 		Cache::addConnection(out)
 		out.callback { Cache::removeConnection(out) }
 	end
