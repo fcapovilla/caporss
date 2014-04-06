@@ -9,5 +9,5 @@ def send_streams(event, data="")
 
 	puts "Sending event '#{event}' to #{Cache::connections.length} connection(s)"
 
-	Cache::connections.each { |out| out << content }
+	Cache::connections.each { |out| out << content unless out.closed? }
 end
