@@ -24,9 +24,3 @@ configure :production do
 	use Rack::SslEnforcer
 end
 
-configure do
-	# Keep SSE connections alive
-	EventMachine::PeriodicTimer.new(10) do
-		Cache::connections.each { |out| out << "\0" }
-	end
-end
