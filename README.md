@@ -57,16 +57,15 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 		export DATABASE_URL="postgres://username:password@hostname/database"
 
-5. Run CapoRSS using Thin:
+5. Run CapoRSS using Thin (Replace YOUR_KEYFILE and YOUR_CERTFILE with the paths of your SSL certificate files:
 
-		bundle exec thin -R config.ru -e production
+		bundle exec thin -R config.ru -e production -d --ssl --ssl-key-file YOUR_KEYFILE --ssl-cert-file YOUR_CERTFILE start
 
 6. Open a web browser and go to "http://localhost:3000"
 7. The default username/password is "admin"/"admin"
 
 Notes:
 * For security reasons, a SSL certificate is required for running CapoRSS in production mode.
-* The Postgres adapter is used in the production configuration by default. If you want to use MySQL, comment the "dm-postgres-adapter" gem and uncomment the "dm-mysql-adapter" gem in the Gemfile.
 
 ### Heroku and AppFog
 
