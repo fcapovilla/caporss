@@ -152,7 +152,11 @@ if ['mysql', 'postgres'].include? adapter
 				execute 'ALTER TABLE feeds MODIFY pshb INT(11) DEFAULT 4'
 			elsif adapter == 'postgres'
 				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT null'
-				execute 'ALTER TABLE feeds ALTER COLUMN pshb TYPE INTEGER USING CASE WHEN pshb=false THEN 0 ELSE 1 END'
+				begin
+					execute 'ALTER TABLE feeds ALTER COLUMN pshb TYPE SMALLINT USING CASE WHEN pshb=false THEN 0 ELSE 1 END'
+				rescue
+					puts ">> Column pshb is not boolean. Nothing to do."
+				end
 				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT 4'
 			end
 
