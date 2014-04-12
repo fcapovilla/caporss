@@ -102,6 +102,11 @@ $(function() {
 					}
 				}
 			}
+
+			var subscription = CapoRSS.subscriptions.get(data.feed_id);
+			if(subscription) {
+				subscription.fetch();
+			}
 		});
 	}
 

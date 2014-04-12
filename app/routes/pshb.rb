@@ -10,12 +10,14 @@ get '/pshb/callback/:id' do
 			feed.pshb_expiration = Time.now + params['hub.lease_seconds'].to_i
 			feed.pshb = :active
 			feed.save
+			send_streams "sync:feed_updated", {:folder_id => feed.folder_id, :feed_id => feed.id}
 			return params['hub.challenge']
 		end
 	elsif params['hub.mode'] == 'unsubscribe'
 		if feed and feed.pshb == :inactive and feed.pshb_topic == params['hub.topic']
 			feed.pshb_expiration = nil
 			feed.save
+			send_streams "sync:feed_updated", {:folder_id => feed.folder_id, :feed_id => feed.id}
 			return params['hub.challenge']
 		end
 	end
