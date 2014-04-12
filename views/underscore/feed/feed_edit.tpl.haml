@@ -35,13 +35,11 @@
                       <td>#{t.edit_feed.pshb_expiration}</td>
                       <td><%= feed.pshb_expiration %></td>
                     </tr>
+                    <tr>
+                      <td>#{t.edit_feed.pshb_status}</td>
+                      <td><%= feed.pshb %></td>
+                    </tr>
                   </table>
-                </div>
-                <div class="checkbox">
-                  <label for="feedUsePSHB">
-                    <input type="checkbox" id="feedUsePSHB" <% if(feed.pshb) { %>checked="checked"<% } %> />
-                    #{t.edit_feed.use_pshb}
-                  </label>
                 </div>
               <% } %>
               <input type="hidden" id="feedId" value="" />

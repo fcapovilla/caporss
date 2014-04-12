@@ -53,10 +53,10 @@ edit_feed:
     url: "URL:"
     folder: "Folder:"
     reset: Reset feed
-    use_pshb: Use Pubsubhubbub
     pshb_topic: PSHB Topic
     pshb_hub: PSHB Hub
     pshb_expiration: Expiration
+    pshb_status: Status
     save: Save
 
 edit_folder:
@@ -124,5 +124,9 @@ subscription:
     last_update: Last update
     last_sync: Last sync
     sync_error: Last HTTP code
-    pshb: PSHB
+    pshb:
+        name: PSHB
+        inactive: Inactive
+        active: Active
+        requested: Requested
     delete: Delete

@@ -6,13 +6,14 @@ get '/pshb/callback/:id' do
 	feed = Feed.get(params[:id])
 
 	if params['hub.mode'] == 'subscribe'
-		if feed and feed.pshb and feed.pshb_topic == params['hub.topic']
+		if feed and feed.pshb == :requested and feed.pshb_topic == params['hub.topic']
 			feed.pshb_expiration = Time.now + params['hub.lease_seconds'].to_i
+			feed.pshb = :active
 			feed.save
 			return params['hub.challenge']
 		end
 	elsif params['hub.mode'] == 'unsubscribe'
-		if feed and !feed.pshb and feed.pshb_topic == params['hub.topic']
+		if feed and feed.pshb == :inactive and feed.pshb_topic == params['hub.topic']
 			feed.pshb_expiration = nil
 			feed.save
 			return params['hub.challenge']
@@ -30,7 +31,7 @@ post '/pshb/callback/:id' do
 		entries = Feedjira::Feed.parse(request.body.read)
 		feed = Feed.get(id)
 
-		if feed and feed.pshb
+		if feed and feed.pshb == :active
 			old_count = feed.items.count
 
 			feed.update_feed!(entries)

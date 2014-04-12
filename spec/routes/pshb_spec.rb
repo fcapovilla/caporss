@@ -6,7 +6,7 @@ describe "Pubsubhubbub route" do
 		admin = User.first(:username => 'admin')
 
 		folder = Folder.create(:title => "Folder", :user => admin)
-		feed = Feed.create(:title => "Feed", :url => "http://localhost:4567/1.rss?items=3&pshb=1", :user => admin)
+		feed = Feed.create(:title => "Feed", :url => "http://localhost:4567/1.rss?items=3&pshb=active", :user => admin)
 		folder.feeds << feed
 		folder.save
 
@@ -20,28 +20,28 @@ describe "Pubsubhubbub route" do
 		feed.sync!
 
 		feed.items.count.should == 3
-		feed.pshb.should == false
+		feed.pshb.should == :inactive
 		feed.pshb_hub.should == 'http://localhost:4567/pshb/hub'
-		feed.pshb_topic.should == 'http://localhost:4567/1.rss?items=3&pshb=1'
+		feed.pshb_topic.should == 'http://localhost:4567/1.rss?items=3&pshb=active'
 		feed.pshb_expiration.should be_nil
 
-		put "/api/feed/#{feed.id}", {:pshb => true}.to_json
+		put "/api/feed/#{feed.id}", {:pshb => "active"}.to_json
 
 		feed.reload
-		feed.pshb.should == true
+		feed.pshb.should == :requested
 		feed.pshb_expiration.should be_nil
 	end
 
 	it 'denies unknown or invalid intent validations' do
 		feed = Feed.first
-		feed.pshb.should == true
+		feed.pshb.should == :requested
 		feed.pshb_expiration.should be_nil
 
 		get "/pshb/callback/#{feed.id}", :'hub.topic' => 'invalid topic', :'hub.mode' => 'subscribe', :'hub.lease_seconds' => '3600', :'hub.challenge' => 'abcd'
 		last_response.status.should == 404
 
 		feed.reload
-		feed.pshb.should == true
+		feed.pshb.should == :requested
 		feed.pshb_expiration.should be_nil
 
 		get "/pshb/callback/999", :'hub.topic' => feed.pshb_topic, :'hub.mode' => 'subscribe', :'hub.lease_seconds' => '3600', :'hub.challenge' => 'abcd'
@@ -50,13 +50,15 @@ describe "Pubsubhubbub route" do
 
 	it 'responds correctly to hub intent validations' do
 		feed = Feed.first
-		feed.pshb.should == true
+		feed.pshb.should == :requested
 		feed.pshb_expiration.should be_nil
 
 		get "/pshb/callback/#{feed.id}", :'hub.topic' => feed.pshb_topic, :'hub.mode' => 'subscribe', :'hub.lease_seconds' => '3600', :'hub.challenge' => 'abcd'
 		last_response.body.should == 'abcd'
 
-		feed.reload.pshb_expiration.should_not be_nil
+		feed.reload
+		feed.pshb_expiration.should_not be_nil
+		feed.pshb.should == :active
 	end
 
 	it 'does nothing on invalid callback calls' do
@@ -104,12 +106,12 @@ describe "Pubsubhubbub route" do
 		authorize 'admin', 'admin'
 
 		feed = Feed.first
-		feed.pshb.should == true
+		feed.pshb.should == :active
 
-		put "/api/feed/#{feed.id}", {:pshb => false}.to_json
+		put "/api/feed/#{feed.id}", {:pshb => "inactive"}.to_json
 
 		feed.reload
-		feed.pshb.should == false
+		feed.pshb.should == :inactive
 		feed.pshb_expiration.should_not be_nil
 	end
 

@@ -20,10 +20,16 @@
     </td>
     <td>
       <% if(feed.pshb_hub) { %>
-        <% if(feed.pshb) { %>
-          <i class="fa fa-check-square-o togglePSHBAction"></i>
-        <% } else { %>
+        <% if(feed.pshb == 'inactive') { %>
           <i class="fa fa-square-o togglePSHBAction"></i>
+          #{t.subscription.pshb.inactive}
+        <% } else { %>
+          <i class="fa fa-check-square-o togglePSHBAction"></i>
+          <% if(feed.pshb == 'active') { %>
+            #{t.subscription.pshb.active}
+          <% } else { %>
+            #{t.subscription.pshb.requested}
+          <% } %>
         <% } %>
       <% } %>
     </td>

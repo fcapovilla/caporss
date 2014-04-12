@@ -6,7 +6,7 @@ post '/full_sync' do
 	authorize_basic! :sync
 	content_type :json, 'charset' => 'utf-8'
 
-	Feed.all(:pshb => true).each do |feed|
+	Feed.all(:pshb => :active).each do |feed|
 		# Resubscribe if the Pubsubhubbub subscription is almost expired
 		if feed.pshb_expiration and feed.pshb_expiration < Time.now + (60*60*2)
 			feed.pshb_subscribe!(uri('/pshb/callback'))
@@ -14,7 +14,7 @@ post '/full_sync' do
 	end
 
 	last_sync = DateTime.now
-	urls = Feed.all(:pshb => false).map{ |feed|
+	urls = Feed.all(:pshb => :inactive).map{ |feed|
 		if feed.last_sync < last_sync
 			last_sync = feed.last_sync
 		end
@@ -28,7 +28,7 @@ post '/full_sync' do
 	new_items = 0
 	errors = 0
 	feeds.each do |url, xml|
-		Feed.all(:url => url, :pshb => false).each do |feed|
+		Feed.all(:url => url, :pshb => :inactive).each do |feed|
 			if xml.kind_of?(Fixnum)
 				errors+=1
 
@@ -59,7 +59,7 @@ namespace '/sync' do
 		authorize_basic! :user
 		content_type :json, 'charset' => 'utf-8'
 
-		Feed.all(:pshb => true).each do |feed|
+		Feed.all(:pshb => :active).each do |feed|
 			# Resubscribe if the Pubsubhubbub subscription is almost expired
 			if feed.pshb_expiration and feed.pshb_expiration < Time.now + (60*60*2)
 				feed.pshb_subscribe!(uri('/pshb/callback'))
@@ -69,7 +69,7 @@ namespace '/sync' do
 
 	post '/all' do
 		last_sync = DateTime.now
-		urls = Feed.all(:user => @user, :pshb => false).map{ |feed|
+		urls = Feed.all(:user => @user, :pshb => :inactive).map{ |feed|
 			if feed.last_sync < last_sync
 				last_sync = feed.last_sync
 			end
@@ -83,7 +83,7 @@ namespace '/sync' do
 		new_items = 0
 		errors = 0
 		feeds.each do |url, xml|
-			Feed.all(:user => @user, :url => url, :pshb => false).each do |feed|
+			Feed.all(:user => @user, :url => url, :pshb => :inactive).each do |feed|
 				if xml.kind_of?(Fixnum)
 					errors+=1
 

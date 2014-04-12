@@ -30,14 +30,12 @@ CapoRSS.View.FeedEdit = Backbone.Marionette.ItemView.extend({
 		var feedFolder = this.$('#feedFolder').val();
 		var feedUrl = this.$('#feedUrl').val();
 		var reset = this.$('#resetFeed').is(':checked');
-		var pshb = this.$('#feedUsePSHB').is(':checked');
 		var feedId = this.model.id;
 
 		this.model.unset('position');
 		this.model.save({
 			url: feedUrl,
 			folder: feedFolder,
-			pshb: pshb
 		},{
 			success: function() {
 				CapoRSS.router.navigate("", {trigger: true});

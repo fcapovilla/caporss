@@ -30,7 +30,7 @@ class Feed
 	property :pshb_hub, String, :length => 0..2000, :default => ''
 	property :pshb_topic, String, :length => 0..2000, :default => ''
 	property :pshb_expiration, Time
-	property :pshb, Boolean, :default => false
+	property :pshb, Enum[:inactive, :active, :requested], :default => :inactive
 
 	belongs_to :user, :required => false
 	belongs_to :folder
@@ -55,7 +55,7 @@ class Feed
 
 	# Update the feed using a Feedjira feed object
 	def update_feed!(feed)
-		unless self.pshb
+		if self.pshb == :inactive
 			if feed.hub
 				self.pshb_hub = feed.hub
 
@@ -223,9 +223,9 @@ class Feed
 		})
 
 		if response.code == '202'
-			self.pshb = true
+			self.pshb = :requested
 		else
-			self.pshb = false
+			self.pshb = :inactive
 		end
 
 		self.save
@@ -240,7 +240,7 @@ class Feed
 			'hub.mode' => 'unsubscribe'
 		})
 
-		self.pshb = false
+		self.pshb = :inactive
 		self.save
 	end
 end

@@ -72,10 +72,12 @@ put '/api/feed/:id', '/api/folder/*/feed/:id' do
 		feed.move(attributes[:position]) if attributes.has_key?(:position)
 	end
 
-	if feed.pshb and !attributes[:pshb]
-		feed.pshb_unsubscribe!(uri('pshb/callback'))
-	elsif !feed.pshb and attributes[:pshb]
-		feed.pshb_subscribe!(uri('/pshb/callback'))
+	if attributes.has_key?(:pshb)
+		if feed.pshb != :inactive and attributes[:pshb] == 'inactive'
+			feed.pshb_unsubscribe!(uri('pshb/callback'))
+		elsif feed.pshb == :inactive and attributes[:pshb] != 'inactive'
+			feed.pshb_subscribe!(uri('/pshb/callback'))
+		end
 	end
 
 	feed.attributes = attributes.slice(:url)

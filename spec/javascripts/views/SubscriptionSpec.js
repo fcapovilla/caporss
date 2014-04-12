@@ -10,7 +10,7 @@ describe("Subscription View", function() {
 			last_update: '2010-12-10T01:02:03+00:00',
 			sync_error: 404,
 			pshb_hub: 'http://www.example.com',
-			pshb: false
+			pshb: 'inactive'
 		});
 		this.feed.collection = {url: '/api/feed'};
 		this.view = new CapoRSS.View.Subscription({model: this.feed});
@@ -70,7 +70,7 @@ describe("Subscription View", function() {
 
 			this.server.respond();
 
-			expect(this.feed.get('pshb')).toEqual(true);
+			expect(this.feed.get('pshb')).toEqual('requested');
 
 			this.view.$el.find('.togglePSHBAction').trigger('click');
 
@@ -80,7 +80,7 @@ describe("Subscription View", function() {
 
 			this.server.respond();
 
-			expect(this.feed.get('pshb')).toEqual(false);
+			expect(this.feed.get('pshb')).toEqual('inactive');
 		});
 	});
 });

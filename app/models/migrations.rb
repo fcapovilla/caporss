@@ -143,4 +143,20 @@ migration 6, :add_pubsubhubbub do
 	end
 end
 
+if ['mysql', 'postgresql'].include? adapter
+	migration 7, :update_pshb_column do
+		up do
+			if adapter == 'mysql'
+				execute 'ALTER TABLE feeds MODIFY pshb INT(11) DEFAULT 1'
+			elsif adapter == 'postgresql'
+				execute 'ALTER TABLE feeds ALTER COLUMN pshb TYPE INT(11)'
+				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT 1'
+			end
+
+			execute 'UPDATE feeds SET pshb=1 WHERE pshb=0'
+			execute 'UPDATE feeds SET pshb=2 WHERE pshb=1'
+		end
+	end
+end
+
 migrate_up!
