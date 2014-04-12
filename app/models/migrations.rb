@@ -156,8 +156,8 @@ if ['mysql', 'postgres'].include? adapter
 				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT 1'
 			end
 
-			execute 'UPDATE feeds SET pshb=1 WHERE pshb=0'
 			execute 'UPDATE feeds SET pshb=2 WHERE pshb=1'
+			execute 'UPDATE feeds SET pshb=1 WHERE pshb=0'
 		end
 	end
 end
