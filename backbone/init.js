@@ -87,6 +87,22 @@ $(function() {
 		eventSource.addEventListener("sync:new_items", function(e) {
 			CapoRSS.folders.refresh();
 		});
+
+		eventSource.addEventListener("sync:feed_updated", function(e) {
+			var data = $.parseJSON(e.data);
+
+			var folder = CapoRSS.folders.get(data.folder_id);
+			if(folder) {
+				var feed = folder.feeds.get(data.feed_id);
+				if(feed) {
+					feed.fetch();
+
+					if(CapoRSS.router.currentSelection === feed) {
+						CapoRSS.router.currentSelection.items.fetch({reset: true});
+					}
+				}
+			}
+		});
 	}
 
 	// Automatic page fetching

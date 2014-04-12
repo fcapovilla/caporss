@@ -26,7 +26,7 @@ post '/pshb/callback/:id' do
 	id = params[:id]
 
 	# Parse and update the feed in the background
-	task = Thread.new do
+	Thread.new do
 		entries = Feedjira::Feed.parse(request.body.read)
 		feed = Feed.get(id)
 
@@ -36,7 +36,7 @@ post '/pshb/callback/:id' do
 			feed.update_feed!(entries)
 
 			if feed.items.count > old_count
-				send_streams "sync:new_items"
+				send_streams "sync:feed_updated", {:folder_id => feed.folder_id, :feed_id => feed.id}
 			end
 		else
 			logger.error "Pubsubhubbub feed update failed for feed #{id}"
