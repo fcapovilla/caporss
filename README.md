@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.18.1
+Version 0.19.0
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -171,7 +171,6 @@ Most dependencies are already included in the Gemfile and in the application's p
 ## TODO
 
 * Optimisations, performance improvements and bugfixes
-* Improve SSE support
 * Add other automatic sync methods (cron, worker)
 
 ## Release notes
