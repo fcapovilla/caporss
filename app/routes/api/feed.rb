@@ -73,7 +73,7 @@ put '/api/feed/:id', '/api/folder/*/feed/:id' do
 	end
 
 	if attributes.has_key?(:pshb)
-		if feed.pshb != :inactive and attributes[:pshb] == 'inactive'
+		if [:active, :requested].include? feed.pshb and attributes[:pshb] == 'inactive'
 			feed.pshb_unsubscribe!(uri('pshb/callback'))
 		elsif feed.pshb == :inactive and attributes[:pshb] != 'inactive'
 			feed.pshb_subscribe!(uri('/pshb/callback'))

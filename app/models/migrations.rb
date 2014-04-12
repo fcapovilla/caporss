@@ -149,15 +149,15 @@ if ['mysql', 'postgres'].include? adapter
 	migration 7, :update_pshb_column do
 		up do
 			if adapter == 'mysql'
-				execute 'ALTER TABLE feeds MODIFY pshb INT(11) DEFAULT 1'
+				execute 'ALTER TABLE feeds MODIFY pshb INT(11) DEFAULT 4'
 			elsif adapter == 'postgres'
 				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT null'
 				execute 'ALTER TABLE feeds ALTER COLUMN pshb TYPE INTEGER USING CASE WHEN pshb=false THEN 0 ELSE 1 END'
-				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT 1'
+				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT 4'
 			end
 
 			execute 'UPDATE feeds SET pshb=2 WHERE pshb=1'
-			execute 'UPDATE feeds SET pshb=1 WHERE pshb=0'
+			execute 'UPDATE feeds SET pshb=4 WHERE pshb=0'
 		end
 	end
 end

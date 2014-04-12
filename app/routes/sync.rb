@@ -14,7 +14,7 @@ post '/full_sync' do
 	end
 
 	last_sync = DateTime.now
-	urls = Feed.all(:pshb => :inactive).map{ |feed|
+	urls = Feed.all(:pshb.not => :active).map{ |feed|
 		if feed.last_sync < last_sync
 			last_sync = feed.last_sync
 		end
@@ -28,7 +28,7 @@ post '/full_sync' do
 	new_items = 0
 	errors = 0
 	feeds.each do |url, xml|
-		Feed.all(:url => url, :pshb => :inactive).each do |feed|
+		Feed.all(:url => url, :pshb.not => :active).each do |feed|
 			if xml.kind_of?(Fixnum)
 				errors+=1
 
@@ -69,7 +69,7 @@ namespace '/sync' do
 
 	post '/all' do
 		last_sync = DateTime.now
-		urls = Feed.all(:user => @user, :pshb => :inactive).map{ |feed|
+		urls = Feed.all(:user => @user, :pshb.not => :active).map{ |feed|
 			if feed.last_sync < last_sync
 				last_sync = feed.last_sync
 			end
@@ -83,7 +83,7 @@ namespace '/sync' do
 		new_items = 0
 		errors = 0
 		feeds.each do |url, xml|
-			Feed.all(:user => @user, :url => url, :pshb => :inactive).each do |feed|
+			Feed.all(:user => @user, :url => url, :pshb.not => :active).each do |feed|
 				if xml.kind_of?(Fixnum)
 					errors+=1
 

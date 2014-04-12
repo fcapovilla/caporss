@@ -19,7 +19,7 @@
       <% } %>
     </td>
     <td>
-      <% if(feed.pshb_hub) { %>
+      <% if(feed.pshb != 'unavailable') { %>
         <% if(feed.pshb == 'inactive') { %>
           <i class="fa fa-square-o togglePSHBAction"></i>
           #{t.subscription.pshb.inactive}

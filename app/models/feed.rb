@@ -30,7 +30,7 @@ class Feed
 	property :pshb_hub, String, :length => 0..2000, :default => ''
 	property :pshb_topic, String, :length => 0..2000, :default => ''
 	property :pshb_expiration, Time
-	property :pshb, Enum[:inactive, :active, :requested], :default => :inactive
+	property :pshb, Enum[:inactive, :active, :requested, :unavailable], :default => :unavailable
 
 	belongs_to :user, :required => false
 	belongs_to :folder
@@ -55,8 +55,9 @@ class Feed
 
 	# Update the feed using a Feedjira feed object
 	def update_feed!(feed)
-		if self.pshb == :inactive
-			if feed.hub
+		if feed.hub
+			if self.pshb == :unavailable
+				self.pshb = :inactive
 				self.pshb_hub = feed.hub
 
 				if feed.topic and feed.topic =~ /^#{URI::regexp}$/
@@ -71,8 +72,13 @@ class Feed
 					uri.query = 'v=2'
 					self.pshb_topic = uri.to_s
 				end
-			else
+			end
+		else
+			unless [:active, :requested].include? self.pshb
 				self.pshb_hub = ''
+				self.pshb_topic = ''
+				self.pshb_expiration = nil
+				self.pshb = :unavailable
 			end
 		end
 
