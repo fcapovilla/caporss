@@ -3,12 +3,12 @@ require 'dm-migrations/migration_runner'
 
 adapter = repository(:default).adapter.options[:adapter]
 
-if ['mysql', 'postgresql'].include? adapter
+if ['mysql', 'postgres'].include? adapter
 	migration 1, :update_favicon_data_column do
 		up do
 			if adapter == 'mysql'
 				execute 'ALTER TABLE favicons MODIFY data TEXT'
-			elsif adapter == 'postgresql'
+			elsif adapter == 'postgres'
 				execute 'ALTER TABLE favicons ALTER COLUMN data TYPE text'
 			end
 		end
@@ -73,26 +73,28 @@ migration 2, :multi_user_support do
 	end
 end
 
-migration 3, :folder_title_not_unique do
-	up do
-		begin
-			if adapter == 'mysql'
-				execute 'DROP INDEX "unique_folders_title" ON folders'
-			elsif adapter == 'postgresql'
-				execute 'DROP INDEX "unique_folders_title"'
+if ['mysql', 'postgres'].include? adapter
+	migration 3, :folder_title_not_unique do
+		up do
+			begin
+				if adapter == 'mysql'
+					execute 'DROP INDEX "unique_folders_title" ON folders'
+				elsif adapter == 'postgres'
+					execute 'DROP INDEX "unique_folders_title"'
+				end
+			rescue
+				puts ">> Index doesn't exist. Nothing to do."
 			end
-		rescue
-			puts ">> Index doesn't exist. Nothing to do."
 		end
 	end
 end
 
-if ['mysql', 'postgresql'].include? adapter
+if ['mysql', 'postgres'].include? adapter
 	migration 4, :update_default_locale_size do
 		up do
 			if adapter == 'mysql'
 				execute 'ALTER TABLE users MODIFY default_locale VARCHAR(5)'
-			elsif adapter == 'postgresql'
+			elsif adapter == 'postgres'
 				execute 'ALTER TABLE users ALTER COLUMN default_locale TYPE VARCHAR(5)'
 			end
 		end
@@ -143,12 +145,12 @@ migration 6, :add_pubsubhubbub do
 	end
 end
 
-if ['mysql', 'postgresql'].include? adapter
+if ['mysql', 'postgres'].include? adapter
 	migration 7, :update_pshb_column do
 		up do
 			if adapter == 'mysql'
 				execute 'ALTER TABLE feeds MODIFY pshb INT(11) DEFAULT 1'
-			elsif adapter == 'postgresql'
+			elsif adapter == 'postgres'
 				execute 'ALTER TABLE feeds ALTER COLUMN pshb TYPE INT(11)'
 				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT 1'
 			end
