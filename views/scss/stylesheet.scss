@@ -65,6 +65,11 @@ form {
 	overflow: auto;
 }
 
+// Table style with minimal padding
+td.no-padding {
+	padding: 2px !important;
+}
+
 #searchForm {
 	.form-group,
 	.checkbox {
