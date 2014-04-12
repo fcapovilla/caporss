@@ -151,7 +151,7 @@ if ['mysql', 'postgres'].include? adapter
 			if adapter == 'mysql'
 				execute 'ALTER TABLE feeds MODIFY pshb INT(11) DEFAULT 1'
 			elsif adapter == 'postgres'
-				execute 'ALTER TABLE feeds ALTER COLUMN pshb TYPE INT(11)'
+				execute 'ALTER TABLE feeds ALTER COLUMN pshb TYPE INT'
 				execute 'ALTER TABLE feeds ALTER COLUMN pshb SET DEFAULT 1'
 			end
 
