@@ -42,23 +42,23 @@ describe("Subscription List View", function() {
 		it("can change sort column and order", function() {
 			this.view.$el.find('.sortable[data-column="title"]').trigger('click');
 
-			expect(this.view.$el.find('tbody>tr').eq(0).html()).toContain("Test 1");
-			expect(this.view.$el.find('tbody>tr').eq(1).html()).toContain("Test 2");
+			expect(this.view.$el.find('tbody>tr').eq(0).html()).toContain("Test 2");
+			expect(this.view.$el.find('tbody>tr').eq(1).html()).toContain("Test 1");
 
 			this.view.$el.find('.sortable[data-column="title"]').trigger('click');
 
-			expect(this.view.$el.find('tbody>tr').eq(0).html()).toContain("Test 2");
-			expect(this.view.$el.find('tbody>tr').eq(1).html()).toContain("Test 1");
-
-			this.view.$el.find('.sortable[data-column="last_update"]').trigger('click');
-
-			expect(this.view.$el.find('tbody>tr').eq(0).html()).toContain("Test 2");
-			expect(this.view.$el.find('tbody>tr').eq(1).html()).toContain("Test 1");
+			expect(this.view.$el.find('tbody>tr').eq(0).html()).toContain("Test 1");
+			expect(this.view.$el.find('tbody>tr').eq(1).html()).toContain("Test 2");
 
 			this.view.$el.find('.sortable[data-column="last_update"]').trigger('click');
 
 			expect(this.view.$el.find('tbody>tr').eq(0).html()).toContain("Test 1");
 			expect(this.view.$el.find('tbody>tr').eq(1).html()).toContain("Test 2");
+
+			this.view.$el.find('.sortable[data-column="last_update"]').trigger('click');
+
+			expect(this.view.$el.find('tbody>tr').eq(0).html()).toContain("Test 2");
+			expect(this.view.$el.find('tbody>tr').eq(1).html()).toContain("Test 1");
 		});
 	});
 });
