@@ -72,14 +72,6 @@ put '/api/feed/:id', '/api/folder/*/feed/:id' do
 		feed.move(attributes[:position]) if attributes.has_key?(:position)
 	end
 
-	if attributes.has_key?(:pshb)
-		if [:active, :requested].include? feed.pshb and attributes[:pshb] == 'inactive'
-			feed.pshb_unsubscribe!(uri('pshb/callback'))
-		elsif feed.pshb == :inactive and attributes[:pshb] != 'inactive'
-			feed.pshb_subscribe!(uri('/pshb/callback'))
-		end
-	end
-
 	feed.attributes = attributes.slice(:url)
 
 	unless feed.valid?
@@ -104,6 +96,14 @@ put '/api/feed/:id', '/api/folder/*/feed/:id' do
 
 	feed.update_unread_count!
 	old_folder.update_unread_count! if old_folder
+
+	if attributes.has_key?(:pshb)
+		if [:active, :requested].include? feed.pshb and attributes[:pshb] == 'inactive'
+			feed.pshb_unsubscribe!(uri('pshb/callback'))
+		elsif feed.pshb == :inactive and attributes[:pshb] != 'inactive'
+			feed.pshb_subscribe!(uri('/pshb/callback'))
+		end
+	end
 
 	feed.to_json
 end
