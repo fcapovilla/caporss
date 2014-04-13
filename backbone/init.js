@@ -35,10 +35,10 @@ $(function() {
 
 	// Add a spinner icon when an Ajax call is running
 	$(document).ajaxStart(function() {
-		$('#spinner').removeClass('invisible').addClass('fa-spin');
+		$('#spinner').removeClass('invisible');
 	});
 	$(document).ajaxStop(function() {
-		$('#spinner').removeClass('fa-spin').addClass('invisible');
+		$('#spinner').addClass('invisible');
 	});
 
 	// Manage AJAX errors

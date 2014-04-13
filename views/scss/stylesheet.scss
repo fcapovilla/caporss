@@ -77,6 +77,10 @@ td.no-padding {
 	}
 }
 
+#spinner {
+	vertical-align: text-top;
+}
+
 // Desktop view
 @media screen and (min-width:768px) {
 	.content {
