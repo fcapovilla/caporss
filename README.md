@@ -1,4 +1,4 @@
-# CapoRSS 
+# CapoRSS
 
 Version 0.19.2
 
