@@ -1,6 +1,6 @@
 # CapoRSS 
 
-Version 0.19.0
+Version 0.19.1
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -59,7 +59,7 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 5. Run CapoRSS using Thin (Replace YOUR_KEYFILE and YOUR_CERTFILE with the paths of your SSL certificate files:
 
-		bundle exec thin -R config.ru -e production -d --ssl --ssl-key-file YOUR_KEYFILE --ssl-cert-file YOUR_CERTFILE start
+		bundle exec thin -R config.ru -e production -d --threaded --ssl --ssl-key-file YOUR_KEYFILE --ssl-cert-file YOUR_CERTFILE start
 
 6. Open a web browser and go to "http://localhost:3000"
 7. The default username/password is "admin"/"admin"
