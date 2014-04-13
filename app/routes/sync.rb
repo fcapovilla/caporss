@@ -6,13 +6,6 @@ post '/full_sync' do
 	authorize_basic! :sync
 	content_type :json, 'charset' => 'utf-8'
 
-	Feed.all(:pshb => :active).each do |feed|
-		# Resubscribe if the Pubsubhubbub subscription is almost expired
-		if feed.pshb_expiration and feed.pshb_expiration < Time.now + (60*60*2)
-			feed.pshb_subscribe!(uri('/pshb/callback'))
-		end
-	end
-
 	last_sync = DateTime.now
 	urls = Feed.all(:pshb.not => :active).map{ |feed|
 		if feed.last_sync < last_sync
@@ -50,6 +43,13 @@ post '/full_sync' do
 		send_streams "sync:new_items"
 	end
 
+	Feed.all(:pshb => :active).each do |feed|
+		# Resubscribe if the Pubsubhubbub subscription is almost expired
+		if feed.pshb_expiration and feed.pshb_expiration < Time.now + (60*60*2)
+			feed.pshb_subscribe!(uri('/pshb/callback'))
+		end
+	end
+
 	{ :updated => updated_count, :new_items => new_items, :errors => errors }.to_json
 end
 
@@ -58,7 +58,9 @@ namespace '/sync' do
 	before do
 		authorize_basic! :user
 		content_type :json, 'charset' => 'utf-8'
+	end
 
+	after do
 		Feed.all(:pshb => :active).each do |feed|
 			# Resubscribe if the Pubsubhubbub subscription is almost expired
 			if feed.pshb_expiration and feed.pshb_expiration < Time.now + (60*60*2)
