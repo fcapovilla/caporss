@@ -18,30 +18,28 @@
         <%= feed.sync_error %>
       <% } %>
     </td>
-    <td>
-      <% if(feed.pshb != 'unavailable') { %>
-        <% if(feed.pshb == 'inactive') { %>
-          <td class="active">
-            <i class="fa fa-square-o togglePSHBAction"></i>
-            #{t.subscription.pshb.inactive}
+    <% if(feed.pshb != 'unavailable') { %>
+      <% if(feed.pshb == 'inactive') { %>
+        <td class="active">
+          <i class="fa fa-square-o togglePSHBAction"></i>
+          #{t.subscription.pshb.inactive}
+        </td>
+      <% } else { %>
+        <% if(feed.pshb == 'active') { %>
+          <td class="<%= pshb_expired?'danger':'success' %>">
+            <i class="fa fa-check-square-o togglePSHBAction"></i>
+            #{t.subscription.pshb.active}
           </td>
         <% } else { %>
-          <% if(feed.pshb == 'active') { %>
-            <td class="<%= pshb_expired?'danger':'success' %>">
-              <i class="fa fa-check-square-o togglePSHBAction"></i>
-              #{t.subscription.pshb.active}
-            </td>
-          <% } else { %>
-            <td class="warning">
-              <i class="fa fa-check-square-o togglePSHBAction"></i>
-              #{t.subscription.pshb.requested}
-            </td>
-          <% } %>
+          <td class="warning">
+            <i class="fa fa-check-square-o togglePSHBAction"></i>
+            #{t.subscription.pshb.requested}
+          </td>
         <% } %>
-      <% } else { %>
-        <td></td>
       <% } %>
-    </td>
+    <% } else { %>
+      <td></td>
+    <% } %>
     <td class="no-padding">
       <a class="btn btn-default btn-xs deleteFeedAction" title="#{t.buttons.delete}"><i class="fa fa-trash-o"></i></a>
     </td>
