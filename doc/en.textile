@@ -1,8 +1,9 @@
 h1. Keyboard shortcuts
 
-* */* : Do an item search
+* */* : Toggle the search bar
 * *A* : Show the feed subscription dialog.
-* *R* : Sync feeds
+* *R* : Refresh feeds list
+* *S* : Sync feeds
 * *H* : Hide/Unhide read items
 * *J* : Move down one item in the item list
 * *K* : Move up one item in the item list
@@ -13,6 +14,7 @@ h1. Keyboard shortcuts
 
 h1. Settings
 
+* *Subscriptions* : Show the list of all feeds. Here, you can subscribe to Pubsubhubbub feeds (PSHB). PSHB feeds are not updated when doing periodic or manuel synchronizations. The "Force sync" button lets you synchronize all feeds, including PSHB feeds.
 * *Import/Export OPML files* : OPML files contain informations on feed subscription. You can import opml files from outside sources and export a list of your feeds as an OPML file for use in another RSS reader.
 * *Cleanup* : Deletes old items in the local database. Only read items are deleted. You can specify the age limit for items in days. All items older than this limit will be deleted when clicking the "Cleanup" button.
 * *Sync after* : Fetches new items from the servers for all feeds at the specified interval.
@@ -25,6 +27,7 @@ h1. Main menu
 
 * *Sync* : Fetches new items from the servers. Applied to all feeds.
 * *Show/Hide read items* : This feature lets you specify if items that were already read will be shown in the item list.
+* *Toggle search bar* : Show or hide the search bar.
 * *Subscribe* : Lets you add a new feed subscription. If no folder name is specified, the feed will be automatically added to the "Feeds" folder.
 * *Settings* : Show the settings dialog.
 

@@ -1,8 +1,9 @@
 h1. Raccourcis clavier
 
-* */* : Effectuer une recherche d'items
+* */* : Afficher/Cacher la barre de recherche
 * *A* : Afficher la fenêtre d'abonnement
-* *R* : Synchroniser tous les abonnements
+* *S* : Synchroniser tous les abonnements
+* *R* : Rafraîchir la liste des abonnements
 * *H* : Cacher/Afficher les items lus
 * *J* : Voir le prochain item dans la liste des items
 * *K* : Voir l'item précédent dans la liste des items
@@ -13,6 +14,7 @@ h1. Raccourcis clavier
 
 h1. Préférences
 
+* *Abonnements* : Affiche la liste des abonnements. Permet d'activer des abonnements Pubsubhubbub (PSHB). Les abonnements PSHB ne sont pas synchronisés par les actions de synchronisations périodiques ou manuelles. Le bouton "Forcer la synchronisation" permet d'effectuer une synchronisation sur tous les abonnements en incluant les abonnements PSHB.
 * *Importer/Exporter un ficher OPML* : Un fichier OPML contient des informations sur les abonnements. Vous pouvez importer un fichier OPML d'une source externe ou exporter une liste de vos abonnements sous la forme d'un fichier OPML pouvant être importé dans un autre lecteur RSS.
 * *Nettoyage* : Supprime les vieux items dans la base de données locale. Les items non-lus ne seront pas supprimés. Vous pouvez spécifier une limite d'âge en jours. Seul les items dont la date dépasse cette limite seront supprimés lors d'un clic sur le bouton "Nettoyage".
 * *Synchroniser toutes les...* : Va chercher les nouveaux items sur les serveurs distants à un certain intervalle.
@@ -25,6 +27,7 @@ h1. Menu principal
 
 * *Synchroniser* : Va chercher les nouveaux items sur les serveurs distants. Appliqué sur tous les abonnements.
 * *Afficher/Cacher les items lus* : Vous permet de spécifier si les items qui ont déjà été lus seront affichés dans la liste des items.
+* *Afficher/Cacher la barre de recherche* : Pour afficher ou cacher la barre de recherche.
 * *Abonnement* : Vous permet d'ajouter un nouvel abonnement à un flux. Si aucun nom de dossier n'est entré, le nouvel abonnement sera automatiquement ajouté au dossier "Feeds".
 * *Préférences* : Affiche la fenêtre de préférences.
 
