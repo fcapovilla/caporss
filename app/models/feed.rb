@@ -240,13 +240,13 @@ class Feed
 	def pshb_unsubscribe!(callback)
 		uri = URI.parse(self.pshb_hub)
 
+		self.pshb = :inactive
+		self.save
+
 		Net::HTTP.post_form(uri, {
 			'hub.callback' => "#{callback}/#{self.id}",
 			'hub.topic' => self.pshb_topic,
 			'hub.mode' => 'unsubscribe'
 		})
-
-		self.pshb = :inactive
-		self.save
 	end
 end
