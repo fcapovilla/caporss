@@ -108,7 +108,7 @@ search:
     current_search: Current search filter
     current_sort_order: Current sort order
     title: Search
-    in_title: Search in titles only
+    in_title: Toggle search in titles/contents
     sort_by: "Sort by: "
     sort:
         date:

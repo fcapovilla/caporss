@@ -3,7 +3,14 @@
   <script id='tmpl-filters' type='text/template'>
     <form id="searchForm" method="get" action="#" class="form-inline">
       <div class="form-group">
-        <input class="form-control" class="form-control" type="text" id="searchQuery" placeholder="#{t.search.title}" autocomplete="off" />
+        <div class="input-group">
+          <input class="form-control" class="form-control" type="text" id="searchQuery" placeholder="#{t.search.title}" autocomplete="off" />
+          <span class="input-group-btn">
+            <button class="btn btn-default" id="searchInTitle" title="#{t.search.in_title}">
+              <i class="fa fa-list"></i>
+            </button>
+          </span>
+        </div>
       </div>
       <div class="form-group">
         <label for="sortType">#{t.search.sort_by}</label>
@@ -13,12 +20,6 @@
           <option value="titleAsc">#{t.search.sort.title.asc}</option>
           <option value="titleDesc">#{t.search.sort.title.desc}</option>
         </select>
-      </div>
-      <div class="checkbox">
-        <label for="searchInTitle">
-          <input type="checkbox" id="searchInTitle" checked="checked" />
-          #{t.search.in_title}
-        </label>
       </div>
     </form>
   </script>

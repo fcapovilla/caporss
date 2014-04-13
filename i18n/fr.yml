@@ -108,7 +108,7 @@ search:
     current_search: Filtre de recherche courant
     current_sort_order: Tri courant
     title: Recherche
-    in_title: Recherche sur titres
+    in_title: Rechercher dans les titres/contenus
     sort_by: "Tri : "
     sort:
         date:
