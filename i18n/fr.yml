@@ -42,6 +42,7 @@ buttons:
     logout: Déconnexion
     return_to_feedlist: Retour à la liste des abonnements
     show_more_items: "Afficher plus d'items..."
+    toggle_search_filters: Afficher/Cacher la barre de recherche
 
 subscribe:
     subscribe: Abonnement

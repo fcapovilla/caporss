@@ -17,10 +17,10 @@ CapoRSS.View.Filters = Backbone.Marionette.CompositeView.extend({
 		this.searchInTitle = !this.searchInTitle;
 
 		if(this.searchInTitle) {
-			this.$('#searchInTitle>i').removeClass('fa-list-alt').addClass('fa-list');
+			this.$('#searchInTitle>i').attr('class', 'fa fa-list');
 		}
 		else {
-			this.$('#searchInTitle>i').removeClass('fa-list').addClass('fa-list-alt');
+			this.$('#searchInTitle>i').attr('class', 'fa fa-list-alt');
 		}
 
 		this.changeSearchFilter();

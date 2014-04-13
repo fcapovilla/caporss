@@ -42,6 +42,7 @@ buttons:
     logout: Log out
     return_to_feedlist: Return to feed list
     show_more_items: Show more items...
+    toggle_search_filters: Toggle search bar
 
 subscribe:
     subscribe: Subscribe

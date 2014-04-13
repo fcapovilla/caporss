@@ -7,7 +7,8 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 		'click #settingsModalButton': 'showSettingsModal',
 		'click #mobilePrevItem' : 'prevItem',
 		'click #mobileNextItem' : 'nextItem',
-		'click #toggleReadVisibility' : 'toggleReadVisibility'
+		'click #toggleReadVisibility' : 'toggleReadVisibility',
+		'click #toggleSearchFilters' : 'toggleSearchFilters'
 	},
 
 	/**
@@ -16,6 +17,9 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	onRender: function() {
 		if($.cookie('show_read') !== undefined) {
 			this.setReadVisibility($.cookie('show_read')=='true' ? true : false);
+		}
+		if($.cookie('search_filters') !== undefined) {
+			this.setSearchFilters($.cookie('search_filters')=='true' ? true : false);
 		}
 	},
 
@@ -86,6 +90,31 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 		SETTINGS.show_read = show_read;
 
 		CapoRSS.router.refreshItemList({show_read: show_read});
+	},
+
+	/**
+	 * Toggle search filters bar.
+	 */
+	toggleSearchFilters: function() {
+		this.setSearchFilters(!SETTINGS.search_filters);
+	},
+
+	/**
+	 * Show/hide search filters.
+	 * @param {boolean} search_filters
+	 */
+	setSearchFilters: function(search_filters) {
+		$.cookie('search_filters', search_filters, {expires: 10000});
+		SETTINGS.search_filters = search_filters;
+
+		if(search_filters) {
+			$('#filters').show();
+		}
+		else {
+			$('#filters').hide();
+		}
+
+		$(window).resize();
 	},
 
 	/**
