@@ -97,7 +97,7 @@ $(function() {
 				if(feed) {
 					feed.fetch();
 
-					if(CapoRSS.router.currentSelection === feed) {
+					if(CapoRSS.router.currentSelection !== null) {
 						CapoRSS.router.currentSelection.items.fetch({reset: true});
 					}
 				}

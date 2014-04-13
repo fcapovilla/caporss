@@ -21,16 +21,25 @@
     <td>
       <% if(feed.pshb != 'unavailable') { %>
         <% if(feed.pshb == 'inactive') { %>
-          <i class="fa fa-square-o togglePSHBAction"></i>
-          #{t.subscription.pshb.inactive}
+          <td class="active">
+            <i class="fa fa-square-o togglePSHBAction"></i>
+            #{t.subscription.pshb.inactive}
+          </td>
         <% } else { %>
-          <i class="fa fa-check-square-o togglePSHBAction"></i>
           <% if(feed.pshb == 'active') { %>
-            #{t.subscription.pshb.active}
+            <td class="<%= pshb_expired?'danger':'success' %>">
+              <i class="fa fa-check-square-o togglePSHBAction"></i>
+              #{t.subscription.pshb.active}
+            </td>
           <% } else { %>
-            #{t.subscription.pshb.requested}
+            <td class="warning">
+              <i class="fa fa-check-square-o togglePSHBAction"></i>
+              #{t.subscription.pshb.requested}
+            </td>
           <% } %>
         <% } %>
+      <% } else { %>
+        <td></td>
       <% } %>
     </td>
     <td class="no-padding">

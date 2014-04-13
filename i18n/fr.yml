@@ -10,6 +10,7 @@ settings:
     language: "Langue&nbsp;:"
     import_opml_file: Importer un fichier OPML
     export_as_opml: Exporter les abonnements en OPML
+    force_sync: Forcer la synchronisation
     cleanup_older_than: Supprimer les items plus vieux que 
     days: jours
     refresh_every: Rafraîchir toutes les 

@@ -104,5 +104,19 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 		}
 
 		return prev;
-    }
+    },
+
+	/**
+	 * Check if the PSHB subscription is expired for this feed.
+	 * @return {boolean}
+	 */
+	isPSHBExpired: function() {
+		var expiration = this.get('pshb_expiration');
+		if(expiration === null || expiration === undefined) {
+			return true;
+		}
+
+		var date = new Date(expiration);
+		return (date <= Date.now());
+	}
 });

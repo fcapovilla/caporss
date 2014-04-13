@@ -44,6 +44,22 @@ describe("Feed Model", function() {
 		expect(this.feed.get('unread_count')).toEqual(1);
 	});
 
+	it("can check if its PSHB subscription is expired", function() {
+		var now = new Date();
+		var past = now.getTime() - 1000;
+		var future = now.getTime() + 1000*60*60*24;
+
+		expect(this.feed.isPSHBExpired()).toEqual(true);
+
+		this.feed.set('pshb_expiration', past);
+
+		expect(this.feed.isPSHBExpired()).toEqual(true);
+
+		this.feed.set('pshb_expiration', future);
+
+		expect(this.feed.isPSHBExpired()).toEqual(false);
+	});
+
 	afterEach(function() {
 		this.server.restore();
 	});

@@ -88,10 +88,16 @@ $(document).keyup(function(e) {
 		}
 
 		if(e.keyCode == 82) { // R
+			CapoRSS.folders.refresh();
+		}
+		if(e.keyCode == 83) { // S
 			CapoRSS.mainMenu.sync();
 		}
 		if(e.keyCode == 72) { // H
 			CapoRSS.mainMenu.toggleReadVisibility();
+		}
+		if(e.keyCode == 111 || e.keyCode == 191) { // /
+			CapoRSS.mainMenu.toggleSearchFilters();
 		}
 		if(e.keyCode == 65) { // A
 			CapoRSS.mainMenu.showSubscriptionModal();

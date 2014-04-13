@@ -15,7 +15,10 @@ CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
 	 * @return {Object}
 	 */
 	serializeData: function() {
-		return {'feed': this.model.attributes};
+		return {
+			'feed': this.model.attributes,
+			'pshb_expired': this.model.isPSHBExpired()
+		};
     },
 
 	/**

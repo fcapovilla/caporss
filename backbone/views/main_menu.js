@@ -25,14 +25,16 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 
 	/**
 	 * Sync all items.
+	 * @param {?Object} options
 	 */
-	sync: function() {
+	sync: function(options) {
 		var icon = this.$('#syncButton>i');
 		icon.attr('class', 'fa fa-clock-o');
 		$.ajax({
 			url: '/sync/all',
 			method: 'POST',
 			dataType: 'json',
+			data: options,
 			timeout: 120000,
 			success: function(result) {
 				CapoRSS.folders.fetch({

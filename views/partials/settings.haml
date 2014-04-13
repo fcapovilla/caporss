@@ -54,6 +54,8 @@
                 =t.settings.import_opml_file
               %a(class="btn btn-default" href="/export.opml")
                 =t.settings.export_as_opml
+              %button(class="btn btn-default" id="forceSyncButton")
+                =t.settings.force_sync
               %br
               #subscription-list
             .tab-pane#cleanupSettings

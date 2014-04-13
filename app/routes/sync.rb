@@ -71,7 +71,11 @@ namespace '/sync' do
 
 	post '/all' do
 		last_sync = DateTime.now
-		urls = Feed.all(:user => @user, :pshb.not => :active).map{ |feed|
+
+		filters = {:user => @user}
+		filters[:pshb.not] = :active unless params[:force]
+
+		urls = Feed.all(filters).map{ |feed|
 			if feed.last_sync < last_sync
 				last_sync = feed.last_sync
 			end
@@ -85,7 +89,7 @@ namespace '/sync' do
 		new_items = 0
 		errors = 0
 		feeds.each do |url, xml|
-			Feed.all(:user => @user, :url => url, :pshb.not => :active).each do |feed|
+			Feed.all(filters.merge(:url => url)).each do |feed|
 				if xml.kind_of?(Fixnum)
 					errors+=1
 
@@ -109,7 +113,11 @@ namespace '/sync' do
 		folder = Folder.first(:user => @user, :id => id)
 
 		last_sync = DateTime.now
-		urls = folder.feeds.map{ |feed|
+
+		filters = {:user => @user}
+		filters[:pshb.not] = :active unless params[:force]
+
+		urls = folder.feeds.all(filters).map{ |feed|
 			if feed.last_sync < last_sync
 				last_sync = feed.last_sync
 			end
@@ -123,7 +131,7 @@ namespace '/sync' do
 		new_items = 0
 		errors = 0
 		feeds.each do |url, xml|
-			folder.feeds.all(:user => @user, :url => url).each do |feed|
+			folder.feeds.all(filters.merge(:url => url)).each do |feed|
 				if xml.kind_of?(Fixnum)
 					errors+=1
 

@@ -51,3 +51,9 @@ $('form.upload-form').submit(function(e) {
 		$(this).data('submitted', true);
 	}
 });
+
+// Force full synchronization
+$('#forceSyncButton').click(function() {
+	CapoRSS.mainMenu.sync({force:true});
+	return false;
+});

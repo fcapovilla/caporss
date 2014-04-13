@@ -10,6 +10,7 @@ settings:
     language: "Language:"
     import_opml_file: Import an OPML file
     export_as_opml: Export feeds as OPML
+    force_sync: Force sync
     cleanup_older_than: Cleanup items older than 
     days: days
     refresh_every: Refresh feeds every 

@@ -13,6 +13,9 @@ CapoRSS.View.Filters = Backbone.Marionette.CompositeView.extend({
 		this.searchInTitle = true;
 	},
 
+	/**
+	 * Toggle option to search in titles or content.
+	 */
 	toggleSearchInTitle: function() {
 		this.searchInTitle = !this.searchInTitle;
 
