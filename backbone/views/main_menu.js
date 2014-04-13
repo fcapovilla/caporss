@@ -18,9 +18,7 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 		if($.cookie('show_read') !== undefined) {
 			this.setReadVisibility($.cookie('show_read')=='true' ? true : false);
 		}
-		if($.cookie('search_filters') !== undefined) {
-			this.setSearchFilters($.cookie('search_filters')=='true' ? true : false);
-		}
+		this.setSearchFilters($.cookie('search_filters')=='true' ? true : false);
 	},
 
 	/**

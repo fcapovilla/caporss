@@ -14,8 +14,8 @@ $('.dragbar').mousedown(function(e){
 			var x = e.pageX;
 			var maxwidth = $(window).width()-500;
 
-			if(x < 265) {
-				x = 265;
+			if(x < 270) {
+				x = 270;
 			}
 			if(x > maxwidth) {
 				x = maxwidth;
