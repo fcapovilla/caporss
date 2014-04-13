@@ -22,9 +22,9 @@ CapoRSS.Collection.Feed = Backbone.Collection.extend({
 		}
 
 		if (this.sortDirection) {
-			return a > b ? 1 : -1;
-		} else {
 			return a < b ? 1 : -1;
+		} else {
+			return a > b ? 1 : -1;
 		}
 	}
 });
