@@ -38,7 +38,13 @@ CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
 	 * Action: Toggle Pubsubhubbub for this feed.
 	 */
 	togglePSHB: function() {
+		var that=this;
 		var value = (this.model.get('pshb')=='inactive')?'requested':'inactive';
-		this.model.save({'pshb': value});
+		// Skip sync, we will wait for an event from the server
+		this.model.save({'pshb': value, 'skip_sync': true}, {
+			success: function() {
+				that.model.set('skip_sync', false);
+			}
+		});
 	}
 });

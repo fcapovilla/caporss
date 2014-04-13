@@ -20,7 +20,8 @@ CapoRSS.Model.Feed = Backbone.Model.extend({
 			folder: this.get('folder'),
 			folder_id: this.get('folder_id'),
 			url: this.get('url'),
-			pshb: this.get('pshb')
+			pshb: this.get('pshb'),
+			skip_sync: this.get('skip_sync')
 		};
 	},
 

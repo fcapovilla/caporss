@@ -105,7 +105,7 @@ put '/api/feed/:id', '/api/folder/*/feed/:id' do
 		end
 	end
 
-	feed.to_json
+	feed.to_json unless attributes.has_key?(:skip_sync)
 end
 
 delete '/api/feed/:id', '/api/folder/*/feed/:id' do
