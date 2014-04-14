@@ -31,7 +31,7 @@ $(function() {
 	}
 
 	// Set timeout for AJAX requests
-	$.ajaxSetup({timeout:120000});
+	$.ajaxSetup({timeout:300000});
 
 	// Add a spinner icon when an Ajax call is running
 	$(document).ajaxStart(function() {
