@@ -8,14 +8,14 @@
     %meta(content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" name="viewport")
     %link(rel="apple-touch-icon" href="/mobile-icon.png")
     %script(src="js/libs.js")
-  :css
-    table form {
-      margin: 0;
-    }
-    table .input-append,
-    table input {
-      margin-bottom: 0 !important;
-    }
+    :css
+      table form {
+        margin: 0;
+      }
+      table .input-append,
+      table input {
+        margin-bottom: 0 !important;
+      }
   %body
     .container
       .row
@@ -67,8 +67,8 @@
                     -unless user.roles.include?(:admin) or user.roles.include?(:sync)
                       %button(class="btn btn-default" onclick="deleteUser(this);" title="#{t.admin.user.delete}")
                         %i.fa.fa-trash
-              %form(action="/user" method="post")
-                %tr
+              %tr
+                %form(action="/user" method="post")
                   %td
                     %input(class="form-control" type="text" name="username" placeholder="#{t.admin.user.username}")
                   %td
