@@ -1,94 +1,95 @@
 !!! 5
-%head
-  %title CapoRSS - #{t.admin.title}
-  %link(rel="stylesheet" media="screen" href="css/bootstrap.min.css")
-  %link(rel="stylesheet" media="screen" href="css/bootstrap-theme.min.css")
-  %link(rel="stylesheet" media="screen" href="css/font-awesome.min.css")
-  %meta(content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" name="viewport")
-  %link(rel="apple-touch-icon" href="/mobile-icon.png")
-  %script(src="js/libs.js")
-:css
-  table form {
-    margin: 0;
-  }
-  table .input-append,
-  table input {
-    margin-bottom: 0 !important;
-  }
-%body
-  .container
-    .row
-      .col-md-8.col-md-offset-2.well
-        %a(class="btn btn-default" href="/" title="#{t.buttons.return_to_feedlist}")
-          %i.fa.fa-arrow-left
-        %a(class="btn btn-default" href="/logout" title="#{t.buttons.logout}")
-          %i.fa.fa-sign-out
-        %h2
-          =t.admin.title
-        -if flash[:error]
-          .alert.alert-danger
-            %b Error
-            %br
-            = flash[:error]
-        -if flash[:success]
-          .alert.alert-success
-            = flash[:success]
-        %table.table.table-bordered
-          %thead
-            %tr
-              %th= t.admin.user.username
-              %th= t.admin.user.password
-              %th= t.admin.user.roles
-              %th= t.admin.user.action
-          %tbody
-            - User.all.each do |user|
-              %tr
-                %td
-                  %input(type="hidden" class="id" value="#{user.id}")
-                  %form(action="/user/#{user.id}" method="post")
-                    .input-group
-                      %input(class="form-control" type="text" name="username" value="#{user.username}")
-                      %span.input-group-btn
-                        %button(type="submit" class="btn btn-default" title="#{t.admin.user.edit}")
-                          %i.fa.fa-pencil
-                %td
-                  %form(action="/user/#{user.id}" method="post")
-                    .input-group
-                      %input(class="form-control" type="password" name="password" placeholder="********")
-                      %span.input-group-btn
-                        %button(type="submit" class="btn btn-default" title="#{t.admin.user.edit}")
-                          %i.fa.fa-pencil
-                %td
-                  %ul
-                    - user.roles.each do |role|
-                      %li&= role
-                %td
-                  -unless user.roles.include?(:admin) or user.roles.include?(:sync)
-                    %button(class="btn btn-default" onclick="deleteUser(this);" title="#{t.admin.user.delete}")
-                      %i.fa.fa-trash
-            %form(action="/user" method="post")
-              %tr
-                %td
-                  %input(class="form-control" type="text" name="username" placeholder="#{t.admin.user.username}")
-                %td
-                  %input(class="form-control" type="password" name="password" placeholder="#{t.admin.user.password}")
-                %td
-                %td
-                  %button(type="submit" class="btn btn-default" title="#{t.admin.user.add}")
-                    %i.fa.fa-plus
-
-  :javascript
-    function deleteUser(elem) {
-      var id = $(elem).closest('tr').find('.id').val();
-
-      if(confirm("#{t.admin.user.confirm_delete}")) {
-        $.ajax({
-          url: '/user/' + id,
-          method: 'DELETE',
-          success: function() {
-            $(elem).closest('tr').remove();
-          }
-        });
-      }
+%html
+  %head
+    %title CapoRSS - #{t.admin.title}
+    %link(rel="stylesheet" media="screen" href="css/bootstrap.min.css")
+    %link(rel="stylesheet" media="screen" href="css/bootstrap-theme.min.css")
+    %link(rel="stylesheet" media="screen" href="css/font-awesome.min.css")
+    %meta(content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" name="viewport")
+    %link(rel="apple-touch-icon" href="/mobile-icon.png")
+    %script(src="js/libs.js")
+  :css
+    table form {
+      margin: 0;
     }
+    table .input-append,
+    table input {
+      margin-bottom: 0 !important;
+    }
+  %body
+    .container
+      .row
+        .col-md-8.col-md-offset-2.well
+          %a(class="btn btn-default" href="/" title="#{t.buttons.return_to_feedlist}")
+            %i.fa.fa-arrow-left
+          %a(class="btn btn-default" href="/logout" title="#{t.buttons.logout}")
+            %i.fa.fa-sign-out
+          %h2
+            =t.admin.title
+          -if flash[:error]
+            .alert.alert-danger
+              %b Error
+              %br
+              = flash[:error]
+          -if flash[:success]
+            .alert.alert-success
+              = flash[:success]
+          %table.table.table-bordered
+            %thead
+              %tr
+                %th= t.admin.user.username
+                %th= t.admin.user.password
+                %th= t.admin.user.roles
+                %th= t.admin.user.action
+            %tbody
+              - User.all.each do |user|
+                %tr
+                  %td
+                    %input(type="hidden" class="id" value="#{user.id}")
+                    %form(action="/user/#{user.id}" method="post")
+                      .input-group
+                        %input(class="form-control" type="text" name="username" value="#{user.username}")
+                        %span.input-group-btn
+                          %button(type="submit" class="btn btn-default" title="#{t.admin.user.edit}")
+                            %i.fa.fa-pencil
+                  %td
+                    %form(action="/user/#{user.id}" method="post")
+                      .input-group
+                        %input(class="form-control" type="password" name="password" placeholder="********")
+                        %span.input-group-btn
+                          %button(type="submit" class="btn btn-default" title="#{t.admin.user.edit}")
+                            %i.fa.fa-pencil
+                  %td
+                    %ul
+                      - user.roles.each do |role|
+                        %li&= role
+                  %td
+                    -unless user.roles.include?(:admin) or user.roles.include?(:sync)
+                      %button(class="btn btn-default" onclick="deleteUser(this);" title="#{t.admin.user.delete}")
+                        %i.fa.fa-trash
+              %form(action="/user" method="post")
+                %tr
+                  %td
+                    %input(class="form-control" type="text" name="username" placeholder="#{t.admin.user.username}")
+                  %td
+                    %input(class="form-control" type="password" name="password" placeholder="#{t.admin.user.password}")
+                  %td
+                  %td
+                    %button(type="submit" class="btn btn-default" title="#{t.admin.user.add}")
+                      %i.fa.fa-plus
+
+    :javascript
+      function deleteUser(elem) {
+        var id = $(elem).closest('tr').find('.id').val();
+
+        if(confirm("#{t.admin.user.confirm_delete}")) {
+          $.ajax({
+            url: '/user/' + id,
+            method: 'DELETE',
+            success: function() {
+              $(elem).closest('tr').remove();
+            }
+          });
+        }
+      }
 

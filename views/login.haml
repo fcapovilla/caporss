@@ -1,31 +1,32 @@
 !!! 5
-%head
-  %title CapoRSS - Login
-  %link(rel="stylesheet" media="screen" href="css/bootstrap.min.css")
-  %link(rel="stylesheet" media="screen" href="css/bootstrap-theme.min.css")
-  %link(rel="stylesheet" media="screen" href="css/font-awesome.min.css")
-  %meta(content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" name="viewport")
-  %link(rel="apple-touch-icon" href="/mobile-icon.png")
-  %script(src="js/libs.js")
-%body
-  .container
-    .row
-      .col-md-4.col-md-offset-4.well
-        %h2
-          =t.login.login
-        -if flash[:error]
-          .alert.alert-danger
-            %b Error
-            %br
-            = flash[:error]
-        -if flash[:success]
-          .alert.alert-success
-            = flash[:success]
-        %form(class="form-horizontal" method="post" action="/login")
-          %fieldset
-            .clearfix
-              %input(class="form-control" type="text" name="username" autofocus="autofocus" aria-hidden="true" placeholder="#{t.login.username}")
-            .clearfix
-              %input(class="form-control" type="password" name="password" aria-hidden="true" placeholder="#{t.login.password}")
-            %button(type="submit" class="btn btn-primary pull-right" aria-hidden="true")
-              =t.login.connect
+%html
+  %head
+    %title CapoRSS - Login
+    %link(rel="stylesheet" media="screen" href="css/bootstrap.min.css")
+    %link(rel="stylesheet" media="screen" href="css/bootstrap-theme.min.css")
+    %link(rel="stylesheet" media="screen" href="css/font-awesome.min.css")
+    %meta(content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" name="viewport")
+    %link(rel="apple-touch-icon" href="/mobile-icon.png")
+    %script(src="js/libs.js")
+  %body
+    .container
+      .row
+        .col-md-4.col-md-offset-4.well
+          %h2
+            =t.login.login
+          -if flash[:error]
+            .alert.alert-danger
+              %b Error
+              %br
+              = flash[:error]
+          -if flash[:success]
+            .alert.alert-success
+              = flash[:success]
+          %form(class="form-horizontal" method="post" action="/login")
+            %fieldset
+              .clearfix
+                %input(class="form-control" type="text" name="username" autofocus="autofocus" aria-hidden="true" placeholder="#{t.login.username}")
+              .clearfix
+                %input(class="form-control" type="password" name="password" aria-hidden="true" placeholder="#{t.login.password}")
+              %button(type="submit" class="btn btn-primary pull-right" aria-hidden="true")
+                =t.login.connect
