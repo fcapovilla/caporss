@@ -11,6 +11,10 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 		'click #toggleSearchFilters' : 'toggleSearchFilters'
 	},
 
+	initialize: function() {
+		this.canSync = true;
+	},
+
 	/**
 	 * Action on menu render.
 	 */
@@ -27,8 +31,20 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	 * @param {?Object} options
 	 */
 	sync: function(elem, options) {
-		var icon = this.$('#syncButton>i');
-		icon.attr('class', 'fa fa-clock-o');
+		if(this.canSync === false) {
+			return;
+		}
+		this.canSync = false;
+
+		this.$('#syncButton>i').attr('class', 'fa fa-clock-o');
+
+		options || (options = {});
+
+		if(CapoRSS.eventSource) {
+			options.async = true;
+		}
+
+		var that = this;
 		$.ajax({
 			url: '/sync/all',
 			method: 'POST',
@@ -36,20 +52,15 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 			data: options,
 			timeout: 120000,
 			success: function(result) {
-				CapoRSS.folders.fetch({
-					success: function() {
-						if(result.new_items > 0) {
-							$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
-						}
-						icon.attr('class', 'fa fa-refresh');
+				if(!result.async) {
+					if(result.new_items > 0) {
+						CapoRSS.folders.refresh();
 					}
-				});
-				if(CapoRSS.router.currentSelection !== null) {
-					CapoRSS.router.currentSelection.items.fetch({reset: true});
+					that.endSync();
 				}
 			},
 			error: function() {
-				icon.attr('class', 'fa fa-refresh');
+				that.endSync();
 			}
 		});
 	},
@@ -132,5 +143,13 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	showSettingsModal: function() {
 		$('#settingsModal .nav a:first').tab('show');
 		$('#settingsModal').modal();
+	},
+
+	/**
+	 * Unlock the sync button.
+	 */
+	endSync: function() {
+		this.canSync = true;
+		this.$('#syncButton>i').attr('class', 'fa fa-refresh');
 	}
 });

@@ -31,7 +31,7 @@ $(function() {
 	}
 
 	// Set timeout for AJAX requests
-	$.ajaxSetup({timeout:300000});
+	$.ajaxSetup({timeout:120000});
 
 	// Add a spinner icon when an Ajax call is running
 	$(document).ajaxStart(function() {
@@ -82,13 +82,17 @@ $(function() {
 
 	// EventSource refresh
 	if (!!window.EventSource && SETTINGS.sse_refresh) {
-		var eventSource = new EventSource('/stream');
+		CapoRSS.eventSource = new EventSource('/stream');
 
-		eventSource.addEventListener("sync:new_items", function(e) {
+		CapoRSS.eventSource.addEventListener("sync:new_items", function(e) {
 			CapoRSS.folders.refresh();
 		});
 
-		eventSource.addEventListener("sync:feed_updated", function(e) {
+		CapoRSS.eventSource.addEventListener("sync:finished", function(e) {
+			CapoRSS.mainMenu.endSync();
+		});
+
+		CapoRSS.eventSource.addEventListener("sync:feed_updated", function(e) {
 			var data = $.parseJSON(e.data);
 
 			var folder = CapoRSS.folders.get(data.folder_id);

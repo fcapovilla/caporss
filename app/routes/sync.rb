@@ -70,7 +70,12 @@ namespace '/sync' do
 	end
 
 	post '/all' do
+		user_id = @user.id
 		last_sync = DateTime.now
+
+		updated_count = 0
+		new_items = 0
+		errors = 0
 
 		filters = {:user => @user}
 		filters[:pshb.not] = :active unless params[:force]
@@ -83,30 +88,42 @@ namespace '/sync' do
 		}
 		urls.uniq!
 
-		feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30, :if_modified_since => last_sync})
+		thread = Thread.new do
+			feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30, :if_modified_since => last_sync})
 
-		updated_count = 0
-		new_items = 0
-		errors = 0
-		feeds.each do |url, xml|
-			Feed.all(filters.merge(:url => url)).each do |feed|
-				if xml.kind_of?(Fixnum)
-					errors+=1
+			feeds.each do |url, xml|
+				Feed.all(filters.merge(:url => url)).each do |feed|
+					if xml.kind_of?(Fixnum)
+						errors+=1
 
-					feed.sync_error = xml
-					feed.last_sync = DateTime.now
-					feed.save
-				else
-					old_count = feed.items.count
+						feed.sync_error = xml
+						feed.last_sync = DateTime.now
+						feed.save
+					else
+						old_count = feed.items.count
 
-					feed.update_feed!(xml)
+						feed.update_feed!(xml)
 
-					updated_count+=1
-					new_items += feed.items.count - old_count
+						updated_count+=1
+						new_items += feed.items.count - old_count
+					end
 				end
 			end
+
+			if params[:async]
+				if new_items > 0
+					send_streams('sync:new_items', '', user_id)
+				end
+				send_streams('sync:finished', '', user_id)
+			end
 		end
-		{ :updated => updated_count, :new_items => new_items, :errors => errors }.to_json
+
+		if params[:async]
+			{ :async => true }.to_json
+		else
+			thread.join
+			{ :updated => updated_count, :new_items => new_items, :errors => errors }.to_json
+		end
 	end
 
 	post '/folder/:id' do |id|

@@ -1,7 +1,8 @@
 # encoding: utf-8
 
-# Send an event and data to all Event Stream connections
-def send_streams(event, data="")
+# Send an event and data to Event Stream connections
+# If user_id is not specified, the event will be send to all connections
+def send_streams(event, data="", userid=0)
 	content = ""
 	content += "event: #{event}\n" unless event.nil?
 	if data
@@ -13,7 +14,11 @@ def send_streams(event, data="")
 	end
 	content += "\n"
 
-	puts "Sending event '#{event}' to #{Cache::connections.length} connection(s)"
+	connections = (userid ? Cache::connections(userid) : Cache::connections)
 
-	Cache::connections.each { |out| out << content unless out.closed? }
+	return if connections.nil?
+
+	puts "Sending event '#{event}' to #{connections.length} connection(s)"
+
+	connections.each { |out| out << content unless out.closed? }
 end

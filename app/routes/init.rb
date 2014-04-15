@@ -75,11 +75,12 @@ get '/', '/folder*', '/feed*', '/item*' do
 	haml :index
 end
 
-
 # Manage stream connections
 get '/stream' do
 	authorize_basic! :user
 	content_type 'text/event-stream', 'charset' => 'utf-8'
+
+	user_id = @user.id
 
 	stream :keep_open do |out|
 		# Keep connection alive
@@ -87,11 +88,11 @@ get '/stream' do
 			out << ":\n\n" unless out.closed?
 		end
 
-		Cache::addConnection(out)
+		Cache::addConnection(user_id, out)
 
 		out.callback do
 			timer.cancel
-			Cache::removeConnection(out)
+			Cache::removeConnection(user_id, out)
 		end
 	end
 end
