@@ -22,6 +22,26 @@ CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
     },
 
 	/**
+	 * View helpers for use in template.
+	 */
+	templateHelpers: {
+		/**
+		 * Date format view helper.
+		 * @param {Date} date
+		 * @return {string} The formatted date
+		 */
+		formatDate: function(date) {
+			var pad = function(n){return n<10 ? '0'+n : n;};
+			return  pad(date.getDate())+'/'+
+				pad(date.getMonth()+1)+'/'+
+				pad(date.getFullYear())+' '+
+				pad(date.getHours())+':'+
+				pad(date.getMinutes())+':'+
+				pad(date.getSeconds());
+		}
+	},
+
+	/**
 	 * Delete the feed.
 	 * @param {eventObject} e
 	 */

@@ -8,10 +8,10 @@
       <%= feed.unread_count %>
     </td>
     <td>
-      <%= feed.last_update %>
+      <%= formatDate(new Date(feed.last_update)) %>
     </td>
     <td>
-      <%= feed.last_sync %>
+      <%= formatDate(new Date(feed.last_sync)) %>
     </td>
     <td class="text-error">
       <% if(feed.sync_error) { %>
