@@ -13,8 +13,9 @@ require 'RedCloth'
 require 'json'
 require 'open-uri'
 
-require_relative 'app/models/init'
 require_relative 'app/helpers/init'
+require_relative 'app/parsers/init'
+require_relative 'app/models/init'
 require_relative 'app/routes/init'
 
 

@@ -48,6 +48,14 @@
             <i class="fa fa-download"></i> Download file
           </a>
         <% } %>
+        <% if(item.medias) { %>
+          <br>
+          <% _.each(item.medias, function(url, type) { %>
+            <a class="btn btn-default" href="<%= url %>">
+              <i class="fa fa-download"></i> <%= type %>
+            </a>
+          <% }); %>
+        <% } %>
       </div>
     <% } %>
   </script>

@@ -8,6 +8,7 @@ class Item
 	property :guid, String, :length => 2000
 	property :content, Text
 	property :attachment_url, String, :length => 2000
+	property :medias, Json
 	property :read, Boolean, :default => false
 	property :date, DateTime
 

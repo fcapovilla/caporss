@@ -1,20 +1,6 @@
 # encoding: utf-8
 require 'uri'
-require 'feedjira'
 require 'net/http'
-
-
-# Force enclosure parsing on all Feedjira feed entries
-Feedjira::Feed.add_common_feed_entry_element(:enclosure, :value => :url, :as => :enclosure_url)
-
-# Add Pubsubhubbub hub parsing to all Feedjira feed entries (hub + topic)
-Feedjira::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
-Feedjira::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
-Feedjira::Feed.add_common_feed_element(:'link', :value => :href, :as => :hub, :with => {:rel => 'hub'})
-Feedjira::Feed.add_common_feed_element(:'atom:link', :value => :href, :as => :topic, :with => {:rel => 'self'})
-Feedjira::Feed.add_common_feed_element(:'atom10:link', :value => :href, :as => :topic, :with => {:rel => 'self'})
-Feedjira::Feed.add_common_feed_element(:'link', :value => :href, :as => :topic, :with => {:rel => 'self'})
-
 
 class Feed
 	include DataMapper::Resource
@@ -94,6 +80,11 @@ class Feed
 		feed.entries.each do |entry|
 			entry.sanitize!
 
+			medias = nil
+			if entry.respond_to? :medias and !entry.medias.empty?
+				medias = Hash.from_pairs(entry.media_types, entry.medias)
+			end
+
 			create = false
 
 			if entry.id
@@ -106,7 +97,8 @@ class Feed
 						:url => entry.url,
 						:content => (entry.content || entry.summary),
 						:date => entry.published,
-						:attachment_url => entry.enclosure_url
+						:attachment_url => entry.enclosure_url,
+						:medias => medias
 					)
 				else
 					create = true
@@ -132,7 +124,8 @@ class Feed
 					:content => (entry.content || entry.summary),
 					:date => entry.published,
 					:guid => entry.id,
-					:attachment_url => entry.enclosure_url
+					:attachment_url => entry.enclosure_url,
+					:medias => medias
 				)
 
 				self.items << item
