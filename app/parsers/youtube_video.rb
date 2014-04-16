@@ -31,7 +31,8 @@ module Feedjira
 			end
 
 			def content
-				'<img src="' + @thumbnail + '" /><br>' + @content.gsub("\n", '<br>')
+				return @cached_content if @cached_content
+				@cached_content = '<img src="' + @thumbnail + '" /><br>' + @content.gsub("\n", '<br>')
 			end
 		end
 	end
