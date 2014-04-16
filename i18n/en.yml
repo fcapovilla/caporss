@@ -123,7 +123,7 @@ search:
 subscription:
     name: Name
     unread_count: Unread count
-    last_update: Last update
+    last_update: Newest item
     last_sync: Last sync
     sync_error: Last HTTP code
     pshb:
