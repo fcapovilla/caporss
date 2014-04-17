@@ -13,9 +13,6 @@ $('#cleanupButton').click(function() {
 			},
 			success: function() {
 				CapoRSS.folders.fetch();
-				if(CapoRSS.router.currentSelection !== null) {
-					CapoRSS.router.currentSelection.items.fetch({reset: true});
-				}
 			}
 		});
 	}

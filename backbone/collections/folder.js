@@ -18,6 +18,7 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 	/**
 	 * Fetch updates from the server.
 	 * Show a notification if new items were found.
+	 * Also updates CapoRSS.subscriptions if the settings dialogs is open.
 	 */
 	refresh: function() {
 		var that = this;
@@ -28,16 +29,16 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 				if(new_items > 0) {
 					$.pnotify({ text: new_items + ' new items.', type: 'success' });
 				}
+				if($('#settingsModal').is(':visible')) {
+					CapoRSS.subscriptions.fetch();
+				}
 			}
 		});
-		if(CapoRSS.router.currentSelection !== null) {
-			CapoRSS.router.currentSelection.items.fetch({reset: true});
-		}
 	},
 
 	/**
 	 * Fetch folders from the server.
-	 * Also fetches feeds for each folder.
+	 * Also fetches feeds for each folder and items for the selected feed.
 	 * @param {?Object} options
 	 * @return {Deferred}
 	 */
@@ -57,6 +58,10 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 
 			$.when.apply($, deferreds).then(callbacks.success, callbacks.error);
 		}, callbacks.error);
+
+		if(CapoRSS.router.currentSelection !== null) {
+			CapoRSS.router.currentSelection.items.fetch({reset: true});
+		}
 
 		return deferred;
 	},

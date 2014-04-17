@@ -46,12 +46,12 @@ CapoRSS.View.FeedEdit = Backbone.Marionette.ItemView.extend({
 						method: 'PUT',
 						data: JSON.stringify({action: 'reset'}),
 						success: function() {
-							CapoRSS.folders.fetch();
+							CapoRSS.folders.refresh();
 						}
 					});
 				}
 				else {
-					CapoRSS.folders.fetch();
+					CapoRSS.folders.refresh();
 				}
 			}
 		});

@@ -2,6 +2,8 @@ CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
 	tagName: 'tr',
 	template: '#tmpl-subscription',
 	events: {
+		'click .syncFeedAction' : 'syncFeed',
+		'click .editFeedAction' : 'showFeedEditDialog',
 		'click .deleteFeedAction' : 'deleteFeed',
 		'click .togglePSHBAction' : 'togglePSHB',
 	},
@@ -50,11 +52,45 @@ CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
 			if(this.model == CapoRSS.router.currentSelection) {
 				CapoRSS.router.navigate("", {trigger: true});
 			}
+			var that = this;
 			this.model.destroy({success: function() {
-				CapoRSS.subscriptions.fetch();
-				CapoRSS.folders.fetch();
+				CapoRSS.folders.get(that.model.get('folder_id')).fetchChildren();
 			}});
 		}
+	},
+
+	/**
+	 * Show feed edition dialog.
+	 */
+	showFeedEditDialog: function() {
+		$('#settingsModal').modal('hide');
+
+		var feedEdit = new CapoRSS.View.FeedEdit({model: this.model});
+		feedEdit.showModal();
+
+		$('#editFeedModal').one('hidden.bs.modal', function() {
+			$('#settingsModal').modal('show');
+		});
+	},
+
+	/**
+	 * Synchronize the feed.
+	 */
+	syncFeed: function() {
+		var that = this;
+		$.ajax({
+			method: 'POST',
+			url: '/sync/feed/' + this.model.id,
+			dataType: 'json',
+			success: function(result) {
+				that.model.fetch({
+					success: function() {
+						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+					}
+				});
+				CapoRSS.folders.getFeed(that.model.id).fetch();
+			}
+		});
 	},
 
 	/**
