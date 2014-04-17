@@ -7,7 +7,7 @@ describe("Subscription View", function() {
 			folder_id: 1,
 			unread_count: 1,
 			title: 'Test 1',
-			last_update: '2010-12-10T01:02:03+00:00',
+			last_update: '2010-12-10T01:02:03',
 			sync_error: 404,
 			pshb_hub: 'http://www.example.com',
 			pshb: 'inactive'
@@ -31,8 +31,8 @@ describe("Subscription View", function() {
 			expect(this.view.$el.html()).toContain("404");
 		});
 
-		it("displays the last update date without formatting", function() {
-			expect(this.view.$el.html()).toContain("2010-12-10T01:02:03+00:00");
+		it("displays the last update date with formatting", function() {
+			expect(this.view.$el.html()).toContain("10/12/2010 01:02:03");
 		});
 	});
 

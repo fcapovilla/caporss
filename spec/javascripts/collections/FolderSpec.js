@@ -9,6 +9,10 @@ describe("Folder Collection", function() {
 				set: function(a,b) {}
 			}
 		};
+
+		CapoRSS.router = {
+			currentSelection: null,
+		};
 	});
 
 	it("fetches each folder's feeds on collection fetch", function() {
