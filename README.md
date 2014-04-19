@@ -12,11 +12,8 @@ CapoRSS is a simple self-hosted RSS aggregator written in Ruby and Javascript.
 
 ## Screenshots
 
-### Desktop View
-![](doc/screenshots/screenshot.png)
-
-### Mobile View
-![](doc/screenshots/mobile.png)
+* [Desktop view](doc/screenshots/screenshot.png)
+* [Mobile view](doc/screenshots/mobile.png)
 
 ## Installation
 
