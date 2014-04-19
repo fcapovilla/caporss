@@ -55,6 +55,8 @@ git clone https://github.com/fcapovilla/caporss.git
 # From the cloned folder, create a new application :
 <code>
 cd caporss
+</code>
+<code>
 heroku apps:create caporss
 </code>
 # Add the postgres addon :
@@ -87,6 +89,8 @@ git clone https://github.com/fcapovilla/caporss.git
 # From the cloned folder, create a new Ruby app with a Postgres service :
 <code>
 cd caporss
+</code>
+<code>
 af push caporss --runtime ruby193
 </code>
 
@@ -101,13 +105,12 @@ rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4 --from-code=https://github.com
 </code>
 
 If the first installation method fails, you can try to deploy it in multiple steps :
-<code>
-rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4
+
+bc. rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4
 cd caporss
 git rm -rf diy misc .openshift
 git remote add upstream -m master https://github.com/fcapovilla/caporss.git
 git pull -s recursive -X theirs upstream master
 git push
-</code>
 
 Please note that the deployment can take a long time because Ruby and some gems need to be compiled on the server during the first deployment.
