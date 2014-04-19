@@ -43,10 +43,6 @@
 	.item-container {
 		position: relative;
 
-		.item-icons {
-			position: absolute;
-		}
-
 		.item-labels {
 			float: right;
 			text-align: right;
@@ -55,8 +51,14 @@
 		.item-title {
 			float: none;
 			overflow: hidden;
-			margin-left: 45px;
 			height: 20px;
+			.dropdown {
+				padding: 0 2px;
+				position: absolute;
+			}
+			.dropdown-spacer {
+				padding: 0 10px;
+			}
 		}
 	}
 
@@ -86,13 +88,14 @@
 		.item-container {
 			.item-title {
 				height: 28px;
-				margin-left: 55px;
 				padding: 5px 0;
 				line-height: 1.5;
-			}
-
-			.item-icons {
-				padding-top: 4px;
+				.dropdown {
+					padding: 0 3px;
+				}
+				.dropdown-spacer {
+					padding: 0 12px;
+				}
 			}
 		}
 

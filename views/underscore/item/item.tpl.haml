@@ -2,21 +2,6 @@
 :plain
   <script id='tmpl-item' type='text/template'>
     <div class="item-container<% if(item.open){ %> active<% } %>">
-      <div class="item-icons">
-        <span class="dropdown">
-          <i onclick="" class="fa fa-caret-down dropdown-toggle" data-toggle="dropdown"></i>
-          <% if(!item.feed_title){ %>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= item.id %>-menu">
-              <li><a class="readNewerAction">#{t.buttons.mark_newer_read}</a></li>
-              <li><a class="unreadNewerAction">#{t.buttons.mark_newer_unread}</a></li>
-              <li><a class="readOlderAction">#{t.buttons.mark_older_read}</a></li>
-              <li><a class="unreadOlderAction">#{t.buttons.mark_older_unread}</a></li>
-            </ul>
-          <% } %>
-        </span>
-        <i onclick="" class="readUnreadIcon fa fa-circle<% if(item.read){ %>-o<% } %>"></i>
-      </div>
-
       <div class="item-labels">
         <% if(item.feed_title) { %>
           <span class="item-feed-title label <% if(!item.read){ %>label-primary<% } else { %>label-default<% } %> hidden-small-phone">
@@ -29,6 +14,20 @@
       </div>
 
       <div class="item-title">
+        <% if(!item.feed_title) { %>
+          <span class="dropdown">
+            <i onclick="" class="fa fa-caret-down dropdown-toggle" data-toggle="dropdown"></i>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= item.id %>-menu">
+              <li><a class="readNewerAction">#{t.buttons.mark_newer_read}</a></li>
+              <li><a class="unreadNewerAction">#{t.buttons.mark_newer_unread}</a></li>
+              <li><a class="readOlderAction">#{t.buttons.mark_older_read}</a></li>
+              <li><a class="unreadOlderAction">#{t.buttons.mark_older_unread}</a></li>
+            </ul>
+          </span>
+          <i class="dropdown-spacer"></i>
+        <% } %>
+        <i onclick="" class="readUnreadIcon fa fa-circle<% if(item.read){ %>-o<% } %>"></i>
+
         <% if(!item.read){ %>
           <b><%= item.title %></b>
         <% }else{ %>
