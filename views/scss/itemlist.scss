@@ -51,6 +51,7 @@
 		.item-title {
 			float: none;
 			overflow: hidden;
+			padding: 0 3px;
 			height: 20px;
 			.dropdown {
 				padding: 0 2px;
@@ -88,7 +89,7 @@
 		.item-container {
 			.item-title {
 				height: 28px;
-				padding: 5px 0;
+				padding: 5px 3px;
 				line-height: 1.5;
 				.dropdown {
 					padding: 0 3px;
