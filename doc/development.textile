@@ -40,11 +40,11 @@ grunt
 
 h1. Application structure
 
-* *app* : Contains the server-side Heroku application. Each folder has an "init.rb" file which requires the other files.
+* *app* : Contains the server-side Sinatra application. Each folder has an "init.rb" file which imports the other files.
 ** *helpers* : Helper methods.
 ** *models* : Datamapper models. Also includes database migrations in the "migrations.rb" file.
 ** *parsers* : Custom Feedjira parsers.
-** *routes* : Heroku routes.
+** *routes* : Sinatra routes.
 * *backbone* : Contains the client-side Backbone application. All of these files are concatenated and minified by the server.
 * *doc* : Documentation.
 * *i18n* : Translation files.
@@ -52,6 +52,6 @@ h1. Application structure
 * *scripts* : Worker or cron scripts.
 * *spec* : Tests.
 * *views* : Template files.
-** *partials* : Partial HAML files.
+** *partials* : HAML partial files.
 ** *scss* : SCSS style files.
 ** *underscore* : HAML files containing Underscore templates.

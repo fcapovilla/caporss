@@ -7,6 +7,10 @@ This procedure will run CapoRSS in development mode using an SQLite database
 <code>
 gem install bundler
 </code>
+# Clone CapoRSS :
+<code>
+git clone https://github.com/fcapovilla/caporss.git
+</code>
 # Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 <code>
 bundle install --without production test travis
@@ -26,6 +30,10 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 # Install the "bundler" Ruby gem using this command:
 <code>
 gem install bundler
+</code>
+# Clone CapoRSS :
+<code>
+git clone https://github.com/fcapovilla/caporss.git
 </code>
 # Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 <code>
@@ -47,7 +55,7 @@ Notes:
 
 h1. Heroku
 
-# Install heroku
+# Install the "Heroku Toolbelt":https://toolbelt.heroku.com/
 # Clone CapoRSS :
 <code>
 git clone https://github.com/fcapovilla/caporss.git
@@ -99,6 +107,8 @@ See this page for more informations :
 
 h1. Openshift
 
+Important : This installation method was only tested once and might not work on the current version of CapoRSS.
+
 CapoRSS can be deployed on Openshift using the diy-0.1 and mysql-5.5 cartridges. The cron cartridge is also required if you want automatic feed updates.
 <code>
 rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4 --from-code=https://github.com/fcapovilla/caporss.git --timeout=9999
@@ -117,8 +127,8 @@ Please note that the deployment can take a long time because Ruby and some gems 
 
 h1. Sync feeds periodically
 
-The "fetch_all" route can be called by the "sync" user and will fetch all new items for all feeds on the server.
-A worker script that calls the "/fetch_all" route is included in the "scripts" folder.  You can add this script in a Worker, or call it via CRON.
+The "fetch_all" route will fetch all new items for all feeds on the server. This route can be called by the "sync" user.
+A worker script that calls the "/fetch_all" route is included in the "scripts" folder.  You can add this script in a Web Worker, or call it via CRON.
 
 You must set two variables in this script :
 * *password* : The "sync" user's password

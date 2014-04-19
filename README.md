@@ -32,16 +32,20 @@ This procedure will run CapoRSS in development mode using an SQLite database. Ot
 
 		gem install bundler
 
-3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions, so you may need to install a compiler and development packages:
+3. Clone CapoRSS :
+
+		git clone https://github.com/fcapovilla/caporss.git
+
+4. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions, so you may need to install a compiler and development packages:
 
 		bundle install --without production test travis
 
-4. Start CapoRSS using this command:
+5. Start CapoRSS using this command:
 
 		bundle exec ruby app.rb
 
-5. Open a web browser and go to "http://localhost:4567"
-6. The default username/password is "admin"/"admin"
+6. Open a web browser and go to "http://localhost:4567"
+7. The default username/password is "admin"/"admin"
 
 ## Documentation
 
