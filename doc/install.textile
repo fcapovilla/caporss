@@ -4,11 +4,17 @@ This procedure will run CapoRSS in development mode using an SQLite database
 
 # Install Ruby 2.1.0
 # Install the "bundler" Ruby gem using this command:
-<pre>gem install bundler</pre>
+<code>
+gem install bundler
+</code>
 # Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
-<pre>bundle install --without production test travis</pre>
+<code>
+bundle install --without production test travis
+</code>
 # Start CapoRSS using this command:
-<pre>bundle exec ruby app.rb</pre>
+<code>
+bundle exec ruby app.rb
+</code>
 # Open a web browser and go to "http://localhost:4567"
 # The default username/password is "admin"/"admin"
 
@@ -18,13 +24,21 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 
 # Install Ruby 2.1.0
 # Install the "bundler" Ruby gem using this command:
-<pre>gem install bundler</pre>
+<code>
+gem install bundler
+</code>
 # Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
-<pre>bundle install --without development test travis</pre>
+<code>
+bundle install --without development test travis
+</code>
 # Set the "DATABASE_URL" environment variable with your database connection informations. ex:
-<pre>export DATABASE_URL='postgres://username:password@hostname/database'</pre>
+<code>
+export DATABASE_URL="postgres://username:password@hostname/database"
+</code>
 # Run CapoRSS using Thin (Replace YOUR_KEYFILE and YOUR_CERTFILE with the paths of your SSL certificate files:
-<pre>bundle exec thin -R config.ru -e production -d --threaded --ssl --ssl-key-file YOUR_KEYFILE --ssl-cert-file YOUR_CERTFILE start</pre>
+<code>
+bundle exec thin -R config.ru -e production -d --threaded --ssl --ssl-key-file YOUR_KEYFILE --ssl-cert-file YOUR_CERTFILE start
+</code>
 # Open a web browser and go to "http://localhost:3000"
 # The default username/password is "admin"/"admin"
 
@@ -35,16 +49,26 @@ h1. Heroku
 
 # Install heroku
 # Clone CapoRSS :
-<pre>git clone https://github.com/fcapovilla/caporss.git</pre>
+<code>
+git clone https://github.com/fcapovilla/caporss.git
+</code>
 # From the cloned folder, create a new application :
-<pre>cd caporss
-heroku apps:create caporss</pre>
+<code>
+cd caporss
+heroku apps:create caporss
+</code>
 # Add the postgres addon :
-<pre>heroku addons:add heroku-postgresql:dev</pre>
+<code>
+heroku addons:add heroku-postgresql:dev
+</code>
 # Set the BUNDLE_WITHOUT environment variable so only the production gems are installed:
-<pre>heroku config:set BUNDLE_WITHOUT='development:test:travis'</pre>
+<code>
+heroku config:set BUNDLE_WITHOUT="development:test:travis"
+</code>
 # Push CapoRSS to heroku :
-<pre>git push heroku master</pre>
+<code>
+git push heroku master
+</code>
 
 See this page for more informations :
 * "Getting started with Ruby on Heroku":https://devcenter.heroku.com/articles/ruby
@@ -53,12 +77,18 @@ h1. Appfog
 
 CapoRSS can easily be used on Appfog :
 # Install af :
-<pre>gem install af</pre>
+<code>
+gem install af
+</code>
 # Clone CapoRSS :
-<pre>git clone https://github.com/fcapovilla/caporss.git</pre>
+<code>
+git clone https://github.com/fcapovilla/caporss.git
+</code>
 # From the cloned folder, create a new Ruby app with a Postgres service :
-<pre>cd caporss
-af push caporss --runtime ruby193</pre>
+<code>
+cd caporss
+af push caporss --runtime ruby193
+</code>
 
 See this page for more informations :
 * "AppFog CLI Tool Overview":https://docs.appfog.com/getting-started/af-cli
@@ -66,14 +96,18 @@ See this page for more informations :
 h1. Openshift
 
 CapoRSS can be deployed on Openshift using the diy-0.1 and mysql-5.5 cartridges. The cron cartridge is also required if you want automatic feed updates.
-<pre>rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4 --from-code=https://github.com/fcapovilla/caporss.git --timeout=9999</pre>
+<code>
+rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4 --from-code=https://github.com/fcapovilla/caporss.git --timeout=9999
+</code>
 
 If the first installation method fails, you can try to deploy it in multiple steps :
-<pre>rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4
+<code>
+rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4
 cd caporss
 git rm -rf diy misc .openshift
 git remote add upstream -m master https://github.com/fcapovilla/caporss.git
 git pull -s recursive -X theirs upstream master
-git push</pre>
+git push
+</code>
 
 Please note that the deployment can take a long time because Ruby and some gems need to be compiled on the server during the first deployment.

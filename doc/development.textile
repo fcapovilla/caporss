@@ -3,13 +3,21 @@ h1. Tests
 To run tests locally :
 
 # Install required packages with bundle:
-<pre>bundle install --without production development travis</pre>
+<code>
+bundle install --without production development travis
+</code>
 # Run Ruby tests :
-<pre>DATABASE_URL='sqlite::memory:' bundle exec rspec spec</pre>
+<code>
+DATABASE_URL="sqlite::memory:" bundle exec rspec spec
+</code>
 # Run Javascript tests :
-<pre>rake jasmine:ci</pre>
+<code>
+rake jasmine:ci
+</code>
 # To run Javascript tests in a browser :
-<pre>rake jasmine</pre>
+<code>
+rake jasmine
+</code>
 
 h1. Javascript libraries management
 
@@ -18,11 +26,17 @@ To update Javascript libraries :
 
 # Install Node and npm
 # Install Grunt and Bower :
-<pre>npm install</pre>
+<code>
+npm install
+</code>
 # Install Javascript dependencies with Bower :
-<pre>bower install</pre>
+<code>
+bower install
+</code>
 # Concatenate and minify dependencies using grunt :
-<pre>grunt</pre>
+<code>
+grunt
+</code>
 
 h1. Application structure
 
