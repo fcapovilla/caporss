@@ -52,12 +52,12 @@ h1. Heroku
 <code>
 git clone https://github.com/fcapovilla/caporss.git
 </code>
-# From the cloned folder, create a new application :
+# From the cloned folder, create a new application (Replace APPNAME with you application name) :
 <code>
 cd caporss
 </code>
 <code>
-heroku apps:create caporss
+heroku apps:create APPNAME
 </code>
 # Add the postgres addon :
 <code>
@@ -86,12 +86,12 @@ gem install af
 <code>
 git clone https://github.com/fcapovilla/caporss.git
 </code>
-# From the cloned folder, create a new Ruby app with a Postgres service :
+# From the cloned folder, create a new Ruby app with a Postgres service (Replace APPNAME with you application name) :
 <code>
 cd caporss
 </code>
 <code>
-af push caporss --runtime ruby193
+af push APPNAME --runtime ruby193
 </code>
 
 See this page for more informations :
@@ -114,3 +114,14 @@ git pull -s recursive -X theirs upstream master
 git push
 
 Please note that the deployment can take a long time because Ruby and some gems need to be compiled on the server during the first deployment.
+
+h1. Sync feeds periodically
+
+The "fetch_all" route can be called by the "sync" user and will fetch all new items for all feeds on the server.
+A worker script that calls the "/fetch_all" route is included in the "scripts" folder.  You can add this script in a Worker, or call it via CRON.
+
+You must set two variables in this script :
+* *password* : The "sync" user's password
+* *url* : The base url of your CapoRSS instance.
+
+If your server isn't using HTTPS, you will also need to delete the "http.use_ssl" and "http.verify_mode" lines, but please note that doing so will be insecure, because the "sync" user's password will be sent in clear.
