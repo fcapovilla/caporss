@@ -5,7 +5,7 @@ To run tests locally :
 # Install required packages with bundle:
 <pre>bundle install --without production development travis</pre>
 # Run Ruby tests :
-<pre>DATABASE_URL="sqlite::memory:" bundle exec rspec spec</pre>
+<pre>DATABASE_URL='sqlite::memory:' bundle exec rspec spec</pre>
 # Run Javascript tests :
 <pre>rake jasmine:ci</pre>
 # To run Javascript tests in a browser :

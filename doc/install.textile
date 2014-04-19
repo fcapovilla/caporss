@@ -22,7 +22,7 @@ CapoRSS can be run in production mode with Thin and PostgreSQL. Other database b
 # Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
 <pre>bundle install --without development test travis</pre>
 # Set the "DATABASE_URL" environment variable with your database connection informations. ex:
-<pre>export DATABASE_URL="postgres://username:password@hostname/database"</pre>
+<pre>export DATABASE_URL='postgres://username:password@hostname/database'</pre>
 # Run CapoRSS using Thin (Replace YOUR_KEYFILE and YOUR_CERTFILE with the paths of your SSL certificate files:
 <pre>bundle exec thin -R config.ru -e production -d --threaded --ssl --ssl-key-file YOUR_KEYFILE --ssl-cert-file YOUR_CERTFILE start</pre>
 # Open a web browser and go to "http://localhost:3000"
@@ -42,7 +42,7 @@ heroku apps:create caporss</pre>
 # Add the postgres addon :
 <pre>heroku addons:add heroku-postgresql:dev</pre>
 # Set the BUNDLE_WITHOUT environment variable so only the production gems are installed:
-<pre>heroku config:set BUNDLE_WITHOUT="development:test:travis"</pre>
+<pre>heroku config:set BUNDLE_WITHOUT='development:test:travis'</pre>
 # Push CapoRSS to heroku :
 <pre>git push heroku master</pre>
 
