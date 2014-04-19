@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 0.19.3
+Version 1.0.0
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.png?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -9,6 +9,14 @@ Version 0.19.3
 ## Description
 
 CapoRSS is a simple self-hosted RSS aggregator written in Ruby and Javascript.
+
+## Features
+
+* Live notifications using [Server-Sent Events](http://www.w3.org/TR/eventsource).
+* [Pubsubhubbub (Push)](https://code.google.com/p/pubsubhubbub/) support for live feed updates.
+* Mobile device support using responsive HTML.
+* Feed organization using folders with drag-and-drop support.
+* Import and export feeds in [OPML](https://en.wikipedia.org/wiki/OPML) format.
 
 ## Screenshots
 
@@ -24,7 +32,7 @@ This procedure will run CapoRSS in development mode using an SQLite database. Ot
 
 		gem install bundler
 
-3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
+3. Run a "bundle install" in the application's root directory. Note that some dependencies are native extensions, so you may need to install a compiler and development packages:
 
 		bundle install --without production test travis
 
