@@ -39,5 +39,5 @@ if [ -f $OPENSHIFT_DATA_DIR/rbenv-init.sh ]; then
 	cd $OPENSHIFT_REPO_DIR
 
 	# bundle
-	bundle install --without test development
+	bundle install --without test travis development
 fi

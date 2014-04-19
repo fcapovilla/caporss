@@ -20,9 +20,7 @@ CapoRSS is a simple self-hosted RSS aggregator written in Ruby and Javascript.
 
 ## Installation
 
-### localhost (development)
-
-This procedure will run CapoRSS in development mode using an SQLite database
+This procedure will run CapoRSS in development mode using an SQLite database. Other installation methods can be found in the [installation](doc/install.textile) documentation file.
 
 1. Install Ruby 2.1.0
 2. Install the "bundler" Ruby gem using this command:
@@ -40,103 +38,16 @@ This procedure will run CapoRSS in development mode using an SQLite database
 5. Open a web browser and go to "http://localhost:4567"
 6. The default username/password is "admin"/"admin"
 
-### localhost (production)
-
-CapoRSS can be run in production mode with Thin and PostgreSQL. Other database backends can be used by replacing the "dm-postgres-adapter" gem in the Gemfile with the correct Datamapper adapter for your database.
-
-1. Install Ruby 2.1.0
-2. Install the "bundler" Ruby gem using this command:
-
-		gem install bundler
-
-3. Run "bundle install" in the application's root directory. Note that some dependencies are native extensions and will need a compiler and development packages:
-
-		bundle install --without development test travis
-
-4. Set the "DATABASE\_URL" environment variable with your database connection informations. ex:
-
-		export DATABASE_URL="postgres://username:password@hostname/database"
-
-5. Run CapoRSS using Thin (Replace YOUR_KEYFILE and YOUR_CERTFILE with the paths of your SSL certificate files:
-
-		bundle exec thin -R config.ru -e production -d --threaded --ssl --ssl-key-file YOUR_KEYFILE --ssl-cert-file YOUR_CERTFILE start
-
-6. Open a web browser and go to "http://localhost:3000"
-7. The default username/password is "admin"/"admin"
-
-Notes:
-* For security reasons, a SSL certificate is required for running CapoRSS in production mode.
-
-### Heroku and AppFog
-
-CapoRSS is Heroku-ready and AppFog-ready, so you can push it on these services like any other Sinatra-based applications.
-See these pages for more informations :
-* [Getting started with Ruby on Heroku](https://devcenter.heroku.com/articles/ruby)
-* [AppFog CLI Tool Overview](https://docs.appfog.com/getting-started/af-cli)
-
-Notes :
-* On Heroku, you must set the BUNDLE\_WITHOUT environment variable so only the production gems are installed:
-
-		heroku config:set BUNDLE_WITHOUT="development:test:travis"
-
-### Openshift
-
-CapoRSS can also be deloyed on Openshift using the diy-0.1 and mysql-5.5 cartridges. The cron cartridge is also required if you want automatic feed updates.
-
-	rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4 --from-code=https://github.com/fcapovilla/caporss.git --timeout=9999
-
-If the first installation method fails, you can try to deploy it in multiple steps :
-
-	rhc create-app caporss diy-0.1 mysql-5.5 cron-1.4
-	cd caporss
-	git rm -rf diy misc .openshift
-	git remote add upstream -m master https://github.com/fcapovilla/caporss.git
-	git pull -s recursive -X theirs upstream master
-	git push
-
-Please note that the deployment can take a long time because Ruby and some gems need to be compiled on the server during the first deployment.
-
-## Tests
-
-To run tests locally :
-
-1. Install required packages with bundle:
-
-		bundle install --without production development travis
-
-2. Run Ruby tests :
-
-		DATABASE_URL="sqlite::memory:" bundle exec rspec spec
-
-3. Run Javascript tests :
-
-		rake jasmine:ci
-
-## Javascript libraries management
-
-This procedure is not required to use CapoRSS. It is only necessary if you want to manage or update the Javascript dependencies of CapoRSS.
-To update Javascript libraries :
-
-1. Install Node and npm
-
-2. Install Grunt and Bower :
-
-		npm install
-
-3. Install Javascript dependencies with Bower :
-
-		bower install
-
-4. Concatenate and minify dependencies using grunt :
-
-		grunt
-
 ## Documentation
 
-* [English version](doc/en.textile)
-* [French version](doc/fr.textile)
+* [Installation](doc/install.textile)
+* [Development](doc/development.textile)
+* User documentation :
+ * [English version](doc/en.textile)
+ * [French version](doc/fr.textile)
+* [Changelog / Release notes](CHANGELOG.textile)
 
-## Dependencies
+## Acknowledgment
 
 CapoRSS is built on top of these great projects :
 
@@ -149,7 +60,7 @@ CapoRSS is built on top of these great projects :
 * [Bootstrap](http://twitter.github.com/bootstrap/)
 * [bootstrap3-typeahead](https://github.com/bassjobsen/Bootstrap-3-Typeahead)
 * [Font awesome](http://fortawesome.github.com/Font-Awesome/)
-* [Pines notify](http://pinesframework.org/pnotify/)
+* [PNotify](https://github.com/sciactive/pnotify)
 * [Backbone.js](http://backbonejs.org/)
 * [Marionette.js](http://marionettejs.com/)
 * [Lo-Dash](http://lodash.com/)
@@ -165,16 +76,7 @@ CapoRSS is built on top of these great projects :
 
 Also, CapoRSS's favicon is from the [RRZE Icon Set](http://rrze-icon-set.berlios.de/)
 
-Most dependencies are already included in the Gemfile and in the application's public directory.
-
 ## TODO
 
 * Optimisations, performance improvements and bugfixes
 * Add other automatic sync methods (cron, worker)
-
-## Release notes
-* 0.5.0 : This version brings a lots of modifications to the database structure to add multi-user support. Automatic migrations are included to move all single-user configurations to the 'admin/admin' user, but starting from a clean database is recommended.
-* 0.9.0 : This version adds GUID and item update support. A migration was added to add GUIDs to existing items by using their title, url and publication date. Please note that some duplicate items may be created on the next feed synchronisation if :
- * The title, url or publication date of an item was modified since the item was first added to the local database.
- * There was a problem fetching the feed during the migration.
-* 0.11.0 : This version adds support for Pubsubhubbub feeds. A migration will check existing feeds for PSHB hub definitions, but you will have to manually activate PSHB for each of them using the feed edition dialog. Please note that some feeds might define a hub without actually pushing updates to it. That is the case for Youtube upload feeds.

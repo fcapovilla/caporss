@@ -1,0 +1,43 @@
+h1. Tests
+
+To run tests locally :
+
+# Install required packages with bundle:
+<pre>bundle install --without production development travis</pre>
+# Run Ruby tests :
+<pre>DATABASE_URL="sqlite::memory:" bundle exec rspec spec</pre>
+# Run Javascript tests :
+<pre>rake jasmine:ci</pre>
+# To run Javascript tests in a browser :
+<pre>rake jasmine</pre>
+
+h1. Javascript libraries management
+
+This procedure is not required to use CapoRSS. It is only necessary if you want to manage or update the Javascript dependencies of CapoRSS.
+To update Javascript libraries :
+
+# Install Node and npm
+# Install Grunt and Bower :
+<pre>npm install</pre>
+# Install Javascript dependencies with Bower :
+<pre>bower install</pre>
+# Concatenate and minify dependencies using grunt :
+<pre>grunt</pre>
+
+h1. Application structure
+
+* *app* : Contains the server-side Heroku application. Each folder has an "init.rb" file which requires the other files.
+** *helpers* : Helper methods.
+** *models* : Datamapper models. Also includes database migrations in the "migrations.rb" file.
+** *parsers* : Custom Feedjira parsers.
+** *routes* : Heroku routes.
+* *backbone* : Contains the client-side Backbone application. All of these files are concatenated and minified by the server.
+* *doc* : Documentation.
+* *i18n* : Translation files.
+* *public* : Public files. CSS, fonts, images and Javascript dependencies.
+* *scripts* : Worker or cron scripts.
+* *spec* : Tests.
+* *views* : Template files.
+** *partials* : Partial HAML files.
+** *scss* : SCSS style files.
+** *underscore* : HAML files containing Underscore templates.
