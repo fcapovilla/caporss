@@ -86,12 +86,6 @@ get '/stream' do
 	end
 end
 
-get '/doc' do
-	root = settings.root + '/doc'
-	content = File.open("#{root}/install.textile", 'r').read()
-	RedCloth.new(content).to_html
-end
-
 
 # Load all routes
 require_relative 'login'
