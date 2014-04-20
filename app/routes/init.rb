@@ -101,3 +101,8 @@ require_relative 'pshb'
 require_relative 'api/folder'
 require_relative 'api/feed'
 require_relative 'api/item'
+
+require_relative 'greader/auth'
+require_relative 'greader/feed'
+require_relative 'greader/folder'
+require_relative 'greader/item'

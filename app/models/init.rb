@@ -49,3 +49,6 @@ require_relative 'migrations'
 
 # Prepare session store
 use Rack::Session::Moneta, :store => Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
+
+# Prepare token store
+Cache::tokens = Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)

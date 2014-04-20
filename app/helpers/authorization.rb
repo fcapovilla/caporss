@@ -24,3 +24,19 @@ def authorize_basic!(*roles)
 
 	halt 403
 end
+
+def authorize_token!(*roles)
+	token = ''
+	if request.env['HTTP_AUTHORIZATION']
+		parts = request.env['HTTP_AUTHORIZATION'].split
+		token = parts[1].sub(/^auth=/, '') if parts[0] == 'GoogleLogin'
+	end
+
+	if token and Cache::tokens.key?(token)
+		if @user = User.first(:username => Cache::tokens[token])
+			return token
+		end
+	end
+
+	halt [401, 'Unauthorized']
+end

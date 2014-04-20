@@ -8,6 +8,17 @@ class Cache
 	# Concatenated backbone application
 	@@backbone = nil
 
+	# Token store
+	@@tokens = nil
+
+	def self.tokens
+		@@tokens
+	end
+
+	def self.tokens=(t)
+		@@tokens = t
+	end
+
 	def self.backbone
 		@@backbone
 	end
