@@ -10,7 +10,8 @@ module Feedjira
 			element :link, :as => :url, :value => :href, :with => {:type => "text/html", :rel => "alternate"}
 			element :name, :as => :author
 			element :summary
-			element :"media:description", :as => :content
+			element :content
+			element :"media:description", :as => :media_description
 			element :"media:thumbnail", :as => :thumbnail, :value => :url, :with => {:width => "320"}
 
 			element :enclosure, :as => :image, :value => :href
@@ -32,7 +33,11 @@ module Feedjira
 
 			def content
 				return @cached_content if @cached_content
-				@cached_content = '<img src="' + @thumbnail + '" /><br>' + @content.gsub("\n", '<br>')
+				if @media_description
+					@cached_content = '<img src="' + @thumbnail + '" /><br>' + @media_description.gsub("\n", '<br>')
+				else
+					@cached_content = @content
+				end
 			end
 		end
 	end
