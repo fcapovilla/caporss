@@ -11,25 +11,25 @@ namespace '/greader' do
 			target_title = nil
 			if target
 				if target =~ /^feed\/(.*)/
-					puts $1
 					if feed = Feed.first(:url => $1, :user => @user)
 						filters[:feed] = feed
 						target_title = filters[:feed].title
 					end
 				elsif target =~ /^label\/(.*)/
-					puts $1
 					if folder = Folder.first(:title => $1, :user => @user)
 						filters[Item.feed.folder_id] = folder.id
 						target_title = folder.title
 					end
+				elsif target =~ /^user\/[^\/]*\/state\/com\.google\/(.*)/
+					target_title = $1
 				end
 			end
 
 			halt 404 if target_title.nil?
 
 
-			if params[:n] and params[:n] > 0
-				if params[:n] > 1000
+			if params[:n] and params[:n].to_i > 0
+				if params[:n].to_i > 1000
 					filters[:limit] = 1000
 				else
 					filters[:limit] = params[:n].to_i
@@ -48,8 +48,8 @@ namespace '/greader' do
 				filters[:date.lt] = params[:ot].to_i
 			end
 
-			if params[:xt]
-				# TODO: Exclude Target
+			if params[:xt] and params[:xt] =~ /user\/[^\/]*\/state\/com\.google\/read/
+				filters[:read] = false
 			end
 
 			if params[:it]
@@ -63,6 +63,8 @@ namespace '/greader' do
 			end
 
 			items = []
+
+			puts filters.inspect
 
 			Item.all(filters).each do |item|
 				items << {
