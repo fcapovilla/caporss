@@ -67,17 +67,43 @@ namespace '/greader' do
 			puts filters.inspect
 
 			Item.all(filters).each do |item|
+				categories = [
+					"user/#{@user.id}/state/com.google/reading-list",
+					"user/#{@user.id}/label/#{item.feed.folder.title}"
+				]
+				if item.read
+					categories << "user/#{@user.id}/state/com.google/read"
+				else
+					categories << "user/#{@user.id}/state/com.google/fresh"
+				end
+
+				enclosure = []
+				if item.medias
+					enclosure += item.medias.map { |k,v|
+						{
+							:href => v,
+							:type => k,
+							:length => 99999
+						}
+					}
+				end
+				if item.attachment_url
+					enclosure += {
+						:href => item.attachment_url,
+						:type => 'application/octet-stream',
+						:length => 99999
+					}
+				end
+
 				items << {
-					:crawlTimeMsec => '', # TODO
-					:timestampUsec => '', # TODO
+					:crawlTimeMsec => item.date.to_time.to_i,
+					:timestampUsec => item.date.to_time.to_i * 1000,
 					:id => "tag:google.com,2005:reader/item/#{item.id}",
-					:categories => [
-						"user/#{@user.id}/label/#{item.feed.folder.title}"
-					],
+					:categories => categories,
 					:title => item.title,
 					:published => item.date,
 					:updated => item.date,
-					:enclosure => [], # TODO: Attachments
+					:enclosure => enclosure,
 					:canonical => [{
 						:href => item.url
 					}],
@@ -109,7 +135,7 @@ namespace '/greader' do
 				:self => {
 					:href => request.url
 				},
-				:updated => 0, # TODO
+				:updated => Time.now.to_i, # TODO
 				:items => items,
 				:continuation => filters[:offset] + filters[:limit]
 			}.to_json
