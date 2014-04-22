@@ -25,3 +25,8 @@ configure :production do
 	use Rack::SslEnforcer
 end
 
+configure do
+	# Needed for Greader API support
+	set :protection, :except => :path_traversal
+end
+
