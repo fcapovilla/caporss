@@ -26,6 +26,8 @@ def authorize_basic!(*roles)
 end
 
 def authorize_token!(*roles)
+	return if @user and @user.authorize(roles)
+
 	token = ''
 	if request.env['HTTP_AUTHORIZATION']
 		parts = request.env['HTTP_AUTHORIZATION'].split

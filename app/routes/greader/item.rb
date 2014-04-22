@@ -62,9 +62,9 @@ namespace '/greader' do
 				filters[:offset] = 0
 			end
 
-			items = []
-
 			puts filters.inspect
+
+			items = []
 
 			Item.all(filters).each do |item|
 				categories = [
@@ -88,21 +88,21 @@ namespace '/greader' do
 					}
 				end
 				if item.attachment_url
-					enclosure += {
+					enclosure += [{
 						:href => item.attachment_url,
 						:type => 'application/octet-stream',
 						:length => 99999
-					}
+					}]
 				end
 
 				items << {
-					:crawlTimeMsec => item.date.to_time.to_i,
-					:timestampUsec => item.date.to_time.to_i * 1000,
-					:id => "tag:google.com,2005:reader/item/#{item.id}",
+					:crawlTimeMsec => (item.date.to_time.to_i * 1000).to_s,
+					:timestampUsec => (item.date.to_time.to_i * 1000 * 1000).to_s,
+					:id => item.id.to_s,
 					:categories => categories,
 					:title => item.title,
-					:published => item.date,
-					:updated => item.date,
+					:published => item.date.to_time.to_i,
+					:updated => item.date.to_time.to_i,
 					:enclosure => enclosure,
 					:canonical => [{
 						:href => item.url
@@ -111,10 +111,10 @@ namespace '/greader' do
 						:href => item.url,
 						:type => "text/html"
 					}],
-					:summary => [{
+					:summary => {
 						:direction => 'ltr',
 						:content => item.content
-					}],
+					},
 					:author => '',
 					:likingUsers => [],
 					:comments => [],
@@ -127,8 +127,8 @@ namespace '/greader' do
 				}
 			end
 
-			{
-				:direction => 'ltr', # TODO
+			output = {
+				:direction => 'ltr',
 				:id => target,
 				:title => target_title,
 				:description => '',
@@ -137,8 +137,12 @@ namespace '/greader' do
 				},
 				:updated => Time.now.to_i, # TODO
 				:items => items,
-				:continuation => filters[:offset] + filters[:limit]
-			}.to_json
+			}
+
+			if items.length == filters[:limit]
+				output[:continuation] = (filters[:offset] + filters[:limit]).to_s
+			end
+			output.to_json
 		end
 
 		get '/stream/items/contents' do
@@ -146,7 +150,63 @@ namespace '/greader' do
 		end
 
 		get '/stream/items/ids' do
-			{}.to_json # TODO
+			authorize_token! :user
+
+			filters = {}
+
+			if params[:n] and params[:n].to_i > 0
+				if params[:n].to_i > 1000
+					filters[:limit] = 1000
+				else
+					filters[:limit] = params[:n].to_i
+				end
+			else
+				filters[:limit] = 20
+			end
+
+			if params[:r] and params[:r] == 'o'
+				filters[:order] = [:date.asc]
+			else
+				filters[:order] = [:date.desc]
+			end
+
+			if params[:ot]
+				filters[:date.lt] = params[:ot].to_i
+			end
+
+			if params[:xt] and params[:xt] =~ /user\/[^\/]*\/state\/com\.google\/read/
+				filters[:read] = false
+			end
+
+			if params[:it]
+				# TODO: Include Target
+			end
+
+			if params[:c]
+				filters[:offset] = params[:c].to_i
+			else
+				filters[:offset] = 0
+			end
+
+			items = []
+
+			Item.all(filters).each do |item|
+				items << {
+					:id => item.id.to_s,
+					:directStreamIds => [
+						"user/#{@user.id}/label/#{item.feed.folder.title}"
+					],
+					:timestampUsec => (item.date.to_time.to_i * 1000 * 1000).to_s
+				}
+			end
+
+			output = {
+				:itemRefs => items,
+			}
+			if items.length == filters[:limit]
+				output[:continuation] = (filters[:offset] + filters[:limit]).to_s
+			end
+			output.to_json
 		end
 	end
 
