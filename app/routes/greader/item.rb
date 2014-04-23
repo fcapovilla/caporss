@@ -62,8 +62,6 @@ namespace '/greader' do
 				filters[:offset] = 0
 			end
 
-			puts filters.inspect
-
 			items = []
 
 			Item.all(filters).each do |item|
