@@ -109,9 +109,12 @@ namespace '/greader' do
 	end
 
 	namespace '/reader/api/0' do
-		get '/stream/contents/*' do |target|
-			authorize_token! :user
 
+		before do
+			authorize_token! :user
+		end
+
+		get '/stream/contents/*' do |target|
 			filters = generate_greader_filters(params)
 
 			target_title = nil
@@ -121,7 +124,7 @@ namespace '/greader' do
 						filters[:feed] = feed
 						target_title = filters[:feed].title
 					end
-				elsif target =~ /^label\/(.*)/
+				elsif target =~ /^user\/[^\/]*\/label\/(.*)/
 					if folder = Folder.first(:title => $1, :user => @user)
 						filters[Item.feed.folder_id] = folder.id
 						target_title = folder.title
@@ -157,8 +160,6 @@ namespace '/greader' do
 		end
 
 		get '/stream/items/contents' do
-			authorize_token! :user
-
 			filters = generate_greader_filters(params)
 
 			halt 404 unless params[:i]
@@ -177,8 +178,6 @@ namespace '/greader' do
 		end
 
 		get '/stream/items/ids' do
-			authorize_token! :user
-
 			filters = generate_greader_filters(params)
 			items = []
 
@@ -199,6 +198,28 @@ namespace '/greader' do
 				output[:continuation] = (filters[:offset] + filters[:limit]).to_s
 			end
 			output.to_json
+		end
+
+		get '/edit-tag' do
+			item = Item.get(params[:i].to_i)
+
+			if params[:a]
+				if params[:a] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
+					if $1 == 'read'
+						item.update(:read => true)
+					end
+				end
+			end
+
+			if params[:r]
+				if params[:r] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
+					if $1 == 'read'
+						item.update(:read => false)
+					end
+				end
+			end
+
+			'OK'
 		end
 	end
 

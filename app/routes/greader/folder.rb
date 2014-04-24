@@ -3,9 +3,12 @@
 
 namespace '/greader' do
 	namespace '/reader/api/0' do
-		get '/tag/list' do
-			authorize_token! :user
 
+		before do
+			authorize_token! :user
+		end
+
+		get '/tag/list' do
 			tags = []
 
 			Folder.all(:user => @user).each do |folder|
@@ -19,20 +22,37 @@ namespace '/greader' do
 		end
 
 		get '/rename-tag' do
-			{}.to_json # TODO
+			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
+				if folder = Folder.first(:title => $1, :user => @user)
+					if params[:dest] =~ /^user\/[^\/]*\/label\/(.+)/
+						folder.title = $1
+						folder.save
+					end
+				end
+			end
+
+			'OK'
 		end
 
 		get '/disable-tag' do
-			{}.to_json # TODO
-		end
+			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
+				if folder = Folder.first(:title => $1, :user => @user)
+					base_folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
 
-		get '/edit-tag' do
-			{}.to_json # TODO
+					feed_ids = folder.feeds.map { |feed| feed.id }
+					feed_ids.each do |feed_id|
+						feed = Feed.get(feed_id)
+						feed.move_to_list(base_folder.id)
+					end
+
+					folder.reload.destroy
+				end
+			end
+
+			'OK'
 		end
 
 		get '/preference/stream/list' do
-			authorize_token! :user
-
 			prefs = {}
 
 			Folder.all(:user => @user).each do |folder|
@@ -52,9 +72,10 @@ namespace '/greader' do
 		end
 
 		get '/preference/stream/set' do
-			authorize_token! :user
-
-			folder = Folder.first(params[:s].to_i)
+			folder = nil
+			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
+				folder = Folder.first(:title => $1, :user => @user)
+			end
 
 			if folder and params[:k]
 				if params[:k] == 'is-expanded'
@@ -65,9 +86,7 @@ namespace '/greader' do
 			'OK'
 		end
 
-		get 'unread-count' do
-			authorize_token! :user
-
+		get '/unread-count' do
 			counts = []
 			total = 0
 			newest_item = '0'

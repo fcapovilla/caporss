@@ -3,25 +3,12 @@
 
 namespace '/greader' do
 	namespace '/reader/api/0' do
-		get '/unread-count' do
+
+		before do
 			authorize_token! :user
-
-			unread_counts = []
-
-			Feed.all(:user => @user).each do |feed|
-				unread_counts << {
-					:id => "feed/#{feed.url}",
-					:count => feed.unread_count,
-					:newestItemTimestampUsec => feed.last_update.to_time.to_i * 1000
-				}
-			end
-
-			{:max => 1000, :unreadcounts => unread_counts}.to_json
 		end
 
 		get '/subscription/list' do
-			authorize_token! :user
-
 			subscriptions = []
 
 			Feed.all(:user => @user).each do |feed|
@@ -49,9 +36,7 @@ namespace '/greader' do
 		end
 
 		get '/subscription/quickadd' do
-			authorize_token! :user
-
-			folder = Folder.first_or_create(:user => @user, :title => 'Feed')
+			folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
 
 			feed = Feed.new(
 				:user => @user,
@@ -75,23 +60,11 @@ namespace '/greader' do
 		end
 
 		get '/subscription/edit' do
-			authorize_token! :user
-
 			return 404 unless params[:ac]
 
 			feed = nil
 			if params[:s] and params[:s] =~ /^feed\/(.*)/
 				feed = Feed.first(:url => $1, :user => @user)
-			end
-
-			folder_a = nil
-			if params[:a] and params[:a] =~ /^label\/(.*)/
-				folder_a = Folder.first(:title => $1, :user => @user)
-			end
-
-			folder_r = nil
-			if params[:r] and params[:r] =~ /^label\/(.*)/
-				folder_r = Folder.first(:title => $1, :user => @user)
 			end
 
 			if params[:ac] == 'unsubscribe' and feed
@@ -103,13 +76,15 @@ namespace '/greader' do
 			if (params[:ac] == 'edit' or params[:ac] == 'subscribe') and feed
 				old_folder = feed.folder
 
-				if folder_r == old_folder
-					folder = Folder.first_or_create(:user => @user, :title => 'Feed')
-					feed.folder = folder
+				if params[:r] and params[:r] =~ /^user\/[^\/]*\/label\/(.*)/
+					folder = Folder.first(:title => $1, :user => @user)
+					if folder == old_folder
+						feed.folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
+					end
 				end
 
-				if folder_a
-					feed.folder = folder_a
+				if params[:a] and params[:a] =~ /^user\/[^\/]*\/label\/(.*)/
+					feed.folder = Folder.first_or_create(:title => $1, :user => @user)
 				end
 
 				feed.title = params[:t] if params[:t]
@@ -123,8 +98,6 @@ namespace '/greader' do
 		end
 
 		get '/mark-all-as-read' do
-			authorize_token! :user
-
 			if params[:s]
 				if params[:s] =~ /^feed\/(.*)/
 					feed = Feed.first(:url => $1, :user => @user)
@@ -133,15 +106,15 @@ namespace '/greader' do
 					end
 					feed.save
 					feed.update_unread_count!
-				elsif params[:s] =~ /^label\/(.*)/
+				elsif params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
 					folder = Folder.first(:title => $1, :user => @user)
 					folder.feeds.each do |f|
 						f.items.each do |item|
 							item.read = true
 						end
 						f.save
+						f.update_unread_count!
 					end
-					folder.update_unread_count!
 				end
 			end
 
