@@ -31,6 +31,20 @@ namespace '/greader' do
 				filters[:date.gt] = params[:nt].to_i
 			end
 
+			if params[:s]
+				if params[:s] =~ /^feed\/(.*)/
+					if feed = Feed.first(:url => $1, :user => @user)
+						filters[:feed] = feed
+					end
+				elsif params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
+					if folder = Folder.first(:title => $1, :user => @user)
+						filters[Item.feed.folder_id] = folder.id
+					end
+				elsif params[:s] =~ /user\/[^\/]*\/state\/com\.google\/read/
+					filters[:read] = true
+				end
+			end
+
 			if params[:xt] and params[:xt] =~ /user\/[^\/]*\/state\/com\.google\/read/
 				filters[:read] = false
 			end
@@ -77,7 +91,7 @@ namespace '/greader' do
 				{
 					:crawlTimeMsec => (item.date.to_time.to_i * 1000).to_s,
 					:timestampUsec => (item.date.to_time.to_i * 1000 * 1000).to_s,
-					:id => item.id.to_s,
+					:id => "tag:google.com,2005:reader/item/#{item.id.to_s(16).rjust(16,'0')}",
 					:categories => categories,
 					:title => item.title,
 					:published => item.date.to_time.to_i,
@@ -182,11 +196,14 @@ namespace '/greader' do
 			items = []
 
 			Item.all(filters).each do |item|
+				directStreamIds = []
+				if params[:includeAllDirectStreamIds] == 'true'
+					directStreamIds = ["user/#{@user.id}/label/#{item.feed.folder.title}"]
+				end
+
 				items << {
 					:id => item.id.to_s,
-					:directStreamIds => [
-						"user/#{@user.id}/label/#{item.feed.folder.title}"
-					],
+					:directStreamIds => directStreamIds,
 					:timestampUsec => (item.date.to_time.to_i * 1000 * 1000).to_s
 				}
 			end
