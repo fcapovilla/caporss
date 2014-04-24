@@ -2,31 +2,10 @@
 # GReader Items
 
 namespace '/greader' do
-	namespace '/reader/api/0' do
-		get '/stream/contents/*' do |target|
-			authorize_token! :user
 
+	helpers do
+		def generate_greader_filters(params)
 			filters = {}
-
-			target_title = nil
-			if target
-				if target =~ /^feed\/(.*)/
-					if feed = Feed.first(:url => $1, :user => @user)
-						filters[:feed] = feed
-						target_title = filters[:feed].title
-					end
-				elsif target =~ /^label\/(.*)/
-					if folder = Folder.first(:title => $1, :user => @user)
-						filters[Item.feed.folder_id] = folder.id
-						target_title = folder.title
-					end
-				elsif target =~ /^user\/[^\/]*\/state\/com\.google\/(.*)/
-					target_title = $1
-				end
-			end
-
-			halt 404 if target_title.nil?
-
 
 			if params[:n] and params[:n].to_i > 0
 				if params[:n].to_i > 1000
@@ -48,12 +27,12 @@ namespace '/greader' do
 				filters[:date.lt] = params[:ot].to_i
 			end
 
-			if params[:xt] and params[:xt] =~ /user\/[^\/]*\/state\/com\.google\/read/
-				filters[:read] = false
+			if params[:nt]
+				filters[:date.gt] = params[:nt].to_i
 			end
 
-			if params[:it]
-				# TODO: Include Target
+			if params[:xt] and params[:xt] =~ /user\/[^\/]*\/state\/com\.google\/read/
+				filters[:read] = false
 			end
 
 			if params[:c]
@@ -62,9 +41,11 @@ namespace '/greader' do
 				filters[:offset] = 0
 			end
 
-			items = []
+			return filters
+		end
 
-			Item.all(filters).each do |item|
+		def get_greader_items(filters)
+			Item.all(filters).map do |item|
 				categories = [
 					"user/#{@user.id}/state/com.google/reading-list",
 					"user/#{@user.id}/label/#{item.feed.folder.title}"
@@ -93,7 +74,7 @@ namespace '/greader' do
 					}]
 				end
 
-				items << {
+				{
 					:crawlTimeMsec => (item.date.to_time.to_i * 1000).to_s,
 					:timestampUsec => (item.date.to_time.to_i * 1000 * 1000).to_s,
 					:id => item.id.to_s,
@@ -124,6 +105,38 @@ namespace '/greader' do
 					}
 				}
 			end
+		end
+	end
+
+	namespace '/reader/api/0' do
+		get '/stream/contents/*' do |target|
+			authorize_token! :user
+
+			filters = generate_greader_filters(params)
+
+			target_title = nil
+			if target
+				if target =~ /^feed\/(.*)/
+					if feed = Feed.first(:url => $1, :user => @user)
+						filters[:feed] = feed
+						target_title = filters[:feed].title
+					end
+				elsif target =~ /^label\/(.*)/
+					if folder = Folder.first(:title => $1, :user => @user)
+						filters[Item.feed.folder_id] = folder.id
+						target_title = folder.title
+					end
+				elsif target =~ /^user\/[^\/]*\/state\/com\.google\/(.*)/
+					target_title = $1
+				end
+			else
+				target = "user/#{@user.id}/state/com.google/reading-list"
+				target_title = 'reading-list'
+			end
+
+			halt 404 if target_title.nil?
+
+			items = get_greader_items(filters)
 
 			output = {
 				:direction => 'ltr',
@@ -144,48 +157,29 @@ namespace '/greader' do
 		end
 
 		get '/stream/items/contents' do
-			{}.to_json # TODO
+			authorize_token! :user
+
+			filters = generate_greader_filters(params)
+
+			halt 404 unless params[:i]
+
+			filters[:id] = params[:i]
+
+			items = get_greader_items(filters)
+
+			{
+				:direction => 'ltr',
+				:self => {
+					:href => request.url
+				},
+				:items => items,
+			}.to_json
 		end
 
 		get '/stream/items/ids' do
 			authorize_token! :user
 
-			filters = {}
-
-			if params[:n] and params[:n].to_i > 0
-				if params[:n].to_i > 1000
-					filters[:limit] = 1000
-				else
-					filters[:limit] = params[:n].to_i
-				end
-			else
-				filters[:limit] = 20
-			end
-
-			if params[:r] and params[:r] == 'o'
-				filters[:order] = [:date.asc]
-			else
-				filters[:order] = [:date.desc]
-			end
-
-			if params[:ot]
-				filters[:date.lt] = params[:ot].to_i
-			end
-
-			if params[:xt] and params[:xt] =~ /user\/[^\/]*\/state\/com\.google\/read/
-				filters[:read] = false
-			end
-
-			if params[:it]
-				# TODO: Include Target
-			end
-
-			if params[:c]
-				filters[:offset] = params[:c].to_i
-			else
-				filters[:offset] = 0
-			end
-
+			filters = generate_greader_filters(params)
 			items = []
 
 			Item.all(filters).each do |item|

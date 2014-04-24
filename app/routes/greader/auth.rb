@@ -20,6 +20,8 @@ namespace '/greader' do
 
 	# FIXME : Code reuse
 	get '/reader/subscriptions/export' do
+		authorize_token! :user
+
 		headers "Content-Disposition" => "attachment;filename=export.opml"
 		content_type 'text/x-opml', 'charset' => 'utf-8'
 
@@ -54,6 +56,18 @@ namespace '/greader' do
 				:signupTimeSec => 0,
 				:isMultiLoginEnabled => false
 			}.to_json
+		end
+
+		get '/preference/list' do
+			authorize_token! :user
+
+			{:prefs => []}.to_json
+		end
+
+		get '/friend/list' do
+			authorize_token! :user
+
+			{:friends => []}.to_json
 		end
 	end
 end
