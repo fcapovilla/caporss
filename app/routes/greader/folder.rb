@@ -21,7 +21,7 @@ namespace '/greader' do
 			{:tags => tags}.to_json
 		end
 
-		get '/rename-tag' do
+		route :get, :post, '/rename-tag' do
 			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
 				if folder = Folder.first(:title => $1, :user => @user)
 					if params[:dest] =~ /^user\/[^\/]*\/label\/(.+)/
@@ -34,7 +34,7 @@ namespace '/greader' do
 			'OK'
 		end
 
-		get '/disable-tag' do
+		route :get, :post, '/disable-tag' do
 			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
 				if folder = Folder.first(:title => $1, :user => @user)
 					base_folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
@@ -71,7 +71,7 @@ namespace '/greader' do
 			{:streamprefs => prefs}.to_json
 		end
 
-		get '/preference/stream/set' do
+		route :get, :post, '/preference/stream/set' do
 			folder = nil
 			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
 				folder = Folder.first(:title => $1, :user => @user)

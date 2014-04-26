@@ -217,7 +217,7 @@ namespace '/greader' do
 			output.to_json
 		end
 
-		get '/edit-tag' do
+		route :get, :post, '/edit-tag' do
 			item = Item.first(:id => params[:i].to_i, :user => @user)
 
 			if params[:a]

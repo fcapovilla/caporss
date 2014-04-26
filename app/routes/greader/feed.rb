@@ -35,7 +35,7 @@ namespace '/greader' do
 			{:subscriptions => subscriptions}.to_json
 		end
 
-		get '/subscription/quickadd' do
+		route :get, :post, '/subscription/quickadd' do
 			folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
 
 			feed = Feed.new(
@@ -59,7 +59,7 @@ namespace '/greader' do
 			}.to_json
 		end
 
-		get '/subscription/edit' do
+		route :get, :post, '/subscription/edit' do
 			return 404 unless params[:ac]
 
 			feed = nil
@@ -97,7 +97,7 @@ namespace '/greader' do
 			'OK'
 		end
 
-		get '/mark-all-as-read' do
+		route :get, :post, '/mark-all-as-read' do
 			if params[:s]
 				if params[:s] =~ /^feed\/(.*)/
 					feed = Feed.first(:url => $1, :user => @user)
