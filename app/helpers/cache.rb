@@ -8,15 +8,15 @@ class Cache
 	# Concatenated backbone application
 	@@backbone = nil
 
-	# Token store
-	@@tokens = nil
+	# Moneta store
+	@@store = nil
 
-	def self.tokens
-		@@tokens
+	def self.store
+		@@store
 	end
 
-	def self.tokens=(t)
-		@@tokens = t
+	def self.store=(t)
+		@@store = t
 	end
 
 	def self.backbone

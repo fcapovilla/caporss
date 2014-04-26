@@ -34,8 +34,8 @@ def authorize_token!(*roles)
 
 	return token if @user and @user.authorize(roles)
 
-	if token and Cache::tokens.key?(token)
-		if @user = User.first(:username => Cache::tokens[token])
+	if token and Cache::store.key?("greader:#{token}")
+		if @user = User.first(:username => Cache::store["greader:#{token}"])
 			return token if @user.authorize(roles)
 		end
 	end
