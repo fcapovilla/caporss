@@ -225,7 +225,12 @@ end
 
 
 route :get, :post, '/greader/reader/api/0/edit-tag' do
-	item = Item.first(:id => params[:i].to_i, :user => @user)
+	item_id = params[:i].to_i
+	if params[:i] =~ /^tag:google\.com,2005:reader\/item\/(.*)/
+		item_id = $1.to_i(16)
+	end
+
+	item = Item.first(:id => item_id, :user => @user)
 
 	if params[:a]
 		if params[:a] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
