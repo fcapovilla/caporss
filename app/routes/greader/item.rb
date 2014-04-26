@@ -255,5 +255,8 @@ route :get, :post, '/greader/reader/api/0/edit-tag' do
 		end
 	end
 
+	feed_ids = items.map{ |i| i.feed_id }.uniq
+	Feed.all(:id => feed_ids).update_unread_count!
+
 	'OK'
 end
