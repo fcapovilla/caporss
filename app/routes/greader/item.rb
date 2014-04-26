@@ -216,31 +216,32 @@ namespace '/greader' do
 			end
 			output.to_json
 		end
-
-		route :get, :post, '/edit-tag' do
-			item = Item.first(:id => params[:i].to_i, :user => @user)
-
-			if params[:a]
-				if params[:a] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
-					if $1 == 'read'
-						item.update(:read => true)
-					end
-				end
-			end
-
-			if params[:r]
-				if params[:r] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
-					if $1 == 'read'
-						item.update(:read => false)
-					end
-				end
-			end
-
-			'OK'
-		end
 	end
 
 	get '/reader/atom' do
 		{}.to_json # TODO
 	end
+end
+
+
+route :get, :post, '/greader/reader/api/0/edit-tag' do
+	item = Item.first(:id => params[:i].to_i, :user => @user)
+
+	if params[:a]
+		if params[:a] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
+			if $1 == 'read'
+				item.update(:read => true)
+			end
+		end
+	end
+
+	if params[:r]
+		if params[:r] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
+			if $1 == 'read'
+				item.update(:read => false)
+			end
+		end
+	end
+
+	'OK'
 end

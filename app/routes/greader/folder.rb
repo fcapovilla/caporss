@@ -21,37 +21,6 @@ namespace '/greader' do
 			{:tags => tags}.to_json
 		end
 
-		route :get, :post, '/rename-tag' do
-			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
-				if folder = Folder.first(:title => $1, :user => @user)
-					if params[:dest] =~ /^user\/[^\/]*\/label\/(.+)/
-						folder.title = $1
-						folder.save
-					end
-				end
-			end
-
-			'OK'
-		end
-
-		route :get, :post, '/disable-tag' do
-			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
-				if folder = Folder.first(:title => $1, :user => @user)
-					base_folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
-
-					feed_ids = folder.feeds.map { |feed| feed.id }
-					feed_ids.each do |feed_id|
-						feed = Feed.get(feed_id)
-						feed.move_to_list(base_folder.id)
-					end
-
-					folder.reload.destroy
-				end
-			end
-
-			'OK'
-		end
-
 		get '/preference/stream/list' do
 			prefs = {}
 
@@ -69,21 +38,6 @@ namespace '/greader' do
 			end
 
 			{:streamprefs => prefs}.to_json
-		end
-
-		route :get, :post, '/preference/stream/set' do
-			folder = nil
-			if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
-				folder = Folder.first(:title => $1, :user => @user)
-			end
-
-			if folder and params[:k]
-				if params[:k] == 'is-expanded'
-					folder.update(:open => (params[:v] == 'true'))
-				end
-			end
-
-			'OK'
 		end
 
 		get '/unread-count' do
@@ -128,4 +82,57 @@ namespace '/greader' do
 			}.to_json
 		end
 	end
+end
+
+route :get, :post, '/greader/reader/api/0/rename-tag' do
+	authorize_token! :user
+
+	if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
+		if folder = Folder.first(:title => $1, :user => @user)
+			if params[:dest] =~ /^user\/[^\/]*\/label\/(.+)/
+				folder.title = $1
+				folder.save
+			end
+		end
+	end
+
+	'OK'
+end
+
+route :get, :post, '/greader/reader/api/0/disable-tag' do
+	authorize_token! :user
+
+	if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
+		if folder = Folder.first(:title => $1, :user => @user)
+			base_folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
+
+			feed_ids = folder.feeds.map { |feed| feed.id }
+			feed_ids.each do |feed_id|
+				feed = Feed.get(feed_id)
+				feed.move_to_list(base_folder.id)
+			end
+
+			folder.reload.destroy
+		end
+	end
+
+	'OK'
+end
+
+
+route :get, :post, '/greader/reader/api/0/preference/stream/set' do
+	authorize_token! :user
+
+	folder = nil
+	if params[:s] and params[:s] =~ /^user\/[^\/]*\/label\/(.*)/
+		folder = Folder.first(:title => $1, :user => @user)
+	end
+
+	if folder and params[:k]
+		if params[:k] == 'is-expanded'
+			folder.update(:open => (params[:v] == 'true'))
+		end
+	end
+
+	'OK'
 end
