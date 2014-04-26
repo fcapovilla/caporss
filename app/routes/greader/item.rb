@@ -164,7 +164,7 @@ namespace '/greader' do
 					:href => request.url
 				},
 				:updated => Time.now.to_i, # TODO
-				:items => items,
+				:items => items
 			}
 
 			if items.length == filters[:limit]

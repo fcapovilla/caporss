@@ -26,17 +26,17 @@ def authorize_basic!(*roles)
 end
 
 def authorize_token!(*roles)
-	return if @user and @user.authorize(roles)
-
 	token = ''
 	if request.env['HTTP_AUTHORIZATION']
 		parts = request.env['HTTP_AUTHORIZATION'].split
 		token = parts[1].sub(/^auth=/, '') if parts[0] == 'GoogleLogin'
 	end
 
+	return token if @user and @user.authorize(roles)
+
 	if token and Cache::tokens.key?(token)
 		if @user = User.first(:username => Cache::tokens[token])
-			return token
+			return token if @user.authorize(roles)
 		end
 	end
 
