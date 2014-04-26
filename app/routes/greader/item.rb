@@ -225,17 +225,24 @@ end
 
 
 route :get, :post, '/greader/reader/api/0/edit-tag' do
-	item_id = params[:i].to_i
-	if params[:i] =~ /^tag:google\.com,2005:reader\/item\/(.*)/
-		item_id = $1.to_i(16)
+	item_ids = []
+	if params[:i]
+		params[:i] = [params[:i]] unless params[:i].is_a? Array
+		params[:i].each do |id|
+			item_id = id.to_i
+			if id =~ /^tag:google\.com,2005:reader\/item\/(.*)/
+				item_id = $1.to_i(16)
+			end
+			item_ids << item_id
+		end
 	end
 
-	item = Item.first(:id => item_id, :user => @user)
+	items = Item.all(:id => item_ids, :user => @user)
 
 	if params[:a]
 		if params[:a] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
 			if $1 == 'read'
-				item.update(:read => true)
+				items.update(:read => true)
 			end
 		end
 	end
@@ -243,7 +250,7 @@ route :get, :post, '/greader/reader/api/0/edit-tag' do
 	if params[:r]
 		if params[:r] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
 			if $1 == 'read'
-				item.update(:read => false)
+				items.update(:read => false)
 			end
 		end
 	end
