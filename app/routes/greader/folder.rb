@@ -91,7 +91,7 @@ namespace '/greader' do
 			total = 0
 			newest_item = '0'
 
-			counts += Folder.all.map do |folder|
+			counts += Folder.all(:user => @user).map do |folder|
 				newest = '0'
 				if feed = folder.feeds.first(:order => [:last_update.desc])
 					newest = (feed.last_update.to_time.to_i * 1000 * 1000).to_s
@@ -108,7 +108,7 @@ namespace '/greader' do
 				}
 			end
 
-			counts += Feed.all.map do |feed|
+			counts += Feed.all(:user => @user).map do |feed|
 				{
 					:id => "feed/#{feed.url}",
 					:count => feed.unread_count,

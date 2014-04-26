@@ -5,7 +5,7 @@ namespace '/greader' do
 
 	helpers do
 		def generate_greader_filters(params)
-			filters = {}
+			filters = {:user => @user}
 
 			if params[:n] and params[:n].to_i > 0
 				if params[:n].to_i > 1000
@@ -218,7 +218,7 @@ namespace '/greader' do
 		end
 
 		get '/edit-tag' do
-			item = Item.get(params[:i].to_i)
+			item = Item.first(:id => params[:i].to_i, :user => @user)
 
 			if params[:a]
 				if params[:a] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
