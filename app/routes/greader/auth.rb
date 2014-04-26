@@ -7,7 +7,7 @@ namespace '/greader' do
 		if user and user.password == params['Passwd']
 			token = SecureRandom.hex
 			# Token expires after 10 minutes
-			Cache::store.store("greader:#{token}", user.username, :expires => 600)
+			Cache::store.store("greader:#{token}", user.username, :expires => 2592000)
 			"SID=unused\nLSID=unused\nAuth=#{token}"
 		else
 			[401, 'Error=BadAuthentication']

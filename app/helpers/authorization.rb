@@ -35,7 +35,7 @@ def authorize_token!(*roles)
 	return token if @user and @user.authorize(roles)
 
 	if token and Cache::store.key?("greader:#{token}")
-		if @user = User.first(:username => Cache::store["greader:#{token}"])
+		if @user = User.first(:username => Cache::store.load("greader:#{token}", :expires => 2592000))
 			return token if @user.authorize(roles)
 		end
 	end
