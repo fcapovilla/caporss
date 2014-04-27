@@ -7,7 +7,7 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 	},
 
 	/**
-	 * Comparator to sort folders by position bu default
+	 * Comparator to sort folders by position by default
 	 * @param {CapoRSS.Model.Folder}
 	 * @return {number} position
 	 */

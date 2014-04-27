@@ -119,7 +119,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 
 			feed.save({
 				folder_id: dest.id,
-				position: 1
+				position: 0
 			}, { success: function() {
 				CapoRSS.router.navigate("", {trigger: true});
 				if(old_folder_id !== dest.id) {

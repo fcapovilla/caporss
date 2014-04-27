@@ -4,7 +4,7 @@ CapoRSS.Collection.Feed = Backbone.Collection.extend({
 
 	initialize: function() {
 		this.sortAttribute = 'position';
-		this.sortDirection = true;
+		this.sortDirection = false;
 	},
 
 	/**

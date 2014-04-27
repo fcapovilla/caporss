@@ -104,12 +104,8 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 					this.$el.removeClass('drag-hovered');
 					return;
 				}
-				else if(new_position < feed.get('position')) {
-					new_position += 1;
-				}
 			}
 			else {
-				new_position += 1;
 				old_folder = CapoRSS.folders.get(feed.get('folder_id'));
 			}
 

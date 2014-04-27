@@ -106,10 +106,11 @@ route :get, :post, '/greader/reader/api/0/disable-tag' do
 		if folder = Folder.first(:title => $1, :user => @user)
 			base_folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
 
-			feed_ids = folder.feeds.map { |feed| feed.id }
-			feed_ids.each do |feed_id|
-				feed = Feed.get(feed_id)
-				feed.move_to_list(base_folder.id)
+			folder.feeds.each do |feed|
+				feed.folder = base_folder
+				feed.save
+				feed.move(:bottom)
+				feed.repair_list
 			end
 
 			folder.reload.destroy

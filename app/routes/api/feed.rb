@@ -63,13 +63,27 @@ put '/api/feed/:id', '/api/folder/*/feed/:id' do
 		# Keep the old folder if the feed's folder changed
 		old_folder = feed.folder
 
+		folder = Folder.first(:user => @user, :id => attributes[:folder_id])
+
+		feed.folder = folder
+		feed.save
 		if attributes.has_key?(:position)
-			feed.move_to_list(attributes[:folder_id], attributes[:position])
+			if feed.position < attributes[:position]
+				feed.move(:to => attributes[:position])
+			else
+				feed.move(:to => attributes[:position]+1)
+			end
 		else
-			feed.move_to_list(attributes[:folder_id])
+			feed.move(:top)
 		end
-	else
-		feed.move(attributes[:position]) if attributes.has_key?(:position)
+		Folder.repair_list
+	elsif attributes.has_key?(:position)
+		if feed.position < attributes[:position]
+			feed.move(:to => attributes[:position])
+		else
+			feed.move(:to => attributes[:position]+1)
+		end
+		feed.repair_list
 	end
 
 	feed.attributes = attributes.slice(:url)
