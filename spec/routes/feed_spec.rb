@@ -69,7 +69,7 @@ describe "Feed route" do
 		feed.position.should == 2
 		feed2.position.should == 1
 
-		put "/api/feed/#{feed.id}", {:position => 1}.to_json
+		put "/api/feed/#{feed.id}", {:position => 0}.to_json
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Feed 1/
@@ -116,11 +116,11 @@ describe "Feed route" do
 		data = JSON.parse(last_response.body, :symbolize_names => true)
 
 		last_response.body.should =~ /Feed 1/
-		data[:position].should == 6
+		data[:position].should == 1
 		data[:folder_id].should == folder_to_2.id
 
 		feed.reload
-		feed.position.should == 6
+		feed.position.should == 1
 		feed.folder_id.should == folder_to_2.id
 	end
 
