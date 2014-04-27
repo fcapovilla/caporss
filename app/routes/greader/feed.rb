@@ -20,7 +20,7 @@ get '/greader/reader/api/0/subscription/list' do
 				:label => feed.folder.title
 			}],
 			:sortid => feed.position,
-			:firstitemmsec => feed.last_update.to_time.to_i * 1000,
+			:firstitemmsec => (feed.last_update.to_time.to_i * 1000).to_s,
 			:url => feed.url,
 			:htmlUrl => htmlUrl,
 			:iconUrl => feed.favicon ? feed.favicon.url : '' # FIXME: This url might be wrong
