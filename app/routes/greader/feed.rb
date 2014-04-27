@@ -72,25 +72,45 @@ route :get, :post, '/greader/reader/api/0/subscription/edit' do
 		old_folder.update_unread_count!
 	end
 
+	if params[:ac] == 'subscribe'
+		if params[:s] and params[:s] =~ /^feed\/(.+)/
+			feed = Feed.new(
+				:user => @user,
+				:title => $1[0..99],
+				:url => $1
+			)
+		end
+	end
+
 	if (params[:ac] == 'edit' or params[:ac] == 'subscribe') and feed
 		old_folder = feed.folder
+		new_folder = nil
 
 		if params[:r] and params[:r] =~ /^user\/[^\/]*\/label\/(.*)/
 			folder = Folder.first(:title => $1, :user => @user)
 			if folder == old_folder
-				feed.folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
+				feed.folder = nil
 			end
 		end
 
 		if params[:a] and params[:a] =~ /^user\/[^\/]*\/label\/(.*)/
-			feed.folder = Folder.first_or_create(:title => $1, :user => @user)
+			new_folder = Folder.first_or_create(:title => $1, :user => @user)
 		end
 
 		feed.title = params[:t] if params[:t]
 
-		feed.save
-		feed.folder.update_unread_count!
-		old_folder.update_unread_count!
+		if feed.folder.nil? and new_folder.nil?
+			new_folder = Folder.first_or_create(:user => @user, :title => 'Feeds')
+		end
+
+		unless new_folder.nil?
+			new_folder << feed
+			new_folder.save
+			new_folder.update_unread_count!
+			old_folder.update_unread_count! unless old_folder.nil?
+		end
+
+		feed.sync! if params[:ac] == 'subscribe'
 	end
 
 	'OK'
