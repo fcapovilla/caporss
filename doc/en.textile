@@ -55,3 +55,12 @@ h1. Item list
 h1. Drag and drop support
 
 You can easily reorder feeds and folders by moving them using your mouse. You can also move feeds between folders using this method.
+
+h1. Mobile Applications
+
+CapoRSS serves a clone of the Google Reader API, which can be used in some mobile applications. CapoRSS was tested with News+ on Android :
+* Install News+ and the "Google Reader Clone" News+ extension.
+* In News+, configure a new "Google Reader Clone" account :
+ * Hostname : https://YOUR_HOSTNAME/greader/
+ * Username : Your CapoRSS username
+ * Password : Your CapoRSS password

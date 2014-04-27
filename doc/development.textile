@@ -45,6 +45,7 @@ h1. Application structure
 ** *models* : Datamapper models. Also includes database migrations in the "migrations.rb" file.
 ** *parsers* : Custom Feedjira parsers.
 ** *routes* : Sinatra routes.
+** *patches* : Fixes on existing libraries.
 * *backbone* : Contains the client-side Backbone application. All of these files are concatenated and minified by the server.
 * *doc* : Documentation.
 * *i18n* : Translation files.

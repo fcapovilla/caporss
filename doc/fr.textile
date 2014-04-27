@@ -55,3 +55,12 @@ h1. Liste des items
 h1. Support du "glisser-déplacer"
 
 Vous pouvez facilement changer l'ordre des abonnements et des dossier en les glissant à l'aide de votre souris. Vous pouvez aussi changer les abonnements de dossier de cette façon.
+
+h1. Applications mobiles
+
+CapoRSS fournit un clone de l'API de Google Reader et peut donc être utilisé avec certaine applications mobiles. CapoRSS a été testé avec l'application News+ pour Android :
+* Installer News+ et son extension "Google Reader Clone".
+* Dans News+, configurer un nouveau compte "Google Reader Clone" :
+ * Hostname : https://YOUR_HOSTNAME/greader/
+ * Username : Votre nom d'utilisateur CapoRSS
+ * Password : Votre mot de passe CapoRSS

@@ -17,6 +17,7 @@ CapoRSS is a simple self-hosted RSS aggregator written in Ruby and Javascript.
 * Mobile device support using responsive HTML.
 * Feed organization using folders with drag-and-drop support.
 * Import and export feeds in [OPML](https://en.wikipedia.org/wiki/OPML) format.
+* Sync your feeds with mobile applications compatible with the Google Reader API.
 
 ## Screenshots
 
