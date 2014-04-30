@@ -73,10 +73,12 @@ opml_import:
 js:
     confirm_delete_feed: Êtes-vous sûr de vouloir supprimer cet abonnement?
     confirm_delete_folder: Êtes-vous sûr de vouloir supprimer ce dossier?
+    confirm_delete_favorite: "Cette action va supprimer cet item, car il n'est pas associé à un abonnement. Êtes-vous sûr de voulour supprimer ce favori?"
     confirm_read_folder: Cette action sera appliquée sur tous les abonnements du dossier. Êtes-vous sûr de vouloir marquer ce dossier comme lu?
     confirm_unread_folder: Cette action sera appliquée sur tous les abonnements du dossier. Êtes-vous sûr de vouloir marquer ce dossier comme non lu?
     confirm_cleanup: "Cette action va supprimer les items trop anciens et n'est pas réversible. Êtes-vous sûr de vouloir effectuer un nettoyage?"
     all_items_folder: Tous les items
+    favorites: Favoris
 
 login:
     username: Utilisateur

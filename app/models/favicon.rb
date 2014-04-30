@@ -9,7 +9,8 @@ class Favicon
 	property :url, String, :length => 1..2000
 	property :data, Text
 
-	has n, :feeds
+	has n, :feeds, :constraint => :set_nil
+
 
 	def fetch!
 		begin

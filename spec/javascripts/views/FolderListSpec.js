@@ -14,7 +14,7 @@ describe("Folder List View", function() {
 	describe("Rendering", function() {
 		it("renders all folders", function() {
 			expect(this.view.children.length).toEqual(2);
-			expect(this.view.$el.find('.folder-text').length).toEqual(3);
+			expect(this.view.$el.find('.folder-text').length).toEqual(4);
 		});
 
 		it("renders special folders first", function() {

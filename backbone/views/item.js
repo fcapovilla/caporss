@@ -7,6 +7,7 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 		'click .unreadOlderAction' : 'unreadAllOlder',
 		'click .unreadNewerAction' : 'unreadAllNewer',
 		'click .readUnreadIcon': 'toggleRead',
+		'click .favoriteIcon': 'toggleFavorite',
 		'click .dropdown': 'showDropdownMenu',
 		'click .item-container': 'toggleContent'
 	},
@@ -41,7 +42,10 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 	 * @return {Object}
 	 */
 	serializeData: function() {
-		return {'item': this.model.attributes};
+		return {
+			'item': this.model.attributes,
+			'show_menu': (CapoRSS.router.currentSelection instanceof CapoRSS.Model.Feed)
+		};
     },
 
 	/**
@@ -77,6 +81,21 @@ CapoRSS.View.Item = Backbone.Marionette.ItemView.extend({
 	 */
 	toggleRead: function() {
 		this.model.toggleRead();
+		return false;
+	},
+
+	/**
+	 * Toggle the item's favorite status
+	 * @return {boolean} False
+	 */
+	toggleFavorite: function() {
+		if(this.model.get('feed_id') === null) {
+			if(!confirm(LANG.confirm_delete_favorite)) {
+				return false;
+			}
+		}
+
+		this.model.toggleFavorite();
 		return false;
 	},
 

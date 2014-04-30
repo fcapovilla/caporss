@@ -7,9 +7,11 @@ CapoRSS.View.FolderList = Backbone.Marionette.CollectionView.extend({
 
 	initialize: function() {
 		this.allItemsFolder = new CapoRSS.Model.AllItemsFolder();
+		this.favoritesFolder = new CapoRSS.Model.FavoritesFolder();
 
 		this.views = [];
 		this.views.push(new CapoRSS.View.SpecialFolder({model: this.allItemsFolder}));
+		this.views.push(new CapoRSS.View.SpecialFolder({model: this.favoritesFolder}));
 
 		this.render();
 	},

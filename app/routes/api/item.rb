@@ -32,7 +32,7 @@ put '/api/item/:id', '/api/feed/*/item/:id', '/api/folder/*/item/:id' do
 	attributes = JSON.parse(request.body.read, :symbolize_names => true)
 	action = attributes.delete(:action)
 
-	item.attributes = attributes.slice(:read)
+	item.attributes = attributes.slice(:read, :favorite)
 
 	unless item.save
 		errors = item.errors.map{|e| e.first.to_s}
@@ -50,8 +50,17 @@ put '/api/item/:id', '/api/feed/*/item/:id', '/api/folder/*/item/:id' do
 		item.feed.items.all(:date.gt => item.date).update(:read => false)
 	end
 
-	item.feed.update_unread_count!
-	item.to_json
+	# Delete item if it isn't linked to a feed and isn't a favorite
+	if item.feed.nil? and item.favorite == false
+		item.destroy
+		return '{}'
+	else
+		item.feed.update_unread_count!
+		item.to_json
+	end
 end
 
-#delete '/api/item/:id' do |id|
+delete '/api/item/:id', '/api/feed/*/item/:id', '/api/folder/*/item/:id' do
+	# Items cannot be deleted client-side. Do nothing.
+	return '{}'
+end

@@ -3,7 +3,8 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		"": "clear",
 		"feed/:id": "viewFeed",
 		"folder/:id": "viewFolder",
-		"item": "viewAllItems"
+		"item": "viewAllItems",
+		"favorites": "viewFavorites"
 	},
 
 	initialize: function() {
@@ -125,6 +126,14 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 	},
 
 	/**
+	 * Update the item list using the FavoritesFolder
+	 */
+	viewFavorites: function() {
+		var model = CapoRSS.folderList.favoritesFolder;
+		this.updateItemList(model);
+	},
+
+	/**
 	 * Go to the router url for the model in parameter.
 	 * @param {(CapoRSS.Model.Folder|CapoRSS.Model.Feed|CapoRSS.Model.AllItemFolder)} model
 	 */
@@ -135,8 +144,11 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 		else if(model instanceof CapoRSS.Model.Feed) {
 			this.navigate('feed/' + model.id, {trigger: true});
 		}
-		else {
+		else if(model instanceof CapoRSS.Model.AllItemsFolder) {
 			this.navigate('item', {trigger: true});
+		}
+		else if(model instanceof CapoRSS.Model.FavoritesFolder) {
+			this.navigate('favorites', {trigger: true});
 		}
     }
 });

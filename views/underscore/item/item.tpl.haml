@@ -14,7 +14,7 @@
       </div>
 
       <div class="item-title">
-        <% if(!item.feed_title) { %>
+        <% if(show_menu) { %>
           <span class="dropdown">
             <i onclick="" class="fa fa-caret-down dropdown-toggle" data-toggle="dropdown"></i>
             <ul class="dropdown-menu" role="menu" aria-labelledby="item-<%= item.id %>-menu">
@@ -26,6 +26,7 @@
           </span>
           <i class="dropdown-spacer"></i>
         <% } %>
+        <i onclick="" class="favoriteIcon fa fa-star<% if(item.favorite){ %>-o<% } %>"></i>
         <i onclick="" class="readUnreadIcon fa fa-circle<% if(item.read){ %>-o<% } %>"></i>
 
         <% if(!item.read){ %>

@@ -207,6 +207,30 @@ describe "Feed route" do
 		Feed.get(feed.id).should be_nil
 	end
 
+	it "feed deletion does not delete favorite items, but deletes other items" do
+		authorize 'admin', 'admin'
+		feed = Feed.first(:title => 'Feed 4')
+		feed.sync!
+
+		favorite = feed.items.first
+		favorite.update(:favorite => true)
+
+		item = feed.items.last
+
+		delete "/api/feed/#{feed.id}"
+		last_response.status.should == 200
+
+		Feed.all.count.should == 23
+		Feed.get(feed.id).should be_nil
+		Item.get(item.id).should be_nil
+
+		new_favorite = Item.get(favorite.id)
+		new_favorite.should_not be_nil
+		new_favorite.feed_id.should be_nil
+
+		new_favorite.destroy
+	end
+
 	it "creates feeds (No folder title)" do
 		authorize 'admin', 'admin'
 		post '/api/feed', :url => 'http://www.example.com/test.rss'

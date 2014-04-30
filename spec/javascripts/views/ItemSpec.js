@@ -3,7 +3,7 @@ describe("Item View", function() {
 		this.server = create_fake_server();
 
 		CapoRSS.router = {
-			currentSelection: null,
+			currentSelection: new CapoRSS.Model.Feed(),
 			navigate: function(path, options) {},
 			itemList: {
 				cursor: null,

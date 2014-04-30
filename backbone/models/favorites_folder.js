@@ -1,32 +1,32 @@
-CapoRSS.Model.AllItemsFolder = Backbone.Model.extend({
+CapoRSS.Model.FavoritesFolder = Backbone.Model.extend({
 
 	initialize: function() {
-		this.items = new CapoRSS.Collection.Item({show_feed_titles: true});
+		this.items = new CapoRSS.Collection.Item({show_feed_titles: true, favorites: true});
 		this.items.url = '/api/item';
 		this.listenTo(this.items, 'itemRead', this.onItemRead);
 		this.listenTo(this.items, 'itemUnread', this.onItemUnread);
 
 		this.set({
-			name: LANG.all_items_folder,
-			route: 'item',
-			iconclass: 'fa-asterisk'
+			name: LANG.favorites,
+			route: 'favorites',
+			iconclass: 'fa-star'
 		});
 	},
 
 	/**
 	 * Get next feed/folder in the feed list (In this case, the first folder)
-	 * @return {CapoRSS.Model.FavoritesFolder} The favorites folder
+	 * @return {CapoRSS.Model.Folder} The first folder
 	 */
 	getNextInList: function() {
-		return CapoRSS.folderList.favoritesFolder;
+		return CapoRSS.folders.first();
     },
 
 	/**
-	 * Get previous feed/folder in the feed list (In this case, there are no previous item)
-	 * @return {CapoRSS.Model.AllItemsFolder} this
+	 * Get previous feed/folder in the feed list
+	 * @return {CapoRSS.Model.AllItemsFolder} The "All Items" folder
 	 */
 	getPreviousInList: function() {
-		return this;
+		return CapoRSS.folderList.allItemsFolder;
     },
 
 	/**

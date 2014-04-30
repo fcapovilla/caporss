@@ -21,11 +21,22 @@ class Feed
 	belongs_to :user, :required => false
 	belongs_to :folder
 	belongs_to :favicon, :required => false
-	has n, :items, :constraint => :destroy
+	has n, :items, :constraint => :skip
 	is :list, :scope => :folder_id
 
 	validates_with_method :validate_url
 
+
+	# Prevent favorites deletion
+	before :destroy do
+		self.items.each do |item|
+			if item.favorite
+				Item.get(item.id).update(:feed => nil)
+			else
+				Item.get(item.id).destroy
+			end
+		end
+	end
 
 	# Fetch the feed using Feedjira and update it
 	def sync!

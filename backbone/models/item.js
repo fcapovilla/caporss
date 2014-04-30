@@ -7,7 +7,10 @@ CapoRSS.Model.Item = Backbone.Model.extend({
 	 */
 	toJSON: function() {
 		// Syncable attributes
-		return {read: this.get('read')};
+		return {
+			read: this.get('read'),
+			favorite: this.get('favorite')
+		};
 	},
 
 	/**
@@ -23,6 +26,18 @@ CapoRSS.Model.Item = Backbone.Model.extend({
 		}
 		else {
 			this.trigger('itemUnread', this.get('feed_id'));
+		}
+	},
+
+	/**
+	 * Toggle this item's favorite status
+	 */
+	toggleFavorite: function() {
+		this.set('favorite', !this.get('favorite'));
+		this.save();
+
+		if(this.get('feed_id') === null) {
+			this.destroy();
 		}
 	},
 

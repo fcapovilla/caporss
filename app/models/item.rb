@@ -10,8 +10,9 @@ class Item
 	property :attachment_url, String, :length => 2000
 	property :medias, Json
 	property :read, Boolean, :default => false
+	property :favorite, Boolean, :default => false
 	property :date, DateTime
 
 	belongs_to :user, :required => false
-	belongs_to :feed
+	belongs_to :feed, :required => false
 end

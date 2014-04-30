@@ -19,6 +19,9 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 		if(options !== undefined && options.show_feed_titles) {
 			this.show_feed_titles = true;
 		}
+		if(options !== undefined && options.favorites) {
+			this.favorites = true;
+		}
 	},
 
 	/**
@@ -82,6 +85,10 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 		});
 		if(options.data.query === undefined) {
 			delete options.data.search_title;
+		}
+
+		if(this.favorites) {
+			options.data.favorite = true;
 		}
 
 		var deferred = Backbone.Collection.prototype.fetch.call(this, options);

@@ -122,7 +122,7 @@ CapoRSS.Model.Folder = Backbone.Model.extend({
 		}
 
 		if(prev === null || prev === undefined) {
-			prev = CapoRSS.folderList.allItemsFolder;
+			prev = CapoRSS.folderList.favoritesFolder;
 		}
 
 		return prev;
