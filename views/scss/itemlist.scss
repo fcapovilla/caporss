@@ -18,6 +18,10 @@
 		padding: 4px 5px;
 	}
 
+	.favoriteIcon.fa-star-o {
+		color: #BBBBBB;
+	}
+
 	.item-content {
 		cursor: auto;
 		margin-bottom: 5px;
@@ -51,11 +55,12 @@
 		.item-title {
 			float: none;
 			overflow: hidden;
-			padding: 0 3px;
+			padding: 0 5px;
 			height: 20px;
 			.dropdown {
 				padding: 0 2px;
 				position: absolute;
+				left: 2px;
 			}
 			.dropdown-spacer {
 				padding: 0 10px;
@@ -89,7 +94,7 @@
 		.item-container {
 			.item-title {
 				height: 28px;
-				padding: 5px 3px;
+				padding: 5px 6px;
 				line-height: 1.5;
 				.dropdown {
 					padding: 0 3px;

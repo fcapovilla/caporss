@@ -26,7 +26,7 @@
           </span>
           <i class="dropdown-spacer"></i>
         <% } %>
-        <i onclick="" class="favoriteIcon fa fa-star<% if(item.favorite){ %>-o<% } %>"></i>
+        <i onclick="" class="favoriteIcon fa fa-star<% if(!item.favorite){ %>-o<% } %>"></i>
         <i onclick="" class="readUnreadIcon fa fa-circle<% if(item.read){ %>-o<% } %>"></i>
 
         <% if(!item.read){ %>
