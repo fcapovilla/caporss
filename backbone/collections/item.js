@@ -104,7 +104,7 @@ CapoRSS.Collection.Item = Backbone.Collection.extend({
 				var feed_titles = CapoRSS.folders.getFeedTitles();
 				that.each(function(item) {
 					if(!item.has('feed_title')) {
-						item.set('feed_title', feed_titles[item.get('feed_id')]);
+						item.set('feed_title', ( feed_titles[item.get('feed_id')] || item.get('orig_feed_title') ));
 					}
 				});
 			}

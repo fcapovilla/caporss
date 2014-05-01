@@ -12,6 +12,7 @@ class Item
 	property :read, Boolean, :default => false
 	property :favorite, Boolean, :default => false
 	property :date, DateTime
+	property :orig_feed_title, String, :length => 100
 
 	belongs_to :user, :required => false
 	belongs_to :feed, :required => false

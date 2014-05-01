@@ -95,6 +95,7 @@ require_relative 'user'
 require_relative 'sync'
 require_relative 'cleanup'
 require_relative 'opml'
+require_relative 'favorites'
 require_relative 'favicon'
 require_relative 'pshb'
 

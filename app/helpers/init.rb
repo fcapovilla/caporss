@@ -7,4 +7,5 @@ helpers do
 	require_relative 'documentation'
 	require_relative 'search'
 	require_relative 'stream'
+	require_relative 'greader'
 end

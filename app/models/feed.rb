@@ -31,7 +31,7 @@ class Feed
 	before :destroy do
 		self.items.each do |item|
 			if item.favorite
-				Item.get(item.id).update(:feed => nil)
+				Item.get(item.id).update(:feed => nil, :orig_feed_title => self.title)
 			else
 				Item.get(item.id).destroy
 			end

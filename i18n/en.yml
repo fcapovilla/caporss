@@ -10,6 +10,8 @@ settings:
     language: "Language:"
     import_opml_file: Import an OPML file
     export_as_opml: Export feeds as OPML
+    import_favorites: Import a favorites JSON file
+    export_favorites: Export favorites as JSON
     force_sync: Force sync
     cleanup_older_than: Cleanup items older than 
     days: days
@@ -70,6 +72,10 @@ opml_import:
     title: Import an OPML file
     upload: Upload
 
+favorites_import:
+    title: Import a favorites JSON file
+    upload: Upload
+
 js:
     confirm_delete_feed: Are you sure you want to delete this feed?
     confirm_delete_folder: Are you sure you want to delete this folder?
@@ -101,6 +107,7 @@ admin:
 flash:
     settings_saved: Settings saved
     opml_import_success: OPML file successfully imported
+    favorites_import_success: Favorites successfully imported
     user_created: User successfully created
     user_updated: User successfully updated
     new_password_cannot_be_empty: New password cannot be empty

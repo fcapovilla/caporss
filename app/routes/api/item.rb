@@ -55,7 +55,7 @@ put '/api/item/:id', '/api/feed/*/item/:id', '/api/folder/*/item/:id' do
 		item.destroy
 		return '{}'
 	else
-		item.feed.update_unread_count!
+		item.feed.update_unread_count! unless item.feed.nil?
 		item.to_json
 	end
 end

@@ -10,6 +10,8 @@ settings:
     language: "Langue&nbsp;:"
     import_opml_file: Importer un fichier OPML
     export_as_opml: Exporter les abonnements en OPML
+    import_favorites: Importer un fichier JSON de favoris
+    export_favorites: Exporter les favoris en JSON
     force_sync: Forcer la synchronisation
     cleanup_older_than: Supprimer les items plus vieux que 
     days: jours
@@ -70,6 +72,10 @@ opml_import:
     title: Importer un fichier OPML
     upload: Envoyer
 
+favorites_import:
+    title: Importer un fichier JSON de favoris
+    upload: Envoyer
+
 js:
     confirm_delete_feed: Êtes-vous sûr de vouloir supprimer cet abonnement?
     confirm_delete_folder: Êtes-vous sûr de vouloir supprimer ce dossier?
@@ -101,6 +107,7 @@ admin:
 flash:
     settings_saved: Préférences sauvegardées
     opml_import_success: Fichier OPML importé avec succès
+    favorites_import_success: Favoris importés avec succès
     user_created: Utilisateur créé avec succès
     user_updated: Utilisateur modifié avec succès
     new_password_cannot_be_empty: Le nouveau mot de passe ne peut pas être vide

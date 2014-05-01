@@ -54,6 +54,10 @@
                 =t.settings.import_opml_file
               %a(class="btn btn-default" href="/export.opml")
                 =t.settings.export_as_opml
+              %button(class="btn btn-default" href="#importFavoritesModal" role="button" data-dismiss="modal" data-toggle="modal")
+                =t.settings.import_favorites
+              %a(class="btn btn-default" href="/favorites.json")
+                =t.settings.export_favorites
               %button(class="btn btn-default" id="forceSyncButton")
                 =t.settings.force_sync
               %br
