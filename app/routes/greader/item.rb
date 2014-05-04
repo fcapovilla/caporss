@@ -42,8 +42,6 @@ namespace '/greader' do
 
 			items = get_greader_items(filters)
 
-			puts filters.inspect
-
 			output = {
 				:direction => 'ltr',
 				:id => target,
@@ -67,7 +65,17 @@ namespace '/greader' do
 
 			halt 404 unless params[:i]
 
-			filters[:id] = params[:i]
+			item_ids = []
+			params[:i] = [params[:i]] unless params[:i].is_a? Array
+			params[:i].each do |id|
+				item_id = id.to_i
+				if id =~ /^tag:google\.com,2005:reader\/item\/(.*)/
+					item_id = $1.to_i(16)
+				end
+				item_ids << item_id
+			end
+
+			filters[:id] = item_ids
 
 			items = get_greader_items(filters)
 
@@ -132,6 +140,8 @@ route :get, :post, '/greader/reader/api/0/edit-tag' do
 		if params[:a] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
 			if $1 == 'read'
 				items.update(:read => true)
+			elsif $1 == 'starred'
+				items.update(:favorite => true)
 			end
 		end
 	end
@@ -140,6 +150,8 @@ route :get, :post, '/greader/reader/api/0/edit-tag' do
 		if params[:r] =~ /^user\/[^\/]*\/state\/com\.google\/(.+)/
 			if $1 == 'read'
 				items.update(:read => false)
+			elsif $1 == 'starred'
+				items.update(:favorite => false)
 			end
 		end
 	end
