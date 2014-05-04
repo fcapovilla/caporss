@@ -12,7 +12,7 @@ post '/favorites_upload' do
 			:user => @user,
 			:title => data[:title] || '...',
 			:content => '',
-			:date => Time.at(data[:published]).to_datetime || DateTime.now,
+			:date => Time.at(data[:published]).getutc.to_datetime || DateTime.now,
 			:guid => DateTime.now,
 			:url => '',
 			:favorite => true

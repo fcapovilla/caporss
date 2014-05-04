@@ -12,7 +12,7 @@ namespace '/greader' do
 			filters = generate_greader_filters(params)
 
 			target_title = nil
-			if target
+			if target != ""
 				if target =~ /^feed\/(.*)/
 					if feed = Feed.first(:url => $1, :user => @user)
 						filters[:feed] = feed
@@ -22,18 +22,27 @@ namespace '/greader' do
 					if folder = Folder.first(:title => $1, :user => @user)
 						filters[Item.feed.folder_id] = folder.id
 						target_title = folder.title
+						target = "user/#{@user.id}/label/#{folder.title}"
 					end
 				elsif target =~ /^user\/[^\/]*\/state\/com\.google\/(.*)/
+					if $1 == 'starred'
+						filters[:favorite] = true
+					elsif $1 == 'read'
+						filters[:read] = true
+					end
 					target_title = $1
+					target = "user/#{@user.id}/state/com.google/#{$1}"
 				end
 			else
-				target = "user/#{@user.id}/state/com.google/reading-list"
 				target_title = 'reading-list'
+				target = "user/#{@user.id}/state/com.google/reading-list"
 			end
 
 			halt 404 if target_title.nil?
 
 			items = get_greader_items(filters)
+
+			puts filters.inspect
 
 			output = {
 				:direction => 'ltr',

@@ -20,11 +20,11 @@ def generate_greader_filters(params)
 	end
 
 	if params[:ot]
-		filters[:date.lt] = params[:ot].to_i
+		filters[:date.lt] = Time.at(params[:ot].to_i).getutc.to_datetime
 	end
 
 	if params[:nt]
-		filters[:date.gt] = params[:nt].to_i
+		filters[:date.gt] = Time.at(params[:nt].to_i).getutc.to_datetime
 	end
 
 	if params[:s]
