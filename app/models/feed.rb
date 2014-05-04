@@ -179,8 +179,9 @@ class Feed
 	end
 
 	# Delete all read items older than x days
+	# Ignore favorites
 	def cleanup!(days)
-		self.items.each do |item|
+		self.items.all(:favorite => false).each do |item|
 			if item.read and item.date.to_date + days.to_i < Date.today
 				item.destroy
 			end

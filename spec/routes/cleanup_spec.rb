@@ -21,13 +21,27 @@ describe "Cleanup route" do
 		feed.items.count.should == 3
 	end
 
-	it "cleans up feeds" do
+	it "does not clean up favorite items" do
 		authorize 'admin', 'admin'
 		feed = Feed.first(:title => 'Feed 2')
 		feed.sync!
-		feed.items.each do |item|
-			item.update(:read => true)
-		end
+		feed.items.count.should == 3
+		feed.items.update(:favorite => true, :read => true)
+
+		post "/cleanup/feed/#{feed.id}", :cleanup_after => 1
+		last_response.body.should == '"done"'
+		user = User.first(:username => 'admin')
+		user.cleanup_after.should == 1
+
+		feed.reload
+		feed.items.count.should == 3
+	end
+
+	it "cleans up feeds" do
+		authorize 'admin', 'admin'
+		feed = Feed.first(:title => 'Feed 3')
+		feed.sync!
+		feed.items.update(:read => true)
 
 		post "/cleanup/feed/#{feed.id}", :cleanup_after => 400
 		last_response.body.should == '"done"'
@@ -44,9 +58,7 @@ describe "Cleanup route" do
 		folder = Folder.first(:title => 'Folder 1')
 		folder.feeds.each do |feed|
 			feed.sync!
-			feed.items.each do |item|
-				item.update(:read => true)
-			end
+			feed.items.update(:read => true)
 		end
 
 		post "/cleanup/folder/#{folder.id}", :cleanup_after => 400
@@ -64,9 +76,7 @@ describe "Cleanup route" do
 		folder = Folder.first(:title => 'Folder 2')
 		folder.feeds.each do |feed|
 			feed.sync!
-			feed.items.each do |item|
-				item.update(:read => true)
-			end
+			feed.items.update(:read => true)
 		end
 
 		post "/cleanup/all"
