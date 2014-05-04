@@ -35,6 +35,7 @@ describe "Cleanup route" do
 
 		feed.reload
 		feed.items.count.should == 3
+		feed.items.update(:favorite => false)
 	end
 
 	it "cleans up feeds" do
