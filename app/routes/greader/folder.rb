@@ -32,7 +32,7 @@ namespace '/greader' do
 					},
 					{
 						:id => 'subscription-ordering',
-						:value => folder.id.to_s
+						:value => folder.position.to_s
 					}
 				]
 			end
