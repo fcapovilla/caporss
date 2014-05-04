@@ -28,7 +28,7 @@ describe "GReader Feed routes" do
 
 	context "/reader/api/0/subscription/quickadd" do
 		it "adds new feeds" do
-			get "/greader/reader/api/0/subscription/quickadd",
+			post "/greader/reader/api/0/subscription/quickadd",
 				{:quickadd => "http://www.example.com/test.rss"},
 				'HTTP_AUTHORIZATION' => "GoogleLogin auth=#{@token}"
 
@@ -62,7 +62,7 @@ describe "GReader Feed routes" do
 		end
 
 		it "subscribes to new feeds" do
-			get "/greader/reader/api/0/subscription/edit",
+			post "/greader/reader/api/0/subscription/edit",
 				{
 					:ac => "subscribe",
 					:s => "feed/http://www.example.com/test2.rss",
@@ -86,7 +86,7 @@ describe "GReader Feed routes" do
 			feed.title.should == "Title2"
 			feed.folder.title.should == 'New Folder'
 
-			get "/greader/reader/api/0/subscription/edit",
+			post "/greader/reader/api/0/subscription/edit",
 				{
 					:ac => "edit",
 					:s => "feed/http://www.example.com/test2.rss",
@@ -113,7 +113,7 @@ describe "GReader Feed routes" do
 
 			feed.unread_count.should == 3
 
-			get "/greader/reader/api/0/mark-all-as-read",
+			post "/greader/reader/api/0/mark-all-as-read",
 				{
 					:s => 'feed/http://localhost:4567/1.rss?items=3'
 				},
@@ -135,7 +135,7 @@ describe "GReader Feed routes" do
 			folder.unread_count.should == 12
 			folder.feeds.last.unread_count.should == 3
 
-			get "/greader/reader/api/0/mark-all-as-read",
+			post "/greader/reader/api/0/mark-all-as-read",
 				{
 					:s => 'user/-/label/Folder 1'
 				},
