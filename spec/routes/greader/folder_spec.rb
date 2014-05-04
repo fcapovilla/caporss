@@ -14,9 +14,11 @@ describe "GReader Folder routes" do
 			get "/greader/reader/api/0/tag/list", nil, 'HTTP_AUTHORIZATION' => "GoogleLogin auth=#{@token}"
 
 			data = JSON.parse(last_response.body, :symbolize_names => true)
-			data[:tags].length.should == 5
-			data[:tags][0][:id].should == 'user/1/label/Folder 0'
-			data[:tags][0][:sortid].should == 1
+			data[:tags].length.should == 6
+			data[:tags][0][:id].should == 'user/1/state/com.google/starred'
+			data[:tags][0][:sortid].should == 0
+			data[:tags][1][:id].should == 'user/1/label/Folder 0'
+			data[:tags][1][:sortid].should == 1
 		end
 	end
 

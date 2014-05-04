@@ -9,7 +9,12 @@ namespace '/greader' do
 		end
 
 		get '/tag/list' do
-			tags = []
+			tags = [
+				{
+					:id => "user/#{@user.id}/state/com.google/starred",
+					:sortid => 0
+				}
+			]
 
 			Folder.all(:user => @user).each do |folder|
 				tags << {
