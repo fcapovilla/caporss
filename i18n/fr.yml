@@ -11,7 +11,9 @@ settings:
     import_opml_file: Importer un fichier OPML
     export_as_opml: Exporter les abonnements en OPML
     import_favorites: Importer un fichier JSON de favoris
-    export_favorites: Exporter les favoris en JSON
+    export_favorites:
+        json: Exporter les favoris en JSON
+        html: Exporter les favoris en HTML
     force_sync: Forcer la synchronisation
     cleanup_older_than: Supprimer les items plus vieux que 
     days: jours

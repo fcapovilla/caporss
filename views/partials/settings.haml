@@ -57,7 +57,9 @@
               %button(class="btn btn-default" href="#importFavoritesModal" role="button" data-dismiss="modal" data-toggle="modal")
                 =t.settings.import_favorites
               %a(class="btn btn-default" href="/favorites.json")
-                =t.settings.export_favorites
+                =t.settings.export_favorites.json
+              %a(class="btn btn-default" href="/favorites.html")
+                =t.settings.export_favorites.html
               %button(class="btn btn-default" id="forceSyncButton")
                 =t.settings.force_sync
               %br

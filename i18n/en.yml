@@ -11,7 +11,9 @@ settings:
     import_opml_file: Import an OPML file
     export_as_opml: Export feeds as OPML
     import_favorites: Import a favorites JSON file
-    export_favorites: Export favorites as JSON
+    export_favorites:
+        json: Export favorites as JSON
+        html: Export favorites as HTML
     force_sync: Force sync
     cleanup_older_than: Cleanup items older than 
     days: days
