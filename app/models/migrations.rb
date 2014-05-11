@@ -166,4 +166,16 @@ if ['mysql', 'postgres'].include? adapter
 	end
 end
 
+if ['mysql', 'postgres'].include? adapter
+	migration 8, :update_item_feedid_column do
+		up do
+			if adapter == 'mysql'
+				execute 'ALTER TABLE items MODIFY feed_id INT(11)'
+			elsif adapter == 'postgres'
+				execute 'ALTER TABLE items ALTER COLUMN feed_id DROP NOT NULL'
+			end
+		end
+	end
+end
+
 migrate_up!

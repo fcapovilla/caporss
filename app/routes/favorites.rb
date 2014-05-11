@@ -112,8 +112,7 @@ post "/favorite" do
 		:favorite => true,
 		:date => DateTime.now,
 		:user => @user,
-		:read => true,
-		:feed_id => nil
+		:read => true
 	)
 
 	item.to_json
