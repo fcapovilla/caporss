@@ -310,7 +310,7 @@ describe "GReader Item routes" do
 			data[:itemRefs].length.should == 75
 			data[:itemRefs][0][:id].should == item.id.to_s
 			data[:itemRefs][0][:directStreamIds].length.should == 1
-			data[:itemRefs][0][:directStreamIds][0].should == "user/1/label/Folder 0"
+			data[:itemRefs][0][:directStreamIds][0].should == "user/1/label/#{item.feed.folder.title}"
 		end
 
 		it "supports continuations" do
