@@ -31,7 +31,7 @@ group :travis, :test do
 end
 
 group :travis, :production do
-	gem 'dm-postgres-adapter'
+#	gem 'dm-postgres-adapter'
 	gem 'dm-mysql-adapter'
 end
 

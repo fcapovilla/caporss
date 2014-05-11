@@ -1,15 +1,13 @@
 language: ruby
 cache: bundler
 bundler_args: --without production development test
-addons:
-  postgresql: "9.1"
 
 rvm:
   - "1.9.3"
   - "2.1.0"
 env:
   - DB=mysql DATABASE_URL="mysql://@localhost/test"
-  - DB=pgsql DATABASE_URL="postgres://postgres@localhost/test"
+# - DB=pgsql DATABASE_URL="postgres://postgres@localhost/test"
   - DB=sqlite DATABASE_URL="sqlite::memory:"
   - JS=true
 matrix:
