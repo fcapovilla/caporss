@@ -32,7 +32,7 @@ describe("Subscription View", function() {
 		});
 
 		it("displays the last update date with formatting", function() {
-			expect(this.view.$el.html()).toContain("10/12/2010 01:02:03");
+			expect(this.view.$el.html()).toMatch(/\d\d\/12\/2010 \d\d:02:03/);
 		});
 	});
 
