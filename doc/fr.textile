@@ -4,11 +4,11 @@ h1. Raccourcis clavier
 * *A* : Afficher la fenêtre d'abonnement
 * *S* : Synchroniser tous les abonnements
 * *R* : Rafraîchir la liste des abonnements
-* *H* : Cacher/Afficher les items lus
+* *I* : Cacher/Afficher les items lus
 * *J* : Voir le prochain item dans la liste des items
 * *K* : Voir l'item précédent dans la liste des items
-* *SHIFT+J* : Sélectionner le prochain dossier/abonnement dans la barre latérale
-* *SHIFT+K* : Sélectionner le dossier/abonnement précédent dans la barre latérale
+* *H* ou *SHIFT+K* : Sélectionner le dossier/abonnement précédent dans la barre latérale
+* *L* ou *SHIFT+J* : Sélectionner le prochain dossier/abonnement dans la barre latérale
 * *SPACE* : Descendre d'une page dans la liste des items en changenant d'item si nécessaire
 * *SHIFT+SPACE* : Monter d'une page dans la liste des items en changenant d'item si nécessaire
 
@@ -16,7 +16,8 @@ h1. Préférences
 
 * *Abonnements* : Affiche la liste des abonnements. Permet d'activer des abonnements Pubsubhubbub (PSHB). Les abonnements PSHB ne sont pas synchronisés par les actions de synchronisations périodiques ou manuelles. Le bouton "Forcer la synchronisation" permet d'effectuer une synchronisation sur tous les abonnements en incluant les abonnements PSHB.
 * *Importer/Exporter un ficher OPML* : Un fichier OPML contient des informations sur les abonnements. Vous pouvez importer un fichier OPML d'une source externe ou exporter une liste de vos abonnements sous la forme d'un fichier OPML pouvant être importé dans un autre lecteur RSS.
-* *Nettoyage* : Supprime les vieux items dans la base de données locale. Les items non-lus ne seront pas supprimés. Vous pouvez spécifier une limite d'âge en jours. Seul les items dont la date dépasse cette limite seront supprimés lors d'un clic sur le bouton "Nettoyage".
+* *Importer/Exporter les favoris* : Vous pouvez exporter et importer vos favoris dans un format JSON compatible avec GReader. Vous pouvez aussi exporter vos favoris au format HTML afin de les importer dans un navigateur.
+* *Nettoyage* : Supprime les vieux items dans la base de données locale. Les items non-lus et les favoris ne seront pas supprimés. Vous pouvez spécifier une limite d'âge en jours. Seul les items dont la date dépasse cette limite seront supprimés lors d'un clic sur le bouton "Nettoyage".
 * *Synchroniser toutes les...* : Va chercher les nouveaux items sur les serveurs distants à un certain intervalle.
 * *Rafraîchir toutes les...* : Va chercher les nouveaux items dans la base de données locale à un intervalle spécifié. À utiliser avec un "worker" de synchronisation automatique qui va chercher les items sur les serveur distant avec un intervalle spécifique.
 * *Rafraîchir avec des SSE* : Si votre serveur et votre navigateur supportent les SSE (Server-Sent Events) et que cette préférence est activée, les données dans le navigateur seront rafraîchies automatiquement à chaque synchronisation des abonnements.
@@ -28,7 +29,7 @@ h1. Menu principal
 * *Synchroniser* : Va chercher les nouveaux items sur les serveurs distants. Appliqué sur tous les abonnements.
 * *Afficher/Cacher les items lus* : Vous permet de spécifier si les items qui ont déjà été lus seront affichés dans la liste des items.
 * *Afficher/Cacher la barre de recherche* : Pour afficher ou cacher la barre de recherche.
-* *Abonnement* : Vous permet d'ajouter un nouvel abonnement à un flux. Si aucun nom de dossier n'est entré, le nouvel abonnement sera automatiquement ajouté au dossier "Feeds".
+* *Abonnement* : Vous permet d'ajouter un favori ou un nouvel abonnement à un flux. Si aucun nom de dossier n'est entré, le nouvel abonnement sera automatiquement ajouté au dossier "Feeds". Les nouveaux favoris ne sont pas associés à un dossier ou à un flux, et sont seulement disponibles dans le dossier "Favoris".
 * *Préférences* : Affiche la fenêtre de préférences.
 
 h1. Menu dossier
@@ -45,11 +46,12 @@ h1. Menu abonnement
 * *Modifier* : Vous permet de changer l'url ou le dossier d'un abonnement
 ** *Réinitialiser l'abonnement* : Si cette option est cochée lors de l'édition d'un abonnement, tous les items de cet abonnement seront supprimés et l'abonnement sera resynchronisé. Les informations sur les items lus/non lus seront perdues.
 * *Supprimer* : Vous permet de supprimer un abonnement. Veuillez noter que cette action est irréversibe.
-* *Utiliser Pubsubhubbub* : Cette option apparaît si l'abonnement supporte le protocole PSHB. Lorsque cette option est activée, l'abonnement ne sera pas mis à jour lors des appels à /fetch_all, mais recevra des mises à jour du hub PSHB dès qu'elles sont publiées. Veuillez noter qu'un abonnements peut définir un hub sans publier ses mises à jour vers celui-ci. Il peut donc être nécessaire de désactiver cette option si vou remarquez que l'abonnement n'est pas mis à jour lorsque PSHB est activé.
+* *Utiliser Pubsubhubbub* : Cette option apparaît si l'abonnement supporte le protocole PSHB. Lorsque cette option est activée, l'abonnement ne sera pas mis à jour lors des appels à /fetch_all, mais recevra des mises à jour du hub PSHB dès qu'elles sont publiées. Veuillez noter qu'un abonnements peut définir un hub sans publier ses mises à jour vers celui-ci. Il peut donc être nécessaire de désactiver cette option si vous remarquez que l'abonnement n'est pas mis à jour lorsque PSHB est activé.
 
 h1. Liste des items
 
 * *Marquer les plus anciens comme lus* : Cette option vous permet de marquer tous les items plus vieux que l'item choisi comme "lus".
+* *Icône "étoile" (Marquer comme favori)* : Un clic sur cette icône a pour effet d'ajouter ou d'enlever l'item de votre liste de favoris.
 * *Icône "cercle" (Marquer comme lu/non lu)* : Un clic sur cette icône a pour effet de marquer l'item sélectionné comme lu/non lu.
 
 h1. Support du "glisser-déplacer"

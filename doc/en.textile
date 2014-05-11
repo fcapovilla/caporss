@@ -4,11 +4,11 @@ h1. Keyboard shortcuts
 * *A* : Show the feed subscription dialog.
 * *R* : Refresh feeds list
 * *S* : Sync feeds
-* *H* : Hide/Unhide read items
+* *I* : Hide/Unhide read items
 * *J* : Move down one item in the item list
 * *K* : Move up one item in the item list
-* *SHIFT+J* : Select the next feed/folder in the sidebar
-* *SHIFT+K* : Select the previous feed/folder in the sidebar
+* *H* or *SHIFT+K* : Select the previous feed/folder in the sidebar
+* *L* or *SHIFT+J* : Select the next feed/folder in the sidebar
 * *SPACE* : Go down one page in the item list, changing the selected item if needed
 * *SHIFT+SPACE* : Go up one page in the item list, changing the selected item if needed
 
@@ -16,7 +16,8 @@ h1. Settings
 
 * *Subscriptions* : Show the list of all feeds. Here, you can subscribe to Pubsubhubbub feeds (PSHB). PSHB feeds are not updated when doing periodic or manuel synchronizations. The "Force sync" button lets you synchronize all feeds, including PSHB feeds.
 * *Import/Export OPML files* : OPML files contain informations on feed subscription. You can import opml files from outside sources and export a list of your feeds as an OPML file for use in another RSS reader.
-* *Cleanup* : Deletes old items in the local database. Only read items are deleted. You can specify the age limit for items in days. All items older than this limit will be deleted when clicking the "Cleanup" button.
+* *Import/Export favorites* : You can import and export your favorites in a JSON file compatible with GReader. You can also export your favorites as an HTML file that you can import in a web browser.
+* *Cleanup* : Deletes old items in the local database. Only unread and favorite items will not be deleted. You can specify the age limit for items in days. All items older than this limit will be deleted when clicking the "Cleanup" button.
 * *Sync after* : Fetches new items from the servers for all feeds at the specified interval.
 * *Refresh after* : Check for new items in the local database at the specified interval. Use with an automatic sync worker that fetches new items at a specific interval.
 * *Refresh using SSE* : If your server and browser both support SSE (Server-Sent Events) and this setting is activated, client-side informations will be automatically updated at every feed synchronisation.
@@ -28,7 +29,7 @@ h1. Main menu
 * *Sync* : Fetches new items from the servers. Applied to all feeds.
 * *Show/Hide read items* : This feature lets you specify if items that were already read will be shown in the item list.
 * *Toggle search bar* : Show or hide the search bar.
-* *Subscribe* : Lets you add a new feed subscription. If no folder name is specified, the feed will be automatically added to the "Feeds" folder.
+* *Subscribe* : Lets you add a new favorite or feed subscription. If no folder name is specified, the feed will be automatically added to the "Feeds" folder. Custom favorites are not associated to feeds or folders, and can be found in the "Favorites" folder.
 * *Settings* : Show the settings dialog.
 
 h1. Folder menu
@@ -50,6 +51,7 @@ h1. Feed menu
 h1. Item list
 
 * *Mark older items as read* : This options will mark all items older than te selected one as "read".
+* *Star icon (Mark as favorite)* : Clicking the star icon on an item line will add or remove the item from your favorites list.
 * *Circle icon (Mark as read/unread)* : Clicking the circle icon on an item line will mark/unmark the item as "read".
 
 h1. Drag and drop support

@@ -11,24 +11,6 @@ $(document).keyup(function(e) {
 	var currentItem = null;
 
 	if(e.shiftKey) {
-		var model = null;
-		if(e.keyCode == 74) { // SHIFT+J
-			// Move to next feed/folder
-			model = CapoRSS.folderList.allItemsFolder;
-			if(CapoRSS.router.currentSelection !== null) {
-				model = CapoRSS.router.currentSelection.getNextInList();
-			}
-			CapoRSS.router.goToModel(model);
-		}
-		if(e.keyCode == 75) { // SHIFT+K
-			// Go to previous feed/folder
-			model = CapoRSS.folderList.allItemsFolder;
-			if(CapoRSS.router.currentSelection !== null) {
-				model = CapoRSS.router.currentSelection.getPreviousInList();
-			}
-			CapoRSS.router.goToModel(model);
-		}
-
 		if(CapoRSS.router.itemList !== null) {
 			if(e.keyCode == 32) { // SHIFT+SPACE
 				// Page up in the item list. Change selected item if necessary.
@@ -93,7 +75,7 @@ $(document).keyup(function(e) {
 		if(e.keyCode == 83) { // S
 			CapoRSS.mainMenu.sync();
 		}
-		if(e.keyCode == 72) { // H
+		if(e.keyCode == 73) { // I
 			CapoRSS.mainMenu.toggleReadVisibility();
 		}
 		if(e.keyCode == 111 || e.keyCode == 191) { // /
@@ -102,6 +84,24 @@ $(document).keyup(function(e) {
 		if(e.keyCode == 65) { // A
 			CapoRSS.mainMenu.showSubscriptionModal();
 		}
+	}
+
+	var model = null;
+	if((e.shiftKey && e.keyCode == 75) || e.keyCode == 72) { // SHIFT+K or H
+		// Go to previous feed/folder
+		model = CapoRSS.folderList.allItemsFolder;
+		if(CapoRSS.router.currentSelection !== null) {
+			model = CapoRSS.router.currentSelection.getPreviousInList();
+		}
+		CapoRSS.router.goToModel(model);
+	}
+	if((e.shiftKey && e.keyCode == 74) || e.keyCode == 76) { // SHIFT+J or L
+		// Move to next feed/folder
+		model = CapoRSS.folderList.allItemsFolder;
+		if(CapoRSS.router.currentSelection !== null) {
+			model = CapoRSS.router.currentSelection.getNextInList();
+		}
+		CapoRSS.router.goToModel(model);
 	}
 });
 
