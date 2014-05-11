@@ -76,6 +76,7 @@ describe "Favorites route" do
 
 	after :all do
 		Folder.all.destroy
+		Item.all(:favorite => true).destroy
 	end
 
 end

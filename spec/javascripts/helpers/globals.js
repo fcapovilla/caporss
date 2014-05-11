@@ -12,7 +12,8 @@ var LANG = {
     confirm_read_folder: "confirm_read_folder",
     confirm_unread_folder: "confirm_unread_folder",
     confirm_cleanup: "confirm_cleanup",
-	all_items_folder: "all_items_folder"
+	all_items_folder: "all_items_folder",
+	favorites: "favorites"
 };
 
 var FLASH = {

@@ -19,6 +19,7 @@ describe("Folder List View", function() {
 
 		it("renders special folders first", function() {
 			expect(this.view.$el.find('.folder-text').eq(0).text()).toContain('all_items_folder');
+			expect(this.view.$el.find('.folder-text').eq(1).text()).toContain('favorites');
 		});
 	});
 });
