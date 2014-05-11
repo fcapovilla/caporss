@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 1.0.0
+Version 1.1.0
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.svg?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
@@ -17,6 +17,7 @@ CapoRSS is a simple self-hosted RSS aggregator written in Ruby and Javascript.
 * Mobile device support using responsive HTML.
 * Feed organization using folders with drag-and-drop support.
 * Import and export feeds in [OPML](https://en.wikipedia.org/wiki/OPML) format.
+* Import favorites in JSON format (GReader-compatible). Export favorites in JSON and HTML format.
 * Sync your feeds with mobile applications compatible with the Google Reader API.
 
 ## Screenshots
