@@ -5,20 +5,45 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            #{t.subscribe.subscribe}
+            #{t.subscribe.add}
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
           </div>
-          <form id="subscriptionForm" method="get" action="#">
-            <div class="modal-body">
-              <label for="subscriptionUrl">#{t.subscribe.url}</label>
-              <input class="form-control" type="text" id="subscriptionUrl" aria-hidden="true" />
-              <label for="subscriptionFolder">#{t.subscribe.folder}</label>
-              <input class="form-control" autocomplete="off" type="text" id="subscriptionFolder" aria-hidden="true" value="" />
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#feedTab" data-toggle="tab">
+                #{t.subscribe.subscribe}
+              </a>
+            </li>
+            <li>
+              <a href="#favoriteTab" data-toggle="tab">
+                #{t.subscribe.favorite}
+              </a>
+            </li>
+          </ul>
+          <div class="modal-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="feedTab">
+                <form id="subscriptionForm" method="get" action="#">
+                  <label for="subscriptionUrl">#{t.subscribe.url}</label>
+                  <input class="form-control" type="text" id="subscriptionUrl" aria-hidden="true" />
+                  <label for="subscriptionFolder">#{t.subscribe.folder}</label>
+                  <input class="form-control" autocomplete="off" type="text" id="subscriptionFolder" aria-hidden="true" value="" />
+                  <div class="modal-footer">
+                    <button type="submit" id="addFeedButton" class="btn btn-primary" aria-hidden="true">#{t.subscribe.subscribe}</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane" id="favoriteTab">
+                <form id="favoriteForm" method="get" action="#">
+                  <label for="favoriteUrl">#{t.subscribe.url}</label>
+                  <input class="form-control" type="text" id="favoriteUrl" aria-hidden="true" />
+                  <div class="modal-footer">
+                    <button type="submit" id="addFavoriteButton" class="btn btn-primary" aria-hidden="true">#{t.subscribe.add}</button>
+                  </div>
+                </form>
+              </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" id="subscribeButton" class="btn btn-primary" aria-hidden="true">#{t.subscribe.subscribe}</button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

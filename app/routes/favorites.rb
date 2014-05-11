@@ -101,3 +101,18 @@ get '/favorites.html' do
 
 	output += '</DL><p>'
 end
+
+# Add custom favorite
+post "/favorite" do
+	title = http_get_title(params[:url]) || params[:url]
+
+	item = Item.create(
+		:url => params[:url],
+		:title => title,
+		:favorite => true,
+		:date => DateTime.now,
+		:user => @user
+	)
+
+	item.to_json
+end

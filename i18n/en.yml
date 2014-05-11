@@ -51,8 +51,10 @@ buttons:
 
 subscribe:
     subscribe: Subscribe
+    add: Add
+    favorite: Favorite
     url: "URL:"
-    folder: "Dossier:"
+    folder: "Folder:"
 
 edit_feed:
     title: Edit feed

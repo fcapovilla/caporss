@@ -51,6 +51,8 @@ buttons:
 
 subscribe:
     subscribe: Abonnement
+    add: Ajouter
+    favorite: Favori
     url: "URL&nbsp;:"
     folder: "Dossier&nbsp;:"
 

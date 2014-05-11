@@ -1,7 +1,8 @@
 CapoRSS.View.Subscribe = Backbone.Marionette.CompositeView.extend({
 	template: '#tmpl-subscribe',
 	events: {
-		'click #subscribeButton' : 'subscribe',
+		'click #addFeedButton' : 'addFeed',
+		'click #addFavoriteButton' : 'addFavorite',
 	},
 
 	/**
@@ -15,7 +16,7 @@ CapoRSS.View.Subscribe = Backbone.Marionette.CompositeView.extend({
 	 * Action when the "Subscribe" button is clicked.
 	 * @return {boolean} false
 	 */
-	subscribe: function() {
+	addFeed: function() {
 		$.ajax({
 			url: '/api/feed',
 			method: 'POST',
@@ -25,6 +26,24 @@ CapoRSS.View.Subscribe = Backbone.Marionette.CompositeView.extend({
 			},
 			success: function() {
 				CapoRSS.folders.fetch();
+			}
+		});
+
+		this.$('.modal').modal('hide');
+
+		return false;
+	},
+
+	/**
+	 * Action when the "Subscribe" button is clicked.
+	 * @return {boolean} false
+	 */
+	addFavorite: function() {
+		$.ajax({
+			url: '/favorite',
+			method: 'POST',
+			data: {
+				url: this.$('#favoriteUrl').val()
 			}
 		});
 

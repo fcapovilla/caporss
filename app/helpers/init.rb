@@ -8,4 +8,5 @@ helpers do
 	require_relative 'search'
 	require_relative 'stream'
 	require_relative 'greader'
+	require_relative 'http'
 end
