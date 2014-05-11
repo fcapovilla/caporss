@@ -2,7 +2,7 @@ language: ruby
 cache: bundler
 bundler_args: --without production development test
 addons:
-  postgresql: "9.2"
+  postgresql: "9.1"
 
 rvm:
   - "1.9.3"
