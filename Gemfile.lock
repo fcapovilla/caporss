@@ -46,9 +46,6 @@ GEM
     dm-mysql-adapter (1.2.0)
       dm-do-adapter (~> 1.2.0)
       do_mysql (~> 0.10.6)
-    dm-postgres-adapter (1.2.0)
-      dm-do-adapter (~> 1.2.0)
-      do_postgres (~> 0.10.6)
     dm-serializer (1.2.2)
       dm-core (~> 1.2.0)
       fastercsv (~> 1.5)
@@ -73,8 +70,6 @@ GEM
     dm-validations (1.2.0)
       dm-core (~> 1.2.0)
     do_mysql (0.10.14)
-      data_objects (= 0.10.14)
-    do_postgres (0.10.14)
       data_objects (= 0.10.14)
     do_sqlite3 (0.10.14)
       data_objects (= 0.10.14)
@@ -176,7 +171,6 @@ DEPENDENCIES
   datamapper
   dm-is-list
   dm-mysql-adapter
-  dm-postgres-adapter
   dm-sqlite-adapter
   feedjira
   haml
