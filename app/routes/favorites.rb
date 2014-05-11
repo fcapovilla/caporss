@@ -111,7 +111,8 @@ post "/favorite" do
 		:title => title,
 		:favorite => true,
 		:date => DateTime.now,
-		:user => @user
+		:user => @user,
+		:read => true
 	)
 
 	item.to_json

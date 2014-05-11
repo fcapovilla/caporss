@@ -94,8 +94,14 @@ describe "Admin user page" do
 		post '/login', :username => 'admin', :password => 'admin'
 		user = User.first(:username => 'testuser2')
 
+		# Add a favorite to test favorites deletion
+		Item.create(:user => user, :url => 'test', :title => 'test', :favorite => true)
+
 		delete "/user/#{user.id}"
         User.get(user.id).should be_nil
+		Folder.all(:user => user).count.should == 0
+		Feed.all(:user => user).count.should == 0
+		Item.all(:user => user).count.should == 0
 	end
 
 	it "won't delete admin or sync users" do

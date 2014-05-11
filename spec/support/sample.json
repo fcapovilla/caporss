@@ -1,0 +1,147 @@
+{
+  "direction": "ltr",
+  "title": "Favorites",
+  "items": [
+    {
+      "crawlTimeMsec": "1398827820000",
+      "timestampUsec": "1398827820000000",
+      "id": "tag:google.com,2005:reader/item/0000000000000001",
+      "categories": [
+        "user/1/state/com.google/reading-list",
+        "user/1/label/Folder 1",
+        "user/1/state/com.google/read",
+        "user/1/state/com.google/starred"
+      ],
+      "title": "Favorite 1",
+      "published": 1398827820,
+      "updated": 1398827820,
+      "enclosure": [
+        {
+          "href": "http://www.example.com/test.mp3",
+          "type": "application/octet-stream",
+          "length": 99999
+        }
+      ],
+      "canonical": [
+        {
+          "href": "http://www.example.com/1"
+        }
+      ],
+      "alternate": [
+        {
+          "href": "http://www.example.com/1",
+          "type": "text/html"
+        }
+      ],
+      "summary": {
+        "direction": "ltr",
+        "content": "Favorite content 1"
+      },
+      "author": "",
+      "likingUsers": [
+
+      ],
+      "comments": [
+
+      ],
+      "annotations": [
+
+      ],
+      "origin": {
+        "streamId": "feed/http://localhost:4567/1.rss?items=3",
+        "title": "Feed 1",
+        "htmlUrl": "http://localhost:4567/1.rss?items=3"
+      }
+    },
+    {
+      "crawlTimeMsec": "1398827820000",
+      "timestampUsec": "1398827820000000",
+      "id": "tag:google.com,2005:reader/item/0000000000000002",
+      "categories": [
+        "user/1/state/com.google/reading-list",
+        "user/1/label/Favorite Folder 1",
+        "user/1/state/com.google/starred"
+      ],
+      "title": "Favorite 2",
+      "published": 1398827820,
+      "updated": 1398827820,
+      "enclosure": [
+      ],
+      "canonical": [
+        {
+          "href": "http://www.example.com/2"
+        }
+      ],
+      "alternate": [
+        {
+          "href": "http://www.example.com/2",
+          "type": "text/html"
+        }
+      ],
+      "summary": {
+        "direction": "ltr",
+        "content": "Favorite content 2"
+      },
+      "author": "",
+      "likingUsers": [
+
+      ],
+      "comments": [
+
+      ],
+      "annotations": [
+
+      ],
+      "origin": {
+        "streamId": "feed/http://localhost:4567/test.rss?items=3",
+        "title": "Favorite Feed 1",
+        "htmlUrl": "http://localhost:4567/test.rss?items=3"
+      }
+    },
+    {
+      "crawlTimeMsec": "1398827820000",
+      "timestampUsec": "1398827820000000",
+      "id": "tag:google.com,2005:reader/item/0000000000000002",
+      "categories": [
+        "user/1/state/com.google/reading-list",
+        "user/1/label/Favorite Folder 1",
+        "user/1/state/com.google/starred"
+      ],
+      "title": "Favorite 3",
+      "published": 1398827820,
+      "updated": 1398827820,
+      "enclosure": [
+      ],
+      "canonical": [
+        {
+          "href": "http://www.example.com/3"
+        }
+      ],
+      "alternate": [
+        {
+          "href": "http://www.example.com/3",
+          "type": "text/html"
+        }
+      ],
+      "summary": {
+        "direction": "ltr",
+        "content": "Favorite content 3"
+      },
+      "author": "",
+      "likingUsers": [
+
+      ],
+      "comments": [
+
+      ],
+      "annotations": [
+
+      ],
+      "origin": {
+        "streamId": "feed/http://localhost:4567/test.rss?items=3",
+        "title": "Favorite Feed 1",
+        "htmlUrl": "http://localhost:4567/test.rss?items=3"
+      }
+    }
+  ]
+}

@@ -40,6 +40,10 @@ class TestServer < Sinatra::Base
 		builder.to_xml
 	end
 
+	get '/*.html' do |id|
+		"<html><head><title>Title - #{id}</title></head><body>Content</body></html>"
+	end
+
 	post '/pshb/hub' do
 		202
 	end

@@ -44,6 +44,9 @@ CapoRSS.View.Subscribe = Backbone.Marionette.CompositeView.extend({
 			method: 'POST',
 			data: {
 				url: this.$('#favoriteUrl').val()
+			},
+			success: function() {
+				CapoRSS.folders.fetch();
 			}
 		});
 
