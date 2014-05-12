@@ -31,11 +31,11 @@ group :travis, :test do
 end
 
 group :travis, :production do
-#	gem 'dm-postgres-adapter'
 	gem 'dm-mysql-adapter'
 end
 
 group :production do
+	gem 'dm-postgres-adapter'
 	gem 'rack-ssl-enforcer'
 
 	gem 'therubyracer'
