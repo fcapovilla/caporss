@@ -20,13 +20,19 @@ $(function() {
 	PNotify.prototype.options.addclass = 'stack-bottomright';
 	PNotify.prototype.options.styling = 'fontawesome';
 	PNotify.prototype.options.stack = pnotify_stack;
+	PNotify.prototype.options.title = 'Notification';
+
+	if(SETTINGS.desktop_notifications) {
+		PNotify.prototype.options.desktop.desktop = true;
+		PNotify.desktop.permission();
+	}
 
 	// Show flash messages
 	if(FLASH.success) {
-		new PNotify({ text: FLASH.success, type: 'success' });
+		new PNotify({ title: LANG.success, text: FLASH.success, type: 'success' });
 	}
 	if(FLASH.error) {
-		new PNotify({ text: '<b>Error</b><br>' + FLASH.error, type: 'error' });
+		new PNotify({ title: LANG.error, text: FLASH.error, type: 'error' });
 	}
 
 	// Set timeout for AJAX requests
@@ -43,10 +49,10 @@ $(function() {
 	// Manage AJAX errors
 	$(document).ajaxError(function(event, request, settings) {
 		if(request.responseText) {
-			new PNotify({ text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.responseText, type: 'error' });
+			new PNotify({ title: LANG.error, text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.responseText, type: 'error' });
 		}
 		else {
-			new PNotify({ text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.statusText, type: 'error' });
+			new PNotify({ title: LANG.error, text: 'Failed to call "' + settings.url + '" : ' + request.status + ' ' + request.statusText, type: 'error' });
 		}
 	});
 

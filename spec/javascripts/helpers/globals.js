@@ -3,6 +3,7 @@ var SETTINGS = {
 	sync_timeout: 0,
 	items_per_page: 2,
     sse_refresh: false,
+    desktop_notifications: false,
 	show_read: true
 };
 

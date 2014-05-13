@@ -98,8 +98,13 @@
               .form-group
                 %label.control-label.col-md-2
                   =t.settings.items_per_page
-                .col-md-2
+                .input-group.col-md-2
                   %input(class="form-control" type="text" name="items_per_page" value="#{@user.items_per_page}" aria-hidden="true")
+              .form-group
+                .checkbox.col-md-offset-2
+                  %label
+                    %input(type="checkbox" name="desktop_notifications"){checked: @user.desktop_notifications}
+                    =t.settings.desktop_notifications
               %button(class="btn btn-default" id="updateFaviconsButton" data-dismiss="modal")
                 =t.settings.update_favicons
               - if @user.roles.include?(:admin)

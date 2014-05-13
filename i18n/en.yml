@@ -21,6 +21,7 @@ settings:
     minutes: minutes
     sync_every: Sync feeds every 
     sse_refresh: Refresh using SSE (Server-Sent Events)
+    desktop_notifications: Desktop notifications
     save: Save
     items_per_page: Items per page
     general: General
@@ -89,6 +90,10 @@ js:
     confirm_cleanup: This action will delete old items and cannot be reverted. Are you sure you want to clean up feeds?
     all_items_folder: All items
     favorites: Favorites
+    alert:
+        success: Success
+        error: Error
+        new_items: New items
 
 login:
     username: Username

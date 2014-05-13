@@ -21,6 +21,7 @@ settings:
     minutes: minutes
     sync_every: Synchroniser toutes les 
     sse_refresh: Rafraîchir avec des SSE (Server-Sent Events)
+    desktop_notifications: Notifications système
     save: Sauvegarder
     items_per_page: Items par page
     general: Général
@@ -89,6 +90,10 @@ js:
     confirm_cleanup: "Cette action va supprimer les items trop anciens et n'est pas réversible. Êtes-vous sûr de vouloir effectuer un nettoyage?"
     all_items_folder: Tous les items
     favorites: Favoris
+    alert:
+        success: Succès
+        error: Erreur
+        new_items: Nouveaux items
 
 login:
     username: Utilisateur

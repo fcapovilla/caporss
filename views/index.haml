@@ -39,6 +39,7 @@
     sync_timeout: #{@user.sync_timeout},
     items_per_page: #{@user.items_per_page},
     sse_refresh: #{@user.sse_refresh},
+    desktop_notifications: #{@user.desktop_notifications},
     show_read: true,
     search_filters: false
   };
@@ -51,7 +52,10 @@
     confirm_unread_folder: "#{t.js.confirm_unread_folder}",
     confirm_cleanup: "#{t.js.confirm_cleanup}",
     all_items_folder: "#{t.js.all_items_folder}",
-    favorites: "#{t.js.favorites}"
+    favorites: "#{t.js.favorites}",
+    success: "#{t.js.alert.success}",
+    error: "#{t.js.alert.error}",
+    new_items: "#{t.js.alert.new_items}"
   };
 
   var FLASH = {
