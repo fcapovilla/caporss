@@ -16,7 +16,10 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: './.bower_components/pnotify',
-						src: 'jquery.pnotify.default.css',
+						src: [
+							'pnotify.core.css',
+							'pnotify.buttons.css'
+						],
 						dest: './public/css'
 					},
 					{
@@ -43,7 +46,9 @@ module.exports = function(grunt) {
 					'./.bower_components/json2/json2.js',
 					'./.bower_components/jquery/dist/jquery.js',
 					'./.bower_components/jquery-cookie/jquery.cookie.js',
-					'./.bower_components/pnotify/jquery.pnotify.js',
+					'./.bower_components/pnotify/pnotify.core.js',
+					'./.bower_components/pnotify/pnotify.buttons.js',
+					'./.bower_components/pnotify/pnotify.desktop.js',
 					'./.bower_components/lodash/dist/lodash.js',
 					'./.bower_components/backbone/backbone.js',
 					'./.bower_components/marionette/lib/backbone.marionette.js',

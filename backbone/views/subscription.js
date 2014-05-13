@@ -85,7 +85,7 @@ CapoRSS.View.Subscription = Backbone.Marionette.ItemView.extend({
 			success: function(result) {
 				that.model.fetch({
 					success: function() {
-						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+						new PNotify({ text: result.new_items + ' new items.', type: 'success' });
 					}
 				});
 				CapoRSS.folders.getFeed(that.model.id).fetch();

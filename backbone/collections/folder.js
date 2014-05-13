@@ -27,7 +27,7 @@ CapoRSS.Collection.Folder = Backbone.Collection.extend({
 			success: function() {
 				new_items = that.getUnreadCount() - old_unread_count;
 				if(new_items > 0) {
-					$.pnotify({ text: new_items + ' new items.', type: 'success' });
+					new PNotify({ text: new_items + ' new items.', type: 'success' });
 				}
 				if($('#settingsModal').is(':visible')) {
 					CapoRSS.subscriptions.fetch();

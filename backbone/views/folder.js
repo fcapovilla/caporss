@@ -224,7 +224,7 @@ CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 			success: function(result) {
 				that.model.feeds.fetch({
 					success: function() {
-						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+						new PNotify({ text: result.new_items + ' new items.', type: 'success' });
 					}
 				});
 				if(CapoRSS.router.currentSelection !== null) {

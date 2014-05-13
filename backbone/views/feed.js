@@ -185,7 +185,7 @@ CapoRSS.View.Feed = Backbone.Marionette.ItemView.extend({
 			success: function(result) {
 				that.model.fetch({
 					success: function() {
-						$.pnotify({ text: result.new_items + ' new items.', type: 'success' });
+						new PNotify({ text: result.new_items + ' new items.', type: 'success' });
 					}
 				});
 				if(CapoRSS.router.currentSelection !== null) {
