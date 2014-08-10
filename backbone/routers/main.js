@@ -28,7 +28,7 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 	clear: function() {
 		$('#item-list').scrollTop(0);
 
-		this.itemListRegion.close();
+		this.itemListRegion.reset();
 
 		if(this.currentSelection !== null) {
 			this.currentSelection.set('active', false);
@@ -50,7 +50,7 @@ CapoRSS.Router.Main = Backbone.Router.extend({
 	updateItemList: function(model) {
 		var that = this;
 		$('#item-list').scrollTop(0);
-		this.itemListRegion.close();
+		this.itemListRegion.reset();
 
 		var options = {
 			reset: true,

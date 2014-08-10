@@ -1,7 +1,7 @@
 CapoRSS.View.Folder = Backbone.Marionette.CompositeView.extend({
 	tagName: "li",
-	itemViewContainer: 'ul',
-	itemView: CapoRSS.View.Feed,
+	childViewContainer: 'ul',
+	childView: CapoRSS.View.Feed,
 	template: '#tmpl-folder',
 	attributes: {
 		'draggable': true

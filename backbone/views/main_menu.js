@@ -1,4 +1,4 @@
-CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
+CapoRSS.View.MainMenu = Backbone.Marionette.ItemView.extend({
 	el: $('#mainmenu'),
 	template: '#tmpl-mainmenu',
 	events: {
@@ -14,6 +14,10 @@ CapoRSS.View.MainMenu = Backbone.Marionette.CompositeView.extend({
 	initialize: function() {
 		this.canSync = true;
 	},
+
+	serializeData: function(){
+		return {};
+    },
 
 	/**
 	 * Action on menu render.

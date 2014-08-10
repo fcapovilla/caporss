@@ -1,6 +1,6 @@
 CapoRSS.View.FolderList = Backbone.Marionette.CollectionView.extend({
 	el: $('#feed-list'),
-	itemView: CapoRSS.View.Folder,
+	childView: CapoRSS.View.Folder,
 	collectionEvents: {
 		'sort': 'render'
 	},
