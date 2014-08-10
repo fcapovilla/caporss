@@ -48,7 +48,10 @@ end
 RSpec.configure do |config|
   config.include Rack::Test::Methods
 
-  config.color_enabled = true
+  config.expect_with :rspec do |c|
+    c.syntax = :should
+  end
+
   config.tty = true
   config.formatter = :documentation
 end
