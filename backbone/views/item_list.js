@@ -5,7 +5,8 @@ CapoRSS.View.ItemList = Backbone.Marionette.CompositeView.extend({
 	collectionEvents: {
 		'reset': 'onReset',
 		'all_loaded': 'render',
-		'sync': 'onSync'
+		'sync': 'onSync',
+		'change': 'render'
 	},
 	events: {
 		'click .show_more_items': function(){ this.fetchNextPage(); }
