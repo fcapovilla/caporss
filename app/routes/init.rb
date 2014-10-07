@@ -12,6 +12,14 @@ before do
 	end
 end
 
+before '/api/*' do
+	cache_control :no_cache
+end
+
+before '/greader/*' do
+	cache_control :no_cache
+end
+
 
 # SCSS stylesheet
 get '/stylesheet.css' do
@@ -68,6 +76,8 @@ end
 get '/stream' do
 	authorize_basic! :user
 	content_type 'text/event-stream', 'charset' => 'utf-8'
+	cache_control :no_cache
+	headers 'Connection' => 'keep-alive'
 
 	user_id = @user.id
 
