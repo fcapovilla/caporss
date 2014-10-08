@@ -10,6 +10,7 @@
     "font-awesome": "*",
     "pnotify": ">=2.0.0",
     "json2": "*",
-    "jquery-cookie": "*"
+    "jquery-cookie": "*",
+    "event-source-polyfill": "*"
   }
 }

@@ -43,6 +43,7 @@ module.exports = function(grunt) {
 			},
 			libs: {
 				src: [
+					'./.bower_components/event-source-polyfill/eventsource.min.js',
 					'./.bower_components/json2/json2.js',
 					'./.bower_components/jquery/dist/jquery.js',
 					'./.bower_components/jquery-cookie/jquery.cookie.js',
