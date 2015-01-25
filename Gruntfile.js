@@ -50,7 +50,7 @@ module.exports = function(grunt) {
 					'./.bower_components/pnotify/pnotify.core.js',
 					'./.bower_components/pnotify/pnotify.buttons.js',
 					'./.bower_components/pnotify/pnotify.desktop.js',
-					'./.bower_components/lodash/dist/lodash.js',
+					'./.bower_components/lodash/lodash.js',
 					'./.bower_components/backbone/backbone.js',
 					'./.bower_components/marionette/lib/backbone.marionette.js',
 					'./.bower_components/bootstrap/dist/js/bootstrap.js',

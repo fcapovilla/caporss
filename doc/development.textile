@@ -27,6 +27,8 @@ To update Javascript libraries :
 # Install Node and npm
 # Install Grunt and Bower :
 <code>
+sudo npm install -g grunt-cli
+sudo npm install -g bower
 npm install
 </code>
 # Install Javascript dependencies with Bower :
@@ -35,6 +37,17 @@ bower install
 </code>
 # Concatenate and minify dependencies using grunt :
 <code>
+grunt
+</code>
+# Updating npm dependencies
+<code>
+sudo npm install -g npm-check-updates
+npm-check-updates
+npm install
+</code>
+# Updating bower dependencies
+<code>
+bower update
 grunt
 </code>
 
