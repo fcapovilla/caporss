@@ -4,7 +4,8 @@ gem 'thin'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'sinatra-r18n'
+# Force old version of r18n to support Ruby 1.9.3
+gem 'sinatra-r18n', '>= 1.1.11', '< 2'
 gem 'sinatra-flash'
 
 gem 'haml'
