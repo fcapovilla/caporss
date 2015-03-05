@@ -2,11 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.2.9)
-    addressable (2.3.7)
     backports (3.6.4)
     bcrypt (3.1.10)
-    bcrypt-ruby (3.1.5)
-      bcrypt (>= 3.1.3)
     coveralls (0.7.10)
       multi_json (~> 1.10)
       rest-client (>= 1.6.8, < 2)
@@ -15,73 +12,10 @@ GEM
       thor (~> 0.19.1)
     curb (0.8.6)
     daemons (1.1.9)
-    data_objects (0.10.15)
-      addressable (~> 2.1)
-    datamapper (1.2.0)
-      dm-aggregates (~> 1.2.0)
-      dm-constraints (~> 1.2.0)
-      dm-core (~> 1.2.0)
-      dm-migrations (~> 1.2.0)
-      dm-serializer (~> 1.2.0)
-      dm-timestamps (~> 1.2.0)
-      dm-transactions (~> 1.2.0)
-      dm-types (~> 1.2.0)
-      dm-validations (~> 1.2.0)
     diff-lcs (1.2.5)
-    dm-adjust (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-aggregates (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-constraints (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-core (1.2.1)
-      addressable (~> 2.3)
-    dm-do-adapter (1.2.0)
-      data_objects (~> 0.10.6)
-      dm-core (~> 1.2.0)
-    dm-is-list (1.2.0)
-      dm-adjust (~> 1.2.0)
-    dm-migrations (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-mysql-adapter (1.2.0)
-      dm-do-adapter (~> 1.2.0)
-      do_mysql (~> 0.10.6)
-    dm-postgres-adapter (1.2.0)
-      dm-do-adapter (~> 1.2.0)
-      do_postgres (~> 0.10.6)
-    dm-serializer (1.2.2)
-      dm-core (~> 1.2.0)
-      fastercsv (~> 1.5)
-      json (~> 1.6)
-      json_pure (~> 1.6)
-      multi_json (~> 1.0)
-    dm-sqlite-adapter (1.2.0)
-      dm-do-adapter (~> 1.2.0)
-      do_sqlite3 (~> 0.10.6)
-    dm-timestamps (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-transactions (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-types (1.2.2)
-      bcrypt-ruby (~> 3.0)
-      dm-core (~> 1.2.0)
-      fastercsv (~> 1.5)
-      json (~> 1.6)
-      multi_json (~> 1.0)
-      stringex (~> 1.4)
-      uuidtools (~> 2.1)
-    dm-validations (1.2.0)
-      dm-core (~> 1.2.0)
-    do_mysql (0.10.15)
-      data_objects (= 0.10.15)
-    do_postgres (0.10.15)
-      data_objects (= 0.10.15)
-    do_sqlite3 (0.10.15)
-      data_objects (= 0.10.15)
     docile (1.1.5)
     eventmachine (1.0.7)
     execjs (2.3.0)
-    fastercsv (1.5.5)
     feedjira (1.6.0)
       curb (~> 0.8)
       loofah (~> 2.0)
@@ -95,7 +29,6 @@ GEM
       rake
     jasmine-core (2.2.0)
     json (1.8.2)
-    json_pure (1.8.2)
     libv8 (3.16.14.7)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
@@ -134,6 +67,10 @@ GEM
     rspec-support (3.2.1)
     sass (3.4.12)
     sax-machine (1.3.0)
+    sequel (4.19.0)
+    sequel_secure_password (0.2.11)
+      bcrypt (>= 3.1, < 4.0)
+      sequel (>= 4.1.0, < 5.0)
     simplecov (0.9.2)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
@@ -155,7 +92,7 @@ GEM
     sinatra-r18n (1.1.11)
       r18n-core (= 1.1.11)
       sinatra (>= 1.3)
-    stringex (1.5.1)
+    sqlite3 (1.3.10)
     term-ansicolor (1.3.0)
       tins (~> 1.0)
     therubyracer (0.12.1)
@@ -171,7 +108,6 @@ GEM
     uglifier (2.7.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    uuidtools (2.1.5)
 
 PLATFORMS
   ruby
@@ -179,11 +115,6 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   coveralls
-  datamapper
-  dm-is-list
-  dm-mysql-adapter
-  dm-postgres-adapter
-  dm-sqlite-adapter
   feedjira
   haml
   jasmine
@@ -194,10 +125,13 @@ DEPENDENCIES
   rake
   rspec
   sass
+  sequel
+  sequel_secure_password
   sinatra
   sinatra-contrib
   sinatra-flash
   sinatra-r18n (>= 1.1.11, < 2)
+  sqlite3
   therubyracer
   thin
   uglifier

@@ -1,35 +1,27 @@
 # encoding: utf-8
-class User
-	include DataMapper::Resource
+require 'sinatra/r18n'
 
-	property :id, Serial
-	property :username, String, :length => 1..100, :required => true, :unique => true
-	property :password, BCryptHash, :required => true
-	property :roles, Flag[:admin, :user, :sync], :default => :user
+class User < Sequel::Model
+	plugin :secure_password
 
-	property :cleanup_after, Integer, :default => 300
-	property :refresh_timeout, Integer, :default => 10
-	property :sse_refresh, Boolean, :default => false
-	property :desktop_notifications, Boolean, :default => true
-	property :sync_timeout, Integer, :default => 0
-	property :default_locale, String, :length => 1..5, :default => 'en'
-	property :items_per_page, Integer, :default => 50
+	one_to_many :items
+	one_to_many :feeds
+	one_to_many :folders
 
-	has n, :items, :constraint => :destroy
-	has n, :feeds, :constraint => :destroy
-	has n, :folders, :constraint => :destroy
-
-	validates_numericality_of :cleanup_after, :gt => 0
-	validates_numericality_of :refresh_timeout, :gte => 0
-	validates_numericality_of :sync_timeout, :gte => 0
-	validates_numericality_of :items_per_page, :gt => 0
-	validates_with_method :validate_locale
+	def validate
+		super
+		errors.add(:cleanup_after, 'must be greater than 0') unless self.cleanup_after.nil? or self.cleanup_after > 0
+		errors.add(:refresh_timeout, 'must be greater than 0') unless self.cleanup_after.nil? or self.refresh_timeout > 0
+		errors.add(:sync_timeout, 'must be greater than 0') unless self.sync_timeout.nil? or self.sync_timeout > 0
+		errors.add(:items_per_page, 'must be greater than 0') unless self.items_per_page.nil? or self.items_per_page > 0
+		errors.add(:locale, 'is not a valid locale') unless self.default_locale.nil? or self.validate_locale
+	end
 
 	def authorize(roles)
-		return true if self.roles.include?(:admin)
+		return true if self.role = 'admin'
 
 		roles.each do |role|
-			return true if self.roles.include?(role)
+			return true if self.role = role.to_s
 		end
 
 		return false
@@ -39,7 +31,7 @@ class User
 		R18n.available_locales.each do |locale|
 			return true if locale.code == self.default_locale
 		end
-		[false, "Locale '#{self.default_locale}' is not a known locale."]
+		false
 	end
 
 end

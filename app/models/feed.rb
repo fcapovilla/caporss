@@ -2,33 +2,21 @@
 require 'uri'
 require 'net/http'
 
-class Feed
-	include DataMapper::Resource
+class Feed < Sequel::Model
+	many_to_one :user
+	many_to_one :folder
+	many_to_one :favicon
+	one_to_many :items
 
-	property :id, Serial
-	property :title, String, :length => 100
-	property :url, String, :length => 1..2000
-	property :last_update, DateTime, :default => DateTime.new(2000,1,1)
-	property :last_sync, DateTime, :default => DateTime.new(2000,1,1)
-	property :unread_count, Integer, :default => 0
-	property :sync_error, Integer, :default => 0
+	plugin :list, :scope => :folder_id
 
-	property :pshb_hub, String, :length => 0..2000, :default => ''
-	property :pshb_topic, String, :length => 0..2000, :default => ''
-	property :pshb_expiration, Time
-	property :pshb, Enum[:inactive, :active, :requested, :unavailable], :default => :unavailable
-
-	belongs_to :user, :required => false
-	belongs_to :folder
-	belongs_to :favicon, :required => false
-	has n, :items, :constraint => :skip
-	is :list, :scope => :folder_id
-
-	validates_with_method :validate_url
-
+	def validate
+		super
+		errors.add(:url, 'is not a valid URL.') unless validate_url
+	end
 
 	# Prevent favorites deletion
-	before :destroy do
+	def before_destroy
 		self.items.each do |item|
 			if item.favorite
 				Item.get(item.id).update(:feed => nil, :orig_feed_title => self.title)
@@ -36,6 +24,8 @@ class Feed
 				Item.get(item.id).destroy
 			end
 		end
+
+		super
 	end
 
 	# Fetch the feed using Feedjira and update it
@@ -219,7 +209,7 @@ class Feed
 		if self.url =~ /(^$)|(^(http|https):\/\/[a-z0-9]+((\:[0-9]{1,5})?\/?.*)?$)/ix
 			true
 		else
-			[false, "Url is not a valid URL."]
+			false
 		end
 	end
 

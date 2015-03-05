@@ -1,15 +1,9 @@
 # encoding: utf-8
-class Folder
-	include DataMapper::Resource
+class Folder < Sequel::Model
+	many_to_one :user
+	one_to_many :feeds
 
-	property :id, Serial
-	property :title, String, :length => 1..200
-	property :open, Boolean, :default => true
-	property :unread_count, Integer, :default => 0
-
-	belongs_to :user, :required => false
-	has n, :feeds, :constraint => :destroy
-	is :list
+	plugin :list
 
 	def update_unread_count!
 		self.unread_count = 0

@@ -12,8 +12,8 @@ gem 'haml'
 gem 'sass'
 gem 'RedCloth'
 
-gem 'datamapper'
-gem 'dm-is-list'
+gem 'sequel'
+gem 'sequel_secure_password'
 gem 'moneta'
 
 gem 'nokogiri'
@@ -21,7 +21,7 @@ gem 'feedjira'
 gem 'json'
 
 group :development, :travis, :test do
-	gem 'dm-sqlite-adapter'
+	gem 'sqlite3'
 end
 
 group :travis, :test do
@@ -32,11 +32,11 @@ group :travis, :test do
 end
 
 group :travis, :production do
-	gem 'dm-mysql-adapter'
+	#gem 'dm-mysql-adapter'
 end
 
 group :production do
-	gem 'dm-postgres-adapter'
+	#gem 'dm-postgres-adapter'
 	gem 'rack-ssl-enforcer'
 
 	gem 'therubyracer'

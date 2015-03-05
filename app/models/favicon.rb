@@ -2,15 +2,8 @@
 require 'curb'
 require 'base64'
 
-class Favicon
-	include DataMapper::Resource
-
-	property :id, Serial
-	property :url, String, :length => 1..2000
-	property :data, Text
-
-	has n, :feeds, :constraint => :set_nil
-
+class Favicon < Sequel::Model
+	one_to_many :feeds
 
 	def fetch!
 		begin
