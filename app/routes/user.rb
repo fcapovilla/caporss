@@ -55,7 +55,7 @@ namespace '/user' do
 		content_type :json, 'charset' => 'utf-8'
 
 		user = User.get(id)
-		unless user.roles.include?(:admin) or user.roles.include?(:sync)
+		unless user.role == :admin or user.role == :sync
 			user.destroy
 		end
 

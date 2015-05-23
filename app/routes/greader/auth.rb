@@ -4,7 +4,7 @@
 namespace '/greader' do
 	post '/accounts/ClientLogin' do
 		user = User.first(:username => params['Email'])
-		if user and user.password == params['Passwd']
+		if user and user.authenticate(params['Passwd'])
 			token = SecureRandom.hex
 			# Token expires after 10 minutes
 			Cache::store.store("greader:#{token}", user.username, :expires => 2592000)

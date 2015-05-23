@@ -6,7 +6,7 @@ describe "Admin page" do
 		User.new(
 			:username => 'user',
 			:password => 'user',
-			:roles => [:user]
+			:role => 'user'
 		).save
 	end
 

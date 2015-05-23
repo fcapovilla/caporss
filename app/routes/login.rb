@@ -7,7 +7,7 @@ end
 
 post '/login' do
 	user = User.first(:username => params[:username])
-	if user and user.password == params[:password]
+	if user and user.authenticate(params[:password])
 		session[:username] = params[:username]
 		if session[:login_redirect]
 			redirect session.delete(:login_redirect)

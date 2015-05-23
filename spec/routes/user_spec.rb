@@ -106,8 +106,8 @@ describe "Admin user page" do
 
 	it "won't delete admin or sync users" do
 		post '/login', :username => 'admin', :password => 'admin'
-		admin = User.first(:roles => [:admin])
-		sync = User.first(:roles => [:sync])
+		admin = User.first(:role => 'admin')
+		sync = User.first(:role => 'sync')
 
 		delete "/user/#{admin.id}"
 		User.get(admin.id).should_not be_nil

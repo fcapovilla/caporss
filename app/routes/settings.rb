@@ -5,7 +5,7 @@ post '/save_settings' do
 	authorize_basic! :user
 
 	# Password protected settings
-	if @user.password == params[:old_password]
+	if @user.authenticate(params[:old_password])
 		if params[:new_password].length > 1
 			@user.password = params[:new_password] if params[:new_password]
 		else

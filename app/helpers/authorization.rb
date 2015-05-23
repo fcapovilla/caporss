@@ -16,7 +16,7 @@ def authorize_basic!(*roles)
 	auth ||= Rack::Auth::Basic::Request.new(request.env)
 	if auth.provided? and auth.basic? and auth.credentials
 		if @user = User.first(:username => auth.username)
-			if @user.password == auth.credentials[1] and @user.authorize(roles)
+			if @user.authenticate(auth.credentials[1]) and @user.authorize(roles)
 				return
 			end
 		end

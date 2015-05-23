@@ -6,7 +6,7 @@ describe "Settings route" do
 		User.new(
 			:username => 'user',
 			:password => 'user',
-			:roles => [:user]
+			:role => 'user'
 		).save
 	end
 
