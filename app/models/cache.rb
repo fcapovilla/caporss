@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'moneta'
 
 # Caching class. Contains variables to keep during server lifetime.
 class Cache
@@ -9,14 +10,10 @@ class Cache
 	@@backbone = nil
 
 	# Moneta store
-	@@store = nil
+	@@store = Moneta.new(:Daybreak, :file => 'daybreak_store', :expires => true)
 
 	def self.store
 		@@store
-	end
-
-	def self.store=(t)
-		@@store = t
 	end
 
 	def self.backbone
@@ -43,4 +40,8 @@ class Cache
 	def self.removeConnection(userid, c)
 		@@connections[userid].delete(c)
 	end
+end
+
+at_exit do
+	Cache::store.close
 end

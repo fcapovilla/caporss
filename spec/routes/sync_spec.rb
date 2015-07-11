@@ -156,39 +156,9 @@ describe "Sync route" do
 			feed.items.first(:guid => '1').title.should == "Item 1"
 		end
 
-		it "prevents non-sync users from syncing all feeds" do
-			authorize 'user', 'user'
-
-			post "/full_sync"
-			last_response.status.should == 403
-		end
-
 		after :all do
 			Folder.all.destroy
 			User.first(:username => 'user').destroy
-		end
-
-	end
-
-	context "for sync users" do
-
-		before :all do
-			generate_sample_feeds
-		end
-
-		it "lets the sync user sync all feeds" do
-			authorize 'sync', 'sync'
-			post "/full_sync"
-			data = JSON.parse(last_response.body, :symbolize_names => true)
-
-			data[:updated].should == 25
-			data[:new_items].should == 75
-
-			Folder.all.feeds.items.count.should == 75
-		end
-
-		after :all do
-			Folder.all.destroy
 		end
 
 	end

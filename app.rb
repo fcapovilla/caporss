@@ -1,10 +1,13 @@
 # encoding: utf-8
+require_relative 'app/models/cache'
+
 require 'sinatra'
 require 'sinatra/multi_route'
 require 'sinatra/namespace'
 require 'sinatra/streaming'
 require 'sinatra/r18n'
 require 'sinatra/flash'
+require 'rack/session/moneta'
 
 require 'haml'
 require 'sass'
@@ -30,9 +33,11 @@ configure do
 	# Needed for Greader API support
 	set :protection, :except => :path_traversal
 
+	# Session expires after 7 days
+	use Rack::Session::Moneta, store: Cache::store, expire_after: 604800
+
 	# Set local scheduler if not in cloud environment
 	unless ENV['IS_CLOUD'] then
 		require_relative 'scheduler'
 	end
 end
-

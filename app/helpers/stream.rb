@@ -18,7 +18,7 @@ def send_streams(event, data="", userid=0)
 
 	return if connections.nil?
 
-	puts "Sending event '#{event}' to #{connections.length} connection(s)"
+	logger.info "Sending event '#{event}' to #{connections.length} connection(s)"
 
 	connections.each { |out| out << content unless out.closed? }
 end
