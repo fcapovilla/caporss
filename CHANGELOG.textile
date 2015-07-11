@@ -1,3 +1,11 @@
+h1. 1.2.0
+
+* Add indexes on the items table to improve item display performance.
+* Switch Session and cache backend to Daybreak to improve overall performance.
+* Add Rufus-scheduler to automatically sync feeds every 30 minutes without needing additional configuration.
+* Add Heroku deploy button.
+* Update gems and JS libraries
+
 h1. 1.1.2
 
 * Update to Marionette 2.1
