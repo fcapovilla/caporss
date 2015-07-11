@@ -20,7 +20,7 @@ gem 'daybreak'
 gem 'moneta'
 
 gem 'nokogiri'
-gem 'feedjira'
+gem 'feedjira', '< 2'
 gem 'json'
 
 group :development, :travis, :test do
