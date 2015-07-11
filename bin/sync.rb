@@ -1,3 +1,4 @@
+require_relative '../app/patches/init'
 require_relative '../app/parsers/init'
 require_relative '../app/models/init'
 
@@ -37,8 +38,10 @@ def do_sync
 	end
 
 	if new_items > 0
-		# TODO: Tell the server new items were found.
-		#send_streams "sync:new_items"
+		#Tell the server new items were found.
+		if defined? send_streams
+			send_streams "sync:new_items"
+		end
 	end
 
 	Feed.all(:pshb => :active).each do |feed|
