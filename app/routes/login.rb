@@ -15,7 +15,7 @@ post '/login' do
 			redirect '/'
 		end
 	else
-		flash[:error] = t.flash.invalid_credentials
+		flash[:error] = t.flash.invalid_credentials.to_s
 		redirect '/login'
 	end
 end

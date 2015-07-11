@@ -59,7 +59,7 @@ post '/favorites_upload' do
 		end
 	end
 
-	flash[:success] = t.flash.favorites_import_success
+	flash[:success] = t.flash.favorites_import_success.to_s
 
 	redirect '/'
 end

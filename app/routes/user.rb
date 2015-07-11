@@ -8,7 +8,7 @@ namespace '/user' do
 
 	post do
 		if params[:password].length < 1
-			flash[:error] = t.flash.new_password_cannot_be_empty
+			flash[:error] = t.flash.new_password_cannot_be_empty.to_s
 			redirect '/admin'
 		end
 
@@ -18,7 +18,7 @@ namespace '/user' do
 		)
 
 		if user.save
-			flash[:success] = t.flash.user_created
+			flash[:success] = t.flash.user_created.to_s
 		else
 			errors = user.errors.map{|e| e.first.to_s}
 			flash[:error] = errors.join("<br>")
@@ -34,7 +34,7 @@ namespace '/user' do
 			if params[:password].length > 0
 				user.password = params[:password]
 			else
-				flash[:error] = t.flash.new_password_cannot_be_empty
+				flash[:error] = t.flash.new_password_cannot_be_empty.to_s
 				redirect '/admin'
 			end
 		end
@@ -42,7 +42,7 @@ namespace '/user' do
 		user.username = params[:username] unless params[:username].nil?
 
 		if user.save
-			flash[:success] = t.flash.user_updated
+			flash[:success] = t.flash.user_updated.to_s
 		else
 			errors = user.errors.map{|e| e.first.to_s}
 			flash[:error] = errors.join("<br>")

@@ -9,7 +9,7 @@ post '/save_settings' do
 		if params[:new_password].length > 1
 			@user.password = params[:new_password] if params[:new_password]
 		else
-			flash[:error] = t.flash.new_password_cannot_be_empty
+			flash[:error] = t.flash.new_password_cannot_be_empty.to_s
 		end
 	end
 
@@ -23,7 +23,7 @@ post '/save_settings' do
 	@user.items_per_page = params[:items_per_page] if params[:items_per_page]
 
 	if @user.save
-		flash[:success] = t.flash.settings_saved
+		flash[:success] = t.flash.settings_saved.to_s
 	else
 		errors = @user.errors.map{|e| e.first.to_s}
 		flash[:error] = errors.join("<br>")
