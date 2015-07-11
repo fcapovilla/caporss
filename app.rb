@@ -29,5 +29,10 @@ end
 configure do
 	# Needed for Greader API support
 	set :protection, :except => :path_traversal
+
+	# Set local scheduler if not in cloud environment
+	unless ENV['IS_CLOUD'] then
+		require_relative 'scheduler'
+	end
 end
 

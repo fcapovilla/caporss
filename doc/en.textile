@@ -19,7 +19,7 @@ h1. Settings
 * *Import/Export favorites* : You can import and export your favorites in a JSON file compatible with GReader. You can also export your favorites as an HTML file that you can import in a web browser.
 * *Cleanup* : Deletes old items in the local database. Only unread and favorite items will not be deleted. You can specify the age limit for items in days. All items older than this limit will be deleted when clicking the "Cleanup" button.
 * *Sync after* : Fetches new items from the servers for all feeds at the specified interval.
-* *Refresh after* : Check for new items in the local database at the specified interval. Use with an automatic sync worker that fetches new items at a specific interval.
+* *Refresh after* : Check for new items in the local database at the specified interval.
 * *Refresh using SSE* : If your server and browser both support SSE (Server-Sent Events) and this setting is activated, client-side informations will be automatically updated at every feed synchronisation.
 * *Update all favicons* : Favicons are only fetched from other servers when a subscription is added. You can use this button to fetch a new version of every favicons.
 * *Admin page* : This page lets you add or modify users accounts. Note that this feature can only be accessed by the admin account.

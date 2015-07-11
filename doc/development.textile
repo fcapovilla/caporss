@@ -63,7 +63,6 @@ h1. Application structure
 * *doc* : Documentation.
 * *i18n* : Translation files.
 * *public* : Public files. CSS, fonts, images and Javascript dependencies.
-* *scripts* : Worker or cron scripts.
 * *spec* : Tests.
 * *views* : Template files.
 ** *partials* : HAML partial files.

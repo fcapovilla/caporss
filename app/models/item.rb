@@ -6,9 +6,9 @@ class Item
 	property :title, String, :length => 200
 	property :url, String, :length => 2000
 	property :guid, String, :length => 2000
-	property :content, Text
+	property :content, Text, :lazy => false
 	property :attachment_url, String, :length => 2000
-	property :medias, Json
+	property :medias, Json, :lazy => false
 	property :read, Boolean, :default => false
 	property :favorite, Boolean, :default => false
 	property :date, DateTime

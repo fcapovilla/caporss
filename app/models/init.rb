@@ -47,7 +47,10 @@ DataMapper.finalize.auto_upgrade!
 # Apply migrations
 require_relative 'migrations'
 
+if defined? Cache then
 # Prepare session and token store
-Cache::store = Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
-# Session expires after 7 days
-use Rack::Session::Moneta, store: Cache::store, expire_after: 604800
+	#Cache::store = Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
+	Cache::store = Moneta.new(:Daybreak, :file => 'daybreak_store', :expires => true)
+	# Session expires after 7 days
+	use Rack::Session::Moneta, store: Cache::store, expire_after: 604800
+end

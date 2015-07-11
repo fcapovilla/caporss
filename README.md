@@ -90,4 +90,3 @@ Also, CapoRSS's favicon is from the [RRZE Icon Set](http://rrze-icon-set.berlios
 ## TODO
 
 * Optimisations, performance improvements and bugfixes
-* Add other automatic sync methods (cron, worker)

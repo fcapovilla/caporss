@@ -36,8 +36,10 @@ class User
 	end
 
 	def validate_locale
-		R18n.available_locales.each do |locale|
-			return true if locale.code == self.default_locale
+		if defined? R18n then
+			R18n.available_locales.each do |locale|
+				return true if locale.code == self.default_locale
+			end
 		end
 		[false, "Locale '#{self.default_locale}' is not a known locale."]
 	end

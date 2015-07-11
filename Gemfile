@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 gem 'thin'
 
+gem 'rufus-scheduler'
+
 gem 'sinatra'
 gem 'sinatra-contrib'
 # Force old version of r18n to support Ruby 1.9.3
@@ -14,6 +16,7 @@ gem 'RedCloth'
 
 gem 'datamapper'
 gem 'dm-is-list'
+gem 'daybreak'
 gem 'moneta'
 
 gem 'nokogiri'
