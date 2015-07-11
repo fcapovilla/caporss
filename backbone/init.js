@@ -1,6 +1,9 @@
 var CapoRSS = CapoRSS || {Router: {}, View: {}, Model: {}, Collection: {}};
 
 $(function() {
+	// Init bootstrap material theme
+	$.material.init();
+
 	CapoRSS.router = new CapoRSS.Router.Main();
 	CapoRSS.folders = new CapoRSS.Collection.Folder();
 	CapoRSS.folderList = new CapoRSS.View.FolderList({collection: CapoRSS.folders});

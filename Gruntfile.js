@@ -33,6 +33,18 @@ module.exports = function(grunt) {
 						cwd: './.bower_components/font-awesome/fonts',
 						src: '*',
 						dest: './public/fonts'
+					},
+					{
+						expand: true,
+						cwd: './.bower_components/bootstrap-material-design/dist/css',
+						src: '*',
+						dest: './public/css'
+					},
+					{
+						expand: true,
+						cwd: './.bower_components/bootstrap-material-design/dist/fonts',
+						src: '*',
+						dest: './public/fonts'
 					}
 				]
 			}
@@ -54,7 +66,9 @@ module.exports = function(grunt) {
 					'./.bower_components/backbone/backbone.js',
 					'./.bower_components/marionette/lib/backbone.marionette.js',
 					'./.bower_components/bootstrap/dist/js/bootstrap.js',
-					'./.bower_components/bootstrap3-typeahead/bootstrap3-typeahead.js'
+					'./.bower_components/bootstrap3-typeahead/bootstrap3-typeahead.js',
+					'./.bower_components/bootstrap-material-design/dist/js/material.js',
+					'./.bower_components/bootstrap-material-design/dist/js/ripples.js',
 				],
 				dest: './public/js/libs.js'
 			}

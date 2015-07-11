@@ -4,9 +4,10 @@
   .modal-dialog
     .modal-content
       .modal-header
-        =t.opml_import.title
         %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
           x
+        %h4(class="modal-title")
+          =t.opml_import.title
       %form(class="upload-form" method="post" enctype="multipart/form-data" action="/opml_upload")
         .modal-body
           %input(type="file" name="file" aria-hidden="true")

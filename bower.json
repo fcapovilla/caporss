@@ -11,6 +11,7 @@
     "pnotify": ">=2.0.0",
     "json2": "*",
     "jquery-cookie": "*",
-    "event-source-polyfill": "*"
+    "event-source-polyfill": "*",
+    "bootstrap-material-design": "~0.3.0"
   }
 }

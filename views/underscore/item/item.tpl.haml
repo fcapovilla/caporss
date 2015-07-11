@@ -44,14 +44,14 @@
         <%= item.content %>
         <% if(item.attachment_url){ %>
           <br>
-          <a class="btn btn-default" href="<%= item.attachment_url %>">
+          <a class="btn btn-default btn-raised" href="<%= item.attachment_url %>">
             <i class="fa fa-download"></i> Download file
           </a>
         <% } %>
         <% if(item.medias) { %>
           <br>
           <% _.each(item.medias, function(url, type) { %>
-            <a class="btn btn-default" href="<%= url %>">
+            <a class="btn btn-default btn-raised" href="<%= url %>">
               <i class="fa fa-download"></i> <%= type %>
             </a>
           <% }); %>

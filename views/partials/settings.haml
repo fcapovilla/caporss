@@ -4,9 +4,10 @@
   .modal-dialog.modal-wide
     .modal-content
       .modal-header
-        =t.settings.title
         %button(type="button" class="close" data-dismiss="modal" aria-hidden="true")
           x
+        %h4(class="modal-title")
+          =t.settings.title
       %form(class="settings-form form-horizontal" method="post" enctype="multipart/form-data" action="/save_settings")
         %ul.nav.nav-tabs
           %li.active
@@ -50,17 +51,17 @@
                       %option(value="#{locale.code}"){selected: r18n.locale.code == locale.code}
                         =locale.title
             .tab-pane#subscriptionSettings
-              %button(class="btn btn-default" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal")
+              %button(class="btn btn-default btn-raised" href="#opmlModal" role="button" data-dismiss="modal" data-toggle="modal")
                 =t.settings.import_opml_file
-              %a(class="btn btn-default" href="/export.opml")
+              %a(class="btn btn-default btn-raised" href="/export.opml")
                 =t.settings.export_as_opml
-              %button(class="btn btn-default" href="#importFavoritesModal" role="button" data-dismiss="modal" data-toggle="modal")
+              %button(class="btn btn-default btn-raised" href="#importFavoritesModal" role="button" data-dismiss="modal" data-toggle="modal")
                 =t.settings.import_favorites
-              %a(class="btn btn-default" href="/favorites.json")
+              %a(class="btn btn-default btn-raised" href="/favorites.json")
                 =t.settings.export_favorites.json
-              %a(class="btn btn-default" href="/favorites.html")
+              %a(class="btn btn-default btn-raised" href="/favorites.html")
                 =t.settings.export_favorites.html
-              %button(class="btn btn-default" id="forceSyncButton")
+              %button(class="btn btn-default btn-raised" id="forceSyncButton")
                 =t.settings.force_sync
               %br
               #subscription-list
@@ -72,7 +73,7 @@
                   %input(class="form-control" type="text" id="cleanup_after" name="cleanup_after" value="#{@user.cleanup_after}" aria-hidden="true")
                   %span.input-group-addon
                     =t.settings.days
-                %button(class="btn btn-default col-md-1 col-md-offset-3" id="cleanupButton" data-dismiss="modal")
+                %button(class="btn btn-default btn-raised col-md-1 col-md-offset-3" id="cleanupButton" data-dismiss="modal")
                   =t.settings.cleanup
             .tab-pane#syncSettings
               .form-group
@@ -105,10 +106,10 @@
                   %label
                     %input(type="checkbox" name="desktop_notifications"){checked: @user.desktop_notifications}
                     =t.settings.desktop_notifications
-              %button(class="btn btn-default" id="updateFaviconsButton" data-dismiss="modal")
+              %button(class="btn btn-default btn-raised" id="updateFaviconsButton" data-dismiss="modal")
                 =t.settings.update_favicons
               - if @user.roles.include?(:admin)
-                %a(class="btn btn-default" href="/admin")
+                %a(class="btn btn-default btn-raised" href="/admin")
                   =t.settings.admin_page
             .tab-pane#help
               =documentation
