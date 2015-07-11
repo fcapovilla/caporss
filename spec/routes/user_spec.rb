@@ -104,16 +104,12 @@ describe "Admin user page" do
 		Item.all(:user => user).count.should == 0
 	end
 
-	it "won't delete admin or sync users" do
+	it "won't delete admin users" do
 		post '/login', :username => 'admin', :password => 'admin'
 		admin = User.first(:roles => [:admin])
-		sync = User.first(:roles => [:sync])
 
 		delete "/user/#{admin.id}"
 		User.get(admin.id).should_not be_nil
-
-		delete "/user/#{sync.id}"
-		User.get(sync.id).should_not be_nil
 	end
 
 end

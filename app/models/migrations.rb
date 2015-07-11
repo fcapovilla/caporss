@@ -198,4 +198,10 @@ if ['mysql', 'postgres'].include? adapter
 	end
 end
 
+migration 10, :delete_sync_user do
+	up do
+		User.all(:roles => [:sync]).destroy
+	end
+end
+
 migrate_up!

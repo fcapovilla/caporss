@@ -69,7 +69,7 @@ heroku apps:create APPNAME
 </code>
 # Add the postgres addon :
 <code>
-heroku addons:add heroku-postgresql:dev
+heroku addons:add heroku-postgresql:hobby-dev
 </code>
 # Set the BUNDLE_WITHOUT environment variable so only the production gems are installed:
 <code>

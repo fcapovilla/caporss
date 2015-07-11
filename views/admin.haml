@@ -64,7 +64,7 @@
                       - user.roles.each do |role|
                         %li&= role
                   %td
-                    -unless user.roles.include?(:admin) or user.roles.include?(:sync)
+                    -unless user.roles.include?(:admin)
                       %button(class="btn btn-default" onclick="deleteUser(this);" title="#{t.admin.user.delete}")
                         %i.fa.fa-trash-o
               %tr
