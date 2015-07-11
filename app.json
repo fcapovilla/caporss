@@ -8,8 +8,7 @@
 		"BUNDLE_WITHOUT": "development:test:travis"
 	},
 	"addons": [
-		"heroku-postgresql:hobby-dev",
-		"scheduler:standard"
+		"heroku-postgresql:hobby-dev"
 	],
 	"buildpacks": [
 		{
