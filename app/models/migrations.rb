@@ -178,4 +178,24 @@ if ['mysql', 'postgres'].include? adapter
 	end
 end
 
+if ['mysql', 'postgres'].include? adapter
+	migration 9, :add_item_indexes do
+		up do
+			begin
+				if adapter == 'mysql'
+					execute 'ALTER TABLE items ADD INDEX index_items_date (date)'
+					execute 'ALTER TABLE items ADD INDEX index_items_feed_guid (feed_id, guid(200))'
+					execute 'ALTER TABLE items ADD INDEX index_items_feed_date (feed_id, date)'
+				elsif adapter == 'postgres'
+					execute 'CREATE INDEX index_items_date ON items (date)'
+					execute 'CREATE INDEX index_items_feed_guid ON items (feed_id, guid)'
+					execute 'CREATE INDEX index_items_feed_date ON items (feed_id, date)'
+				end
+			rescue
+				puts ">> Index doesn't exist. Nothing to do."
+			end
+		end
+	end
+end
+
 migrate_up!
