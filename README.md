@@ -6,6 +6,8 @@ Version 1.1.6
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
 [![Dependency Status](https://gemnasium.com/fcapovilla/caporss.svg)](https://gemnasium.com/fcapovilla/caporss)
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 ## Description
 
 CapoRSS is a simple self-hosted RSS aggregator written in Ruby and Javascript.
