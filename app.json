@@ -1,0 +1,13 @@
+{
+	"name": "CapoRSS",
+	"description": "A simple self-hosted RSS aggregator written in Ruby and Javascript.",
+	"repository": "https://github.com/fcapovilla/caporss",
+	"keywords": ["caporss", "rss", "ruby", "backbone"],
+	"env": {
+		"IS_CLOUD": "1",
+		"BUNDLE_WITHOUT": "development:test:travis"
+	},
+	"addons": [
+		"heroku-postgresql:hobby-dev",
+	]
+}
