@@ -8,11 +8,9 @@ require 'sinatra/streaming'
 require 'sinatra/r18n'
 require 'sinatra/flash'
 require 'rack/session/moneta'
+
 require 'tilt/haml'
 require 'tilt/sass'
-
-require 'haml'
-require 'sass'
 require 'RedCloth'
 
 require 'json'
