@@ -14,7 +14,7 @@ module Feedjira
 			elements :entry, :as => :entries, :class => YoutubeVideo
 
 			def self.able_to_parse?(xml) #:nodoc:
-				/\<feed[^\>]+xmlns\s?=\s?[\"|\'](http:\/\/www\.w3\.org\/2005\/Atom|http:\/\/purl\.org\/atom\/ns\#)[\"|\'][^\>]*\>/ =~ xml && /gdata\.youtube\.com/ =~ xml
+				/\<feed[^\>]+xmlns\s?=\s?[\"|\'](http:\/\/www\.w3\.org\/2005\/Atom|http:\/\/purl\.org\/atom\/ns\#)[\"|\'][^\>]*\>/ =~ xml && /xmlns:yt="http:\/\/www\.youtube\.com/ =~ xml
 			end
 
 			def url

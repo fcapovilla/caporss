@@ -12,8 +12,7 @@ module Feedjira
 			element :summary
 			element :content
 			element :"media:description", :as => :media_description
-			element :"media:thumbnail", :as => :thumbnail, :value => :url, :with => {:width => "320"}
-			element :"yt:duration", :as => :duration, :value => :seconds
+			element :"media:thumbnail", :as => :thumbnail, :value => :url
 
 			element :enclosure, :as => :image, :value => :href
 
@@ -32,20 +31,10 @@ module Feedjira
 				@url ||= links.first
 			end
 
-			def formatted_duration
-				return "00:00" unless @duration
-
-				time = @duration.to_i
-				hours = time/3600.to_i
-				minutes = (time/60 - hours * 60).to_i
-				seconds = (time - (minutes * 60 + hours * 3600))
-				"%02d:%02d:%02d" % [hours, minutes, seconds]
-			end
-
 			def content
 				return @cached_content if @cached_content
 				if @media_description
-					@cached_content = '<img src="' + @thumbnail + '" /><br>(' + self.formatted_duration + ')<br>' + @media_description.gsub("\n", '<br>')
+					@cached_content = '<img src="' + @thumbnail + '" /><br>' + @media_description.gsub("\n", '<br>')
 				else
 					@cached_content = @content
 				end
