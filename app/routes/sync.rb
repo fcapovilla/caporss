@@ -15,6 +15,11 @@ namespace '/sync' do
 				feed.pshb_subscribe!(uri('/pshb/callback'))
 			end
 		end
+
+		# Compact daybreak file when syncing
+		db = Daybreak::DB.new "daybreak_store"
+		db.compact
+		db.close
 	end
 
 	post '/all' do
