@@ -60,6 +60,7 @@ h1. Application structure
 ** *routes* : Sinatra routes.
 ** *patches* : Fixes on existing libraries.
 * *backbone* : Contains the client-side Backbone application. All of these files are concatenated and minified by the server.
+* *bin* : Contains scheduled task scripts.
 * *doc* : Documentation.
 * *i18n* : Translation files.
 * *public* : Public files. CSS, fonts, images and Javascript dependencies.

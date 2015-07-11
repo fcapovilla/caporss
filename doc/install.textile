@@ -74,6 +74,7 @@ heroku addons:add heroku-postgresql:hobby-dev
 # Set the BUNDLE_WITHOUT environment variable so only the production gems are installed:
 <code>
 heroku config:set BUNDLE_WITHOUT="development:test:travis"
+heroku config:set IS_CLOUD="1"
 </code>
 # Push CapoRSS to heroku :
 <code>
