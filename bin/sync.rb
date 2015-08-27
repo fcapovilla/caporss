@@ -2,7 +2,13 @@ require_relative '../app/patches/init'
 require_relative '../app/parsers/init'
 require_relative '../app/models/init'
 
+require 'daybreak'
+
 def do_sync
+	db = Daybreak::DB.new "daybreak_store"
+	base_url = db['base_url']
+	db.close
+
 	last_sync = DateTime.now
 
 	urls = Feed.all(:pshb.not => :active).map{ |feed|
@@ -47,7 +53,7 @@ def do_sync
 	Feed.all(:pshb => :active).each do |feed|
 		# Resubscribe if the Pubsubhubbub subscription is almost expired
 		if feed.pshb_expiration and feed.pshb_expiration < Time.now + (60*60*2)
-			feed.pshb_subscribe!(uri('/pshb/callback'))
+			feed.pshb_subscribe!(base_url + '/pshb/callback')
 		end
 	end
 end

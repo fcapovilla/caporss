@@ -30,6 +30,8 @@ configure :production do
 end
 
 configure do
+	set :first_request, true
+
 	# Needed for Greader API support
 	set :protection, :except => :path_traversal
 

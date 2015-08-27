@@ -10,6 +10,12 @@ before do
 			params[:locale] = @user.default_locale
 		end
 	end
+
+	# keep the base_url on the first request so the scheduler can use it.
+	if settings.first_request
+		Cache::store['base_url'] = request.base_url
+		settings.set :first_request, false
+	end
 end
 
 before '/api/*' do
