@@ -36,10 +36,10 @@ end
 
 group :travis, :production do
 	gem 'dm-mysql-adapter'
+	gem 'dm-postgres-adapter'
 end
 
 group :production do
-	gem 'dm-postgres-adapter'
 	gem 'rack-ssl-enforcer'
 
 	gem 'therubyracer'
