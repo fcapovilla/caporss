@@ -1,3 +1,11 @@
+h1. 1.3.0
+
+* Remove Daybreak
+* Store session and cache in database by default so sessions can persist on Heroku.
+* Add MEMORY_CACHE environment variable to keep session and cache in memory for better performance.
+* Update gems and JS libraries
+* Fix Travis tests
+
 h1. 1.2.0
 
 * Add indexes on the items table to improve item display performance.
