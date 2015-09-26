@@ -1,6 +1,6 @@
 # CapoRSS
 
-Version 1.2.0
+Version 1.3.0
 
 [![Build Status](https://travis-ci.org/fcapovilla/caporss.svg?branch=master)](https://travis-ci.org/fcapovilla/caporss)
 [![Coverage Status](https://coveralls.io/repos/fcapovilla/caporss/badge.png?branch=master)](https://coveralls.io/r/fcapovilla/caporss?branch=master)
