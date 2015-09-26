@@ -295,7 +295,7 @@ describe "GReader Item routes" do
 			data = JSON.parse(last_response.body, :symbolize_names => true)
 
 			data[:itemRefs].length.should == 75
-			data[:itemRefs][0][:id].should == item.id.to_s
+			(data[:itemRefs].any? {|itemRef| itemRef[:id] == item.id.to_s}).should == true
 			data[:itemRefs][0][:directStreamIds].length.should == 0
 
 			get "/greader/reader/api/0/stream/items/ids",
@@ -308,9 +308,9 @@ describe "GReader Item routes" do
 			data = JSON.parse(last_response.body, :symbolize_names => true)
 
 			data[:itemRefs].length.should == 75
-			data[:itemRefs][0][:id].should == item.id.to_s
+			(data[:itemRefs].any? {|itemRef| itemRef[:id] == item.id.to_s}).should == true
 			data[:itemRefs][0][:directStreamIds].length.should == 1
-			data[:itemRefs][0][:directStreamIds][0].should == "user/1/label/#{item.feed.folder.title}"
+			data[:itemRefs][0][:directStreamIds][0].should =~ /^user\/1\/label\//
 		end
 
 		it "supports continuations" do
