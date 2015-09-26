@@ -10,10 +10,14 @@ class Cache
 	@@backbone = nil
 
 	# Moneta store
-	@@store = Moneta.new(:Daybreak, :file => 'daybreak_store', :expires => true)
+	@@store = nil
 
 	def self.store
 		@@store
+	end
+
+	def self.store=(s)
+		@@store=s
 	end
 
 	def self.backbone

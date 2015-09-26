@@ -35,6 +35,13 @@ configure do
 	# Needed for Greader API support
 	set :protection, :except => :path_traversal
 
+	# Set cache store
+	if ENV['IS_CLOUD'] then
+		Cache::store = Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
+	else
+		Cache::store = Moneta.new(:Daybreak, :file => 'daybreak_store', :expires => true)
+	end
+
 	# Session expires after 7 days
 	use Rack::Session::Moneta, store: Cache::store, expire_after: 604800
 
