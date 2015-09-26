@@ -32,6 +32,8 @@ end
 # Connect to the database
 DataMapper.setup(:default, ENV['DATABASE_URL'] || 'sqlite:rss.db')
 
+require_relative 'cache'
+
 # Load all models
 require_relative 'setting'
 require_relative 'user'
