@@ -10,7 +10,11 @@ class Cache
 	@@backbone = nil
 
 	# Moneta store
-	@@store = Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
+	if ENV['MEMORY_CACHE'] then
+		@@store = Moneta.new(:LRUHash, :expires => true)
+	else
+		@@store = Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
+	end
 
 	def self.store
 		@@store

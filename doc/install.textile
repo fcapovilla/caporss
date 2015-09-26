@@ -108,3 +108,9 @@ af push APPNAME --runtime ruby193
 See this page for more informations :
 * "AppFog CLI Tool Overview":https://docs.appfog.com/getting-started/af-cli
 
+h1. Environment variables
+
+Some server behaviors can be activated via environment variables :
+* DATABASE_URL : Specify database connection details via a URL in a format supported by Datamapper.
+* MEMORY_CACHE : If set to 1, keeps user sessions in memory instead of persisting them in the database. Requests will be faster in this mode, but session won't persist after server restarts.
+* IS_CLOUD : Set this option to 1 if you are running CapoRSS in a cloud environment. The in-process scheduler will be disabled in cloud mode.
