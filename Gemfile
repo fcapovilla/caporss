@@ -16,7 +16,6 @@ gem 'RedCloth'
 
 gem 'datamapper'
 gem 'dm-is-list'
-gem 'daybreak'
 gem 'moneta'
 
 gem 'nokogiri'

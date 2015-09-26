@@ -14,8 +14,6 @@ require 'RedCloth'
 require 'json'
 require 'open-uri'
 
-require 'daybreak'
-
 require_relative 'app/patches/init'
 require_relative 'app/helpers/init'
 require_relative 'app/parsers/init'

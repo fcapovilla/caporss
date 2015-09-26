@@ -10,11 +10,7 @@ class Cache
 	@@backbone = nil
 
 	# Moneta store
-	if ENV['IS_CLOUD'] then
-		@@store = Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
-	else
-		@@store = Moneta.new(:Daybreak, :file => 'daybreak_store', :expires => true)
-	end
+	@@store = Moneta.new(:DataMapper, :setup => (ENV['DATABASE_URL'] || 'sqlite:rss.db'), :expires => true)
 
 	def self.store
 		@@store

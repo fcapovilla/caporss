@@ -27,7 +27,6 @@ GEM
       dm-transactions (~> 1.2.0)
       dm-types (~> 1.2.0)
       dm-validations (~> 1.2.0)
-    daybreak (0.3.0)
     diff-lcs (1.2.5)
     dm-adjust (1.2.0)
       dm-core (~> 1.2.0)
@@ -190,7 +189,6 @@ DEPENDENCIES
   RedCloth
   coveralls
   datamapper
-  daybreak
   dm-is-list
   dm-mysql-adapter
   dm-postgres-adapter

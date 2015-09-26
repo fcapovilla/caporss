@@ -2,12 +2,8 @@ require_relative '../app/patches/init'
 require_relative '../app/parsers/init'
 require_relative '../app/models/init'
 
-require 'daybreak'
-
 def do_sync
-	db = Daybreak::DB.new "daybreak_store"
-	base_url = db['base_url']
-	db.close
+	base_url = Cache::store['base_url'] = request.base_url
 
 	last_sync = DateTime.now
 
