@@ -3,7 +3,7 @@ require_relative '../app/parsers/init'
 require_relative '../app/models/init'
 
 def do_sync
-	base_url = Cache::store['base_url'] = request.base_url
+	base_url = Cache::store['base_url']
 
 	last_sync = DateTime.now
 
