@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'curb'
 require 'base64'
 
 class Favicon
@@ -13,28 +12,33 @@ class Favicon
 
 
 	def fetch!
-		begin
-			curl = Curl::Easy.new
-			curl.timeout = 5
-			curl.follow_location = true
-			curl.url = self.url
-			curl.on_success{ |resp|
-				if resp.content_type =~ /^image\/.*icon$/
-					data = Base64.encode64(resp.body_str)
+		conn = Faraday.new() do |faraday|
+			faraday.use FaradayMiddleware::FollowRedirects, limit: 3
+			faraday.use Faraday::Adapter::NetHttp
+		end
+		response = conn.get do |req|
+			req.url self.url
+			req.options.timeout = 5
+		end
+
+		if response.success? and response.headers['Content-Type'] =~ /^image\/.*icon$/
+			data = Base64.encode64(response.body)
+			self.data = data if data.length < 65535
+		end
+
+		if self.data.nil? and not self.url =~ /www/
+			# Try the url with a "www"
+			if self.url =~ /^https?:\/\/([^.\/]+)\.[^.\/]+(\.[^.\/]+)+\//
+				response = conn.get do |req|
+					req.url self.url.sub($1, 'www')
+					req.options.timeout = 5
+				end
+
+				if response.success? and response.headers['Content-Type'] =~ /^image\/.*icon$/
+					data = Base64.encode64(response.body)
 					self.data = data if data.length < 65535
 				end
-			}
-			curl.perform
-
-			if self.data.nil? and not self.url =~ /www/
-				# Try the url with a "www"
-				if self.url =~ /^https?:\/\/([^.\/]+)\.[^.\/]+(\.[^.\/]+)+\//
-					curl.url = self.url.sub($1, 'www')
-					curl.perform
-				end
 			end
-		rescue Curl::Err::TimeoutError
-			# Do nothing on timeout
 		end
 
 		self.save

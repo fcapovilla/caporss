@@ -1,6 +1,8 @@
 # encoding: utf-8
 require 'uri'
 require 'net/http'
+require 'faraday'
+require 'faraday_middleware'
 
 class Feed
 	include DataMapper::Resource
@@ -38,15 +40,31 @@ class Feed
 		end
 	end
 
-	# Fetch the feed using Feedjira and update it
+	# Fetch the feed, parse it and update it
 	def sync!
-		feed = Feedjira::Feed.fetch_and_parse(self.url, {:max_redirects => 3, :timeout => 30, :if_modified_since => self.last_sync})
-		if feed.kind_of?(Fixnum)
-			self.sync_error = feed
+		conn = Faraday.new() do |faraday|
+			faraday.use FaradayMiddleware::FollowRedirects, limit: 3
+			faraday.use Faraday::Adapter::NetHttp
+		end
+		response = conn.get do |req|
+			req.url self.url
+			req['If-Modified-Since'] = self.last_sync.rfc822
+			req.options.timeout = 30
+		end
+
+		if response.success?
+			feed = Feedjira::Feed.parse response.body
+			if feed
+				update_feed!(feed)
+			else
+				self.sync_error = -1
+				self.last_sync = DateTime.now
+				self.save
+			end
+		else
+			self.sync_error = response.status
 			self.last_sync = DateTime.now
 			self.save
-		elsif not feed.nil?
-			update_feed!(feed)
 		end
 	end
 
@@ -160,6 +178,7 @@ class Feed
 	def update_unread_count!
 		self.unread_count = self.items.all(:read => false).count
 		self.save
+		self.folder.feeds.reload
 		self.folder.update_unread_count!
 		return self
 	end

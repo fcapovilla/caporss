@@ -106,7 +106,7 @@ migration 5, :add_guid do
 		Feed.all.each do |feed|
 			puts "Fetching GUIDs for feed #{feed.title}"
 
-			feed_data = Feedjira::Feed.fetch_and_parse(feed.url, {:max_redirects => 3, :timeout => 30})
+			feed_data = Feedjira::Feed.fetch_and_parse(feed.url)
 			next if feed_data.kind_of?(Fixnum) or feed_data.nil?
 
 			feed_data.entries.each do |entry|
@@ -127,7 +127,7 @@ end
 migration 6, :add_pubsubhubbub do
 	up do
 		Feed.all.each do |feed|
-			feed_data = Feedjira::Feed.fetch_and_parse(feed.url, {:max_redirects => 3, :timeout => 30})
+			feed_data = Feedjira::Feed.fetch_and_parse(feed.url)
 			next if feed_data.kind_of?(Fixnum) or feed_data.nil?
 
 			if feed_data.hub

@@ -19,7 +19,6 @@ namespace '/sync' do
 
 	post '/all' do
 		user_id = @user.id
-		last_sync = DateTime.now
 
 		updated_count = 0
 		new_items = 0
@@ -28,33 +27,17 @@ namespace '/sync' do
 		filters = {:user => @user}
 		filters[:pshb.not] = :active unless params[:force]
 
-		urls = Feed.all(filters).map{ |feed|
-			if feed.last_sync < last_sync
-				last_sync = feed.last_sync
-			end
-			feed.url
-		}
-		urls.uniq!
-
 		thread = Thread.new do
-			feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30, :if_modified_since => last_sync})
+			Feed.all(filters).each do |feed|
+				old_count = feed.items.count
 
-			feeds.each do |url, xml|
-				Feed.all(filters.merge(:url => url)).each do |feed|
-					if xml.kind_of?(Fixnum)
-						errors+=1
+				feed.sync!
 
-						feed.sync_error = xml
-						feed.last_sync = DateTime.now
-						feed.save
-					else
-						old_count = feed.items.count
+				updated_count+=1
+				new_items += feed.items.count - old_count
 
-						feed.update_feed!(xml)
-
-						updated_count+=1
-						new_items += feed.items.count - old_count
-					end
+				if feed.sync_error
+					errors+=1
 				end
 			end
 
@@ -77,42 +60,26 @@ namespace '/sync' do
 	post '/folder/:id' do |id|
 		folder = Folder.first(:user => @user, :id => id)
 
-		last_sync = DateTime.now
+		updated_count = 0
+		new_items = 0
+		errors = 0
 
 		filters = {:user => @user}
 		filters[:pshb.not] = :active unless params[:force]
 
-		urls = folder.feeds.all(filters).map{ |feed|
-			if feed.last_sync < last_sync
-				last_sync = feed.last_sync
-			end
-			feed.url
-		}
-		urls.uniq!
+		folder.feeds.all(filters).each do |feed|
+			old_count = feed.items.count
 
-		feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30, :if_modified_since => last_sync})
+			feed.sync!
 
-		updated_count = 0
-		new_items = 0
-		errors = 0
-		feeds.each do |url, xml|
-			folder.feeds.all(filters.merge(:url => url)).each do |feed|
-				if xml.kind_of?(Fixnum)
-					errors+=1
+			updated_count+=1
+			new_items += feed.items.count - old_count
 
-					feed.sync_error = xml
-					feed.last_sync = DateTime.now
-					feed.save
-				else
-					old_count = feed.items.count
-
-					feed.update_feed!(xml)
-
-					updated_count+=1
-					new_items += feed.items.count - old_count
-				end
+			if feed.sync_error
+				errors+=1
 			end
 		end
+
 		{ :updated => updated_count, :new_items => new_items, :errors => errors }.to_json
 	end
 

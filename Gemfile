@@ -19,7 +19,7 @@ gem 'dm-is-list'
 gem 'moneta'
 
 gem 'nokogiri'
-gem 'feedjira', '< 2'
+gem 'feedjira'
 gem 'json'
 
 group :development, :travis, :test do

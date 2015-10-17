@@ -5,37 +5,19 @@ require_relative '../app/models/init'
 def do_sync
 	base_url = Cache::store['base_url']
 
-	last_sync = DateTime.now
-
-	urls = Feed.all(:pshb.not => :active).map{ |feed|
-		if feed.last_sync < last_sync
-			last_sync = feed.last_sync
-		end
-		feed.url
-	}
-	urls.uniq!
-
-	feeds = Feedjira::Feed.fetch_and_parse(urls, {:max_redirects => 3, :timeout => 30, :if_modified_since => last_sync})
-
 	updated_count = 0
 	new_items = 0
 	errors = 0
-	feeds.each do |url, xml|
-		Feed.all(:url => url, :pshb.not => :active).each do |feed|
-			if xml.kind_of?(Fixnum)
-				errors+=1
+	Feed.all(:pshb.not => :active).each do |feed|
+		old_count = feed.items.count
 
-				feed.sync_error = xml
-				feed.last_sync = DateTime.now
-				feed.save
-			else
-				old_count = feed.items.count
+		feed.sync!
 
-				feed.update_feed!(xml)
-				updated_count+=1
+		updated_count+=1
+		new_items += feed.items.count - old_count
 
-				new_items += feed.items.count - old_count
-			end
+		if feed.sync_error
+			errors+=1
 		end
 	end
 

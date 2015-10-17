@@ -13,7 +13,7 @@ class Folder
 
 	def update_unread_count!
 		self.unread_count = 0
-		self.feeds.each do |feed|
+		self.feeds.all.each do |feed|
 			self.unread_count += feed.unread_count
 		end
 		self.save
