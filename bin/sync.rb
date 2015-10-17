@@ -3,12 +3,11 @@ require_relative '../app/parsers/init'
 require_relative '../app/models/init'
 
 def do_sync
-	base_url = Cache::store['base_url']
-
 	updated_count = 0
 	new_items = 0
 	errors = 0
-	Feed.all(:pshb.not => :active).each do |feed|
+
+	Feed.all(:pshb.not => :active, :order => [:last_sync.desc], :limit => 20).each do |feed|
 		old_count = feed.items.count
 
 		feed.sync!
@@ -27,6 +26,8 @@ def do_sync
 			send_streams "sync:new_items"
 		end
 	end
+
+	base_url = Cache::store['base_url']
 
 	Feed.all(:pshb => :active).each do |feed|
 		# Resubscribe if the Pubsubhubbub subscription is almost expired
