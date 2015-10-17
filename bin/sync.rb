@@ -7,7 +7,7 @@ def do_sync
 	new_items = 0
 	errors = 0
 
-	Feed.all(:pshb.not => :active, :order => [:last_sync.desc], :limit => 20).each do |feed|
+	Feed.all(:pshb.not => :active, :order => [:last_sync.asc], :limit => 20).each do |feed|
 		old_count = feed.items.count
 
 		feed.sync!
