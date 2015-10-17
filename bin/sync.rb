@@ -7,7 +7,7 @@ def do_sync
 
 	last_sync = DateTime.now
 
-	urls = Feed.all(:pshb.not => :active).map{ |feed|
+	urls = Feed.all(:pshb.not => :active, :order => [:last_sync.asc], :limit => 20).map{ |feed|
 		if feed.last_sync < last_sync
 			last_sync = feed.last_sync
 		end

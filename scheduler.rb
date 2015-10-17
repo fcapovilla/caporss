@@ -4,8 +4,8 @@ require_relative 'bin/sync.rb'
 
 scheduler = Rufus::Scheduler.new
 
-# Sync feeds every 30 minutes.
-scheduler.every '30m', :overlap => false do
+# Sync feeds every 5 minutes.
+scheduler.every '5m', :overlap => false do
 	do_sync
 end
 
