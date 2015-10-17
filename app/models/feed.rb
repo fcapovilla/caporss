@@ -53,10 +53,10 @@ class Feed
 		end
 
 		if response.success?
-			feed = Feedjira::Feed.parse response.body
-			if feed
+			begin
+				feed = Feedjira::Feed.parse response.body
 				update_feed!(feed)
-			else
+			rescue
 				self.sync_error = -1
 				self.last_sync = DateTime.now
 				self.save
