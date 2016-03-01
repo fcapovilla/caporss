@@ -22,6 +22,8 @@ gem 'nokogiri'
 gem 'feedjira', '< 2'
 gem 'json'
 
+gem 'rake'
+
 group :development, :travis, :test do
 	gem 'dm-sqlite-adapter'
 end
@@ -30,7 +32,6 @@ group :travis, :test do
 	gem 'rspec'
 	gem 'coveralls', require: false
 	gem 'jasmine'
-	gem 'rake'
 end
 
 group :travis, :production do
