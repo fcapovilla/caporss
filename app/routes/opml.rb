@@ -61,30 +61,3 @@ get '/export.opml' do
 	}.to_xml
 end
 
-# Feed entries Export
-get '/export.json' do
-	authorize_basic! :user
-
-	headers "Content-Disposition" => "attachment;filename=export.json"
-	content_type 'application/json', 'charset' => 'utf-8'
-
-	feeds = Feed.all(:user => @user).map do |feed|
-        {
-            url: feed.url,
-            items: feed.items.map do |item|
-                {
-                    title: item.title,
-                    url: item.url,
-                    guid: item.guid,
-                    content: item.content,
-                    read: item.read,
-                    date: item.date,
-                    attachment_url: item.attachment_url,
-                    medias: item.medias
-                }
-            end
-        }
-    end
-
-    {feeds: feeds}.to_json
-end
