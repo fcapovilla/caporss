@@ -20,6 +20,7 @@ task :export, :username do |t, args|
 	require_relative 'app/models/init'
 	require_relative 'app/helpers/export'
 	require 'json'
+	require 'tmpdir'
 
 	user = User.first(username: args[:username])
 
