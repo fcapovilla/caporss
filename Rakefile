@@ -28,6 +28,8 @@ task :export, :username do |t, args|
 		open("#{dir}/items.json", "w") do |f|
 			f.write '{"feeds":['
 
+			count = Feed.count(user_id: user.id)
+			index = 0
 			Feed.all(user_id: user.id).each do |feed|
 				f.write({
 					url: feed.url,
@@ -43,7 +45,10 @@ task :export, :username do |t, args|
 							medias: item.medias
 						}
 					end
-				}.to_json + ',')
+				}.to_json)
+
+				index+=1
+				f.write(',') if index < count
 			end
 
 			f.write ']}'
@@ -57,7 +62,7 @@ task :export, :username do |t, args|
 			f.write export_opml(user)
 		end
 
-        filename = "#{user.username}-#{Time.now.to_i}.tgz"
+		filename = "#{user.username}-#{Time.now.to_i}.tgz"
 
 		`tar -czf #{filename} -C #{dir} items.json favorites.html export.opml`
 
