@@ -66,3 +66,13 @@ CapoRSS serves a clone of the Google Reader API, which can be used in some mobil
  * Hostname : https://YOUR_HOSTNAME/greader/
  * Username : Your CapoRSS username
  * Password : Your CapoRSS password
+
+h1. Data exportation
+
+You can export all of a user's data by using the "export" rake task. The user's name must be passed in parameter.
+ex : @rake 'export[username]'@
+
+The generated tgz file will contain three files :
+* export.opml : The OPML export of all feeds and folders of the user.
+* favorites.html : The HTML export of all favorites of the user.
+* items.json : All feed items in JSON, grouped by feed.

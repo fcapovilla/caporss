@@ -7,6 +7,7 @@ helpers do
 	require_relative 'search'
 	require_relative 'greader'
 	require_relative 'http'
+	require_relative 'export'
 end
 
 require_relative 'stream'

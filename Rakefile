@@ -1,10 +1,10 @@
 begin
-  require 'jasmine'
-  load 'jasmine/tasks/jasmine.rake'
+	require 'jasmine'
+	load 'jasmine/tasks/jasmine.rake'
 rescue LoadError
-  task :jasmine do
-    abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
-  end
+	task :jasmine do
+		abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
+	end
 end
 
 task :travis do
@@ -17,30 +17,46 @@ task :travis do
 end
 
 task :export, :username do |t, args|
-    require_relative 'app/models/init'
-    require 'json'
+	require_relative 'app/models/init'
+	require_relative 'app/helpers/export'
+	require 'json'
 
-    user = User.first(username: args[:username])
+	user = User.first(username: args[:username])
 
-    puts '{"feeds":['
+	Dir.mktmpdir do |dir|
+		open("#{dir}/items.json", "w") do |f|
+			f.write '{"feeds":['
 
-	Feed.all(user_id: user.id).each do |feed|
-        puts({
-            url: feed.url,
-            items: feed.items.map do |item|
-                {
-                    title: item.title,
-                    url: item.url,
-                    guid: item.guid,
-                    content: item.content,
-                    read: item.read,
-                    date: item.date,
-                    attachment_url: item.attachment_url,
-                    medias: item.medias
-                }
-            end
-        }.to_json + ',')
-    end
+			Feed.all(user_id: user.id).each do |feed|
+				f.write({
+					url: feed.url,
+					items: feed.items.map do |item|
+						{
+							title: item.title,
+							url: item.url,
+							guid: item.guid,
+							content: item.content,
+							read: item.read,
+							date: item.date,
+							attachment_url: item.attachment_url,
+							medias: item.medias
+						}
+					end
+				}.to_json + ',')
+			end
 
-    puts ']}'
+			f.write ']}'
+		end
+
+		open("#{dir}/favorites.html", "w") do |f|
+			f.write export_favorites(user)
+		end
+
+		open("#{dir}/export.opml", "w") do |f|
+			f.write export_opml(user)
+		end
+
+		`tar -czf #{user.username}-#{Time.now.to_i}.tgz -C #{dir} items.json favorites.html export.opml`
+	end
+
 end
