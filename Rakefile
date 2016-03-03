@@ -57,7 +57,11 @@ task :export, :username do |t, args|
 			f.write export_opml(user)
 		end
 
-		`tar -czf #{user.username}-#{Time.now.to_i}.tgz -C #{dir} items.json favorites.html export.opml`
+        filename = "#{user.username}-#{Time.now.to_i}.tgz"
+
+		`tar -czf #{filename} -C #{dir} items.json favorites.html export.opml`
+
+		puts "File #{filename}.tgz created."
 	end
 
 end

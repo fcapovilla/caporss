@@ -70,7 +70,7 @@ CapoRSS fournit un clone de l'API de Google Reader et peut donc être utilisé a
 h1. Exportation de données
 
 Il est possible d'exporter toutes les données d'un utilisateur en utilisant la tâche rake "export". Le nom de l'usager à exporter doit être passé en paramètre.
-ex : @rake 'export[username]'@
+ex : @bundle exec rake 'export[username]'@
 
 Le fichier tgz généré contient trois fichiers :
 * export.opml : L'export OPML de tous les flux et dossiers de l'usager.
