@@ -60,21 +60,21 @@ def generate_greader_filters(params)
 	return filters
 end
 
-def get_greader_items(filters)
+def get_greader_items(user, filters)
 	Item.all(filters).map do |item|
 		categories = [
-			"user/#{@user.id}/state/com.google/reading-list",
+			"user/#{user.id}/state/com.google/reading-list",
 		]
 		if item.feed
-			categories << "user/#{@user.id}/label/#{item.feed.folder.title}"
+			categories << "user/#{user.id}/label/#{item.feed.folder.title}"
 		end
 		if item.read
-			categories << "user/#{@user.id}/state/com.google/read"
+			categories << "user/#{user.id}/state/com.google/read"
 		else
-			categories << "user/#{@user.id}/state/com.google/fresh"
+			categories << "user/#{user.id}/state/com.google/fresh"
 		end
 		if item.favorite
-			categories << "user/#{@user.id}/state/com.google/starred"
+			categories << "user/#{user.id}/state/com.google/starred"
 		end
 
 		enclosure = []

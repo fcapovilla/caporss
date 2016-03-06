@@ -40,7 +40,7 @@ namespace '/greader' do
 
 			halt 404 if target_title.nil?
 
-			items = get_greader_items(filters)
+			items = get_greader_items(@user, filters)
 
 			output = {
 				:direction => 'ltr',
@@ -77,7 +77,7 @@ namespace '/greader' do
 
 			filters[:id] = item_ids
 
-			items = get_greader_items(filters)
+			items = get_greader_items(@user, filters)
 
 			{
 				:direction => 'ltr',

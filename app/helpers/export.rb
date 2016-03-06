@@ -37,6 +37,6 @@ def export_favorites_json(user)
 	JSON.pretty_generate({
 		:direction => 'ltr',
 		:title => 'Favorites',
-		:items => get_greader_items(:favorite => true, :user => user)
+		:items => get_greader_items(user, :favorite => true, :user => user)
 	})
 end
