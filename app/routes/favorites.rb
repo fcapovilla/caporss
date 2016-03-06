@@ -71,11 +71,7 @@ get '/favorites.json' do
 	headers "Content-Disposition" => "attachment;filename=favorites.json"
 	content_type 'application/json', 'charset' => 'utf-8'
 
-	JSON.pretty_generate({
-		:direction => 'ltr',
-		:title => 'Favorites',
-		:items => get_greader_items(:favorite => true, :user => @user)
-	})
+	export_favorites_json @user
 end
 
 # Export HTML file (Browser bookmarks format)
@@ -85,7 +81,7 @@ get '/favorites.html' do
 	headers "Content-Disposition" => "attachment;filename=favorites.html"
 	content_type 'text/html', 'charset' => 'utf-8'
 
-	export_favorites @user
+	export_favorites_html @user
 end
 
 # Add custom favorite

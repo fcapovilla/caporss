@@ -15,7 +15,7 @@ def export_opml(user)
 	}.to_xml
 end
 
-def export_favorites(user)
+def export_favorites_html(user)
 	output = '<!DOCTYPE NETSCAPE-Bookmark-file-1>
 <!-- This is an automatically generated file.
      It will be read and overwritten.
@@ -31,4 +31,12 @@ def export_favorites(user)
 	end
 
 	output += '</DL><p>'
+end
+
+def export_favorites_json(user)
+	JSON.pretty_generate({
+		:direction => 'ltr',
+		:title => 'Favorites',
+		:items => get_greader_items(:favorite => true, :user => @user)
+	})
 end

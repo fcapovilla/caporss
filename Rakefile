@@ -18,6 +18,7 @@ end
 
 task :export, :username do |t, args|
 	require_relative 'app/models/init'
+	require_relative 'app/helpers/greader'
 	require_relative 'app/helpers/export'
 	require 'json'
 	require 'tmpdir'
@@ -54,8 +55,12 @@ task :export, :username do |t, args|
 			f.write ']}'
 		end
 
+		open("#{dir}/favorites.json", "w") do |f|
+			f.write export_favorites_json(user)
+		end
+
 		open("#{dir}/favorites.html", "w") do |f|
-			f.write export_favorites(user)
+			f.write export_favorites_html(user)
 		end
 
 		open("#{dir}/export.opml", "w") do |f|
@@ -64,7 +69,7 @@ task :export, :username do |t, args|
 
 		filename = "#{user.username}-#{Time.now.to_i}.tgz"
 
-		`tar -czf #{filename} -C #{dir} items.json favorites.html export.opml`
+		`tar -czf #{filename} -C #{dir} items.json favorites.json favorites.html export.opml`
 
 		puts "File #{filename}.tgz created."
 	end
